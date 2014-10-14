@@ -76,12 +76,8 @@ Scene = Class {
   end,
 
   isHit = function(this, hit, actor)
-    local pos = actor:pos()
-    local off = this:off()
-    local box = actor:box()
-    local x, y = pos.x + off.x, pos.y + pos.z + off.y
-    box = {x = x - box.w*0.5, y = y - box.h, w = box.w, h = box.h}      
-      
+    local box, off = actor:hitbox(), this:off()
+    box.x, box.y = box.x + off.x, box.y + off.y
     return Math.Isect(hit, box)
   end,
 

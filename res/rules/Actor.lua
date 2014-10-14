@@ -26,8 +26,8 @@ wlk = {
     elseif actor.cmd.u then actor:spd().z = -actor.prof.spd
     end
   
-    if actor.cmd.r then actor:sca().x = 1
-    elseif actor.cmd.l then actor:sca().x = -1
+    if actor.cmd.r then actor:dir().x = 1
+    elseif actor.cmd.l then actor:dir().x = -1
     end
   end,
 }
@@ -36,7 +36,7 @@ jmp = {
   chk = function() return actor:floor() and actor.cmd.jmp end,
   cmd = function()
     actor:start("jmp")
-    actor:spd().x = actor:face() * actor.prof.spd
+    actor:spd().x = actor:dir().x * actor.prof.spd
     actor:spd().y = actor.prof.jmp
   end
 }
@@ -48,12 +48,14 @@ atkhit = {
     if not actor:curr():isFrame(actor.prof.hit.frm) then return false end
     
     local box = actor.prof.hit.box
-    local pos = actor:pos()
-    local dim = actor:dim()
-    local face = actor:face()
+    local pos, dim, dir = actor:pos(), actor:dim(), actor:dir()
     local off = scene:off()
-    local x, y = pos.x + off.x, pos.y + pos.z + off.y
-    local hitbox = {x = x + box.x*face, y = y - dim.h + box.y, w = box.w * face, h = box.h}
+    
+    local hitbox = {
+      x = pos.x + box.x*dir.x + off.x,
+      y = pos.y + pos.z - dim.h + box.y + off.y,
+      w = box.w * dir.x,
+      h = box.h}
     
     vars.hits = scene:getHit(hitbox, function(other)
       return not (actor == other)
@@ -65,13 +67,14 @@ atkhit = {
   end,
   
   cmd = function(vars)
-    vars.hits:each(function(i, hit)
-      hit:spd{
-        x = hit:spd().x + actor:face() * actor.prof.hit.force.x,
-        y = hit:spd().y + actor.prof.hit.force.y,
-        z = hit:spd().z + hit.prof.hit.force.z}
+    vars.hits:each(function(i, other)
+      other:spd{
+        x = other:spd().x + actor:dir().x * actor.prof.hit.force.x,
+        y = other:spd().y + actor.prof.hit.force.y,
+        z = other:spd().z + actor.prof.hit.force.z}
       
-      hit:start("hit")
+      other:start("hit")
+      other:face(actor)
     end)
   end
 }
@@ -79,7 +82,8 @@ atkhit = {
 atkend = doWhen("std", function() return actor:curr():isEnded() end)
 jmpend = doWhen("std", function() return actor:floor() end)
 hitair = doWhen("hitair", function() return not actor:floor() end)
-hitend = doWhen("std", function() return Math.Abs(actor:spd().x) < 0.5 end)
+hitflr = doWhen("hitflr", function() return actor:floor() end)
+hitend = doWhen("std", function() return actor:curr():isEnded() end)
 
 return {  
   std = {wlk, jmp, atk},
@@ -87,5 +91,6 @@ return {
   jmp = {jmpend},
   atk = {atkhit, atkend},
   hit = {hitair, hitend},
-  hitair = {hitair, hitend},
+  hitair = {hitflr},
+  hitflr = {hitend},
 }

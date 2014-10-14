@@ -13,7 +13,6 @@ Image = Class {
   create = function(this, init)
     this.drawable = ImageDraw.new(init)
     this.data = ImageData.new(init)
-    this.data:sca(this.drawable:size())
   end,
   
   draw = function(this, offset)
@@ -22,8 +21,7 @@ Image = Class {
   
   update = Nil,
   
-  sca = function(this, val) return this.data:sca(val) end,
   pos = function(this, val) return this.data:pos(val) end,
-  rot = function(this, val) return this.data:rot(val) end,
+  dir = function(this, val) return this.data:dir(val) end,
   dim = function(this, val) return this.data:dim(val) end,
 }

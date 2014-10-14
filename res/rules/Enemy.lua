@@ -50,7 +50,10 @@ atk = {
            distZ >= rng.z.min and distZ <= rng.z.max
   end,
   
-  cmd = function() actor.cmd = {atk = true} end,
+  cmd = function()
+    actor:face()
+    actor.cmd = {atk = true}
+  end,
 }
       
 return {

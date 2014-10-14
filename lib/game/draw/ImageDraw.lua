@@ -15,10 +15,10 @@ ImageDraw = Class {
   
   draw = function(this, data, scene)
     local pos = data:pos()
-    local sca = data:sca()
+    local dir = data:dir()
     local off = scene:off()
     
     this.graphics.draw(this.drawable,
-      off.x + pos.x, off.y + pos.y + pos.z, 0, sca.x, sca.y)
+      off.x + pos.x, off.y + pos.y + pos.z, 0, dir.x, dir.y)
   end,
 }

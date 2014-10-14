@@ -41,10 +41,10 @@ SpriteDraw = Class {
     local frame = spriteData:get()
     local dim = spriteData:dim()
     local pos = imageData:pos()
-    local sca = imageData:sca()
+    local dir = imageData:dir()
     local off = scene:off()
     
     this.graphics.drawq(this.drawable, this.quads[frame],
-      off.x + pos.x, off.y + pos.y + pos.z, 0, sca.x, sca.y, dim.w * 0.5, dim.h)
+      off.x + pos.x, off.y + pos.y + pos.z, 0, dir.x, dir.y, dim.w * 0.5, dim.h)
   end,
 }

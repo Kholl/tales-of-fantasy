@@ -13,13 +13,37 @@ actor.prof = {
   hit = {
     frm = 5,
     box = {x = 20, y = 38, w = 47, h = 12},
-    force = {x = 120, y = 0, z = 0},
+    force = {x = 120, y = -220, z = 0},
   },
   rng = {
-    x = {min = 20, max = 67},
+    x = {min = 20, max = 20+47},
     y = {min = 0, max = 30},
     z = {min = 0, max = 10},
   },
+}
+
+ANIM = {
+  Jump = function(sprite)
+    local k = this:spd().y / this.prof.jmp
+    return (sprite.data.nframes) * (1 - k) * 0.5
+  end,
+  
+  Step2 = function(func)
+    return function(sprite)
+      if func() < 0 then return 0 else return 1 end
+    end
+  end,
+  
+  Step3 = function(thold, func)
+    return function(sprite)
+      local value = func()
+      
+      if value < -thold then return 0
+      elseif value > thold then return 2
+      else return 1
+      end
+    end
+  end,
 }
 
 actor.states = {
@@ -30,28 +54,13 @@ actor.states = {
   atk = {res = "res/chars/elf/atk1.png", dim = {w = 134, h = 82},
          frate = 2, nframes = 8, anim = "play"},
   jmp = {res = "res/chars/elf/jmp.png", dim = {w = 62, h = 98},
-         frate = 0, nframes = 8,
-         anim = function(sprite)
-           local k = this:spd().y / this.prof.jmp
-           return (sprite.data.nframes) * (1 - k) * 0.5
-         end},
+         frate = 0, nframes = 8, anim = ANIM.Jump},
   hit = {res = "res/chars/elf/hit.png", dim = {w = 48, h = 68},
-         frate = 3, nframes = 2, anim = "play"},
+         frate = 6, nframes = 2, anim = "play"},
   hitair = {res = "res/chars/elf/hitair.png", dim = {w = 110, h = 49},
-            frate = 0, nframes = 4,
-            anim = function(sprite)
-              if not this:floor() then
-                if this:spd().y < 0
-                  then return 0
-                  else return 1
-                end
-              else
-                if this:spd().x < -4 or this:spd().x > 4
-                  then return 2
-                  else return 3
-                end
-              end
-            end},
+            frate = 0, nframes = 4, anim = ANIM.Step3(60, function() return this:spd().y end)},
+  hitflr = {res = "res/chars/elf/hitflr.png", dim = {w = 110, h = 49},
+            frate = 30, nframes = 1, anim = "play"},
 }
 
 return actor
