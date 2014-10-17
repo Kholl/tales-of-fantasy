@@ -21,27 +21,43 @@ scan = {
 wlk = {
   chk = function() return actor:target() end,
   cmd = function()
-    local dist = actor:dist()
+    actor:state("wlk")
     
-    actor.cmd = {
-      r = dist.x < -actor.prof.rng.x.max,
-      d = dist.z < -actor.prof.rng.z.max,
-      l = dist.x > actor.prof.rng.x.max,
-      u = dist.z > actor.prof.rng.z.max,
-    }
+    local dist = actor:dist()
+    local r = dist.x < -actor.prof.state.atk.rng.x.max
+    local d = dist.z < -actor.prof.state.atk.rng.z.max
+    local l = dist.x >  actor.prof.state.atk.rng.x.max
+    local u = dist.z >  actor.prof.state.atk.rng.z.max
+    
+    if r then actor:spd().x = actor.prof.spd
+    elseif l then actor:spd().x = -actor.prof.spd
+    end
+    
+    if d then actor:spd().z = actor.prof.spd
+    elseif u then actor:spd().z = -actor.prof.spd
+    end
+  
+    if r then actor:dir().x = 1
+    elseif l then actor:dir().x = -1
+    end
   end,
 }
 
 jmp = {
-  chk = function() return actor:target() and actor:floor() and Math.Abs(actor:dist().x) > actor.prof.rng.jmp end,
-  cmd = function() actor.cmd = {jmp = true} end,
+  chk = function()
+    return actor:target() and actor:floor() and Math.Abs(actor:dist().x) > actor.prof.state.jmp.rng
+  end,
+  cmd = function() 
+    actor:start("jmp")
+    actor:spd().y = actor.prof.jmp
+  end,
 }
 
 atk = {
   chk = function()
     if not actor:target() or not actor:floor() then return false end
     
-    local rng = actor.prof.rng
+    local rng = actor.prof.state.atk.rng
     local dist = actor:dist()
     local distX = Math.Abs(dist.x)
     local distZ = Math.Abs(dist.z)
@@ -52,7 +68,7 @@ atk = {
   
   cmd = function()
     actor:face()
-    actor.cmd = {atk = true}
+    actor:start("atk")
   end,
 }
       

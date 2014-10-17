@@ -11,6 +11,8 @@ require("lib/game/dirs/RuleDir")
 require("lib/game/dirs/ActorDir")
 
 Scene = Class {  
+  DELTA = 0.1,
+  
   graphics = Dependency("graphics"),
   
   fps = Property("_fps"),

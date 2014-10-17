@@ -87,7 +87,7 @@ Moo = {
       local instance = setmetatable({}, {__index = class})
       
       if type(init) == "string" then
-        init = Moo.Load{this = instance, loadfile = loadfile}(init)
+        init = Moo.Load{this = instance, require = require}(init)
       end
     
       instance:create(init)

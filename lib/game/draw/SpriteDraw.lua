@@ -42,9 +42,15 @@ SpriteDraw = Class {
     local dim = spriteData:dim()
     local pos = imageData:pos()
     local dir = imageData:dir()
+    local pad = spriteData:pad()
     local off = scene:off()
     
+    if pad.x >= 0 and pad.x <= 1 then padx = dim.w * pad.x else padx = pad.x end
+    if pad.y >= 0 and pad.y <= 1 then pady = dim.h * pad.y else pady = pad.y end
+    
     this.graphics.drawq(this.drawable, this.quads[frame],
-      off.x + pos.x, off.y + pos.y + pos.z, 0, dir.x, dir.y, dim.w * 0.5, dim.h)
+      off.x + pos.x, off.y + pos.y + pos.z, 0,
+      dir.x, dir.y,
+      padx % (dim.w +1), pady % (dim.h +1))
   end,
 }

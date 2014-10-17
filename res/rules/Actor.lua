@@ -7,47 +7,12 @@ function doWhen(state, chk)
   return {chk = chk, cmd = function() actor:start(state) end}
 end
 
-idle = doWhen("std", function() return actor:floor() and actor.cmd.idle end)
-
-wlk = {
-  chk = function()
-    return actor:floor() and
-      (actor.cmd.r or actor.cmd.l or actor.cmd.u or actor.cmd.d)
-  end,
-
-  cmd = function()
-    actor:state("wlk")
-    
-    if actor.cmd.r then actor:spd().x = actor.prof.spd
-    elseif actor.cmd.l then actor:spd().x = -actor.prof.spd
-    end
-    
-    if actor.cmd.d then actor:spd().z = actor.prof.spd
-    elseif actor.cmd.u then actor:spd().z = -actor.prof.spd
-    end
-  
-    if actor.cmd.r then actor:dir().x = 1
-    elseif actor.cmd.l then actor:dir().x = -1
-    end
-  end,
-}
-
-jmp = {
-  chk = function() return actor:floor() and actor.cmd.jmp end,
-  cmd = function()
-    actor:start("jmp")
-    actor:spd().x = actor:dir().x * actor.prof.spd
-    actor:spd().y = actor.prof.jmp
-  end
-}
-  
-atk = doWhen("atk", function() return actor:floor() and actor.cmd.atk end)
-
-atkhit = {
+atkhit = function(selector) return {
   chk = function(vars)
-    if not actor:curr():isFrame(actor.prof.hit.frm) then return false end
+    local state = actor.prof.state[selector]
+    if not actor:curr():isFrame(state.hit.frm) then return false end
     
-    local box = actor.prof.hit.box
+    local box = state.hit.box
     local pos, dim, dir = actor:pos(), actor:dim(), actor:dir()
     local off = scene:off()
     
@@ -61,23 +26,26 @@ atkhit = {
       return not (actor == other)
         and not (other:state() == "hit")
         and not (other:state() == "hitair")
+        and not (other:state() == "hitflr")
     end)
     
     return vars.hits:size() > 0
   end,
   
   cmd = function(vars)
+    local state = actor.prof.state[selector]
     vars.hits:each(function(i, other)
+      local force = state.hit.force
       other:spd{
-        x = other:spd().x + actor:dir().x * actor.prof.hit.force.x,
-        y = other:spd().y + actor.prof.hit.force.y,
-        z = other:spd().z + actor.prof.hit.force.z}
+        x = other:spd().x + actor:dir().x * force.x,
+        y = other:spd().y + force.y,
+        z = other:spd().z + force.z}
       
       other:start("hit")
       other:face(actor)
     end)
-  end
-}
+  end}
+end
 
 atkend = doWhen("std", function() return actor:curr():isEnded() end)
 jmpend = doWhen("std", function() return actor:floor() end)
@@ -85,12 +53,23 @@ hitair = doWhen("hitair", function() return not actor:floor() end)
 hitflr = doWhen("hitflr", function() return actor:floor() end)
 hitend = doWhen("std", function() return actor:curr():isEnded() end)
 
-return {  
-  std = {wlk, jmp, atk},
-  wlk = {wlk, jmp, atk, idle},
+return {
+  -- Basic
   jmp = {jmpend},
-  atk = {atkhit, atkend},
+  atk = {atkhit "atk", atkend},
+  atkjmp = {atkhit "atkjmp", jmpend},
   hit = {hitair, hitend},
   hitair = {hitflr},
   hitflr = {hitend},
+  
+  -- Special attack slots
+  atksp1 = {atkhit "atksp1"},
+  atksp2 = {atkhit "atksp2"},
+  atksp3 = {atkhit "atksp3"},
+  atksp4 = {atkhit "atksp4"},
+  atksp5 = {atkhit "atksp5"},
+  atksp6 = {atkhit "atksp6"},
+  atksp7 = {atkhit "atksp7"},
+  atksp8 = {atkhit "atksp8"},
+  atksp9 = {atkhit "atksp9"},
 }

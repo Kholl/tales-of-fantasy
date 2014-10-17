@@ -25,21 +25,20 @@ PhysDir = Class {
       k.y = Math.Sign(spd.y)
       k.z = Math.Sign(spd.z)
     end
-    k[this.grav] = 1
-    
-    local lim = scene:lim()
+    k[this.grav] = 1    
     
     pos.x = pos.x + (spd.x * scene.delta)
     pos.y = pos.y + (spd.y * scene.delta)
     pos.z = pos.z + (spd.z * scene.delta)
-    
-    pos.x = Math.Lim(pos.x, lim.x)
-    pos.y = Math.Lim(pos.y, lim.y)
-    pos.z = Math.Lim(pos.z, lim.z)
 
     spd.x = spd.x + (k.x * this.drag.x * scene.delta)
     spd.y = spd.y + (k.y * this.drag.y * scene.delta)
     spd.z = spd.z + (k.z * this.drag.z * scene.delta)
+    
+    local lim = scene:lim()
+    pos.x = Math.Lim(pos.x, lim.x)
+    pos.y = Math.Lim(pos.y, lim.y)
+    pos.z = Math.Lim(pos.z, lim.z)
     
     actor:floor(pos[this.grav] == 0)    
     if actor:floor() then spd[this.grav] = 0 end

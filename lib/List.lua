@@ -20,6 +20,18 @@ Moo.List = function(class)
     last = function(this) return this.list[#this.list] end,
     sort = function(this, func) table.sort(this.list, func); return this end,
     
+    map = function(this, func)
+      local mapped = List(class).new()
+      this:each(function(i, item) mapped[i] = func(item) end)
+      return mapped
+    end,
+    
+    reduce = function(this, func)
+      local reduce = nil
+      this:each(function(i, item) reduce = func(item, reduce) end)
+      return reduce
+    end,
+    
     filter = function(this, func)
       local filtered = List(class).new()
       this:each(function(i, item)

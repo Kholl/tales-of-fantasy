@@ -7,6 +7,7 @@ SpriteData = Class {
   graphics = Dependency("graphics"),
   
   dim = Property("_dim"), -- Dimension
+  pad = Property("_pad"), -- Padding
 
   frame = nil,
   frate = nil,
@@ -18,6 +19,7 @@ SpriteData = Class {
     this.frate = init and init.frate or 1
     this.nframes = init and init.nframes or 1
     this:dim(init and init.dim or {w = 0, h = 0})
+    this:pad(init and init.pad or {x = 0.5, h = 0.5})
     this.ended = false
   end,
   

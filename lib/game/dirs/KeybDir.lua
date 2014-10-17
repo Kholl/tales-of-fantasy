@@ -3,21 +3,21 @@ Moo Object Oriented framework for LUA
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
+require("lib/List")
+
 KeybDir = Class {
-  keyboard = Dependency("keyboard"),
-  
+  keyboard = Dependency("keyboard"),  
   keys = nil,
-  input = nil,
   
   create = function(this, init)
-    this.keys = init or {}
+    this.keys = List().new(init or {})
   end,
     
   update = function(this, context)
     local actor = context.actor
     actor.cmd = {idle = true}
     
-    Each(this.keys, function(key, cmd)
+    this.keys:each(function(cmd, key)
       if this.keyboard.isDown(key) then
         actor.cmd[cmd], actor.cmd.idle = true, false
       end

@@ -48,8 +48,13 @@ return {
         
         player = scene.actors:addNew("res/chars/Elf.lua")
         player:pos{x = 160, y = 0, z = 225}
-        scene:addKeyb(player, {right = "r", left = "l", up = "u", down = "d", a = "atk", z = "jmp"})
+        scene:addKeyb(player, {
+            r = "right", l = "left", u = "up", d = "down",
+            b1 = "a", b2 = "z"})
+        
         scene:addRules(player, "res/rules/Actor.lua")
+        scene:addRules(player, "res/rules/Player.lua")
+        scene:addRules(player, "res/rules/Elf.lua")
       end},
     
     encounter = {
