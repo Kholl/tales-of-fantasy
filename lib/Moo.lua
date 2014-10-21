@@ -32,8 +32,10 @@ Moo = {
     return false
   end,
   
-  Copy = function(src, dst)
+  Copy = function(src)
+    local dst = {}
     for key, val in pairs(src) do dst[key] = val end
+    return dst
   end,
 
   Range = function(initial, final, func)

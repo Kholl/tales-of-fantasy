@@ -24,33 +24,13 @@ Actor = Class {
   
   draw = function(this, scene)
     State.draw(this, this.data, scene)
-    
-    local actor = this    
-    local state = actor.prof.state.atksp1
-    
-    local box = state.hit.box
-    local pos, dim, dir = actor:pos(), actor:dim(), actor:dir()
-    local off = scene:off()
-    
-    local hitbox = {
-      x = pos.x + box.x*dir.x + off.x,
-      y = pos.y + pos.z - dim.h + box.y + off.y,
-      w = box.w * dir.x,
-      h = box.h}
-
-    love.graphics.rectangle("line", hitbox.x, hitbox.y, hitbox.w, hitbox.y)
-    
-    local box, off = actor:hitbox(), scene:off()
-    box.x, box.y = box.x + off.x, box.y + off.y
-
-    love.graphics.rectangle("line", box.x, box.y, box.w, box.y)
   end,
   
   update = function(this, scene)
     State.update(this, scene)
     
     this.dirs:each(function (i, dir)
-      dir:update{actor = this, scene = scene, Math = Math}
+      dir:update{actor = this, scene = scene, Math = Math, print = print}
     end)
   end,
   

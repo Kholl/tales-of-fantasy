@@ -53,8 +53,8 @@ return {
             b1 = "a", b2 = "z"})
         
         scene:addRules(player, "res/rules/Actor.lua")
-        scene:addRules(player, "res/rules/Player.lua")
         scene:addRules(player, "res/rules/Elf.lua")
+        scene:addRules(player, "res/rules/Player.lua")
       end},
     
     encounter = {

@@ -19,7 +19,7 @@ actor.prof = {
       force = {x = 120, y = 0, z = 0},
       },
       rng = {
-        x = {min = 23, max = 23}, --23+37},
+        x = {min = 23, max = 23+37}, --23+37},
         y = {min = 0, max = 30},
         z = {min = 0, max = 10},
       },
@@ -81,7 +81,8 @@ actor.states = {
     dim = {w = 89, h = 53}, pad = {x = 0.5, y = 1},
     frate = 0, nframes = 2, anim = ANIM.Step2(function() return this:spd().y end)},
   hitflr = {
-    res = "res/chars/orc/hitflr.png", dim = {w = 89, h = 53},
+    res = "res/chars/orc/hitflr.png",
+    dim = {w = 89, h = 53}, pad = {x = 0.5, y = 1},
     frate = 30, nframes = 1, anim = "play"},
 }
 

@@ -15,11 +15,21 @@ KeybDir = Class {
     
   update = function(this, context)
     local actor = context.actor
-    actor.cmd = {idle = true}
+    
+    if not actor.cmd.dur then actor.cmd.dur = {idle = 0} end
+    
+    pre = actor.cmd.pre
+    if not actor.cmd.idle then pre = Copy(actor.cmd) end
+      
+    actor.cmd = {idle = true, pre = pre, dur = {idle = actor.cmd.dur.idle +1}}
     
     this.keys:each(function(cmd, key)
       if this.keyboard.isDown(key) then
-        actor.cmd[cmd], actor.cmd.idle = true, false
+        if not actor.cmd.dur[cmd] then actor.cmd.dur[cmd] = 0 end
+        actor.cmd.dur[cmd] = actor.cmd.dur[cmd] +1
+        actor.cmd.dur.idle = 0
+        actor.cmd[cmd] = true
+        actor.cmd.idle = false
       end
     end)
   end,

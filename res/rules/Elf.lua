@@ -13,7 +13,14 @@ atksp1end = {
   cmd = function() actor:start("std") end,
 }
 
+run = {
+  chk = function()
+    return actor:floor() and actor.cmd.r and false
+  end,
+  cmd = function() actor:start("run") end,
+}
+
 return {
-  std = {atksp1},
+  std = {atksp1, run},
   atksp1 = {atksp1end},
 }

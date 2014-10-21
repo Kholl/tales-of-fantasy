@@ -30,9 +30,9 @@ actor.prof = {
     
     atkjmp = {
       hit = {
-        frm = 4,
+        frm = 3,
         box = {x = 31, y = 57, w = 35, h = 18},
-        force = {x = 120, y = -120, z = 0},
+        force = {x = 120, y = -40, z = 0},
       },
       rng = {
         x = {min = 31, max = 31+35},
@@ -44,8 +44,8 @@ actor.prof = {
     atksp1 = {
       hit = {
         frm = 5,
-        box = {x = 26, y = 32, w = 56, h = 14},
-        force = {x = 160, y = 0, z = 0},
+        box = {x = 26, y = 32+13, w = 56, h = 14},
+        force = {x = 160, y = -40, z = 0},
       },
       rng = {
         x = {min = 26, max = 26+56},
@@ -88,7 +88,7 @@ actor.states = {
   wlk = {
     res = "res/chars/elf/wlk.png",
     dim = {w = 50, h = 68}, pad = {x = 0.5, y = 1},
-    frate = 3, nframes = 12, anim = "loop"},
+    frate = 2, nframes = 12, anim = "loop"},
   atk = {
     res = "res/chars/elf/atk.png",
     dim = {w = 134, h = 82}, pad = {x = 0.5, y = 1},
@@ -117,6 +117,10 @@ actor.states = {
     res = "res/chars/elf/hitflr.png",
     dim = {w = 110, h = 49}, pad = {x = 0.5, y = 1},
     frate = 30, nframes = 1, anim = "play"},
+  run = {
+    res = "res/chars/elf/run.png",
+    dim = {w = 116, h = 64}, pad = {x = 0.5, y = 1},
+    frate = 2, nframes = 12, anim = "loop"},
 }
 
 return actor

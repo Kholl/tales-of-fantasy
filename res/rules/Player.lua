@@ -5,7 +5,8 @@ Tales Of Fantasy
 
 idle = {
   chk = function()
-    return actor:floor() and not (actor.cmd.r or actor.cmd.l or actor.cmd.u or actor.cmd.d)
+    return actor:floor()
+    and not (actor.cmd.r or actor.cmd.l or actor.cmd.u or actor.cmd.d)
   end,
   cmd = function() actor:start("std") end,
 }
@@ -35,16 +36,12 @@ wlk = {
 }
 
 atk = {
-  chk = function()
-    return actor:floor()
-      and actor.cmd.b1
-      and not (actor.cmd.r or actor.cmd.l or actor.cmd.u or actor.cmd.d or actor.cmd.b2)
-  end,
+  chk = function() return actor:floor() and actor.cmd.b1 end,
   cmd = function() actor:start("atk") end
 }
 
 jmp = {
-  chk = function() return actor:floor() and actor.cmd.b2 and not actor.cmd.b1 end,
+  chk = function() return actor:floor() and actor.cmd.b2 end,
   cmd = function()
     actor:start("jmp")
     actor:spd().y = actor.prof.jmp
@@ -52,10 +49,7 @@ jmp = {
 }
 
 atkjmp = {
-  chk = function()
-    return actor.cmd.b1
-      and not (actor.cmd.r or actor.cmd.l or actor.cmd.u or actor.cmd.d or actor.cmd.b2)
-  end,
+  chk = function() return actor.cmd.b1 end,
   cmd = function() actor:start("atkjmp") end
 }
 
