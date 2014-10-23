@@ -6,31 +6,51 @@ Moo Object Oriented framework for LUA
 require("lib/List")
 
 KeybDir = Class {
-  keyboard = Dependency("keyboard"),  
+  keyboard = Dependency("keyboard"),
+  
   keys = nil,
+  set = nil,
+  seq = nil,
+  hash = nil,
+  hashLast = nil,
   
   create = function(this, init)
-    this.keys = List().new(init or {})
+    this.keys = List().new(init.keys or {})       
+    this.set = {}
+    this.seq = List().new{}
+    this.hash = ""
+    this.hashLast = ""
+    this:reset()
   end,
     
   update = function(this, context)
-    local actor = context.actor
-    
-    if not actor.cmd.dur then actor.cmd.dur = {idle = 0} end
-    
-    pre = actor.cmd.pre
-    if not actor.cmd.idle then pre = Copy(actor.cmd) end
-      
-    actor.cmd = {idle = true, pre = pre, dur = {idle = actor.cmd.dur.idle +1}}
+        
+    if not (this.hashLast == "") and
+       not (this.hash == this.hashLast) then
+       
+      this.seq:add1st(Copy(this.set))
+      this.seq:trim(6)
+      this:reset()
+    end
+
+    this.hashLast = this.hash
+    this.hash = ""
     
     this.keys:each(function(cmd, key)
-      if this.keyboard.isDown(key) then
-        if not actor.cmd.dur[cmd] then actor.cmd.dur[cmd] = 0 end
-        actor.cmd.dur[cmd] = actor.cmd.dur[cmd] +1
-        actor.cmd.dur.idle = 0
-        actor.cmd[cmd] = true
-        actor.cmd.idle = false
-      end
-    end)
+        if not this.keyboard.isDown(key) then return end
+        this.set[cmd] = this.set[cmd] +1
+        this.set.idle = 0
+        this.hash = this.hash .. "," .. cmd
+      end)
+    
+    if this.hash == "" then this.set.idle = this.set.idle +1 end
+    
+    context.actor.prof.key = this.set
+    context.actor.prof.keyseq = this.seq.list
+  end,
+  
+  reset = function(this)
+    this.set.idle = 0
+    this.keys:each(function(cmd, key) this.set[cmd] = 0 end)
   end,
 }

@@ -41,7 +41,7 @@ actor.prof = {
       },
     },
     
-    atksp1 = {
+    atk1 = {
       hit = {
         frm = 5,
         box = {x = 26, y = 32+13, w = 56, h = 14},
@@ -49,6 +49,19 @@ actor.prof = {
       },
       rng = {
         x = {min = 26, max = 26+56},
+        y = {min = 0, max = 30},
+        z = {min = 0, max = 10},
+      },
+    },
+    
+    atk2 = {
+      hit = {
+        frm = 3,
+        box = {x = 44, y = 59+13, w = 36, h = 17},
+        force = {x = 220, y = -40, z = 0},
+      },
+      rng = {
+        x = {min = 44, max = 44+36},
         y = {min = 0, max = 30},
         z = {min = 0, max = 10},
       },
@@ -97,10 +110,6 @@ actor.states = {
     res = "res/chars/elf/atkjmp.png",
     dim = {w = 132, h = 96}, pad = {x = 0.5, y = 1},
     frate = 2, nframes = 5, anim = "play"},
-  atksp1 = {
-    res = "res/chars/elf/atksp1.png",
-    dim = {w = 164, h = 96}, pad = {x = 0.5, y = -13},
-    frate = 2, nframes = 9, anim = "play"},
   jmp = {
     res = "res/chars/elf/jmp.png",
     dim = {w = 62, h = 98}, pad = {x = 0.5, y = 1},
@@ -121,6 +130,18 @@ actor.states = {
     res = "res/chars/elf/run.png",
     dim = {w = 116, h = 64}, pad = {x = 0.5, y = 1},
     frate = 2, nframes = 12, anim = "loop"},
+  runend = {
+    res = "res/chars/Elf/runend.png",
+    dim = {w = 76, h = 62}, pad = {x = 0.5, y = 1},
+    frate = 12, nframes = 1, anim = "play"},
+  atk1 = {
+    res = "res/chars/elf/atk1.png",
+    dim = {w = 164, h = 96}, pad = {x = 0.5, y = -13},
+    frate = 2, nframes = 9, anim = "play"},
+  atk2 = {
+    res = "res/chars/Elf/atk2.png",
+    dim = {w = 160, h = 92}, pad = {x = 0.5, y = 1},
+    frate = {2, 2, 2, 2, 12}, nframes = 5, anim = "play"},
 }
 
 return actor

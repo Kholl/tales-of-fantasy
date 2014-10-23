@@ -12,14 +12,12 @@ Actor = Class {
   data = nil,
   dirs = nil,
   prof = nil,
-  cmd = nil,
   
   create = function(this, init)
     State.create(this, init)
     this.data = ActorData.new(init)
     this.dirs = List().new()
     this.prof = init and init.prof or {}
-    this.cmd = init and init.cmd or {}
   end,
   
   draw = function(this, scene)
@@ -42,10 +40,7 @@ Actor = Class {
   floor = function(this, val) return this.data:floor(val) end,
   target = function(this, val) return this.data:target(val) end,  
   
-  add = function(this, dir)
-    this.dirs:add(dir)
-    return this
-  end,
+  add = function(this, dir) this.dirs:add(dir) end,
   
   dist = function(this, actor)
     actor = actor or this:target()

@@ -10,7 +10,6 @@ ActorData = Class {
   
   spd = Property("_spd"),
   box = Property("_box"),
-  cmd = Property("_cmd"),
   floor = Property("_floor"),
   target = Property("_target"),
 
@@ -18,7 +17,6 @@ ActorData = Class {
     ImageData.create(this, init)
     this:spd(init and init.spd or {x = 0, y = 0, z = 0})
     this:box(init and init.box or {w = 0, h = 0})
-    this:cmd(init and init.cmd or "idle")
     this:floor(init and init.floor or true)
     this:target(init and init.target or false)
   end,

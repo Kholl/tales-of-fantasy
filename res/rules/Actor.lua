@@ -63,13 +63,13 @@ return {
   hitflr = {hitend},
   
   -- Special attack slots
-  atksp1 = {atkhit "atksp1"},
-  atksp2 = {atkhit "atksp2"},
-  atksp3 = {atkhit "atksp3"},
-  atksp4 = {atkhit "atksp4"},
-  atksp5 = {atkhit "atksp5"},
-  atksp6 = {atkhit "atksp6"},
-  atksp7 = {atkhit "atksp7"},
-  atksp8 = {atkhit "atksp8"},
-  atksp9 = {atkhit "atksp9"},
+  atk1 = {atkhit "atk1"},
+  atk2 = {atkhit "atk2"},
+  atk3 = {atkhit "atk3"},
+  atk4 = {atkhit "atk4"},
+  atk5 = {atkhit "atk5"},
+  atk6 = {atkhit "atk6"},
+  atk7 = {atkhit "atk7"},
+  atk8 = {atkhit "atk8"},
+  atk9 = {atkhit "atk9"},
 }

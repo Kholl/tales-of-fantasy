@@ -45,6 +45,19 @@ Moo = {
     return result
   end,
   
+  Debug = function(desc, src, tab)
+    tab = tab or 0
+    
+    print(string.rep("\t", tab) .. desc)
+    Moo.Each(src, function(key, val)
+      if type(val) == "table" then
+        Moo.Debug(key, val, tab +1)
+      else
+        print(string.rep("\t", tab +1) .. key .. "=" .. val)
+      end
+    end)
+  end,
+  
   Property = function(attr)
     return function(obj, val)
       if not (val == nil) then obj[attr] = val end

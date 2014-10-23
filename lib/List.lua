@@ -13,7 +13,13 @@ Moo.List = function(class)
     size = function(this) return #this.list end,
     each = function(this, func) Moo.Each(this.list, func) end,
     
+    trim = function(this, size)
+      while (#this.list > size) do table.remove(this.list) end
+      return this
+    end,
+    
     add = function(this, item) table.insert(this.list, item); return item end,
+    add1st = function(this, item) table.insert(this.list, 1, item); return item end,
     addNew = function(this, params) return this:add(class.new(params)) end,    
       
     first = function(this) return this.list[1] end,
