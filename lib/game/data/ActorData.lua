@@ -12,6 +12,7 @@ ActorData = Class {
   box = Property("_box"),
   floor = Property("_floor"),
   target = Property("_target"),
+  action = Property("_action"),
 
   create = function(this, init)
     ImageData.create(this, init)
@@ -19,5 +20,6 @@ ActorData = Class {
     this:box(init and init.box or {w = 0, h = 0})
     this:floor(init and init.floor or true)
     this:target(init and init.target or false)
+    this:action(init and init.action or false)
   end,
 }

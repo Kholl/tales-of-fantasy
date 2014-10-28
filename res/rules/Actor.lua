@@ -1,15 +1,11 @@
 --[[
-Tales Of Fantasy
+Moo Object Oriented framework for LUA
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-function doWhen(state, chk)
-  return {chk = chk, cmd = function() actor:start(state) end}
-end
-
-atkhit = function(selector) return {
+attack = {
   chk = function(vars)
-    local state = actor.prof.state[selector]
+    local state = actor.info.state[actor:state()]
     if not actor:curr():isFrame(state.hit.frm) then return false end
     
     local box = state.hit.box
@@ -33,7 +29,7 @@ atkhit = function(selector) return {
   end,
   
   cmd = function(vars)
-    local state = actor.prof.state[selector]
+    local state = actor.info.state[actor:state()]
     vars.hits:each(function(i, other)
       local force = state.hit.force
       other:spd{
@@ -44,32 +40,57 @@ atkhit = function(selector) return {
       other:start("hit")
       other:face(actor)
     end)
-  end}
-end
+  end,
+}
 
-atkend = doWhen("std", function() return actor:curr():isEnded() end)
-jmpend = doWhen("std", function() return actor:floor() end)
-hitair = doWhen("hitair", function() return not actor:floor() end)
-hitflr = doWhen("hitflr", function() return actor:floor() end)
-hitend = doWhen("std", function() return actor:curr():isEnded() end)
+idle = function(action) return {
+  chk = function() return actor:action() == false and not (actor:state() == action) end,
+  cmd = function() actor:start(action) end,
+} end
+
+action = function(action) return {
+  chk = function() return actor:action() == action end,
+  cmd = function()    
+    if not (actor:state() == action) then actor:start(action) end
+    if not (actor.info.dir.x == 0) then actor:dir().x = actor.info.dir.x end
+    
+    local state = actor.info.state[action]
+    if state.spd then
+      actor:spd{
+        x = actor.info.dir.x * (state.spd.x or 0),
+        z = actor.info.dir.z * (state.spd.z or 0),
+        y = state.spd.y or 0}
+    end
+  end,
+} end
+
+finish = function(action) return {
+  chk = function() return actor:curr():isEnded() end,
+  cmd = function() actor:start(action) end,
+} end
+
+floor = function(action) return {
+  chk = function() return actor:floor() end,
+  cmd = function() actor:start(action) end,
+} end
+
+nofloor = function(action) return {
+  chk = function() return not actor:floor() end,
+  cmd = function() actor:start(action) end,
+} end
 
 return {
-  -- Basic
-  jmp = {jmpend},
-  atk = {atkhit "atk", atkend},
-  atkjmp = {atkhit "atkjmp", jmpend},
-  hit = {hitair, hitend},
-  hitair = {hitflr},
-  hitflr = {hitend},
-  
-  -- Special attack slots
-  atk1 = {atkhit "atk1"},
-  atk2 = {atkhit "atk2"},
-  atk3 = {atkhit "atk3"},
-  atk4 = {atkhit "atk4"},
-  atk5 = {atkhit "atk5"},
-  atk6 = {atkhit "atk6"},
-  atk7 = {atkhit "atk7"},
-  atk8 = {atkhit "atk8"},
-  atk9 = {atkhit "atk9"},
+  std = {action("wlk"), action("atk"), action("atk2h"), action("jmp"), action("run")},
+  wlk = {action("wlk"), action("jmp"), idle("std")},
+  run = {action("run"), action("atkrun"), action("jmp"), idle("runend")},
+  runend = {finish("std")},
+  atk = {attack, finish("std")},
+  jmp = {action("atkjmp"), floor("std")},
+  jmprun = {floor("std")},
+  atkjmp = {attack, floor("std")},
+  atk2h = {attack, finish("std")},
+  atkrun = {attack, finish("std")},
+  hit = {nofloor("hitair"), finish("std")},
+  hitair = {floor("hitflr")},
+  hitflr = {finish("std")},
 }

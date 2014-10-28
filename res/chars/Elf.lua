@@ -5,7 +5,7 @@ Tales Of Fantasy
 
 ANIM = {
   Jump = function(sprite)
-    local k = this:spd().y / this.prof.state.jmp.spd.y
+    local k = this:spd().y / this.info.state.jmp.spd.y
     return (sprite.data.nframes) * (1 - k) * 0.5
   end,
   
@@ -28,10 +28,11 @@ ANIM = {
 }
 
 actor = {}
+actor.action = false
 actor.state = "std"
 actor.box = {w = 24, h = 68}
 
-actor.prof = {
+actor.info = {
   dir = {x = 0, z = 0},
   state = {
     wlk = {
@@ -41,7 +42,7 @@ actor.prof = {
     
     run = {
       spd = {x = 200, z = 100},
-      rng = {x = {min = 80}},
+      rng = {x = {min = 160}},
     },
     
     atk = {
@@ -58,7 +59,7 @@ actor.prof = {
     },
     
     jmp = {
-      rng = {x = {min = 150}},
+      rng = {x = {min = 160}},
       spd = {x = 100, y = -220},
     },
     
@@ -75,7 +76,7 @@ actor.prof = {
       },
     },
     
-    atk1 = {
+    atk2h = {
       hit = {
         frm = 5,
         box = {x = 26, y = 32+13, w = 56, h = 14},
@@ -87,8 +88,8 @@ actor.prof = {
         z = {max = 10},
       },
     },
-    
-    atk2 = {
+
+    atkrun = {
       hit = {
         frm = 3,
         box = {x = 44, y = 59+13, w = 36, h = 17},
@@ -144,12 +145,12 @@ actor.states = {
     res = "res/chars/Elf/runend.png",
     dim = {w = 76, h = 62}, pad = {x = 0.5, y = 1},
     frate = 12, nframes = 1, anim = "play"},
-  atk1 = {
-    res = "res/chars/elf/atk1.png",
+  atk2h = {
+    res = "res/chars/elf/atk2h.png",
     dim = {w = 164, h = 96}, pad = {x = 0.5, y = -13},
-    frate = 2, nframes = 9, anim = "play"},
-  atk2 = {
-    res = "res/chars/Elf/atk2.png",
+    frate = 2.5, nframes = 9, anim = "play"},
+  atkrun = {
+    res = "res/chars/Elf/atkrun.png",
     dim = {w = 160, h = 92}, pad = {x = 0.5, y = 1},
     frate = {2, 2, 2, 2, 12}, nframes = 5, anim = "play"},
 }

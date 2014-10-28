@@ -11,13 +11,13 @@ Actor = Class {
   
   data = nil,
   dirs = nil,
-  prof = nil,
+  info = nil,
   
   create = function(this, init)
     State.create(this, init)
     this.data = ActorData.new(init)
     this.dirs = List().new()
-    this.prof = init and init.prof or {}
+    this.info = init and init.info or {}
   end,
   
   draw = function(this, scene)
@@ -30,6 +30,8 @@ Actor = Class {
     this.dirs:each(function (i, dir)
       dir:update{actor = this, scene = scene, Math = Math, Each = Each, print = print}
     end)
+  
+    this:action(false)
   end,
   
   dir = function(this, val) return this.data:dir(val) end,
@@ -39,6 +41,7 @@ Actor = Class {
   dim = function(this) return this:curr():dim() end,
   floor = function(this, val) return this.data:floor(val) end,
   target = function(this, val) return this.data:target(val) end,  
+  action = function(this, val) return this.data:action(val) end,
   
   add = function(this, dir) this.dirs:add(dir) end,
   

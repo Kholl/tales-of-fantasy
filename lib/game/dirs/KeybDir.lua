@@ -45,8 +45,8 @@ KeybDir = Class {
     
     if this.hash == "" then this.set.idle = this.set.idle +1 end
     
-    context.actor.prof.key = this.set
-    context.actor.prof.keyseq = this.seq.list
+    context.actor.info.key = this.set
+    context.actor.info.keyseq = this.seq.list
   end,
   
   reset = function(this)

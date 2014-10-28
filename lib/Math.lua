@@ -42,7 +42,6 @@ Math = {
     local keylist = List().new(keys)
     return function(dist, lim)
       return keylist:all(function(key)
-assert(type(lim) == "table", lim)
         return Math.InLim(dist[key], lim[key])
       end)
     end

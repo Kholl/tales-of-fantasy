@@ -53,21 +53,14 @@ return {
             r = "right", l = "left", u = "up", d = "down",
             b1 = "a", b2 = "z"}})
         
+        scene:addRules(player, "res/rules/Keyb.lua")
         scene:addRules(player, "res/rules/Actor.lua")
-        scene:addRules(player, "res/rules/Elf.lua")
-        scene:addRules(player, "res/rules/Player.lua")
-      end},
-    
-    encounter = {
-      chk = function()
-        return player:pos().x > 300 and not triggered
-      end,
-      cmd = function()
-        enemy = scene.actors:addNew("res/chars/Orc.lua")
-        enemy:pos{x = 300, y = 230, z = 225}
+--        scene:addRules(player, "res/rules/Player.lua")
+      
+        enemy = scene.actors:addNew("res/chars/Elf.lua")
+        enemy:pos{x = 400, y = 230, z = 225}
+        scene:addRules(enemy, "res/rules/Auto.lua")
         scene:addRules(enemy, "res/rules/Actor.lua")
-        scene:addRules(enemy, "res/rules/Enemy.lua")
-        triggered = true
       end},
   }
 }
