@@ -3,34 +3,6 @@ Tales Of Fantasy
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-actor = {}
-actor.state = "std"
-actor.box = {w = 30, h = 54}
-
-actor.prof = {
-  spd = 60,
-  jmp = -140,
-  spdjmp = 120,
-  state = {
-    atk = {
-      hit = {
-      frm = 2,
-      box = {x = 23, y = 32, w = 37, h = 14},
-      force = {x = 120, y = 0, z = 0},
-      },
-      rng = {
-        x = {min = 23, max = 23+37}, --23+37},
-        y = {min = 0, max = 30},
-        z = {min = 0, max = 10},
-      },
-    },
-    
-    jmp = {
-      rng = 120,
-    },
-  }
-}
-
 ANIM = {
   Jump = function(sprite)
     local k = this:spd().y / this.prof.jmp
@@ -53,6 +25,33 @@ ANIM = {
       end
     end
   end,
+}
+
+actor = {}
+actor.state = "std"
+actor.box = {w = 30, h = 54}
+
+actor.prof = {
+  jmp = -140,
+  state = {
+    wlk = {spd = 80},
+    atk = {
+      hit = {
+      frm = 2,
+      box = {x = 23, y = 32, w = 37, h = 14},
+      force = {x = 120, y = 0, z = 0},
+      },
+      rng = {
+        x = {min = 23, max = 23+37}, --23+37},
+        y = {min = 0, max = 30},
+        z = {min = 0, max = 10},
+      },
+    },
+    
+    jmp = {
+      rng = 120,
+    },
+  }
 }
 
 actor.states = {

@@ -3,75 +3,9 @@ Tales Of Fantasy
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-actor = {}
-actor.state = "std"
-actor.box = {w = 24, h = 68}
-
-actor.prof = {
-  spd = 100,
-  jmp = -220,
-  state = {
-    atk = {
-      hit = {
-        frm = 5,
-        box = {x = 20, y = 38, w = 47, h = 12},
-        force = {x = 100, y = 0, z = 0},
-      },
-      rng = {
-        x = {min = 20, max = 20+47},
-        y = {min = 0, max = 30},
-        z = {min = 0, max = 10},
-      },
-    },
-    
-    jmp = {
-      rng = 150
-    },
-    
-    atkjmp = {
-      hit = {
-        frm = 3,
-        box = {x = 31, y = 57, w = 35, h = 18},
-        force = {x = 120, y = -40, z = 0},
-      },
-      rng = {
-        x = {min = 31, max = 31+35},
-        y = {min = 0, max = 30},
-        z = {min = 0, max = 10},
-      },
-    },
-    
-    atk1 = {
-      hit = {
-        frm = 5,
-        box = {x = 26, y = 32+13, w = 56, h = 14},
-        force = {x = 160, y = -40, z = 0},
-      },
-      rng = {
-        x = {min = 26, max = 26+56},
-        y = {min = 0, max = 30},
-        z = {min = 0, max = 10},
-      },
-    },
-    
-    atk2 = {
-      hit = {
-        frm = 3,
-        box = {x = 44, y = 59+13, w = 36, h = 17},
-        force = {x = 220, y = -40, z = 0},
-      },
-      rng = {
-        x = {min = 44, max = 44+36},
-        y = {min = 0, max = 30},
-        z = {min = 0, max = 10},
-      },
-    },
-  }
-}
-
 ANIM = {
   Jump = function(sprite)
-    local k = this:spd().y / this.prof.jmp
+    local k = this:spd().y / this.prof.state.jmp.spd.y
     return (sprite.data.nframes) * (1 - k) * 0.5
   end,
   
@@ -91,6 +25,82 @@ ANIM = {
       end
     end
   end,
+}
+
+actor = {}
+actor.state = "std"
+actor.box = {w = 24, h = 68}
+
+actor.info = {
+  dir = {x = 0, z = 0},
+  state = {
+    wlk = {
+      spd = {x = 100, z = 50},
+      rng = {x = {min = 67}},
+    },
+    
+    run = {
+      spd = {x = 200, z = 100},
+      rng = {x = {min = 80}},
+    },
+    
+    atk = {
+      hit = {
+        frm = 5,
+        box = {x = 20, y = 38, w = 47, h = 12},
+        force = {x = 100, y = 0, z = 0},
+      },
+      rng = {
+        x = {min = 20, max = 20+46},
+        y = {max = 30},
+        z = {max = 10},
+      },
+    },
+    
+    jmp = {
+      rng = {x = {min = 150}},
+      spd = {x = 100, y = -220},
+    },
+    
+    atkjmp = {
+      hit = {
+        frm = 3,
+        box = {x = 31, y = 57, w = 35, h = 18},
+        force = {x = 120, y = -40, z = 0},
+      },
+      rng = {
+        x = {min = 31, max = 31+34},
+        y = {max = 30},
+        z = {max = 10},
+      },
+    },
+    
+    atk1 = {
+      hit = {
+        frm = 5,
+        box = {x = 26, y = 32+13, w = 56, h = 14},
+        force = {x = 160, y = -40, z = 0},
+      },
+      rng = {
+        x = {min = 26, max = 26+55},
+        y = {max = 30},
+        z = {max = 10},
+      },
+    },
+    
+    atk2 = {
+      hit = {
+        frm = 3,
+        box = {x = 44, y = 59+13, w = 36, h = 17},
+        force = {x = 220, y = -40, z = 0},
+      },
+      rng = {
+        x = {min = 44, max = 44+35},
+        y = {max = 30},
+        z = {max = 10},
+      },
+    },
+  }
 }
 
 actor.states = {

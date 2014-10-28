@@ -38,6 +38,18 @@ Moo.List = function(class)
       return reduce
     end,
     
+    all = function(this, func)
+      local all = true
+      this:each(function(i, item) all = all and func(item) end)
+      return all
+    end,
+    
+    any = function(this, func)
+      local any = false
+      this:each(function(i, item) any = any or func(item) end)
+      return any
+    end,
+    
     filter = function(this, func)
       local filtered = List(class).new()
       this:each(function(i, item)

@@ -18,6 +18,10 @@ ActorDir = Moo.Class {
   update = function(this, context)
     local state = context.actor:state()
     local stateRules = this.stateRules[state] or Nil
+ 
+    if this.stateRules.all then
+      this.stateRules.all:each(function(i, rule) rule:execute(context) end)
+    end
     
     stateRules:each(function(i, rule) rule:execute(context) end)
   end,
