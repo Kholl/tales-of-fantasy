@@ -32,24 +32,27 @@ actor.state = "std"
 actor.box = {w = 30, h = 54}
 
 actor.prof = {
-  jmp = -140,
   state = {
-    wlk = {spd = 80},
+    wlk = {
+      spd = {x = 80, z = 40},
+      rng = {x = {min = 60}},
+    },
     atk = {
       hit = {
-      frm = 2,
-      box = {x = 23, y = 32, w = 37, h = 14},
-      force = {x = 120, y = 0, z = 0},
+        frm = 2,
+        box = {x = 23, y = 32, w = 37, h = 14},
+        force = {x = 120, y = 0, z = 0},
       },
       rng = {
-        x = {min = 23, max = 23+37}, --23+37},
+        x = {min = 23, max = 23+36},
         y = {min = 0, max = 30},
         z = {min = 0, max = 10},
       },
     },
     
     jmp = {
-      rng = 120,
+      spd = {y = -140},
+      rng = {x = {min = 120}},
     },
   }
 }

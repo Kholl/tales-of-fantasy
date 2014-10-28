@@ -17,12 +17,12 @@ run = {
   cmd = function(vars)
     actor:state("run")
     
-    if actor.prof.key.r >= 1 then actor:spd().x = actor.prof.spd *2
-    elseif actor.prof.key.l >= 1 then actor:spd().x = -actor.prof.spd *2
+    if actor.prof.key.r >= 1 then actor:spd().x = actor.prof.state.run.spd.x
+    elseif actor.prof.key.l >= 1 then actor:spd().x = -actor.prof.state.run.spd.x
     end
     
-    if actor.prof.key.d >= 1 then actor:spd().z = actor.prof.spd *2
-    elseif actor.prof.key.u >= 1 then actor:spd().z = -actor.prof.spd *2
+    if actor.prof.key.d >= 1 then actor:spd().z = actor.prof.state.run.spd.z
+    elseif actor.prof.key.u >= 1 then actor:spd().z = -actor.prof.state.run.spd.z
     end
   
     if actor.prof.key.r >= 1 then actor:dir().x = 1
@@ -35,7 +35,7 @@ runjmp = {
   chk = function() return actor.prof.key.b2 >= 1 end,
   cmd = function()
     actor:start("jmp")
-    actor:spd().y = actor.prof.jmp
+    actor:spd().y = actor.prof.state.jmp.spd.y
   end,
 }
 

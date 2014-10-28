@@ -16,12 +16,12 @@ wlk = {
   cmd = function()
     actor:state("wlk")
     
-    if actor.prof.key.r >= 1 then actor:spd().x = actor.prof.spd
-    elseif actor.prof.key.l >= 1 then actor:spd().x = -actor.prof.spd
+    if actor.prof.key.r >= 1 then actor:spd().x = actor.prof.state.wlk.spd.x
+    elseif actor.prof.key.l >= 1 then actor:spd().x = -actor.prof.state.wlk.spd.x
     end
     
-    if actor.prof.key.d >= 1 then actor:spd().z = actor.prof.spd
-    elseif actor.prof.key.u >= 1 then actor:spd().z = -actor.prof.spd
+    if actor.prof.key.d >= 1 then actor:spd().z = actor.prof.state.wlk.spd.x
+    elseif actor.prof.key.u >= 1 then actor:spd().z = -actor.prof.state.wlk.spd.x
     end
   
     if actor.prof.key.r >= 1 then actor:dir().x = 1
@@ -45,7 +45,7 @@ jmp = {
   end,
   cmd = function()
     actor:start("jmp")
-    actor:spd().y = actor.prof.jmp
+    actor:spd().y = actor.prof.state.jmp.spd.y
   end
 }
 

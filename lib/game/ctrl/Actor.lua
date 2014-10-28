@@ -28,7 +28,7 @@ Actor = Class {
     State.update(this, scene)
     
     this.dirs:each(function (i, dir)
-      dir:update{actor = this, scene = scene, Math = Math, print = print}
+      dir:update{actor = this, scene = scene, Math = Math, Each = Each, print = print}
     end)
   end,
   
