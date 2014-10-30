@@ -48,17 +48,18 @@ return {
         
         player = scene.actors:addNew("res/chars/Elf.lua")
         player:pos{x = 160, y = 0, z = 225}
-        scene:addKeyb(player, {
-          keys = {
-            r = "right", l = "left", u = "up", d = "down",
-            b1 = "a", b2 = "z"}})
+        scene:addKeyb(player, {keys = {r = "right", l = "left", u = "up", d = "down", a = "a", b = "z"}})
         
         scene:addRules(player, "res/rules/Keyb.lua")
         scene:addRules(player, "res/rules/Actor.lua")
---        scene:addRules(player, "res/rules/Player.lua")
       
-        enemy = scene.actors:addNew("res/chars/Elf.lua")
+        enemy = scene.actors:addNew("res/chars/Orc.lua")
         enemy:pos{x = 400, y = 230, z = 225}
+        scene:addRules(enemy, "res/rules/Auto.lua")
+        scene:addRules(enemy, "res/rules/Actor.lua")
+        
+        enemy = scene.actors:addNew("res/chars/Elf.lua")
+        enemy:pos{x = 600, y = 230, z = 225}
         scene:addRules(enemy, "res/rules/Auto.lua")
         scene:addRules(enemy, "res/rules/Actor.lua")
       end},

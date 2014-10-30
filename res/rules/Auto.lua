@@ -28,7 +28,7 @@ target = function(valid) return {
     
     Each(actions, function(action)
       local state = actor.info.state[action]
-      if Math.InLimOf{"x", "y", "z"}(dist, state.rng) then        
+      if state and Math.InLimOf{"x", "y", "z"}(dist, state.rng) then        
         local val = state.spd and state.spd.x or 1
         if best < val then sel, best = action, val end
       end
@@ -42,9 +42,13 @@ return {
   all = {
     notarget,
     target{
-      std = {wlk = true, atk = true, atk2h = true, jmp = true, run = true},
+      std = {
+        wlk = true, jmp = true, run = true,
+        atk = true, atk2h = true, atkup = true,
+      },
       wlk = {wlk = true, jmp = true, run = true},
       run = {run = true, jmp = true, atkrun = true},
+      runend = {atkflr = true},
       jmp = {atkjmp = true},
     },
   },

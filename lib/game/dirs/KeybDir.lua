@@ -24,7 +24,12 @@ KeybDir = Class {
   end,
     
   update = function(this, context)
-        
+    
+    context.actor.info.key = this.seq.list
+    context.actor.info.key[0] = this.set
+
+    if this.hash == "" then this.set["i"] = this.set["i"] +1 end
+    
     if not (this.hashLast == "") and
        not (this.hash == this.hashLast) then
        
@@ -39,18 +44,13 @@ KeybDir = Class {
     this.keys:each(function(cmd, key)
         if not this.keyboard.isDown(key) then return end
         this.set[cmd] = this.set[cmd] +1
-        this.set.idle = 0
+        this.set["i"] = 0
         this.hash = this.hash .. "," .. cmd
-      end)
-    
-    if this.hash == "" then this.set.idle = this.set.idle +1 end
-    
-    context.actor.info.key = this.set
-    context.actor.info.keyseq = this.seq.list
+      end)        
   end,
   
   reset = function(this)
-    this.set.idle = 0
+    this.set["i"] = 0
     this.keys:each(function(cmd, key) this.set[cmd] = 0 end)
   end,
 }

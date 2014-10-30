@@ -31,7 +31,8 @@ actor = {}
 actor.state = "std"
 actor.box = {w = 30, h = 54}
 
-actor.prof = {
+actor.info = {
+  dir = {x = 0, z = 0},
   state = {
     wlk = {
       spd = {x = 80, z = 40},

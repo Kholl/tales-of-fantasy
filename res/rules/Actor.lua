@@ -33,12 +33,13 @@ attack = {
     vars.hits:each(function(i, other)
       local force = state.hit.force
       other:spd{
-        x = other:spd().x + actor:dir().x * force.x,
-        y = other:spd().y + force.y,
-        z = other:spd().z + force.z}
+        x = other:spd().x + actor:dir().x * (force.x or 0),
+        y = other:spd().y + (force.y or 0),
+        z = other:spd().z + (force.z or 0)}
       
       other:start("hit")
-      other:face(actor)
+      other:target(actor)
+      other:face()
     end)
   end,
 }
@@ -80,17 +81,21 @@ nofloor = function(action) return {
 } end
 
 return {
-  std = {action("wlk"), action("atk"), action("atk2h"), action("jmp"), action("run")},
+  std = {
+    action("wlk"), action("jmp"), action("run"),
+    action("atk"), action("atk2h"), action("atkflr"), action("atkup")},
   wlk = {action("wlk"), action("jmp"), idle("std")},
-  run = {action("run"), action("atkrun"), action("jmp"), idle("runend")},
-  runend = {finish("std")},
+  run = {action("run"), action("jmp"), idle("runend"), action("atkrun")},
+  runend = {action("atkflr"), finish("std")},
   atk = {attack, finish("std")},
   jmp = {action("atkjmp"), floor("std")},
   jmprun = {floor("std")},
-  atkjmp = {attack, floor("std")},
-  atk2h = {attack, finish("std")},
-  atkrun = {attack, finish("std")},
   hit = {nofloor("hitair"), finish("std")},
   hitair = {floor("hitflr")},
   hitflr = {finish("std")},
+  atkjmp = {attack, floor("std")},
+  atk2h = {attack, finish("std")},
+  atkrun = {attack, finish("std")},
+  atkflr = {attack, finish("std")},
+  atkup = {attack, finish("jmp")},
 }

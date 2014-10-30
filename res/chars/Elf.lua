@@ -49,7 +49,7 @@ actor.info = {
       hit = {
         frm = 5,
         box = {x = 20, y = 38, w = 47, h = 12},
-        force = {x = 100, y = 0, z = 0},
+        force = {x = 100},
       },
       rng = {
         x = {min = 20, max = 20+46},
@@ -67,7 +67,7 @@ actor.info = {
       hit = {
         frm = 3,
         box = {x = 31, y = 57, w = 35, h = 18},
-        force = {x = 120, y = -40, z = 0},
+        force = {x = 120, y = 10},
       },
       rng = {
         x = {min = 31, max = 31+34},
@@ -80,7 +80,7 @@ actor.info = {
       hit = {
         frm = 5,
         box = {x = 26, y = 32+13, w = 56, h = 14},
-        force = {x = 160, y = -40, z = 0},
+        force = {x = 200},
       },
       rng = {
         x = {min = 26, max = 26+55},
@@ -93,7 +93,7 @@ actor.info = {
       hit = {
         frm = 3,
         box = {x = 44, y = 59+13, w = 36, h = 17},
-        force = {x = 220, y = -40, z = 0},
+        force = {x = 220, y = -40},
       },
       rng = {
         x = {min = 44, max = 44+35},
@@ -101,7 +101,35 @@ actor.info = {
         z = {max = 10},
       },
     },
-  }
+    
+    atkflr = {
+      spd = {x = 300},
+      hit = {
+        frm = 1,
+        box = {x = 0, y = 17, w = 53, h = 22},
+        force = {y = -20},
+      },
+      rng = {
+        x = {min = 0, max = 53},
+        y = {max = 0},
+        z = {max = 10},
+      },
+    },
+    
+    atkup = {
+      spd = {x = -100, y = -220},
+      hit = {
+        frm = 1,
+        box = {x = 4, y = 0, w = 45, h = 81},
+        force = {x = 0, y = -300},
+      },
+      rng = {
+        x = {min = 4, max = 49},
+        y = {max = 30},
+        z = {max = 10},
+      },
+    },
+  },
 }
 
 actor.states = {
@@ -153,6 +181,14 @@ actor.states = {
     res = "res/chars/Elf/atkrun.png",
     dim = {w = 160, h = 92}, pad = {x = 0.5, y = 1},
     frate = {2, 2, 2, 2, 12}, nframes = 5, anim = "play"},
+  atkflr = {
+    res = "res/chars/Elf/atkflr.png",
+    dim = {w = 106, h = 41}, pad = {x = 0.5, y = 1},
+    frate = {8, 16}, nframes = 2, anim = "play"},
+  atkup = {
+    res = "res/chars/Elf/atkup.png",
+    dim = {w = 120, h = 95}, pad = {x = 0.5, y = 1},
+    frate = 4, nframes = 4, anim = "play"},
 }
 
 return actor
