@@ -19,6 +19,7 @@ notarget = {
 target = function(valid) return {
   chk = function() return actor:target() end,
   cmd = function()
+    actor:face()
     local dist = actor:dist()
     actor.info.dir.x = -Math.Sign(dist.x)
     actor.info.dir.z = -Math.Sign(dist.z)
@@ -43,13 +44,14 @@ return {
     notarget,
     target{
       std = {
-        wlk = true, jmp = true, run = true,
-        atk = true, atk2h = true, atkup = true,
+        wlk = true, jmp = true, run = true, blk = true,
+        atk = true, atk2h = true, atkup = true, atkrnd = true,
       },
       wlk = {wlk = true, jmp = true, run = true},
       run = {run = true, jmp = true, atkrun = true},
       runend = {atkflr = true},
       jmp = {atkjmp = true},
+      blk = {blk = true},
     },
   },
 }

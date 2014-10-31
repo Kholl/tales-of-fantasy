@@ -6,9 +6,10 @@ Moo Object Oriented framework for LUA
 attack = {
   chk = function(vars)
     local state = actor.info.state[actor:state()]
-    if not actor:curr():isFrame(state.hit.frm) then return false end
+    local hit = state.hit[actor:curr():frame()]
+    if not hit then return false end
     
-    local box = state.hit.box
+    local box = hit.box
     local pos, dim, dir = actor:pos(), actor:dim(), actor:dir()
     local off = scene:off()
     
@@ -18,6 +19,7 @@ attack = {
       w = box.w * dir.x,
       h = box.h}
     
+    vars.hit = hit
     vars.hits = scene:getHit(hitbox, function(other)
       return not (actor == other)
         and not (other:state() == "hit")
@@ -29,13 +31,18 @@ attack = {
   end,
   
   cmd = function(vars)
-    local state = actor.info.state[actor:state()]
+    local hit = vars.hit
     vars.hits:each(function(i, other)
-      local force = state.hit.force
+      local force = hit.force
+      local dist = actor:dist(other)
+      local face = {
+        x = -Math.Sign(dist.x),
+        z = -Math.Sign(dist.z)}
+      
       other:spd{
-        x = other:spd().x + actor:dir().x * (force.x or 0),
-        y = other:spd().y + (force.y or 0),
-        z = other:spd().z + (force.z or 0)}
+        x = other:spd().x + face.x * (force.x or 0),
+        z = other:spd().z + face.z * (force.z or 0),
+        y = other:spd().y + (force.y or 0)}
       
       other:start("hit")
       other:target(actor)
@@ -46,14 +53,13 @@ attack = {
 
 idle = function(action) return {
   chk = function() return actor:action() == false and not (actor:state() == action) end,
-  cmd = function() actor:start(action) end,
+  cmd = function() print("IDLE"); actor:start(action) end,
 } end
 
 action = function(action) return {
   chk = function() return actor:action() == action end,
   cmd = function()    
     if not (actor:state() == action) then actor:start(action) end
-    if not (actor.info.dir.x == 0) then actor:dir().x = actor.info.dir.x end
     
     local state = actor.info.state[action]
     if state.spd then
@@ -82,11 +88,12 @@ nofloor = function(action) return {
 
 return {
   std = {
-    action("wlk"), action("jmp"), action("run"),
-    action("atk"), action("atk2h"), action("atkflr"), action("atkup")},
+    action("wlk"), action("jmp"), action("run"), action("blk"),
+    action("atk"), action("atk2h"), action("atkflr"), action("atkup"), action("atkrnd")},
   wlk = {action("wlk"), action("jmp"), idle("std")},
   run = {action("run"), action("jmp"), idle("runend"), action("atkrun")},
   runend = {action("atkflr"), finish("std")},
+  blk = {action("blk"), idle("std")},
   atk = {attack, finish("std")},
   jmp = {action("atkjmp"), floor("std")},
   jmprun = {floor("std")},
@@ -98,4 +105,5 @@ return {
   atkrun = {attack, finish("std")},
   atkflr = {attack, finish("std")},
   atkup = {attack, finish("jmp")},
+  atkrnd = {attack, finish("std")},
 }

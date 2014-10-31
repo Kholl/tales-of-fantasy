@@ -34,9 +34,8 @@ Sprite = Class {
   idle = function(this, scene) end,
   play = function(this, scene) this.data:incr(scene.frame):limit() end,
   loop = function(this, scene) this.data:incr(scene.frame):loop() end,
-    
-  pos = function(this, pos) this.data:set "pos" (pos) end,
-  isFrame = function(this, nframe) return this.data:get() == nframe end,
+  
+  frame = function(this, frame) return this.data:get() end,
   isEnded = function(this) return this.data.ended end,
 }
 

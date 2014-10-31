@@ -21,6 +21,8 @@ wlk = {
     if actor.info.key[0]["d"] >= 1 then actor.info.dir.z = 1
     elseif actor.info.key[0]["u"] >= 1 then actor.info.dir.z = -1
     end
+  
+    if not (actor.info.dir.x == 0) then actor:dir().x = actor.info.dir.x end
   end,
 }
 
@@ -34,6 +36,28 @@ run = {
   
   cmd = function()
     actor:action("run")
+    actor.info.dir = {x = 0, z = 0}
+    
+    if actor.info.key[0]["r"] >= 1 then actor.info.dir.x = 1
+    elseif actor.info.key[0]["l"] >= 1 then actor.info.dir.x = -1
+    end
+    
+    if actor.info.key[0]["d"] >= 1 then actor.info.dir.z = 1
+    elseif actor.info.key[0]["u"] >= 1 then actor.info.dir.z = -1
+    end
+  
+    if not (actor.info.dir.x == 0) then actor:dir().x = actor.info.dir.x end
+  end,
+}
+
+blk = {
+  chk = function()
+    return actor.info.key[0]["a"] >= 10 and actor.info.key[0]["b"] == 0 and
+      (actor.info.key[0]["r"] + actor.info.key[0]["l"] + actor.info.key[0]["u"] + actor.info.key[0]["d"]) >= 1
+  end,
+
+  cmd = function()
+    actor:action("blk")
     actor.info.dir = {x = 0, z = 0}
     
     if actor.info.key[0]["r"] >= 1 then actor.info.dir.x = 1
@@ -86,7 +110,7 @@ atkflr = {
   cmd = function()
     actor:action("atkflr")
     actor.info.dir.x = actor:dir().x
-  end,
+  end
 }
 
 atkup = {
@@ -103,10 +127,20 @@ atkup = {
   end,
 }
 
+atkrnd = {
+  chk = function()
+    return
+      actor.info.key[0]["a"] >= 1 and actor.info.key[0]["a"] <= 10 and
+      actor.info.key[0]["b"] >= 1 and actor.info.key[0]["b"] <= 10
+  end,
+  cmd = function() actor:action("atkrnd") end,
+}
+
 return {
-  std = {wlk, jmp, run, atk, atk2h, atkup},
+  std = {wlk, jmp, run, blk, atk, atk2h, atkup, atkrnd},
   wlk = {wlk, jmp},
   run = {run, jmp, atkrun},
   runend = {atkflr},
   jmp = {atkjmp},
+  blk = {blk},
 }

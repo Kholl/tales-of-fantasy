@@ -39,11 +39,7 @@ actor.info = {
       rng = {x = {min = 60}},
     },
     atk = {
-      hit = {
-        frm = 2,
-        box = {x = 23, y = 32, w = 37, h = 14},
-        force = {x = 120, y = 0, z = 0},
-      },
+      hit = {[2] = {box = {x = 23, y = 32, w = 37, h = 14}, force = {x = 120, y = 0, z = 0}}},
       rng = {
         x = {min = 23, max = 23+36},
         y = {min = 0, max = 30},
