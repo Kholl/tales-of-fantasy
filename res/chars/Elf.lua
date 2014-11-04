@@ -37,78 +37,53 @@ actor.info = {
   state = {
     wlk = {
       spd = {x = 100, z = 50},
-      rng = {x = {min = 67}},
+      rng = {min = 67},
     },
     
     run = {
       spd = {x = 200, z = 100},
-      rng = {x = {min = 160}},
+      rng = {min = 160},
     },
     
     blk = {
-      rng = {x = {min = 0, max = 40}},
-      spd = {x = 50, z = 25},
+      rng = {min = 0, max = 40},
     },
 
     atk = {
       hit = {[5] = {box = {x = 20, y = 38, w = 47, h = 12}, force = {x = 100}}},
-      rng = {
-        x = {min = 20, max = 20+46},
-        y = {max = 30},
-        z = {max = 10},
-      },
+      rng = {min = 20, max = 20+46},
     },
     
     jmp = {
-      rng = {x = {min = 160}},
+      rng = {min = 160},
       spd = {x = 100, y = -220},
     },
     
     atkjmp = {
       hit = {[3] = {box = {x = 31, y = 57, w = 35, h = 18}, force = {x = 120, y = 10}}},
-      rng = {
-        x = {min = 31, max = 31+34},
-        y = {max = 30},
-        z = {max = 10},
-      },
+      rng = {min = 31, max = 31+34},
     },
     
     atk2h = {
       hit = {[5] = {box = {x = 26, y = 32+13, w = 56, h = 14}, force = {x = 200}}},
-      rng = {
-        x = {min = 26, max = 26+55},
-        y = {max = 30},
-        z = {max = 10},
-      },
+      rng = {min = 26, max = 26+55},
     },
 
     atkrun = {
       hit = {[3] = {box = {x = 44, y = 59+13, w = 36, h = 17}, force = {x = 220, y = -40}}},
-      rng = {
-        x = {min = 44, max = 44+35},
-        y = {max = 30},
-        z = {max = 10},
-      },
+      rng = {min = 44, max = 44+35},
     },
     
     atkflr = {
       spd = {x = 300},
       hit = {[1] = {box = {x = 0, y = 17, w = 53, h = 22}, force = {y = -20}}},
-      rng = {
-        x = {min = 0, max = 53},
-        y = {max = 0},
-        z = {max = 10},
-      },
+      rng = {min = 0, max = 53},
     },
     
     atkup = {
       spd = {x = -100, y = -220},
       hit = {[1] = {box = {x = 4, y = 0, w = 45, h = 81}, force = {x = 0, y = -300}}},
-      rng = {
-        x = {min = 4, max = 49},
-        y = {max = 30},
-        z = {max = 10},
-      },
+      rng = {min = 4, max = 49},
     },
     
     atkrnd = {
@@ -116,11 +91,7 @@ actor.info = {
         [1] = {box = {x = -71, y = 14, w = 38, h = 38}, force = {x = 220, y = -40}},
         [3] = {box = {x =  43, y = 14, w = 38, h = 38}, force = {x = 220, y = -40}},
       },
-      rng = {
-        x = {min = 43, max = 81},
-        y = {max = 30},
-        z = {max = 10},
-      }
+      rng = {min = 43, max = 81},
     },
   },
 }
@@ -165,7 +136,7 @@ actor.states = {
   blk = {
     res = "res/chars/elf/blk.png",
     dim = {w = 52, h = 67}, pad = {x = 0.5, y = 1},
-    frate = 2, nframes = 12, anim = "loop"},
+    frate = 2, nframes = 12, anim = "idle"},
   runend = {
     res = "res/chars/Elf/runend.png",
     dim = {w = 76, h = 62}, pad = {x = 0.5, y = 1},

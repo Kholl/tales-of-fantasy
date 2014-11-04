@@ -12,7 +12,7 @@ return {
   lim = {
     x = {min = 160, max = 640},
     y = {max = 0},
-    z = {min = 225, max = 235},
+    z = {min = 125, max = 335},
   },
   
   phys = {
@@ -24,9 +24,10 @@ return {
     update = {
       chk = function() return not (player == nil) end,
       cmd = function() 
+        scene.actors:sort(function(a, b) return a:pos().z < b:pos().z end)
         scene:off{
           x =  160 - player:pos().x,
-          y = -100 - player:pos().y,
+          y = -100, -- - player:pos().y,
         }
       end},
     
@@ -57,12 +58,6 @@ return {
         enemy:pos{x = 600, y = 230, z = 225}
         scene:addRules(enemy, "res/rules/Auto.lua")
         scene:addRules(enemy, "res/rules/Actor.lua")
-
-        enemy = scene.actors:addNew("res/chars/Elf.lua")
-        enemy:pos{x = 500, y = 230, z = 225}
-        scene:addRules(enemy, "res/rules/Auto.lua")
-        scene:addRules(enemy, "res/rules/Actor.lua")
-
       end},
   }
 }

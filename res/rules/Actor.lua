@@ -21,10 +21,13 @@ attack = {
     
     vars.hit = hit
     vars.hits = scene:getHit(hitbox, function(other)
+      local eucl = actor:eucl{x = 1, y = 1, z = 5}(other)
+      
       return not (actor == other)
         and not (other:state() == "hit")
         and not (other:state() == "hitair")
         and not (other:state() == "hitflr")
+        and Math.InLim(eucl, state.rng)
     end)
     
     return vars.hits:size() > 0
@@ -39,11 +42,12 @@ attack = {
         x = -Math.Sign(dist.x),
         z = -Math.Sign(dist.z)}
       
-      other:spd{
-        x = other:spd().x + face.x * (force.x or 0),
-        z = other:spd().z + face.z * (force.z or 0),
-        y = other:spd().y + (force.y or 0)}
+      other:spd().x = face.x * (force.x or 0)
+      other:spd().z = face.z * (force.z or 0)
       
+      if other:state() == "blk" and other:facing(actor) then return end
+      
+      other:spd().y = force.y or 0
       other:start("hit")
       other:target(actor)
       other:face()
@@ -53,7 +57,7 @@ attack = {
 
 idle = function(action) return {
   chk = function() return actor:action() == false and not (actor:state() == action) end,
-  cmd = function() print("IDLE"); actor:start(action) end,
+  cmd = function() actor:start(action) end,
 } end
 
 action = function(action) return {

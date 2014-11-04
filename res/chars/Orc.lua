@@ -5,7 +5,7 @@ Tales Of Fantasy
 
 ANIM = {
   Jump = function(sprite)
-    local k = this:spd().y / this.prof.jmp
+    local k = this:spd().y / this.info.state.jmp.spd.y
     return (sprite.data.nframes) * (1 - k) * 0.5
   end,
   
@@ -36,20 +36,16 @@ actor.info = {
   state = {
     wlk = {
       spd = {x = 80, z = 40},
-      rng = {x = {min = 60}},
+      rng = {min = 60},
     },
     atk = {
       hit = {[2] = {box = {x = 23, y = 32, w = 37, h = 14}, force = {x = 120, y = 0, z = 0}}},
-      rng = {
-        x = {min = 23, max = 23+36},
-        y = {min = 0, max = 30},
-        z = {min = 0, max = 10},
-      },
+      rng = {min = 23, max = 23+36},
     },
     
     jmp = {
       spd = {y = -140},
-      rng = {x = {min = 120}},
+      rng = {min = 120},
     },
   }
 }

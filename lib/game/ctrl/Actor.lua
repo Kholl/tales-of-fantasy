@@ -50,10 +50,23 @@ Actor = Class {
     return Math.Dist(this:pos(), actor:pos())
   end,
   
+  eucl = function(this, ratio)
+    ratio = ratio or {x = 1, y = 1, z = 1}
+    return function(actor)
+      local d = this:dist(actor)
+      return math.sqrt(d.x*d.x*ratio.x + d.y*d.y*ratio.y + d.z*d.z*ratio.z)
+    end
+  end,
+  
   face = function(this, actor)
     actor = actor or this:target()
     this:dir().x = Math.Sign(actor:pos().x - this:pos().x)
     return this
+  end,
+  
+  facing = function(this, actor)
+    actor = actor or this:target()
+    return (this:dir().x * actor:dir().x) == -1
   end,
     
   hitbox = function(this)

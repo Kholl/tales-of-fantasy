@@ -19,8 +19,9 @@ notarget = {
 target = function(valid) return {
   chk = function() return actor:target() end,
   cmd = function()
-    actor:face()
     local dist = actor:dist()
+    local eucl = actor:eucl{x = 1, y = 1, z = 5}()
+    
     actor.info.dir.x = -Math.Sign(dist.x)
     actor.info.dir.z = -Math.Sign(dist.z)
      
@@ -29,12 +30,13 @@ target = function(valid) return {
     
     Each(actions, function(action)
       local state = actor.info.state[action]
-      if state and Math.InLimOf{"x", "y", "z"}(dist, state.rng) then        
+      if state and Math.InLim(eucl, state.rng) then        
         local val = state.spd and state.spd.x or 1
         if best < val then sel, best = action, val end
       end
     end)
 
+    actor:face()
     actor:action(sel)
   end,
 } end

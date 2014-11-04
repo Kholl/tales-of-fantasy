@@ -51,23 +51,8 @@ run = {
 }
 
 blk = {
-  chk = function()
-    return actor.info.key[0]["a"] >= 10 and actor.info.key[0]["b"] == 0 and
-      (actor.info.key[0]["r"] + actor.info.key[0]["l"] + actor.info.key[0]["u"] + actor.info.key[0]["d"]) >= 1
-  end,
-
-  cmd = function()
-    actor:action("blk")
-    actor.info.dir = {x = 0, z = 0}
-    
-    if actor.info.key[0]["r"] >= 1 then actor.info.dir.x = 1
-    elseif actor.info.key[0]["l"] >= 1 then actor.info.dir.x = -1
-    end
-    
-    if actor.info.key[0]["d"] >= 1 then actor.info.dir.z = 1
-    elseif actor.info.key[0]["u"] >= 1 then actor.info.dir.z = -1
-    end
-  end,
+  chk = function() return actor.info.key[0]["a"] >= 10 and actor.info.key[0]["b"] == 0 end,
+  cmd = function() actor:action("blk") end,
 }
 
 atk = {
