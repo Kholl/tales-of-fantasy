@@ -121,9 +121,17 @@ atkrnd = {
   cmd = function() actor:action("atkrnd") end,
 }
 
+atksq = function(num) return {
+  chk = function() return actor.info.key[0]["a"] >= 1 and actor.info.key[0]["a"] <= 10 and actor.info.key[0]["b"] == 0 end,
+  cmd = function() actor:action("atksq" .. num); print(actor:action()) end,
+} end
+    
 return {
   std = {wlk, jmp, run, blk, atk, atk2h, atkup, atkrnd},
   wlk = {wlk, jmp},
+  atk = {atksq("1")},
+  atksq1 = {atksq("2")},
+  atksq2 = {atksq("3")},
   run = {run, jmp, atkrun},
   runend = {atkflr},
   jmp = {atkjmp},

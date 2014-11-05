@@ -83,7 +83,7 @@ actor.info = {
     atkup = {
       spd = {x = -100, y = -220},
       hit = {[1] = {box = {x = 4, y = 0, w = 45, h = 81}, force = {x = 0, y = -300}}},
-      rng = {min = 4, max = 49},
+      rng = {min = 4, max = 4+45},
     },
     
     atkrnd = {
@@ -91,7 +91,25 @@ actor.info = {
         [1] = {box = {x = -71, y = 14, w = 38, h = 38}, force = {x = 220, y = -40}},
         [3] = {box = {x =  43, y = 14, w = 38, h = 38}, force = {x = 220, y = -40}},
       },
-      rng = {min = 43, max = 81},
+      rng = {min = 43, max = 43+38},
+    },
+    
+    atksq1 = {
+      hit = {[4] = {box = {x = 40, y = 26, w = 50, h = 8}, force = {x = 100}}},
+      rng = {min = 40, max = 40+50},
+    },
+    
+    atksq2 = {
+      hit = {
+        [1] = {box = {x = 17, y = 14, w = 43, h = 10}, force = {x = 100}},
+        [3] = {box = {x = 68, y = 14, w = 43, h = 10}, force = {x = 100}},
+      },
+      rng = {min = 17, max = 68+43},
+    },
+  
+    atksq3 = {
+      hit = {[5] = {box = {x = 40, y = 30, w = 41, h = 16}, force = {x = 120}}},
+      rng = {min = 40, max = 40 + 41},
     },
   },
 }
@@ -108,7 +126,7 @@ actor.states = {
   atk = {
     res = "res/chars/elf/atk.png",
     dim = {w = 134, h = 82}, pad = {x = 0.5, y = 1},
-    frate = 2, nframes = 8, anim = "play"},
+    frate = {2, [8] = 6}, nframes = 8, anim = "play"},
   atkjmp = {
     res = "res/chars/elf/atkjmp.png",
     dim = {w = 132, h = 96}, pad = {x = 0.5, y = 1},
@@ -144,11 +162,11 @@ actor.states = {
   atk2h = {
     res = "res/chars/elf/atk2h.png",
     dim = {w = 164, h = 96}, pad = {x = 0.5, y = -13},
-    frate = 2.5, nframes = 9, anim = "play"},
+    frate = {2.5, [9] = 7.5}, nframes = 9, anim = "play"},
   atkrun = {
     res = "res/chars/Elf/atkrun.png",
     dim = {w = 160, h = 92}, pad = {x = 0.5, y = 1},
-    frate = {2, 2, 2, 2, 12}, nframes = 5, anim = "play"},
+    frate = {2, [5] = 10}, nframes = 5, anim = "play"},
   atkflr = {
     res = "res/chars/Elf/atkflr.png",
     dim = {w = 106, h = 41}, pad = {x = 0.5, y = 1},
@@ -161,6 +179,18 @@ actor.states = {
     res = "res/chars/Elf/atkrnd.png",
     dim = {w = 162, h = 82}, pad = {x = 0.5, y = 1},
     frate = 2.5, nframes = 5, anim = "play"},
+  atksq1 = {
+    res = "res/chars/Elf/atksq1.png",
+    dim = {w = 200, h = 73}, pad = {x = 0.5, y = 1},
+    frate = {2, [9] = 6}, nframes = 9, anim = "play"},
+  atksq2 = {
+    res = "res/chars/Elf/atksq2.png",
+    dim = {w = 210, h = 65}, pad = {x = 0.5, y = 1},
+    frate = {2, [6] = 6}, nframes = 6, anim = "play"},
+  atksq3 = {
+    res = "res/chars/Elf/atksq3.png",
+    dim = {w = 222, h = 85}, pad = {x = 0.5, y = 1},
+    frate = {2, [8] = 6}, nframes = 8, anim = "play"},
 }
 
 return actor

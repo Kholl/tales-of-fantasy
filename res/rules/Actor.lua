@@ -80,6 +80,11 @@ finish = function(action) return {
   cmd = function() actor:start(action) end,
 } end
 
+chain = function(action) return {
+  chk = function() return actor:curr():isEnded() and actor:action() == action end,
+  cmd = function() actor:start(action) end,
+} end
+
 floor = function(action) return {
   chk = function() return actor:floor() end,
   cmd = function() actor:start(action) end,
@@ -98,7 +103,10 @@ return {
   run = {action("run"), action("jmp"), idle("runend"), action("atkrun")},
   runend = {action("atkflr"), finish("std")},
   blk = {action("blk"), idle("std")},
-  atk = {attack, finish("std")},
+  atk = {attack, chain("atksq1"), finish("std")},
+  atksq1 = {attack, chain("atksq2"), finish("std")},
+  atksq2 = {attack, chain("atksq3"), finish("std")},
+  atksq3 = {attack, finish("std")},
   jmp = {action("atkjmp"), floor("std")},
   jmprun = {floor("std")},
   hit = {nofloor("hitair"), finish("std")},
