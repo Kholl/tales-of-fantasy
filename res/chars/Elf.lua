@@ -125,12 +125,12 @@ actor.states = {
     frate = 2, nframes = 12, anim = "loop"},
   atk = {
     res = "res/chars/elf/atk.png",
-    dim = {w = 134, h = 82}, pad = {x = 0.5, y = 1},
+    dim = {w = 164, h = 82}, pad = {x = 0.5, y = 1},
     frate = {2, [8] = 6}, nframes = 8, anim = "play"},
   atkjmp = {
     res = "res/chars/elf/atkjmp.png",
     dim = {w = 132, h = 96}, pad = {x = 0.5, y = 1},
-    frate = 2, nframes = 5, anim = "play"},
+    frate = 2.2, nframes = 7, anim = "play"},
   jmp = {
     res = "res/chars/elf/jmp.png",
     dim = {w = 62, h = 98}, pad = {x = 0.5, y = 1},
@@ -157,8 +157,8 @@ actor.states = {
     frate = 2, nframes = 12, anim = "idle"},
   runend = {
     res = "res/chars/Elf/runend.png",
-    dim = {w = 76, h = 62}, pad = {x = 0.5, y = 1},
-    frate = 12, nframes = 1, anim = "play"},
+    dim = {w = 100, h = 65}, pad = {x = 0.5, y = 1},
+    frate = {2, 2, 8}, nframes = 3, anim = "play"},
   atk2h = {
     res = "res/chars/elf/atk2h.png",
     dim = {w = 164, h = 96}, pad = {x = 0.5, y = -13},
