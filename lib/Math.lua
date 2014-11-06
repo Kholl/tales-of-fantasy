@@ -46,4 +46,6 @@ Math = {
       end)
     end
   end,
+  
+  Pick = function(list) return list[math.random(1, #list)] end,
 }

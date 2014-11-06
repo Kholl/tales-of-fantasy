@@ -27,6 +27,8 @@ attack = {
         and not (other:state() == "hit")
         and not (other:state() == "hitair")
         and not (other:state() == "hitflr")
+        and not (other:state() == "hitalt")
+        and not (other:state() == "hithvy")
         and Math.InLim(eucl, state.rng)
     end)
     
@@ -48,9 +50,14 @@ attack = {
       if other:state() == "blk" and other:facing(actor) then return end
       
       other:spd().y = force.y or 0
-      other:start("hit")
       other:target(actor)
       other:face()
+      
+      local action = Math.Pick{"hit", "hitalt"}
+      if other.states[action]
+        then other:start(action)
+        else other:start("hit")
+      end
     end)
   end,
 }
@@ -95,6 +102,11 @@ nofloor = function(action) return {
   cmd = function() actor:start(action) end,
 } end
 
+fall = function(action) return {
+  chk = function() return actor:spd().y > 0 end,
+  cmd = function() actor:start(action) end,
+} end
+
 return {
   std = {
     action("wlk"), action("jmp"), action("run"), action("blk"),
@@ -112,6 +124,8 @@ return {
   hit = {nofloor("hitair"), finish("std")},
   hitair = {floor("hitflr")},
   hitflr = {finish("std")},
+  hitalt = {nofloor("hithvy"), finish("std")},
+  hithvy = {fall("hitair")},
   atkjmp = {attack, floor("std")},
   atk2h = {attack, finish("std")},
   atkrun = {attack, finish("std")},

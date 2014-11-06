@@ -147,6 +147,14 @@ actor.states = {
     res = "res/chars/elf/hitflr.png",
     dim = {w = 110, h = 49}, pad = {x = 0.5, y = 1},
     frate = 30, nframes = 1, anim = "play"},
+  hitalt = {
+    res = "res/chars/elf/hitalt.png",
+    dim = {w = 57, h = 62}, pad = {x = 0.5, y = 1},
+    frate = 4, nframes = 2, anim = "play"},
+  hithvy = {
+    res = "res/chars/elf/hithvy.png",
+    dim = {w = 130, h = 51}, pad = {x = 0.5, y = 1},
+    frate = 0, nframes = 1, anim = "idle"},
   run = {
     res = "res/chars/elf/run.png",
     dim = {w = 116, h = 64}, pad = {x = 0.5, y = 1},
