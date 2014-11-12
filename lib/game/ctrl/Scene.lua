@@ -50,7 +50,7 @@ Scene = Class {
   end,
   
   update = function(this, delta)
-    this.ruledir:update{scene = this}
+    this.ruledir:update{scene = this, Math = Math}
   
     this.delta = delta
     this.frame = delta * this._fps

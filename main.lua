@@ -15,7 +15,7 @@ require("lib/game/ctrl/Scene")
 
 love.load = function(arg)
   love.graphics.setMode(320, 200)
-  scene = Scene.new("res/scenes/Scene.lua")
+  scene = Scene.new("res/stages/Palace.lua")
 end
 
 love.draw = function()
