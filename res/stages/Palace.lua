@@ -51,12 +51,11 @@ return {
         
         scene:addRules(player, "res/rules/Keyb.lua")
         scene:addRules(player, "res/rules/Actor.lua")
---[[
-        enemy = scene.actors:addNew("res/chars/Orc.lua")
+
+        enemy = scene.actors:addNew("res/chars/BHeart.lua")
         enemy:pos{x = 600, y = 230, z = 225}
-        scene:addRules(enemy, "res/rules/Auto.lua")
-        scene:addRules(enemy, "res/rules/Actor.lua")
-        ]]--
+--        scene:addRules(enemy, "res/rules/Auto.lua")
+--        scene:addRules(enemy, "res/rules/Actor.lua")
       end},
   }
 }
