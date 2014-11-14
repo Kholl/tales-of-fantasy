@@ -7,6 +7,7 @@ Math = {
   MAX = 2^32,
   
   Abs = math.abs,
+  Rand = math.random,
   
   Sign = function(val)
     if val == 0 then return 0 end

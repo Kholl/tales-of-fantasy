@@ -30,12 +30,12 @@ target = function(valid) return {
     
     Each(actions, function(action)
       local state = actor.info.state[action]
-      if state and Math.InLim(eucl, state.rng) then        
-        local val = state.spd and state.spd.x or 1
+      if state and Math.InLim(eucl, state.rng) then
+        local val = state.spd and state.spd.x or Math.Rand(1, 10)
         if best < val then sel, best = action, val end
       end
     end)
-
+  
     actor:face()
     actor:action(sel)
   end,
@@ -47,7 +47,7 @@ return {
     target{
       std = {
         wlk = true, jmp = true, run = true, blk = true,
-        atk = true, atk2h = true, atkup = true, atkrnd = true,
+        atk = true, atk2h = true, atkflr = true, atkup = true, atkrnd = true,
       },
       atk = {atksq1 = true},
       atksq1 = {atksq2 = true},
