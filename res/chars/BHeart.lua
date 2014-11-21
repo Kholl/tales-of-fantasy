@@ -3,6 +3,19 @@ Tales Of Fantasy
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
+ANIM = {
+  Jump = function(sprite)
+    local k = this:spd().y / this.info.state.jmp.spd.y
+    return (sprite.data.nframes) * (1 - k) * 0.5
+  end,
+  
+  Step2 = function(func)
+    return function(sprite)
+      if func() < 0 then return 0 else return 1 end
+    end
+  end,
+}
+
 actor = {}
 actor.action = false
 actor.state = "std"
@@ -42,6 +55,18 @@ actor.states = {
     res = "res/chars/BHeart/wlk.png",
     dim = {w = 150, h = 168}, pad = {x = 0.5, y = 1},
     frate = 3, nframes = 12, anim = "loop"},
+  hit = {
+    res = "res/chars/BHeart/hit.png",
+    dim = {w = 200, h = 167}, pad = {x = 0.5, y = 1},
+    frate = 4, nframes = 3, anim = "play"},
+  hitair = {
+    res = "res/chars/BHeart/hitair.png",
+    dim = {w = 222, h = 141}, pad = {x = 0.5, y = 1},
+    frate = 0, nframes = 2, anim = ANIM.Step2(function() return this:spd().y end)},
+  hitflr = {
+    res = "res/chars/BHeart/hitflr.png",
+    dim = {w = 254, h = 69}, pad = {x = 0.5, y = -20},
+    frate = 30, nframes = 1, anim = "play"},
   atk = {
     res = "res/chars/BHeart/atk1.png",
     dim = {w = 288, h = 174}, pad = {x = 0.5, y = 1},
