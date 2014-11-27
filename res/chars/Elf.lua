@@ -33,57 +33,71 @@ actor.state = "std"
 actor.box = {w = 24, h = 68}
 
 actor.info = {
+  faction = "elven",
+  hp =  75, hpmax =  75,
+  mp = 125, mpmax = 125,
+  ep =   0, epmax = 300,
   dir = {x = 0, z = 0},
   state = {
     wlk = {
       spd = {x = 100, z = 50},
       rng = {min = 67},
+      ep = 1,
     },
     
     run = {
       spd = {x = 200, z = 100},
       rng = {min = 160},
+      ep = 1,
     },
     
     blk = {
       rng = {min = 0, max = 40},
+      ep = 6,
     },
 
     atk = {
       hit = {[5] = {box = {x = 20, y = 38, w = 47, h = 12}, force = {x = 100}}},
       rng = {min = 20, max = 20+46},
+      ep = 120,
     },
     
     jmp = {
       rng = {min = 160},
       spd = {x = 100, y = -220},
+      ep = 165,
     },
     
     atkjmp = {
       hit = {[3] = {box = {x = 31, y = 57, w = 35, h = 18}, force = {x = 120, y = 10}}},
       rng = {min = 31, max = 31+34},
+      ep = 0,
     },
     
     atk2h = {
       hit = {[5] = {box = {x = 26, y = 32+13, w = 56, h = 14}, force = {x = 200}}},
       rng = {min = 26, max = 26+55},
+      ep = 165,
     },
 
     atkrun = {
       hit = {[3] = {box = {x = 44, y = 59+13, w = 36, h = 17}, force = {x = 220, y = -40}}},
       rng = {min = 44, max = 44+35},
+      ep = 210,
     },
     
     atkflr = {
       spd = {x = 300},
       hit = {[1] = {box = {x = 0, y = 17, w = 53, h = 22}, force = {y = -20}}},
       rng = {min = 0, max = 53},
+      ep = 165,
     },
     
     atkup = {
       spd = {x = -100, y = -220},
       hit = {[1] = {box = {x = 4, y = 0, w = 45, h = 81}, force = {x = 0, y = -300}}},
       rng = {min = 4, max = 4+45},
+      ep = 165,
     },
     
     atkrnd = {
@@ -92,11 +106,13 @@ actor.info = {
         [3] = {box = {x =  43, y = 14, w = 38, h = 38}, force = {x = 220, y = -40}},
       },
       rng = {min = 43, max = 43+38},
+      ep = 165,
     },
     
     atksq1 = {
       hit = {[4] = {box = {x = 40, y = 26, w = 50, h = 8}, force = {x = 100}}},
       rng = {min = 40, max = 40+50},
+      ep = 0,
     },
     
     atksq2 = {
@@ -105,11 +121,13 @@ actor.info = {
         [3] = {box = {x = 68, y = 14, w = 43, h = 10}, force = {x = 100}},
       },
       rng = {min = 17, max = 68+43},
+      ep = 0,
     },
   
     atksq3 = {
       hit = {[5] = {box = {x = 40, y = 30, w = 41, h = 16}, force = {x = 120}}},
       rng = {min = 40, max = 40 + 41},
+      ep = 0,
     },
   },
 }

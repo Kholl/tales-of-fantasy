@@ -47,15 +47,19 @@ return {
         
         player = scene.actors:addNew("res/chars/Elf.lua")
         player:pos{x = 160, y = 0, z = 225}
-        scene:addKeyb(player, {keys = {r = "right", l = "left", u = "up", d = "down", a = "a", b = "z"}})
-        
+        scene:addKeyb(player, {keys = {r = "right", l = "left", u = "up", d = "down", a = "a", b = "z"}})        
         scene:addRules(player, "res/rules/Keyb.lua")
         scene:addRules(player, "res/rules/Actor.lua")
-
+        
         enemy = scene.actors:addNew("res/chars/BHeart.lua")
-        enemy:pos{x = 600, y = 230, z = 225}
+        enemy:pos{x = 400, y = 230, z = 125}
         scene:addRules(enemy, "res/rules/Auto.lua")
         scene:addRules(enemy, "res/rules/Actor.lua")
-      end},
+
+        enemy2 = scene.actors:addNew("res/chars/DWarrior.lua")
+        enemy2:pos{x = 400, y = 230, z = 325}
+        scene:addRules(enemy2, "res/rules/Auto.lua")
+        scene:addRules(enemy2, "res/rules/Actor.lua")
+     end},
   }
 }

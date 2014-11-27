@@ -32,20 +32,27 @@ actor.state = "std"
 actor.box = {w = 30, h = 54}
 
 actor.info = {
+  faction = "orc",
+  hp =  25, hpmax =  25,
+  mp =   0, mpmax =   0,
+  ep =   0, epmax = 300,
   dir = {x = 0, z = 0},
   state = {
     wlk = {
       spd = {x = 80, z = 40},
       rng = {min = 60},
+      ep = 1,
     },
     atk = {
       hit = {[2] = {box = {x = 23, y = 32, w = 37, h = 14}, force = {x = 120, y = 0, z = 0}}},
       rng = {min = 23, max = 23+36},
+      ep = 180,
     },
     
     jmp = {
       spd = {y = -140},
       rng = {min = 120},
+      ep = 210,
     },
   }
 }

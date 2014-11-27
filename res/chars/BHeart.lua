@@ -4,11 +4,6 @@ Tales Of Fantasy
 ]]--
 
 ANIM = {
-  Jump = function(sprite)
-    local k = this:spd().y / this.info.state.jmp.spd.y
-    return (sprite.data.nframes) * (1 - k) * 0.5
-  end,
-  
   Step2 = function(func)
     return function(sprite)
       if func() < 0 then return 0 else return 1 end
@@ -22,27 +17,35 @@ actor.state = "std"
 actor.box = {w = 82, h = 144}
 
 actor.info = {
+  faction = "demon",
+  hp = 500, hpmax = 500,
+  mp = 500, mpmax = 500,
+  ep =   0, epmax = 300,
   dir = {x = 0, z = 0},
   state = {
     wlk = {
       spd = {x = 90, z = 45},
-      rng = {min = 120},
+      rng = {min = 136+36},
+      ep = 1,
     },
         
     atk = {
       hit = {[2] = {box = {x = 44, y = 53, w = 101, h = 55}, force = {x = 160}}},
       rng = {min = 44, max = 101+44},
+      ep = 165,
     },
         
     atk2h = {
       hit = {[3] = {box = {x = 36, y = 75, w = 136, h = 40}, force = {x = 160}}},
       rng = {min = 36, max = 136+36},
+      ep = 165,
     },
-        
+--[[        
     atkflr = {
       hit = {[3] = {box = {x = 60, y = 101, w = 55, h = 63}, force = {x = 60, y = -10}}},
       rng = {min = 60, max = 101+60},
     },
+]]--
   },
 }
 

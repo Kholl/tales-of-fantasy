@@ -24,6 +24,7 @@ attack = {
       local eucl = actor:eucl{x = 1, y = 1, z = 5}(other)
       
       return not (actor == other)
+        and not (actor.info.faction == other.info.faction)
         and not (other:state() == "hit")
         and not (other:state() == "hitair")
         and not (other:state() == "hitflr")

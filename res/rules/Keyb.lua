@@ -123,7 +123,7 @@ atkrnd = {
 
 atksq = function(num) return {
   chk = function() return actor.info.key[0]["a"] >= 1 and actor.info.key[0]["a"] <= 10 and actor.info.key[0]["b"] == 0 end,
-  cmd = function() actor:action("atksq" .. num); print(actor:action()) end,
+  cmd = function() actor:action("atksq" .. num) end,
 } end
     
 return {

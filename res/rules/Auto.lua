@@ -2,13 +2,18 @@
 Moo Object Oriented framework for LUA
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
-
 notarget = {
   chk = function() return not actor:target() end,
   cmd = function()
-    local selectFunc = function(target) return not (actor == target) end
-    local sortFunc = function(targetA, targetB) return 1 end
-    
+    local selectFunc = function(target)
+      return not (actor == target) and not (actor.info.faction == target.info.faction)
+    end
+
+    local sortFunc = function(targetA, targetB)
+      local eucl = actor:eucl{x = 1, y = 1, z = 5}
+      return eucl(targetA) < eucl(targetB)
+    end
+
     local target = scene:getActors(selectFunc):sort(sortFunc):first()
     if not target then return end
     
@@ -19,6 +24,8 @@ notarget = {
 target = function(valid) return {
   chk = function() return actor:target() end,
   cmd = function()
+    actor.info.ep = Math.Lim(actor.info.ep +1, {max = actor.info.epmax})
+    
     local dist = actor:dist()
     local eucl = actor:eucl{x = 1, y = 1, z = 5}()
     
@@ -29,13 +36,19 @@ target = function(valid) return {
     local actions = valid[actor:state()]
     
     Each(actions, function(action)
+      if action == actor:action() then return end
+      
       local state = actor.info.state[action]
-      if state and Math.InLim(eucl, state.rng) then
-        local val = state.spd and state.spd.x or Math.Rand(1, 10)
-        if best < val then sel, best = action, val end
-      end
+      if not state or
+         not (state.ep <= actor.info.ep) or
+         not Math.InLim(eucl, state.rng) then return end
+        
+      local val = state.spd and state.spd.x or Math.Rand(1, 10)
+      if best < val then sel, best = action, val end
     end)
   
+    if sel then actor.info.ep = actor.info.ep - actor.info.state[sel].ep end
+
     actor:face()
     actor:action(sel)
   end,
