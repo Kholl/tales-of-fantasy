@@ -74,7 +74,7 @@ actor.info = {
       ep = 0,
     },
     
-    atk2h = {
+    atkalt = {
       hit = {[5] = {box = {x = 26, y = 32+13, w = 56, h = 14}, force = {x = 200}}},
       rng = {min = 26, max = 26+55},
       ep = 165,
@@ -185,7 +185,7 @@ actor.states = {
     res = "res/chars/Elf/runend.png",
     dim = {w = 100, h = 65}, pad = {x = 0.5, y = 1},
     frate = {2, 2, 8}, nframes = 3, anim = "play"},
-  atk2h = {
+  atkalt = {
     res = "res/chars/elf/atk2h.png",
     dim = {w = 164, h = 96}, pad = {x = 0.5, y = -13},
     frate = {2.5, [9] = 7.5}, nframes = 9, anim = "play"},

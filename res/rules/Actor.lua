@@ -111,7 +111,7 @@ fall = function(action) return {
 return {
   std = {
     action("wlk"), action("jmp"), action("run"), action("blk"),
-    action("atk"), action("atk2h"), action("atkflr"), action("atkup"), action("atkrnd")},
+    action("atk"), action("atkalt"), action("atkflr"), action("atkup"), action("atkrnd")},
   wlk = {action("wlk"), action("jmp"), idle("std")},
   run = {action("run"), action("jmp"), idle("runend"), action("atkrun")},
   runend = {action("atkflr"), finish("std")},
@@ -125,10 +125,10 @@ return {
   hit = {nofloor("hitair"), finish("std")},
   hitair = {floor("hitflr")},
   hitflr = {finish("std")},
-  hitalt = {nofloor("hithvy"), finish("std")},
+  hitalt = {nofloor("hitair"), finish("std")},
   hithvy = {fall("hitair")},
   atkjmp = {attack, floor("std")},
-  atk2h = {attack, finish("std")},
+  atkalt = {attack, finish("std")},
   atkrun = {attack, finish("std")},
   atkflr = {attack, finish("std")},
   atkup = {attack, finish("jmp")},

@@ -24,7 +24,7 @@ notarget = {
 target = function(valid) return {
   chk = function() return actor:target() end,
   cmd = function()
-    actor.info.ep = Math.Lim(actor.info.ep +1, {max = actor.info.epmax})
+    actor.info.ep = Math.Lim(actor.info.ep +2, {max = actor.info.epmax})
     
     local dist = actor:dist()
     local eucl = actor:eucl{x = 1, y = 1, z = 5}()
@@ -60,7 +60,7 @@ return {
     target{
       std = {
         wlk = true, jmp = true, run = true, blk = true,
-        atk = true, atk2h = true, atkflr = true, atkup = true, atkrnd = true,
+        atk = true, atkalt = true, atkflr = true, atkup = true, atkrnd = true,
       },
       atk = {atksq1 = true},
       atksq1 = {atksq2 = true},

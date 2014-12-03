@@ -75,14 +75,14 @@ atkjmp = {
   cmd = function() actor:action("atkjmp") end,
 }
 
-atk2h = {
+atkalt = {
   chk = function()
     return 
       actor.info.key[0]["a"] >= 1 and actor.info.key[0]["a"] <= 10 and actor.info.key[0]["b"] == 0 and
       ((actor:dir().x ==  1 and actor.info.key[0]["r"] >= 1 and actor.info.key[0]["r"] <= 10) or
        (actor:dir().x == -1 and actor.info.key[0]["l"] >= 1 and actor.info.key[0]["l"] <= 10))
   end,
-  cmd = function() actor:action("atk2h") end,
+  cmd = function() actor:action("atkalt") end,
 }
 
 atkflr = {
@@ -127,7 +127,7 @@ atksq = function(num) return {
 } end
     
 return {
-  std = {wlk, jmp, run, blk, atk, atk2h, atkup, atkrnd},
+  std = {wlk, jmp, run, blk, atk, atkalt, atkup, atkrnd},
   wlk = {wlk, jmp},
   atk = {atksq("1")},
   atksq1 = {atksq("2")},

@@ -35,7 +35,7 @@ actor.info = {
       ep = 165,
     },
         
-    atk2h = {
+    atkalt = {
       hit = {[3] = {box = {x = 36, y = 75, w = 136, h = 40}, force = {x = 160}}},
       rng = {min = 36, max = 136+36},
       ep = 165,
@@ -74,7 +74,7 @@ actor.states = {
     res = "res/chars/BHeart/atk1.png",
     dim = {w = 288, h = 174}, pad = {x = 0.5, y = 1},
     frate = 4, nframes = 4, anim = "play"},
-  atk2h = {
+  atkalt = {
     res = "res/chars/BHeart/atk2.png",
     dim = {w = 308, h = 174}, pad = {x = 0.5, y = 1},
     frate = 3, nframes = 5, anim = "play"},

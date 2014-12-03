@@ -50,16 +50,31 @@ return {
         scene:addKeyb(player, {keys = {r = "right", l = "left", u = "up", d = "down", a = "a", b = "z"}})        
         scene:addRules(player, "res/rules/Keyb.lua")
         scene:addRules(player, "res/rules/Actor.lua")
-        
-        enemy = scene.actors:addNew("res/chars/BHeart.lua")
-        enemy:pos{x = 400, y = 230, z = 125}
+
+        npc = scene.actors:addNew("res/chars/DElf.lua")
+        npc:pos{x = 160, y = 0, z = 125}
+        scene:addRules(npc, "res/rules/Auto.lua")
+        scene:addRules(npc, "res/rules/Actor.lua")
+
+        npc = scene.actors:addNew("res/chars/DElf.lua")
+        npc:pos{x = 160, y = 0, z = 325}
+        scene:addRules(npc, "res/rules/Auto.lua")
+        scene:addRules(npc, "res/rules/Actor.lua")
+                
+        enemy = scene.actors:addNew("res/chars/DWarrior.lua")
+        enemy:pos{x = 800, y = 0, z = 125}
         scene:addRules(enemy, "res/rules/Auto.lua")
         scene:addRules(enemy, "res/rules/Actor.lua")
 
-        enemy2 = scene.actors:addNew("res/chars/DWarrior.lua")
-        enemy2:pos{x = 400, y = 230, z = 325}
-        scene:addRules(enemy2, "res/rules/Auto.lua")
-        scene:addRules(enemy2, "res/rules/Actor.lua")
+        enemy = scene.actors:addNew("res/chars/BHeart.lua")
+        enemy:pos{x = 800, y = 0, z = 225}
+        scene:addRules(enemy, "res/rules/Auto.lua")
+        scene:addRules(enemy, "res/rules/Actor.lua")
+
+        enemy = scene.actors:addNew("res/chars/DWarrior.lua")
+        enemy:pos{x = 800, y = 0, z = 325}
+        scene:addRules(enemy, "res/rules/Auto.lua")
+        scene:addRules(enemy, "res/rules/Actor.lua")
      end},
   }
 }
