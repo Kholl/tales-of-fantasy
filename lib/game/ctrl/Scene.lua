@@ -18,6 +18,7 @@ Scene = Class {
   fps = Property("_fps"),
   off = Property("_off"),
   lim = Property("_lim"),
+  ratio = Property("_ratio"),
   
   time = nil,
   delta = nil,
@@ -35,6 +36,7 @@ Scene = Class {
     this:off(init and init.off or {x = 0, y = 0})
     this:lim(init and init.lim or {})
     this:fps(init and init.fps or 24)    
+    this:ratio(init and init.ratio or {x = 1, y = 1, z = 1})
     
     this.time = 0
     this.delta = 0

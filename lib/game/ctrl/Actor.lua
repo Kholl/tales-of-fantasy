@@ -53,12 +53,9 @@ Actor = Class {
     return Math.Dist(this:pos(), actor:pos())
   end,
   
-  eucl = function(this, ratio)
-    ratio = ratio or {x = 1, y = 1, z = 1}
-    return function(actor)
-      local d = this:dist(actor)
-      return math.sqrt(d.x*d.x*ratio.x + d.y*d.y*ratio.y + d.z*d.z*ratio.z)
-    end
+  eucl = function(this, actor)
+    local d = this:dist(actor)
+    return math.sqrt(d.x*d.x + d.y*d.y + d.z*d.z)
   end,
   
   face = function(this, actor)

@@ -40,13 +40,13 @@ actor.info = {
   dir = {x = 0, z = 0},
   state = {
     wlk = {
-      spd = {x = 100, z = 50},
+      spd = {x = 100, z = 100},
       rng = {min = 67},
       ep = 1,
     },
     
     run = {
-      spd = {x = 200, z = 100},
+      spd = {x = 200},
       rng = {min = 160},
       ep = 1,
     },

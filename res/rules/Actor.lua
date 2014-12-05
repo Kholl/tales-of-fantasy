@@ -21,7 +21,7 @@ attack = {
     
     vars.hit = hit
     vars.hits = scene:getHit(hitbox, function(other)
-      local eucl = actor:eucl{x = 1, y = 1, z = 5}(other)
+      local eucl = actor:eucl(other)
       
       return not (actor == other)
         and not (actor.info.faction == other.info.faction)

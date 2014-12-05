@@ -10,8 +10,7 @@ notarget = {
     end
 
     local sortFunc = function(targetA, targetB)
-      local eucl = actor:eucl{x = 1, y = 1, z = 5}
-      return eucl(targetA) < eucl(targetB)
+      return actor:eucl(targetA) < actor:eucl(targetB)
     end
 
     local target = scene:getActors(selectFunc):sort(sortFunc):first()
@@ -27,7 +26,7 @@ target = function(valid) return {
     actor.info.ep = Math.Lim(actor.info.ep +2, {max = actor.info.epmax})
     
     local dist = actor:dist()
-    local eucl = actor:eucl{x = 1, y = 1, z = 5}()
+    local eucl = actor:eucl()
     
     actor.info.dir.x = -Math.Sign(dist.x)
     actor.info.dir.z = -Math.Sign(dist.z)

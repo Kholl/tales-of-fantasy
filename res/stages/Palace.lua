@@ -11,13 +11,15 @@ return {
   lim = {
     x = {min = 180, max = 6400},
     y = {max = 0},
-    z = {min = 110, max = 256},
+    z = {min = 250, max = 500},
   },
   
   phys = {
     drag = {x = -240, y = 480, z = -240},
     grav = "y"
   },
+  
+  ratio = {x = 1, y = 1, z = 1/2},
   
   rules = {
     update = {
@@ -49,27 +51,27 @@ return {
           :addKeyb{r = "right", l = "left", u = "up", d = "down", a = "a", b = "z"}
           :addRules("res/rules/Keyb.lua")
           :addRules("res/rules/Actor.lua")
-        player:pos{x = 160, y = 0, z = 225}
+        player:pos{x = 160, y = 0, z = 375}
         
         scene.actors:addNew("res/chars/DElf.lua")
           :addRules("res/rules/Auto.lua")
           :addRules("res/rules/Actor.lua")
-          :pos{x = 160, y = 0, z = 125}
+          :pos{x = 200, y = 0, z = 300}
         
         scene.actors:addNew("res/chars/DElfWarrior.lua")
           :addRules("res/rules/Auto.lua")
           :addRules("res/rules/Actor.lua")
-          :pos{x = 160, y = 0, z = 325}
+          :pos{x = 200, y = 0, z = 450}
         
         scene.actors:addNew("res/chars/DWarrior.lua")
           :addRules("res/rules/Auto.lua")
           :addRules("res/rules/Actor.lua")
-          :pos{x = 800, y = 0, z = 200}
+          :pos{x = 800, y = 0, z = 300}
         
         scene.actors:addNew("res/chars/BHeart.lua")
           :addRules("res/rules/Auto.lua")
           :addRules("res/rules/Actor.lua")
-          :pos{x = 800, y = 0, z = 300}
+          :pos{x = 800, y = 0, z = 450}
      end},
   }
 }

@@ -24,7 +24,7 @@ actor.info = {
   dir = {x = 0, z = 0},
   state = {
     wlk = {
-      spd = {x = 90, z = 45},
+      spd = {x = 90, z = 90},
       rng = {min = 136+36},
       ep = 1,
     },
