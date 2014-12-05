@@ -11,6 +11,7 @@ ActorData = Class {
   spd = Property("_spd"),
   box = Property("_box"),
   floor = Property("_floor"),
+  radius = Property("_radius"),
   target = Property("_target"),
   action = Property("_action"),
 
@@ -19,6 +20,7 @@ ActorData = Class {
     this:spd(init and init.spd or {x = 0, y = 0, z = 0})
     this:box(init and init.box or {w = 0, h = 0})
     this:floor(init and init.floor or true)
+    this:radius(init and init.radius or 0)
     this:target(init and init.target or false)
     this:action(init and init.action or false)
   end,

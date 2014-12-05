@@ -40,10 +40,13 @@ Actor = Class {
   box = function(this, val) return this.data:box(val) end,
   dim = function(this) return this:curr():dim() end,
   floor = function(this, val) return this.data:floor(val) end,
+  radius = function(this, val) return this.data:radius(val) end,
   target = function(this, val) return this.data:target(val) end,  
   action = function(this, val) return this.data:action(val) end,
   
-  add = function(this, dir) this.dirs:add(dir) end,
+  addKeyb = function(this, init) return this:add(KeybDir.new(init)) end,
+  addRules = function(this, init) return this:add(ActorDir.new(init)) end,
+  add = function(this, dir) this.dirs:add(dir); return this end,
   
   dist = function(this, actor)
     actor = actor or this:target()

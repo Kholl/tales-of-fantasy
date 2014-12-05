@@ -15,7 +15,7 @@ KeybDir = Class {
   hashLast = nil,
   
   create = function(this, init)
-    this.keys = List().new(init.keys or {})       
+    this.keys = List().new(init or {})       
     this.set = {}
     this.seq = List().new{}
     this.hash = ""

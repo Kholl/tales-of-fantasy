@@ -82,5 +82,4 @@ Scene = Class {
     box.x, box.y = box.x + off.x, box.y + off.y
     return Math.Isect(hit, box)
   end,
-
 }

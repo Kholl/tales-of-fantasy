@@ -42,5 +42,5 @@ PhysDir = Class {
     
     actor:floor(pos[this.grav] == 0)    
     if actor:floor() then spd[this.grav] = 0 end
-  end,
+  end
 }
