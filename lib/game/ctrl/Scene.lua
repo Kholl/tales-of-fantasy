@@ -66,9 +66,8 @@ Scene = Class {
     this.frame = delta * this._fps
     this.time = this.time + delta
 
-    this.scrolls:each(function(i, scroll)
-      scroll:update(this)
-    end)
+    this.ifaces:each(function(i, iface) iface:update(this) end)
+    this.scrolls:each(function(i, scroll) scroll:update(this) end)
       
     this.actors:each(function(i, actor)
       this.physdir:update{actor = actor, scene = this}

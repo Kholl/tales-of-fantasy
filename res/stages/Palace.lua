@@ -55,7 +55,9 @@ return {
         
         scene.ifaces:add(scene.IFACE.Text.new{
           pos = {x = 50, y = 50},
-          val = "Hola mundo",
+          update = function(this, scene)
+            this:val(player.info.hp)
+          end,
         })
         
         scene.actors:addNew("res/chars/DElf.lua")
