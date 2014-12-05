@@ -35,21 +35,21 @@ actor.info = {
     },
 
     atk = {
-      hit = {[5] = {box = {x = 51, y = 36, w = 54, h = 3}, force = {x = 100}}},
+      hit = {[4] = {box = {x = 51, y = 36, w = 54, h = 3}, force = {x = 100}}},
       rng = {min = 51, max = 51+54},
+      ep = 120,
+    },
+        
+    atkalt = {
+      hit = {[4] = {box = {x = 45, y = 18, w = 31, h = 44}, force = {x = 100}}},
+      rng = {min = 45, max = 45+31},
       ep = 120,
     },
     
     jmp = {
       rng = {min = 160},
-      spd = {x = 100, y = -220},
-      ep = 165,
-    },
-        
-    atkalt = {
-      hit = {[5] = {box = {x = 45, y = 18, w = 31, h = 44}, force = {x = 100}}},
-      rng = {min = 45, max = 45+31},
-      ep = 120,
+      spd = {x = 110, y = -220},
+      ep = 160,
     },
   },
 }
