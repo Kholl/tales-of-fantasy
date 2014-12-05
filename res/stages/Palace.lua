@@ -53,6 +53,11 @@ return {
           :addRules("res/rules/Actor.lua")
         player:pos{x = 160, y = 0, z = 375}
         
+        scene.ifaces:add(scene.IFACE.Text.new{
+          pos = {x = 50, y = 50},
+          val = "Hola mundo",
+        })
+        
         scene.actors:addNew("res/chars/DElf.lua")
           :addRules("res/rules/Auto.lua")
           :addRules("res/rules/Actor.lua")

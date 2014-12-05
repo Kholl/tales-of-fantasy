@@ -5,6 +5,8 @@ Moo Object Oriented framework for LUA
 
 require("lib/game/ctrl/Scroll")
 require("lib/game/ctrl/Actor")
+require("lib/game/ctrl/Image")
+require("lib/game/ctrl/Text")
 require("lib/game/dirs/KeybDir")
 require("lib/game/dirs/PhysDir")
 require("lib/game/dirs/RuleDir")
@@ -12,6 +14,10 @@ require("lib/game/dirs/ActorDir")
 
 Scene = Class {  
   DELTA = 0.1,
+  IFACE = {
+    Image = Image,
+    Text = Text,
+  },
   
   graphics = Dependency("graphics"),
   
@@ -44,11 +50,13 @@ Scene = Class {
 
     this.scrolls = List(Scroll).new()
     this.actors = List(Actor).new()
+    this.ifaces = List().new()
   end,
   
   draw = function(this)
     this.scrolls:each(function(i, scroll) scroll:draw(this) end)
     this.actors:each(function(i, actor) actor:draw(this) end)
+    this.ifaces:each(function(i, iface) iface:draw(this) end)
   end,
   
   update = function(this, delta)

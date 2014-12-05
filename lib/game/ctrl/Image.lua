@@ -15,13 +15,12 @@ Image = Class {
     this.data = ImageData.new(init)
   end,
   
-  draw = function(this, offset)
-    this.drawable:draw(this.data, offset)
+  draw = function(this, scene)
+    this.drawable:draw(this.data, scene)
   end,
   
   update = Nil,
   
   pos = function(this, val) return this.data:pos(val) end,
   dir = function(this, val) return this.data:dir(val) end,
-  dim = function(this, val) return this.data:dim(val) end,
 }
