@@ -41,7 +41,7 @@ actor.info = {
   state = {
     wlk = {
       spd = {x = 100, z = 100},
-      rng = {min = 67},
+      rng = {min = 60},
       ep = 1,
     },
     
@@ -69,64 +69,60 @@ actor.info = {
     },
     
     atkjmp = {
-      hit = {[3] = {box = {x = 31, y = 57, w = 35, h = 18}, force = {x = 120, y = 10}}},
-      rng = {min = 31, max = 31+34},
+      hit = {[3] = {box = {x = 0, y = 0, w = 66, h = 96}}},
+      rng = {min = 0, max = 66},
       ep = 0,
     },
     
     atkalt = {
-      hit = {[5] = {box = {x = 26, y = 32+13, w = 56, h = 14}, force = {x = 200}}},
-      rng = {min = 26, max = 26+55},
-      ep = 165,
+      hit = {[5] = {box = {x = 0, y = 0, w = 82, h = 96}, force = {x = 100, y = -200}}},
+      rng = {min = 0, max = 82},
+      ep = 120,
     },
 
     atkrun = {
-      hit = {[3] = {box = {x = 44, y = 59+13, w = 36, h = 17}, force = {x = 220, y = -40}}},
-      rng = {min = 44, max = 44+35},
-      ep = 210,
+      hit = {[3] = {box = {x = 0, y = 0, w = 80, h = 92}, force = {x = 180, y = -220}}},
+      rng = {min = 0, max = 80},
+      ep = 120,
     },
     
     atkflr = {
       spd = {x = 300},
-      hit = {[1] = {box = {x = 0, y = 17, w = 53, h = 22}, force = {y = -20}}},
-      rng = {min = 0, max = 53},
-      ep = 165,
+      rng = {min = 40, max = 120},
+      ep = 120,
     },
     
     atkup = {
       spd = {x = -100, y = -220},
-      hit = {[1] = {box = {x = 4, y = 0, w = 45, h = 81}, force = {x = 0, y = -300}}},
-      rng = {min = 4, max = 4+45},
+      hit = {[1] = {box = {x = 0, y = 0, w = 60, h = 95}, force = {x = 0, y = -300}}},
+      rng = {min = 0, max = 60},
       ep = 165,
     },
     
     atkrnd = {
       hit = {
-        [1] = {box = {x = -71, y = 14, w = 38, h = 38}, force = {x = 220, y = -40}},
-        [3] = {box = {x =  43, y = 14, w = 38, h = 38}, force = {x = 220, y = -40}},
+        [1] = {box = {x = -81, y = 13, w = 81, h = 69}, force = {x = 100, y = -200}},
+        [3] = {box = {x =   0, y = 13, w = 81, h = 69}, force = {x = 100, y = -200}},
       },
-      rng = {min = 43, max = 43+38},
-      ep = 165,
+      rng = {min = 0, max = 81},
+      ep = 120,
     },
     
     atksq1 = {
-      hit = {[4] = {box = {x = 40, y = 26, w = 50, h = 8}, force = {x = 100}}},
-      rng = {min = 40, max = 40+50},
+      hit = {[4] = {box = {x = 0, y = 0, w = 100, h = 73}}},
+      rng = {min = 0, max = 100},
       ep = 0,
     },
     
     atksq2 = {
-      hit = {
-        [1] = {box = {x = 17, y = 14, w = 43, h = 10}, force = {x = 100}},
-        [3] = {box = {x = 68, y = 14, w = 43, h = 10}, force = {x = 100}},
-      },
-      rng = {min = 17, max = 68+43},
+      hit = {[3] = {box = {x = 0, y = 14, w = 105, h = 51}}},
+      rng = {min = 0, max = 105},
       ep = 0,
     },
   
     atksq3 = {
-      hit = {[5] = {box = {x = 40, y = 30, w = 41, h = 16}, force = {x = 120}}},
-      rng = {min = 40, max = 40 + 41},
+      hit = {[5] = {box = {x = 0, y = 0, w = 111, h = 85}, force = {x = 180, y = -220}}},
+      rng = {min = 0, max = 111},
       ep = 0,
     },
   },
