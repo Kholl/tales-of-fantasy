@@ -17,7 +17,7 @@ actor.state = "std"
 actor.box = {w = 24, h = 76}
 
 actor.info = {
-  faction = "elven",
+  faction = "elven2",
   hp = 125, hpmax = 125,
   mp =  75, mpmax =  75,
   ep =   0, epmax = 300,
@@ -25,31 +25,26 @@ actor.info = {
   state = {
     wlk = {
       spd = {x = 110, z = 110},
-      rng = {min = 45+31},
-      ep = 1,
-    },
-    
-    blk = {
-      rng = {min = 20, max = 44},
+      rng = {min = 75},
       ep = 1,
     },
 
     atk = {
-      hit = {[4] = {box = {x = 51, y = 36, w = 54, h = 3}, force = {x = 100}}},
-      rng = {min = 51, max = 51+54},
-      ep = 120,
+      hit = {[3] = {box = {x = 0, y = 36, w = 106, h = 44}}},
+      rng = {min = 0, max = 106},
+      ep = 160,
     },
         
     atkalt = {
-      hit = {[4] = {box = {x = 45, y = 18, w = 31, h = 44}, force = {x = 100}}},
-      rng = {min = 45, max = 45+31},
-      ep = 120,
+      hit = {[4] = {box = {x = 0, y = 27, w = 75, h = 54}, force = {x = 140, y = -160}}},
+      rng = {min = 0, max = 75},
+      ep = 160,
     },
     
     jmp = {
-      rng = {min = 160},
+      rng = {min = 120},
       spd = {x = 110, y = -220},
-      ep = 160,
+      ep = 120,
     },
   },
 }
@@ -70,7 +65,7 @@ actor.states = {
   atkalt = {
     res = "res/chars/delfboss/atk2.png",
     dim = {w = 150, h = 81}, pad = {x = 0.5, y = -1},
-    frate = {3, [6] = 9}, nframes = 6, anim = "play"},
+    frate = 3, nframes = 5, anim = "play"},
   jmp = {
     res = "res/chars/delfboss/jmp.png",
     dim = {w = 60, h = 101}, pad = {x = 0.5, y = 1},
