@@ -25,21 +25,15 @@ actor.info = {
   state = {
     wlk = {
       spd = {x = 60, z = 60},
-      rng = {min = 85+25},
+      rng = {min = 110},
       ep = 1,
     },
         
     atk = {
-      hit = {[3] = {box = {x = 25, y = 42, w = 85, h = 48}, force = {x = 240, y = -40}}},
-      rng = {min = 25, max = 85+25},
-      ep = 240,
+      hit = {[3] = {box = {x = 0, y = 0, w = 110, h = 145}, force = {x = 180, y = -220}}},
+      rng = {min = 0, max = 110},
+      ep = 300,
     },
---[[        
-    atkflr = {
-      hit = {},
-      rng = {min = 90, max = 120},
-    },
-]]--
   },
 }
 

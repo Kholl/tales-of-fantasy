@@ -57,15 +57,15 @@ actor.info = {
     },
 
     atk = {
-      hit = {[5] = {box = {x = 20, y = 38, w = 47, h = 12}, force = {x = 100}}},
-      rng = {min = 20, max = 20+46},
+      hit = {[5] = {box = {x = 0, y = 0, w = 82, h = 82}}},
+      rng = {min = 0, max = 82},
       ep = 120,
     },
     
     jmp = {
-      rng = {min = 160},
+      rng = {min = 120, max = 140},
       spd = {x = 100, y = -220},
-      ep = 165,
+      ep = 120,
     },
     
     atkjmp = {

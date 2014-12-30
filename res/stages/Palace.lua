@@ -59,22 +59,22 @@ return {
             this:val(player.info.hp)
           end,
         })
-        
+--[[        
         scene.actors:addNew("res/chars/DElfBoss.lua")
           :addRules("res/rules/Auto.lua")
           :addRules("res/rules/Actor.lua")
           :pos{x = 200, y = 0, z = 300}
-        --[[
+        
         scene.actors:addNew("res/chars/TelArin.lua")
           :addRules("res/rules/Auto.lua")
           :addRules("res/rules/Actor.lua")
           :pos{x = 200, y = 0, z = 375}
-        
+        ]]--
         scene.actors:addNew("res/chars/DElf.lua")
           :addRules("res/rules/Auto.lua")
           :addRules("res/rules/Actor.lua")
           :pos{x = 200, y = 0, z = 450}
-        
+        --[[
         scene.actors:addNew("res/chars/DWarrior.lua")
           :addRules("res/rules/Auto.lua")
           :addRules("res/rules/Actor.lua")

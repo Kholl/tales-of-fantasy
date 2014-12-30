@@ -24,7 +24,7 @@ actor.info = {
   dir = {x = 0, z = 0},
   state = {
     wlk = {
-      spd = {x = 110, z = 110},
+      spd = {x = 100, z = 100},
       rng = {min = 75},
       ep = 1,
     },
@@ -43,7 +43,7 @@ actor.info = {
     
     jmp = {
       rng = {min = 120},
-      spd = {x = 110, y = -220},
+      spd = {x = 120, y = -240},
       ep = 120,
     },
   },

@@ -127,7 +127,7 @@ return {
   hitflr = {finish("std")},
   hitalt = {nofloor("hitair"), finish("std")},
   hithvy = {fall("hitair")},
-  atkjmp = {attack, floor("std")},
+  atkjmp = {attack, finish("jmp"), floor("std")},
   atkalt = {attack, finish("std")},
   atkrun = {attack, finish("std")},
   atkflr = {attack, finish("std")},

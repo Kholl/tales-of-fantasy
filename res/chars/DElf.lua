@@ -17,46 +17,46 @@ actor.state = "std"
 actor.box = {w = 24, h = 76}
 
 actor.info = {
-  faction = "elven",
+  faction = "elven2",
   hp = 100, hpmax = 100,
   mp =   0, mpmax =   0,
   ep =   0, epmax = 300,
   dir = {x = 0, z = 0},
   state = {
     wlk = {
-      spd = {x = 110, z = 110},
-      rng = {min = 45+31},
+      spd = {x = 100, z = 100},
+      rng = {min = 77},
       ep = 1,
     },
 
     atk = {
-      hit = {[2] = {box = {x = 41, y = 34, w = 38, h = 20}, force = {x = 80}}},
-      rng = {min = 41, max = 41+38},
+      hit = {[2] = {box = {x = 0, y = 0, w = 77, h = 89}}},
+      rng = {min = 0, max = 77},
       ep = 160,
     },
 
     atksq1 = {
-      hit = {[1] = {box = {x = 37, y = 31, w = 45, h = 10}, force = {x = 80}}},
-      rng = {min = 37, max = 37+45},
+      hit = {[2] = {box = {x = 0, y = 34, w = 94, h = 47}, force = {x = 80}}},
+      rng = {min = 0, max = 94},
       ep = 0,
     },
 
     atkalt = {
-      hit = {[2] = {box = {x = 76, y = 8, w = 40, h = 16}, force = {x = 100}}},
-      rng = {min = 76, max = 76+40},
+      hit = {[2] = {box = {x = 0, y = 11, w = 104, h = 55}}},
+      rng = {min = 0, max = 104},
       ep = 160,
     },
 
-    atkjmp = {
-      hit = {[2] = {box = {x = 24, y = 23, w = 37, h = 19}, force = {x = 120, y = 10}}},
-      rng = {min = 24, max = 24+37+25},
+    jmp = {
+      rng = {min = 120, max = 140},
+      spd = {x = 120, y = -240},
       ep = 120,
     },
-    
-    jmp = {
-      rng = {min = 80, max = 110},
-      spd = {x = 110, y = -220},
-      ep = 1,
+
+    atkjmp = {
+      hit = {[2] = {box = {x = 0, y = 0, w = 60, h = 41}}},
+      rng = {min = 0, max = 110},
+      ep = 0,
     },
   },
 }

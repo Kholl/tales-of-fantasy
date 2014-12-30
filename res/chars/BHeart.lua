@@ -25,27 +25,21 @@ actor.info = {
   state = {
     wlk = {
       spd = {x = 90, z = 90},
-      rng = {min = 136+36},
+      rng = {min = 144},
       ep = 1,
     },
         
     atk = {
-      hit = {[2] = {box = {x = 44, y = 53, w = 101, h = 55}, force = {x = 160}}},
-      rng = {min = 44, max = 101+44},
-      ep = 165,
+      hit = {[2] = {box = {x = 0, y = 53, w = 144, h = 121}}},
+      rng = {min = 0, max = 144},
+      ep = 160,
     },
         
     atkalt = {
-      hit = {[3] = {box = {x = 36, y = 75, w = 136, h = 40}, force = {x = 160}}},
-      rng = {min = 36, max = 136+36},
-      ep = 165,
+      hit = {[3] = {box = {x = 0, y = 74, w = 154, h = 100}}},
+      rng = {min = 0, max = 154},
+      ep = 160,
     },
---[[        
-    atkflr = {
-      hit = {[3] = {box = {x = 60, y = 101, w = 55, h = 63}, force = {x = 60, y = -10}}},
-      rng = {min = 60, max = 101+60},
-    },
-]]--
   },
 }
 

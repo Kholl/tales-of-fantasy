@@ -41,7 +41,7 @@ actor.info = {
   state = {
     wlk = {
       spd = {x = 90, z = 90},
-      rng = {min = 28},
+      rng = {min = 100},
       ep = 1,
     },
 
@@ -58,14 +58,14 @@ actor.info = {
     },
     
     jmp = {
-      rng = {min = 100},
+      rng = {min = 120, max = 140},
       spd = {x = 120, y = -240},
       ep = 120,
     },
     
     atkjmp = {
       hit = {[6] = {box = {x = 0, y = 0, w = 100, h = 122}}},
-      rng = {min = 0, max = 100},
+      rng = {min = 0, max = 110},
       ep = 0,
     },
   },
