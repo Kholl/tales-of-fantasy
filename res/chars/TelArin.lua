@@ -30,43 +30,43 @@ ANIM = {
 actor = {}
 actor.action = false
 actor.state = "std"
-actor.box = {w = 24, h = 68}
+actor.box = {w = 28, h = 78}
 
 actor.info = {
   faction = "elven2",
-  hp =  75, hpmax =  75,
-  mp = 125, mpmax = 125,
+  hp = 300, hpmax = 300,
+  mp = 100, mpmax = 100,
   ep =   0, epmax = 300,
   dir = {x = 0, z = 0},
   state = {
     wlk = {
-      spd = {x = 100, z = 100},
+      spd = {x = 90, z = 90},
       rng = {min = 67},
       ep = 1,
     },
 
     atk = {
-      hit = {[5] = {box = {x = 20, y = 38, w = 47, h = 12}, force = {x = 100}}},
-      rng = {min = 20, max = 20+46},
-      ep = 120,
-    },
-    
-    jmp = {
-      rng = {min = 160},
-      spd = {x = 100, y = -220},
-      ep = 165,
-    },
-    
-    atkjmp = {
-      hit = {[3] = {box = {x = 31, y = 57, w = 35, h = 18}, force = {x = 120, y = 10}}},
-      rng = {min = 31, max = 31+34},
-      ep = 0,
+      hit = {[6] = {box = {x = 0, y = 27, w = 176, h = 54}}},
+      rng = {min = 0, max = 176},
+      ep = 160,
     },
     
     atkalt = {
-      hit = {[5] = {box = {x = 26, y = 32+13, w = 56, h = 14}, force = {x = 200}}},
-      rng = {min = 26, max = 26+55},
-      ep = 165,
+      hit = {[3] = {box = {x = 0, y = 0, w = 100, h = 90}, force = {x = 100, y = -220}}},
+      rng = {min = 0, max = 100},
+      ep = 160,
+    },
+    
+    jmp = {
+      rng = {min = 100},
+      spd = {x = 120, y = -240},
+      ep = 120,
+    },
+    
+    atkjmp = {
+      hit = {[6] = {box = {x = 0, y = 0, w = 100, h = 122}}},
+      rng = {min = 0, max = 100},
+      ep = 0,
     },
   },
 }

@@ -39,7 +39,7 @@ attack = {
   cmd = function(vars)
     local hit = vars.hit
     vars.hits:each(function(i, other)
-      local force = hit.force
+      local force = hit.force or {}
       local dist = actor:dist(other)
       local face = {
         x = -Math.Sign(dist.x),
