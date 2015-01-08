@@ -12,13 +12,7 @@ require("lib/game/dirs/PhysDir")
 require("lib/game/dirs/RuleDir")
 require("lib/game/dirs/ActorDir")
 
-Scene = Class {  
-  DELTA = 0.1,
-  IFACE = {
-    Image = Image,
-    Text = Text,
-  },
-  
+Scene = Class {    
   graphics = Dependency("graphics"),
   
   fps = Property("_fps"),
@@ -60,7 +54,10 @@ Scene = Class {
   end,
   
   update = function(this, delta)
-    this.ruledir:update{scene = this, Math = Math}
+    this.ruledir:update{
+      scene = this,
+      Math = Math,
+      Each = Each}
   
     this.delta = delta
     this.frame = delta * this._fps
@@ -74,9 +71,6 @@ Scene = Class {
       actor:update(this)
     end)
   end,
-  
-  addKeyb = function(this, actor, init) actor:add(KeybDir.new(init)) end,
-  addRules = function(this, actor, init) actor:add(ActorDir.new(init)) end,
     
   getActors = function(this, func)
     if func then return this.actors:filter(func) else return this.actors end

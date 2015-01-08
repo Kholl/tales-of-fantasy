@@ -53,7 +53,14 @@ actor.info = {
     
     blk = {
       rng = {min = 0, max = 40},
-      ep = 6,
+      ep = 1,
+    },
+    
+    dodge = {
+      evade = true,
+      spd = {x = 300},
+      rng = {min = 40, max = 120},
+      ep = 120,
     },
 
     atk = {
@@ -69,8 +76,8 @@ actor.info = {
     },
     
     atkjmp = {
-      hit = {[3] = {box = {x = 0, y = 0, w = 66, h = 96}}},
-      rng = {min = 0, max = 66},
+      hit = {[3] = {box = {x = 0, y = 0, w = 80, h = 96}, force = {x = 120}}},
+      rng = {min = 0, max = 80},
       ep = 0,
     },
     
@@ -86,20 +93,16 @@ actor.info = {
       ep = 120,
     },
     
-    atkflr = {
-      spd = {x = 300},
-      rng = {min = 40, max = 120},
+    atkup = {
+      evade = true,
+      spd = {y = -220},
+      hit = {[1] = {box = {x = 0, y = 0, w = 60, h = 95}, force = {x = 0, y = -220}}},
+      rng = {min = 0, max = 60},
       ep = 120,
     },
     
-    atkup = {
-      spd = {x = -100, y = -220},
-      hit = {[1] = {box = {x = 0, y = 0, w = 60, h = 95}, force = {x = 0, y = -300}}},
-      rng = {min = 0, max = 60},
-      ep = 165,
-    },
-    
     atkrnd = {
+      evade = true,
       hit = {
         [1] = {box = {x = -81, y = 13, w = 81, h = 69}, force = {x = 100, y = -200}},
         [3] = {box = {x =   0, y = 13, w = 81, h = 69}, force = {x = 100, y = -200}},
@@ -125,6 +128,8 @@ actor.info = {
       rng = {min = 0, max = 111},
       ep = 0,
     },
+    
+    hitflr = {evade = true},
   },
 }
 
@@ -177,6 +182,10 @@ actor.states = {
     res = "res/chars/elf/blk.png",
     dim = {w = 52, h = 67}, pad = {x = 0.5, y = 1},
     frate = 2, nframes = 12, anim = "idle"},
+  dodge = {
+    res = "res/chars/Elf/atkflr.png",
+    dim = {w = 106, h = 41}, pad = {x = 0.5, y = 1},
+    frate = {8, 16}, nframes = 2, anim = "play"},
   runend = {
     res = "res/chars/Elf/runend.png",
     dim = {w = 100, h = 65}, pad = {x = 0.5, y = 1},
@@ -189,10 +198,6 @@ actor.states = {
     res = "res/chars/Elf/atkrun.png",
     dim = {w = 160, h = 92}, pad = {x = 0.5, y = 1},
     frate = {2, [5] = 10}, nframes = 5, anim = "play"},
-  atkflr = {
-    res = "res/chars/Elf/atkflr.png",
-    dim = {w = 106, h = 41}, pad = {x = 0.5, y = 1},
-    frate = {8, 16}, nframes = 2, anim = "play"},
   atkup = {
     res = "res/chars/Elf/atkup.png",
     dim = {w = 120, h = 95}, pad = {x = 0.5, y = 1},

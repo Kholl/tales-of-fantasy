@@ -39,6 +39,7 @@ target = function(valid) return {
       
       local state = actor.info.state[action]
       if not state or
+         not state.rng or
          not (state.ep <= actor.info.ep) or
          not Math.InLim(eucl, state.rng) then return end
         
@@ -59,14 +60,14 @@ return {
     target{
       std = {
         wlk = true, jmp = true, run = true, blk = true,
-        atk = true, atkalt = true, atkflr = true, atkup = true, atkrnd = true,
+        atk = true, atkalt = true, atkup = true, atkrnd = true,
       },
       atk = {atksq1 = true},
       atksq1 = {atksq2 = true},
       atksq2 = {atksq3 = true},
       wlk = {wlk = true, jmp = true, run = true},
       run = {run = true, jmp = true, atkrun = true},
-      runend = {atkflr = true},
+      runend = {dodge = true},
       jmp = {atkjmp = true},
       blk = {blk = true},
     },

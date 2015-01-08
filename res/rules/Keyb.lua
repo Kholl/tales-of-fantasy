@@ -55,6 +55,19 @@ blk = {
   cmd = function() actor:action("blk") end,
 }
 
+dodge = {
+  chk = function()
+    return actor.info.key[1] and
+      actor.info.key[0]["u"] == 0 and actor.info.key[0]["d"] >= 1 and
+      actor.info.key[1]["u"] == 0 and actor.info.key[1]["i"] >= 1 and actor.info.key[1]["i"] <= 10 and
+      actor.info.key[1]["d"] >= 1 and actor.info.key[1]["d"] <= 10
+  end,
+  cmd = function()
+    actor:action("dodge")
+    actor.info.dir.x = actor:dir().x
+  end
+}
+
 atk = {
   chk = function() return actor.info.key[0]["a"] >= 1 and actor.info.key[0]["a"] <= 10 and actor.info.key[0]["b"] == 0 end,
   cmd = function() actor:action("atk") end,
@@ -83,19 +96,6 @@ atkalt = {
        (actor:dir().x == -1 and actor.info.key[0]["l"] >= 1 and actor.info.key[0]["l"] <= 10))
   end,
   cmd = function() actor:action("atkalt") end,
-}
-
-atkflr = {
-  chk = function()
-    return actor.info.key[1] and
-      actor.info.key[0]["u"] == 0 and actor.info.key[0]["d"] >= 1 and
-      actor.info.key[1]["u"] == 0 and actor.info.key[1]["i"] >= 1 and actor.info.key[1]["i"] <= 10 and
-      actor.info.key[1]["d"] >= 1 and actor.info.key[1]["d"] <= 10
-  end,
-  cmd = function()
-    actor:action("atkflr")
-    actor.info.dir.x = actor:dir().x
-  end
 }
 
 atkup = {
@@ -133,7 +133,7 @@ return {
   atksq1 = {atksq("2")},
   atksq2 = {atksq("3")},
   run = {run, jmp, atkrun},
-  runend = {atkflr},
+  runend = {dodge},
   jmp = {atkjmp},
   blk = {blk},
 }

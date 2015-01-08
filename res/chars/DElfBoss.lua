@@ -17,7 +17,7 @@ actor.state = "std"
 actor.box = {w = 24, h = 76}
 
 actor.info = {
-  faction = "elven2",
+  faction = "dark elven",
   hp = 125, hpmax = 125,
   mp =  75, mpmax =  75,
   ep =   0, epmax = 300,
@@ -46,6 +46,8 @@ actor.info = {
       spd = {x = 120, y = -240},
       ep = 120,
     },
+    
+    hitflr = {evade = true},
   },
 }
 

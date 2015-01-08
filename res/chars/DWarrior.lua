@@ -18,6 +18,7 @@ actor.box = {w = 120, h = 135}
 
 actor.info = {
   faction = "demon",
+  massive = true,
   hp = 750, hpmax = 750,
   mp = 250, mpmax = 250,
   ep =   0, epmax = 300,
@@ -30,10 +31,13 @@ actor.info = {
     },
         
     atk = {
+      evade = true,
       hit = {[3] = {box = {x = 0, y = 0, w = 110, h = 145}, force = {x = 180, y = -220}}},
       rng = {min = 0, max = 110},
       ep = 300,
     },
+    
+    hitflr = {evade = true},
   },
 }
 

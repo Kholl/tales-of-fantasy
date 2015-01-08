@@ -40,20 +40,22 @@ actor.info = {
   state = {
     wlk = {
       spd = {x = 80, z = 80},
-      rng = {min = 60},
+      rng = {min = 63},
       ep = 1,
     },
     atk = {
-      hit = {[2] = {box = {x = 23, y = 32, w = 37, h = 14}, force = {x = 120, y = 0, z = 0}}},
-      rng = {min = 23, max = 23+36},
+      hit = {[2] = {box = {x = 0, y = 0, w = 63, h = 63}}},
+      rng = {min = 0, max = 63},
       ep = 180,
     },
     
     jmp = {
-      spd = {y = -140},
       rng = {min = 120},
-      ep = 210,
+      spd = {x = 80, y = -200},
+      ep = 180,
     },
+    
+    hitflr = {evade = true},
   }
 }
 

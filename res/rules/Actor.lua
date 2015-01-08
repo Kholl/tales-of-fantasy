@@ -5,8 +5,8 @@ Moo Object Oriented framework for LUA
 
 attack = {
   chk = function(vars)
-    local state = actor.info.state[actor:state()]
-    local hit = state.hit[actor:curr():frame()]
+    local actorState = actor.info.state[actor:state()]
+    local hit = actorState.hit[actor:curr():frame()]
     if not hit then return false end
     
     local box = hit.box
@@ -22,15 +22,12 @@ attack = {
     vars.hit = hit
     vars.hits = scene:getHit(hitbox, function(other)
       local eucl = actor:eucl(other)
+      local otherState = other.info.state[other:state()]
       
       return not (actor == other)
+        and not (otherState and otherState.evade)
         and not (actor.info.faction == other.info.faction)
-        and not (other:state() == "hit")
-        and not (other:state() == "hitair")
-        and not (other:state() == "hitflr")
-        and not (other:state() == "hitalt")
-        and not (other:state() == "hithvy")
-        and Math.InLim(eucl, state.rng)
+        and Math.InLim(eucl, actorState.rng)
     end)
     
     return vars.hits:size() > 0
@@ -39,26 +36,27 @@ attack = {
   cmd = function(vars)
     local hit = vars.hit
     vars.hits:each(function(i, other)
+      other:target(actor)
+
+      if not (other:state() == "blk" and other:facing(actor)) and
+         not (other:state() == "hit" or other:state() == "hitalt") then
+         
+        local action = Math.Pick{"hit", "hitalt"}
+        if other.states[action] then other:start(action) else other:start("hit") end
+      end
+      
+      if other.info.massive then return end
+      
       local force = hit.force or {}
       local dist = actor:dist(other)
       local face = {
         x = -Math.Sign(dist.x),
         z = -Math.Sign(dist.z)}
       
-      other:spd().x = face.x * (force.x or 0)
-      other:spd().z = face.z * (force.z or 0)
-      
-      if other:state() == "blk" and other:facing(actor) then return end
-      
-      other:spd().y = force.y or 0
-      other:target(actor)
       other:face()
-      
-      local action = Math.Pick{"hit", "hitalt"}
-      if other.states[action]
-        then other:start(action)
-        else other:start("hit")
-      end
+      if force.x then other:spd().x = face.x * force.x end
+      if force.z then other:spd().z = face.z * force.z end
+      if force.y then other:spd().y = force.y end
     end)
   end,
 }
@@ -111,11 +109,12 @@ fall = function(action) return {
 return {
   std = {
     action("wlk"), action("jmp"), action("run"), action("blk"),
-    action("atk"), action("atkalt"), action("atkflr"), action("atkup"), action("atkrnd")},
+    action("atk"), action("atkalt"), action("atkup"), action("atkrnd")},
   wlk = {action("wlk"), action("jmp"), idle("std")},
   run = {action("run"), action("jmp"), idle("runend"), action("atkrun")},
-  runend = {action("atkflr"), finish("std")},
+  runend = {action("dodge"), finish("std")},
   blk = {action("blk"), idle("std")},
+  dodge = {finish("std")},
   atk = {attack, chain("atksq1"), finish("std")},
   atksq1 = {attack, chain("atksq2"), finish("std")},
   atksq2 = {attack, chain("atksq3"), finish("std")},
@@ -130,7 +129,6 @@ return {
   atkjmp = {attack, finish("jmp"), floor("std")},
   atkalt = {attack, finish("std")},
   atkrun = {attack, finish("std")},
-  atkflr = {attack, finish("std")},
   atkup = {attack, finish("jmp")},
   atkrnd = {attack, finish("std")},
 }
