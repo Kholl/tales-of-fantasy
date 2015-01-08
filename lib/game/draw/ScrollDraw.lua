@@ -4,6 +4,7 @@ Moo Object Oriented framework for LUA
 ]]--
 
 ScrollDraw = Class {
+  resource = Dependency("resource"),
   graphics = Dependency("graphics"),
   window = Dependency("window"),
   
@@ -13,7 +14,7 @@ ScrollDraw = Class {
   
   create = function(this, init)
     local resource = (init and init.res)
-    this.drawable = this.graphics.newImage(resource)
+    this.drawable = this.resource:get("image", resource)
     
     local size = this:size()
     this.quad = this.graphics.newQuad(0, 0, 0, 0, size.w, size.h)

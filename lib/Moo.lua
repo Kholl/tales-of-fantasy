@@ -130,3 +130,4 @@ Moo = {
 require("lib/Math")
 require("lib/List")
 require("lib/Rule")
+require("lib/Cache")

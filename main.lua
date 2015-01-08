@@ -10,6 +10,9 @@ Moo.Import()
 Dependency "window" (love.window)
 Dependency "graphics" (love.graphics)
 Dependency "keyboard" (love.keyboard)
+Dependency "resource" (Cache.new{
+  image = love.graphics.newImage,
+})
 
 require("lib/game/ctrl/Scene")
 

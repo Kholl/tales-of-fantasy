@@ -4,13 +4,14 @@ Moo Object Oriented framework for LUA
 ]]--
 
 ImageDraw = Class {
+  resource = Dependency("resource"),
   graphics = Dependency("graphics"),
   
   drawable = nil,
   
   create = function(this, init)
     local resource = init and init.res
-    this.drawable = this.graphics.newImage(resource)
+    this.drawable = this.resource:get("image", resource)
   end,
   
   draw = function(this, data, scene)
