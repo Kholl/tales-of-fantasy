@@ -3,14 +3,6 @@ Tales Of Fantasy
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-ANIM = {
-  Step2 = function(func)
-    return function(sprite)
-      if func() < 0 then return 0 else return 1 end
-    end
-  end,
-}
-
 actor = {}
 actor.action = false
 actor.state = "std"
@@ -63,7 +55,7 @@ actor.states = {
   hitair = {
     res = "res/chars/bheart/hitair.png",
     dim = {w = 222, h = 141}, pad = {x = 0.5, y = 1},
-    frate = 0, nframes = 2, anim = ANIM.Step2(function() return this:spd().y end)},
+    frate = 0, nframes = 2, anim = Game.Anim.Air2(this)},
   hitflr = {
     res = "res/chars/bheart/hitflr.png",
     dim = {w = 254, h = 69}, pad = {x = 0.5, y = -20},

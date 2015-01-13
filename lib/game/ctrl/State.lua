@@ -15,7 +15,14 @@ State = Class {
     
     this.states = {}
     Each(init and init.states, function(key, state)
-      this.states[key] = Sprite.new(state)
+      this.states[key] = Sprite.new{
+        res = state.res,
+        dim = state.dim,
+        pad = state.pad,
+        anim = state.anim,
+        frate = state.frate,
+        nframes = state.nframes,
+        pmap = state.pmap or init.pmap}
     end)
   end,
   

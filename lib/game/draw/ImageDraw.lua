@@ -4,22 +4,33 @@ Moo Object Oriented framework for LUA
 ]]--
 
 ImageDraw = Class {
+  FORMAT = "%s%s",
+  
+  filesystem = Dependency("filesystem"),
   resource = Dependency("resource"),
   graphics = Dependency("graphics"),
   
   drawable = nil,
   
   create = function(this, init)
-    local resource = init and init.res
-    this.drawable = this.resource:get("image", resource)
-  end,
-  
-  draw = function(this, data, scene)
-    local pos = data:pos()
-    local dir = data:dir()
-    local off = scene:off()
-    
-    this.graphics.draw(this.drawable,
-      off.x + pos.x, off.y + pos.y + pos.z, 0, dir.x, dir.y)
+    local resourceName = init and init.res    
+      
+    if init.pmap then
+      local resourceOrig = resourceName
+      resourceName = ImageDraw.FORMAT:format(resourceName, init.pmap.name)
+      local resource = this.resource:get("image", resourceName)
+      
+      if not resource then
+        resource = this.resource:safeload("image", resourceOrig)
+        resource:mapPixel(init.pmap.func)
+        this.filesystem.mkdir(resourceName)
+        this.filesystem.remove(resourceName)
+        resource:encode(resourceName)
+        this.resource:set(resourceName, resource)
+      end
+    end
+
+    local resource = assert(this.resource:get("image", resourceName), resourceName)
+    this.drawable = this.graphics.newImage(resource)
   end,
 }

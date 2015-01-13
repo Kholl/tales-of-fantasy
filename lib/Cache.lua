@@ -12,8 +12,18 @@ Cache = Moo.Class {
     this.resources = {}
   end,
   
-  get = function(this, kind, file)
-    if not this.resources[file] then this.resources[file] = this.loader[kind](file) end
-    return this.resources[file]
+  safeload = function(this, kind, name)
+    local ok, res = pcall(function() return this.loader[kind](name) end)
+    if ok then return res end
+  end,
+  
+  get = function(this, kind, name)
+    if not this.resources[name] then this:set(name, this:safeload(kind, name)) end
+    return this.resources[name]
+  end,
+  
+  set = function(this, name, value)
+    this.resources[name] = value
+    return value
   end,
 }

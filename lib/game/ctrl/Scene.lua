@@ -57,7 +57,12 @@ Scene = Class {
     this.ruledir:update{
       scene = this,
       Math = Math,
-      Each = Each}
+      List = List,
+      Each = Each,
+      Find = Find,
+      Copy = Copy,
+      Range = Range,
+      Game = Game}
   
     this.delta = delta
     this.frame = delta * this._fps
@@ -76,7 +81,7 @@ Scene = Class {
     if func then return this.actors:filter(func) else return this.actors end
   end,
   
-  getHit = function(this, hit, func)
+  getHits = function(this, hit, func)
     return this.actors:filter(function(actor) return func(actor) and this:isHit(hit, actor) end)
   end,
 

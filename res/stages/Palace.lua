@@ -50,7 +50,7 @@ return {
         }
         
         local players = {
-          scene.actors:addNew("res/chars/Elf.lua"),
+          scene.actors:addNew("res/chars/Sarah.lua"),
         }
         
         Each(players, function(i, player)
@@ -63,12 +63,12 @@ return {
         camera = players[1]
         
         local autos = {
-          scene.actors:addNew("res/chars/DElfBoss.lua"),
-          scene.actors:addNew("res/chars/DElfBoss.lua"),
-          scene.actors:addNew("res/chars/DElf.lua"),
-          scene.actors:addNew("res/chars/DElf.lua"),
-          scene.actors:addNew("res/chars/DElf.lua"),
-          scene.actors:addNew("res/chars/DElf.lua"),
+          scene.actors:addNew("res/chars/HElfBoss.lua"),
+          scene.actors:addNew("res/chars/HElfBoss.lua"),
+          scene.actors:addNew("res/chars/HElf.lua"),
+          scene.actors:addNew("res/chars/HElf.lua"),
+          scene.actors:addNew("res/chars/HElf.lua"),
+          scene.actors:addNew("res/chars/HElf.lua"),
           scene.actors:addNew("res/chars/TelArin.lua"),
           scene.actors:addNew("res/chars/DWarrior.lua"),
           scene.actors:addNew("res/chars/BHeart.lua"),

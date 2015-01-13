@@ -20,7 +20,7 @@ attack = {
       h = box.h}
     
     vars.hit = hit
-    vars.hits = scene:getHit(hitbox, function(other)
+    vars.hits = scene:getHits(hitbox, function(other)
       local eucl = actor:eucl(other)
       local otherState = other.info.state[other:state()]
       

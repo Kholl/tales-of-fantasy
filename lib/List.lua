@@ -20,7 +20,7 @@ Moo.List = function(class)
     
     add = function(this, item) table.insert(this.list, item); return item end,
     add1st = function(this, item) table.insert(this.list, 1, item); return item end,
-    addNew = function(this, params) return this:add(class.new(params)) end,    
+    addNew = function(this, init) return this:add(class.new(init)) end,    
       
     first = function(this) return this.list[1] end,
     last = function(this) return this.list[#this.list] end,

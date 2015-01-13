@@ -32,7 +32,12 @@ Actor = Class {
         actor = this,
         scene = scene,
         Math = Math,
-        Each = Each}
+        List = List,
+        Each = Each,
+        Find = Find,
+        Copy = Copy,
+        Range = Range,
+        Game = Game}
     end)
   
     this:action(false)

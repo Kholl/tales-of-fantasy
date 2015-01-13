@@ -3,34 +3,11 @@ Tales Of Fantasy
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-ANIM = {
-  Jump = function(sprite)
-    local k = this:spd().y / this.info.state.jmp.spd.y
-    return (sprite.data.nframes) * (1 - k) * 0.5
-  end,
-  
-  Step2 = function(func)
-    return function(sprite)
-      if func() < 0 then return 0 else return 1 end
-    end
-  end,
-  
-  Step3 = function(thold, func)
-    return function(sprite)
-      local value = func()
-      
-      if value < -thold then return 0
-      elseif value > thold then return 2
-      else return 1
-      end
-    end
-  end,
-}
-
 actor = {}
 actor.action = false
 actor.state = "std"
 actor.box = {w = 28, h = 78}
+actor.pmap = Game.assets["high elf pal"]
 
 actor.info = {
   faction = "dark elven",
@@ -38,6 +15,7 @@ actor.info = {
   mp = 100, mpmax = 100,
   ep =   0, epmax = 300,
   dir = {x = 0, z = 0},
+
   state = {
     wlk = {
       spd = {x = 90, z = 90},
@@ -97,7 +75,7 @@ actor.states = {
   jmp = {
     res = "res/chars/telarin/jmp.png",
     dim = {w = 106, h = 109}, pad = {x = 0.5, y = 1},
-    frate = 0, nframes = 3, anim = ANIM.Step3(60, function() return this:spd().y end)},
+    frate = 0, nframes = 3, anim = Game.Anim.Air3(this, 60)},
   hit = {
     res = "res/chars/telarin/hit.png",
     dim = {w = 132, h = 84}, pad = {x = 0.5, y = 1},
@@ -105,7 +83,7 @@ actor.states = {
   hitair = {
     res = "res/chars/telarin/hitair.png",
     dim = {w = 111, h = 77}, pad = {x = 0.5, y = 1},
-    frate = 0, nframes = 2, anim = ANIM.Step2(function() return this:spd().y end)},
+    frate = 0, nframes = 2, anim = Game.Anim.Air2(this)},
   hitflr = {
     res = "res/chars/telarin/hitflr.png",
     dim = {w = 125, h = 52}, pad = {x = 0.5, y = 1},

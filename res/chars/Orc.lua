@@ -3,30 +3,6 @@ Tales Of Fantasy
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-ANIM = {
-  Jump = function(sprite)
-    local k = this:spd().y / this.info.state.jmp.spd.y
-    return (sprite.data.nframes) * (1 - k) * 0.5
-  end,
-  
-  Step2 = function(func)
-    return function(sprite)
-      if func() < 0 then return 0 else return 1 end
-    end
-  end,
-  
-  Step3 = function(thold, func)
-    return function(sprite)
-      local value = func()
-      
-      if value < -thold then return 0
-      elseif value > thold then return 2
-      else return 1
-      end
-    end
-  end,
-}
-
 actor = {}
 actor.state = "std"
 actor.box = {w = 30, h = 54}
@@ -75,7 +51,7 @@ actor.states = {
   jmp = {
     res = "res/chars/orc/jmp.png",
     dim = {w = 65, h = 66}, pad = {x = 0.5, y = 1},
-    frate = 0, nframes = 3, anim = ANIM.Jump},
+    frate = 0, nframes = 3, anim = Game.Anim.Air(this)},
   hit = {
     res = "res/chars/orc/hit.png",
     dim = {w = 89, h = 53}, pad = {x = 0.5, y = 1},
@@ -83,7 +59,7 @@ actor.states = {
   hitair = {
     res = "res/chars/orc/hitair.png", 
     dim = {w = 89, h = 53}, pad = {x = 0.5, y = 1},
-    frate = 0, nframes = 2, anim = ANIM.Step2(function() return this:spd().y end)},
+    frate = 0, nframes = 2, anim = Game.Anim.Air2(this)},
   hitflr = {
     res = "res/chars/orc/hitflr.png",
     dim = {w = 89, h = 53}, pad = {x = 0.5, y = 1},

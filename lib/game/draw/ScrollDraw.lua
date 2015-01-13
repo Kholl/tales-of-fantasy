@@ -9,15 +9,13 @@ ScrollDraw = Class {
   window = Dependency("window"),
   
   scroll = nil,
-  drawable = nil,
   quad = nil,
   
   create = function(this, init)
-    local resource = (init and init.res)
-    this.drawable = this.resource:get("image", resource)
+    ImageDraw.create(this, init)
     
-    local size = this:size()
-    this.quad = this.graphics.newQuad(0, 0, 0, 0, size.w, size.h)
+    local w, h = this.drawable:getWidth(), this.drawable:getHeight()
+    this.quad = this.graphics.newQuad(0, 0, 0, 0, w, h)
   end,
   
   draw = function(this, data, scene)
@@ -32,9 +30,5 @@ ScrollDraw = Class {
     this.quad:setViewport(0, 0, w - x, h - y)    
     this.drawable:setWrap(scr.x, scr.y)
     this.graphics.drawq(this.drawable, this.quad, x, y)
-  end,
-    
-  size = function(this)
-    return {w = this.drawable:getWidth(), h = this.drawable:getHeight()}
   end,
 }

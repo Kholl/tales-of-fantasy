@@ -16,7 +16,7 @@ Moo = {
   Err = function(message)
     return function(t, key, val) error(string.format(message, key)) end
   end,
-
+  
   Each = function(table, func)
     local result = {}
     table = table or {}
@@ -32,8 +32,8 @@ Moo = {
     return false
   end,
   
-  Copy = function(src)
-    local dst = {}
+  Copy = function(src, dst)
+    dst = dst or {}
     for key, val in pairs(src) do dst[key] = val end
     return dst
   end,
@@ -43,19 +43,6 @@ Moo = {
     for i = initial, final do result[i] = func(i) end
     
     return result
-  end,
-  
-  Debug = function(desc, src, tab)
-    tab = tab or 0
-    
-    print(string.rep("\t", tab) .. desc)
-    Moo.Each(src, function(key, val)
-      if type(val) == "table" then
-        Moo.Debug(key, val, tab +1)
-      else
-        print(string.rep("\t", tab +1) .. key .. "=" .. val)
-      end
-    end)
   end,
   
   Property = function(attr)
@@ -102,9 +89,9 @@ Moo = {
       local instance = setmetatable({}, {__index = class})
       
       if type(init) == "string" then
-        init = Moo.Load{this = instance, require = require}(init)
+        init = Moo.Load{this = instance, Game = Moo.Game}(init)
       end
-    
+      
       instance:create(init)
       return instance
     end
@@ -131,3 +118,6 @@ require("lib/Math")
 require("lib/List")
 require("lib/Rule")
 require("lib/Cache")
+
+-- Load Game custom program
+Moo.Game = require("Game")
