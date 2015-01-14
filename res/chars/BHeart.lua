@@ -24,7 +24,7 @@ actor.info = {
         
     atk = {
       evade = true,
-      hit = {[2] = {box = {x = 0, y = 53, w = 144, h = 121}}},
+      hit = {[2] = {box = {x = 0, y = 53, w = 144, h = 121}, force = {x = 140, y = -180}}},
       rng = {min = 0, max = 144},
       ep = 160,
     },

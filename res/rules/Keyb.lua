@@ -1,5 +1,5 @@
 --[[
-Moo Object Oriented framework for LUA
+Tales Of Fantasy
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 

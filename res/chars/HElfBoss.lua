@@ -10,7 +10,7 @@ actor.box = {w = 24, h = 76}
 actor.pmap = Game.assets["high elf pal"]
 
 actor.info = {
-  faction = "dark elven",
+  faction = "helf",
   hp = 125, hpmax = 125,
   mp =  75, mpmax =  75,
   ep =   0, epmax = 300,
@@ -82,10 +82,6 @@ actor.states = {
     res = "res/chars/delfboss/hitalt.png",
     dim = {w = 100, h = 75}, pad = {x = 0.5, y = 1},
     frate = 4, nframes = 2, anim = "play"},
-  blk = {
-    res = "res/chars/delfboss/blk.png",
-    dim = {w = 97, h = 80}, pad = {x = 0.5, y = 1},
-    frate = 0, nframes = 1, anim = "idle"},
 }
 
 return actor

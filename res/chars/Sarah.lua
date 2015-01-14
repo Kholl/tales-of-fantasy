@@ -9,7 +9,7 @@ actor.state = "std"
 actor.box = {w = 24, h = 68}
 
 actor.info = {
-  faction = "elven",
+  faction = "helf",
   hp =  75, hpmax =  75,
   mp = 125, mpmax = 125,
   ep =   0, epmax = 300,

@@ -105,12 +105,16 @@ Moo = {
   
   Load = function(env)
     return function(file)
-      local func, errmsg = loadfile(file)
-      assert(func, errmsg)      
+      local func, errmsg = Moo.filecache[file] or loadfile(file)
+      Moo.filecache[file] = func
       
+      assert(func, errmsg)
       return setfenv(func, env)()
     end
   end,
+  
+  -- File load cache
+  filecache = {},
 }
 
 -- Foundation classes

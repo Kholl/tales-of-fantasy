@@ -45,6 +45,8 @@ Scene = Class {
     this.scrolls = List(Scroll).new()
     this.actors = List(Actor).new()
     this.ifaces = List().new()
+    
+    if init.start then init.start(this) end
   end,
   
   draw = function(this)
