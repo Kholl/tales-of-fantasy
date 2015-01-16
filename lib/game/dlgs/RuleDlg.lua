@@ -3,7 +3,7 @@ Moo Object Oriented framework for LUA
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-RuleDir = Moo.Class {
+RuleDlg = Moo.Class {
   rules = nil,
   
   create = function(this, rules)

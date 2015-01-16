@@ -53,8 +53,8 @@ Actor = Class {
   target = function(this, val) return this.data:target(val) end,  
   action = function(this, val) return this.data:action(val) end,
   
-  addKeyb = function(this, init) return this:add(KeybDir.new(init)) end,
-  addRules = function(this, init) return this:add(ActorDir.new(init)) end,
+  addKeyb = function(this, init) return this:add(KeybDlg.new(init)) end,
+  addRules = function(this, init) return this:add(ActorDlg.new(init)) end,
   add = function(this, dir) this.dirs:add(dir); return this end,
   
   dist = function(this, actor)

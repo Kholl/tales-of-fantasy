@@ -7,10 +7,10 @@ require("lib/game/ctrl/Scroll")
 require("lib/game/ctrl/Actor")
 require("lib/game/ctrl/Image")
 require("lib/game/ctrl/Text")
-require("lib/game/dirs/KeybDir")
-require("lib/game/dirs/PhysDir")
-require("lib/game/dirs/RuleDir")
-require("lib/game/dirs/ActorDir")
+require("lib/game/dlgs/KeybDlg")
+require("lib/game/dlgs/PhysDlg")
+require("lib/game/dlgs/RuleDlg")
+require("lib/game/dlgs/ActorDlg")
 
 Scene = Class {    
   graphics = Dependency("graphics"),
@@ -30,8 +30,8 @@ Scene = Class {
   actors = nil,
   
   create = function(this, init)
-    this.physdir = PhysDir.new(init and init.phys)
-    this.ruledir = RuleDir.new(init and init.rules)
+    this.physdir = PhysDlg.new(init and init.phys)
+    this.ruledir = RuleDlg.new(init and init.rules)
     
     this:off(init and init.off or {x = 0, y = 0})
     this:lim(init and init.lim or {})

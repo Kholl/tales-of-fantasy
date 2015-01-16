@@ -5,7 +5,7 @@ Moo Object Oriented framework for LUA
 
 require("lib/List")
 
-KeybDir = Class {
+KeybDlg = Class {
   keyboard = Dependency("keyboard"),
   
   keys = nil,
