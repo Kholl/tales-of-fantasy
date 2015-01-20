@@ -6,6 +6,8 @@ Moo Object Oriented framework for LUA
 SpriteData = Class {
   graphics = Dependency("graphics"),
   
+  box = Property("_box"), -- Hitbox
+  rad = Property("_rad"), -- Radius
   dim = Property("_dim"), -- Dimension
   pad = Property("_pad"), -- Padding
 
@@ -16,8 +18,10 @@ SpriteData = Class {
   
   create = function(this, init)
     this.frame = init and init.frame or 0
-    this.frate = init and init.frate or 1
+    this.frate = init and init.frate or 0
     this.nframes = init and init.nframes or 1
+    this:box(init and init.box or {w = 0, h = 0})
+    this:rad(init and init.rad or 0)
     this:dim(init and init.dim or {w = 0, h = 0})
     this:pad(init and init.pad or {x = 0.5, h = 0.5})
     this.ended = false

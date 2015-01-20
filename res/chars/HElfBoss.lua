@@ -6,9 +6,74 @@ Tales Of Fantasy
 actor = {}
 actor.action = false
 actor.state = "std"
+actor.pad = {x = 0.5, y = 1}
 actor.box = {w = 24, h = 76}
 actor.rad = 12
 actor.pmap = Game.assets["high elf pal"]
+
+actor.states = {
+  std = {
+    res = "res/chars/delfboss/std.png",
+    dim = {w = 80, h = 78},
+    frate = 0,
+    nframes = 1,
+    anim = "idle"},
+  wlk = {
+    res = "res/chars/delfboss/wlk.png",
+    dim = {w = 83, h = 78},
+    frate = 3,
+    nframes = 8,
+    anim = "loop"},
+  atk = {
+    res = "res/chars/delfboss/atk1.png",
+    dim = {w = 212, h = 80},
+    frate = 3,
+    nframes = 4,
+    anim = "play"},
+  atkalt = {
+    res = "res/chars/delfboss/atk2.png",
+    dim = {w = 150, h = 81},
+    pad = {x = 0.5, y = -1},
+    frate = 3,
+    nframes = 5,
+    anim = "play"},
+  jmp = {
+    res = "res/chars/delfboss/jmp.png",
+    rad = 0,
+    dim = {w = 60, h = 101},
+    frate = 0,
+    nframes = 2,
+    anim = Game.Anim.Air2(this)},
+  hit = {
+    res = "res/chars/delfboss/hit.png",
+    dim = {w = 96, h = 77},
+    frate = 4,
+    nframes = 2,
+    anim = "play"},
+  hitair = {
+    res = "res/chars/delfboss/hitair.png",
+    rad = 0,
+    dim = {w = 116, h = 46},
+    frate = 0,
+    nframes = 2,
+    anim = Game.Anim.Air2(this)},
+  hitflr = {
+    res = "res/chars/delfboss/hitflr.png",
+    dim = {w = 123, h = 31},
+    frate = 30,
+    nframes = 1,
+    anim = "play"},
+  die = {
+    res = "res/chars/delfboss/hitflr.png",
+    rad = 0,
+    dim = {w = 123, h = 31}},
+  hitalt = {
+    res = "res/chars/delfboss/hitalt.png",
+    dim = {w = 100, h = 75},
+    frate = 4,
+    nframes = 2,
+    anim = "play"},
+}
 
 actor.info = {
   faction = "helf",
@@ -45,46 +110,8 @@ actor.info = {
     },
     
     hitflr = {evade = true},
+    die = {evade = true},
   },
-}
-
-actor.states = {
-  std = {
-    res = "res/chars/delfboss/std.png",
-    dim = {w = 80, h = 78}, pad = {x = 0.5, y = 1},
-    frate = 0, nframes = 1, anim = "idle"},
-  wlk = {
-    res = "res/chars/delfboss/wlk.png",
-    dim = {w = 83, h = 78}, pad = {x = 0.5, y = 1},
-    frate = 3, nframes = 8, anim = "loop"},
-  atk = {
-    res = "res/chars/delfboss/atk1.png",
-    dim = {w = 212, h = 80}, pad = {x = 0.5, y = 1},
-    frate = 3, nframes = 4, anim = "play"},
-  atkalt = {
-    res = "res/chars/delfboss/atk2.png",
-    dim = {w = 150, h = 81}, pad = {x = 0.5, y = -1},
-    frate = 3, nframes = 5, anim = "play"},
-  jmp = {
-    res = "res/chars/delfboss/jmp.png",
-    dim = {w = 60, h = 101}, pad = {x = 0.5, y = 1},
-    frate = 0, nframes = 2, anim = Game.Anim.Air2(this)},
-  hit = {
-    res = "res/chars/delfboss/hit.png",
-    dim = {w = 96, h = 77}, pad = {x = 0.5, y = 1},
-    frate = 4, nframes = 2, anim = "play"},
-  hitair = {
-    res = "res/chars/delfboss/hitair.png",
-    dim = {w = 116, h = 46}, pad = {x = 0.5, y = 1},
-    frate = 0, nframes = 2, anim = Game.Anim.Air2(this)},
-  hitflr = {
-    res = "res/chars/delfboss/hitflr.png",
-    dim = {w = 123, h = 31}, pad = {x = 0.5, y = 1},
-    frate = 30, nframes = 1, anim = "play"},
-  hitalt = {
-    res = "res/chars/delfboss/hitalt.png",
-    dim = {w = 100, h = 75}, pad = {x = 0.5, y = 1},
-    frate = 4, nframes = 2, anim = "play"},
 }
 
 return actor

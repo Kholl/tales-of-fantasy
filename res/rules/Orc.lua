@@ -35,6 +35,7 @@ return {
     Game.Rule.floor("hitflr"),
   },
   hitflr = {
-    Game.Rule.nodie("std"),
+    Game.Rule.finish("std"),
+    Game.Rule.died("die"),
   },
 }

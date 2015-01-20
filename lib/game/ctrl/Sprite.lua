@@ -14,7 +14,7 @@ Sprite = Class {
   create = function(this, init)
     this.drawable = SpriteDraw.new(init)    
     this.data = SpriteData.new(init)    
-    this.anim = (init and init.anim) or "loop"
+    this.anim = (init and init.anim) or "idle"
   end,
   
   draw = function(this, imageData, scene)
@@ -27,7 +27,10 @@ Sprite = Class {
     end
   end,
   
+  box = function(this) return this.data:box() end,
+  rad = function(this) return this.data:rad() end,
   dim = function(this) return this.data:dim() end,
+  pad = function(this) return this.data:pad() end,
   
   reset = function(this) this.data:reset() end,
     

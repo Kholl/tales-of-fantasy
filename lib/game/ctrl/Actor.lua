@@ -44,11 +44,11 @@ Actor = Class {
   end,
   
   dim = function(this) return this:curr():dim() end,
+  box = function(this) return this:curr():box() end,
+  rad = function(this) return this:curr():rad() end,
   dir = function(this, val) return this.data:dir(val) end,
   pos = function(this, val) return this.data:pos(val) end,    
   spd = function(this, val) return this.data:spd(val) end,
-  box = function(this, val) return this.data:box(val) end,
-  rad = function(this, val) return this.data:rad(val) end,
   mass = function(this, val) return this.data:mass(val) end,
   floor = function(this, val) return this.data:floor(val) end,
   target = function(this, val) return this.data:target(val) end,  

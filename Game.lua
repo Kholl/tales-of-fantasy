@@ -153,8 +153,6 @@ Game = {
             end
           end
           
-          if other.info.massive then return end
-          
           local force = vars.hit.force or {}
           local dist = actor:dist(other)
           local face = {
@@ -196,8 +194,8 @@ Game = {
       cmd = function() actor:start(action) end,
     } end,
 
-    nodie = function(action) return {
-      chk = function() return actor:curr():isEnded() and (actor.info.hp > 0) end,
+    died = function(action) return {
+      chk = function() return actor.info.hp == 0 end,
       cmd = function() actor:start(action) end,
     } end,
 

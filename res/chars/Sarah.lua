@@ -6,8 +6,143 @@ Tales Of Fantasy
 actor = {}
 actor.action = false
 actor.state = "std"
+actor.pad = {x = 0.5, y = 1}
 actor.box = {w = 24, h = 68}
 actor.rad = 12
+
+actor.states = {
+  std = {
+    res = "res/chars/lucia/std.png",
+    dim = {w = 59, h = 69},
+    frate = 8,
+    nframes = 3,
+    anim = "loop"},
+  wlk = {
+    res = "res/chars/lucia/wlk.png",
+    dim = {w = 50, h = 68},
+    frate = 2,
+    nframes = 12, anim = "loop"},
+  atk = {
+    res = "res/chars/lucia/atk.png",
+    dim = {w = 164, h = 82},
+    frate = {2, [8] = 6},
+    nframes = 8, anim = "play"},
+  atkjmp = {
+    res = "res/chars/lucia/atkjmp.png",
+    rad = 0,
+    dim = {w = 132, h = 96},
+    frate = 2,
+    nframes = 7,
+    anim = "play"},
+  jmp = {
+    res = "res/chars/lucia/jmp.png",
+    rad = 0,
+    dim = {w = 62, h = 98},
+    frate = 0,
+    nframes = 8,
+    anim = Game.Anim.Air(this)},
+  hit = {
+    res = "res/chars/lucia/hit.png",
+    dim = {w = 48, h = 68},
+    frate = 4,
+    nframes = 2,
+    anim = "play"},
+  hitair = {
+    res = "res/chars/lucia/hitair.png",
+    rad = 0,
+    dim = {w = 110, h = 49},
+    frate = 0,
+    nframes = 4,
+    anim = Game.Anim.Air3(this, 60)},
+  hitflr = {
+    res = "res/chars/lucia/hitflr.png",
+    dim = {w = 110, h = 49},
+    frate = 30,
+    nframes = 1,
+    anim = "play"},
+  die = {
+    res = "res/chars/lucia/hitflr.png",
+    rad = 0,
+    dim = {w = 110, h = 49}},
+  hitalt = {
+    res = "res/chars/lucia/hitalt.png",
+    dim = {w = 57, h = 62},
+    frate = 4,
+    nframes = 2,
+    anim = "play"},
+  hithvy = {
+    res = "res/chars/lucia/hithvy.png",
+    dim = {w = 130, h = 51},
+    frate = 0,
+    nframes = 1,
+    anim = "idle"},
+  run = {
+    res = "res/chars/lucia/run.png",
+    dim = {w = 116, h = 64},
+    frate = 2,
+    nframes = 12,
+    anim = "loop"},
+  blk = {
+    res = "res/chars/lucia/blk.png",
+    dim = {w = 52, h = 67},
+    frate = 2,
+    nframes = 12,
+    anim = "idle"},
+  dodge = {
+    res = "res/chars/lucia/atkflr.png",
+    dim = {w = 106, h = 41},
+    frate = {8, 16},
+    nframes = 2,
+    anim = "play"},
+  runend = {
+    res = "res/chars/lucia/runend.png",
+    dim = {w = 100, h = 65},
+    frate = {2, 2, 8},
+    nframes = 3,
+    anim = "play"},
+  atkalt = {
+    res = "res/chars/lucia/atk2h.png",
+    dim = {w = 164, h = 96}, pad = {x = 0.5, y = -13},
+    frate = {2.5, [9] = 7.5},
+    nframes = 9,
+    anim = "play"},
+  atkrun = {
+    res = "res/chars/lucia/atkrun.png",
+    dim = {w = 160, h = 92},
+    frate = {2, [5] = 10},
+    nframes = 5,
+    anim = "play"},
+  atkup = {
+    res = "res/chars/lucia/atkup.png",
+    dim = {w = 120, h = 95},
+    frate = 4,
+    nframes = 4,
+    anim = "play"},
+  atkrnd = {
+    res = "res/chars/lucia/atkrnd.png",
+    dim = {w = 162, h = 82},
+    frate = 2,
+    nframes = 5,
+    anim = "play"},
+  atksq1 = {
+    res = "res/chars/lucia/atksq1.png",
+    dim = {w = 200, h = 73},
+    frate = {2, [9] = 6},
+    nframes = 9,
+    anim = "play"},
+  atksq2 = {
+    res = "res/chars/lucia/atksq2.png",
+    dim = {w = 210, h = 65},
+    frate = {2, [6] = 6},
+    nframes = 6,
+    anim = "play"},
+  atksq3 = {
+    res = "res/chars/lucia/atksq3.png",
+    dim = {w = 222, h = 85},
+    frate = {2, [8] = 6},
+    nframes = 8,
+    anim = "play"},
+}
 
 actor.info = {
   faction = "helf",
@@ -116,94 +251,8 @@ actor.info = {
     },
     
     hitflr = {evade = true},
+    die = {evade = true},
   },
-}
-
-actor.states = {
-  std = {
-    res = "res/chars/lucia/std.png",
-    dim = {w = 59, h = 69}, pad = {x = 0.5, y = 1},
-    frate = 8, nframes = 3, anim = "loop"},
-  wlk = {
-    res = "res/chars/lucia/wlk.png",
-    dim = {w = 50, h = 68}, pad = {x = 0.5, y = 1},
-    frate = 2, nframes = 12, anim = "loop"},
-  atk = {
-    res = "res/chars/lucia/atk.png",
-    dim = {w = 164, h = 82}, pad = {x = 0.5, y = 1},
-    frate = {2, [8] = 6}, nframes = 8, anim = "play"},
-  atkjmp = {
-    res = "res/chars/lucia/atkjmp.png",
-    dim = {w = 132, h = 96}, pad = {x = 0.5, y = 1},
-    frate = 2, nframes = 7, anim = "play"},
-  jmp = {
-    res = "res/chars/lucia/jmp.png",
-    dim = {w = 62, h = 98}, pad = {x = 0.5, y = 1},
-    frate = 0, nframes = 8, anim = Game.Anim.Air(this)},
-  hit = {
-    res = "res/chars/lucia/hit.png",
-    dim = {w = 48, h = 68}, pad = {x = 0.5, y = 1},
-    frate = 4, nframes = 2, anim = "play"},
-  hitair = {
-    res = "res/chars/lucia/hitair.png",
-    dim = {w = 110, h = 49}, pad = {x = 0.5, y = 1},
-    frate = 0, nframes = 4, anim = Game.Anim.Air3(this, 60)},
-  hitflr = {
-    res = "res/chars/lucia/hitflr.png",
-    dim = {w = 110, h = 49}, pad = {x = 0.5, y = 1},
-    frate = 30, nframes = 1, anim = "play"},
-  hitalt = {
-    res = "res/chars/lucia/hitalt.png",
-    dim = {w = 57, h = 62}, pad = {x = 0.5, y = 1},
-    frate = 4, nframes = 2, anim = "play"},
-  hithvy = {
-    res = "res/chars/lucia/hithvy.png",
-    dim = {w = 130, h = 51}, pad = {x = 0.5, y = 1},
-    frate = 0, nframes = 1, anim = "idle"},
-  run = {
-    res = "res/chars/lucia/run.png",
-    dim = {w = 116, h = 64}, pad = {x = 0.5, y = 1},
-    frate = 2, nframes = 12, anim = "loop"},
-  blk = {
-    res = "res/chars/lucia/blk.png",
-    dim = {w = 52, h = 67}, pad = {x = 0.5, y = 1},
-    frate = 2, nframes = 12, anim = "idle"},
-  dodge = {
-    res = "res/chars/lucia/atkflr.png",
-    dim = {w = 106, h = 41}, pad = {x = 0.5, y = 1},
-    frate = {8, 16}, nframes = 2, anim = "play"},
-  runend = {
-    res = "res/chars/lucia/runend.png",
-    dim = {w = 100, h = 65}, pad = {x = 0.5, y = 1},
-    frate = {2, 2, 8}, nframes = 3, anim = "play"},
-  atkalt = {
-    res = "res/chars/lucia/atk2h.png",
-    dim = {w = 164, h = 96}, pad = {x = 0.5, y = -13},
-    frate = {2.5, [9] = 7.5}, nframes = 9, anim = "play"},
-  atkrun = {
-    res = "res/chars/lucia/atkrun.png",
-    dim = {w = 160, h = 92}, pad = {x = 0.5, y = 1},
-    frate = {2, [5] = 10}, nframes = 5, anim = "play"},
-  atkup = {
-    res = "res/chars/lucia/atkup.png",
-    dim = {w = 120, h = 95}, pad = {x = 0.5, y = 1},
-    frate = 4, nframes = 4, anim = "play"},
-  atkrnd = {
-    res = "res/chars/lucia/atkrnd.png",
-    dim = {w = 162, h = 82}, pad = {x = 0.5, y = 1},
-    frate = 2, nframes = 5, anim = "play"},
-  atksq1 = {
-    res = "res/chars/lucia/atksq1.png",
-    dim = {w = 200, h = 73}, pad = {x = 0.5, y = 1},
-    frate = {2, [9] = 6}, nframes = 9, anim = "play"},
-  atksq2 = {
-    res = "res/chars/lucia/atksq2.png",
-    dim = {w = 210, h = 65}, pad = {x = 0.5, y = 1},
-    frate = {2, [6] = 6}, nframes = 6, anim = "play"},
-  atksq3 = {
-    res = "res/chars/lucia/atksq3.png",
-    dim = {w = 222, h = 85}, pad = {x = 0.5, y = 1},
-    frate = {2, [8] = 6}, nframes = 8, anim = "play"},
 }
 
 return actor

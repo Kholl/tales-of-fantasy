@@ -6,10 +6,84 @@ Tales Of Fantasy
 actor = {}
 actor.action = false
 actor.state = "std"
+actor.pad = {x = 0.5, y = 1}
 actor.box = {w = 28, h = 78}
 actor.rad = 14
 actor.mass = 1
 actor.pmap = Game.assets["high elf pal"]
+
+actor.states = {
+  std = {
+    res = "res/chars/telarin/std.png",
+    dim = {w = 100, h = 80},
+    frate = 10,
+    nframes = 2,
+    anim = "loop"},
+  wlk = {
+    res = "res/chars/telarin/wlk.png",
+    dim = {w = 100, h = 114},
+    frate = 3,
+    nframes = 8,
+    anim = "loop"},
+  atk = {
+    res = "res/chars/telarin/atk1.png",
+    dim = {w = 252, h = 81}, pad = {x = 100, y = 1},
+    frate = 2.5,
+    nframes = 7,
+    anim = "play"},
+  atkalt = {
+    res = "res/chars/telarin/atk2.png",
+    dim = {w = 200, h = 90}, pad = {x = 0.5, y = -5},
+    frate = 3,
+    nframes = 4,
+    anim = "play"},
+  atkjmp = {
+    res = "res/chars/telarin/atkair.png",
+    rad = 0,
+    dim = {w = 200, h = 122},
+    frate = 2.5,
+    nframes = 7,
+    anim = "play"},
+  jmp = {
+    res = "res/chars/telarin/jmp.png",
+    rad = 0,
+    dim = {w = 106, h = 109},
+    frate = 0,
+    nframes = 3,
+    anim = Game.Anim.Air3(this, 60)},
+  hit = {
+    res = "res/chars/telarin/hit.png",
+    dim = {w = 132, h = 84},
+    frate = 4,
+    nframes = 2,
+    anim = "play"},
+  hitair = {
+    res = "res/chars/telarin/hitair.png",
+    rad = 0,
+    dim = {w = 111, h = 77},
+    frate = 0,
+    nframes = 2,
+    anim = Game.Anim.Air2(this)},
+  hitflr = {
+    res = "res/chars/telarin/hitflr.png",
+    dim = {w = 125, h = 52},
+    frate = {[1] = 2, [2] = 28},
+    nframes = 2,
+    anim = "play"},
+  die = {
+    res = "res/chars/telarin/hitflr.png",
+    rad = 0,
+    dim = {w = 125, h = 52},
+    frate = {[1] = 2, [2] = 28},
+    nframes = 2,
+    anim = "play"},
+  hithvy = {
+    res = "res/chars/telarin/hithvy.png",
+    dim = {w = 158, h = 111},
+    frate = 2,
+    nframes = 3,
+    anim = "play"},
+}
 
 actor.info = {
   faction = "helf",
@@ -53,50 +127,8 @@ actor.info = {
     },
     
     hitflr = {evade = true},
+    die = {evade = true},
   },
-}
-
-actor.states = {
-  std = {
-    res = "res/chars/telarin/std.png",
-    dim = {w = 100, h = 80}, pad = {x = 0.5, y = 1},
-    frate = 10, nframes = 2, anim = "loop"},
-  wlk = {
-    res = "res/chars/telarin/wlk.png",
-    dim = {w = 100, h = 114}, pad = {x = 0.5, y = 1},
-    frate = 3, nframes = 8, anim = "loop"},
-  atk = {
-    res = "res/chars/telarin/atk1.png",
-    dim = {w = 252, h = 81}, pad = {x = 100, y = 1},
-    frate = 2.5, nframes = 7, anim = "play"},
-  atkalt = {
-    res = "res/chars/telarin/atk2.png",
-    dim = {w = 200, h = 90}, pad = {x = 0.5, y = -5},
-    frate = 3, nframes = 4, anim = "play"},
-  atkjmp = {
-    res = "res/chars/telarin/atkair.png",
-    dim = {w = 200, h = 122}, pad = {x = 0.5, y = 1},
-    frate = 2.5, nframes = 7, anim = "play"},
-  jmp = {
-    res = "res/chars/telarin/jmp.png",
-    dim = {w = 106, h = 109}, pad = {x = 0.5, y = 1},
-    frate = 0, nframes = 3, anim = Game.Anim.Air3(this, 60)},
-  hit = {
-    res = "res/chars/telarin/hit.png",
-    dim = {w = 132, h = 84}, pad = {x = 0.5, y = 1},
-    frate = 4, nframes = 2, anim = "play"},
-  hitair = {
-    res = "res/chars/telarin/hitair.png",
-    dim = {w = 111, h = 77}, pad = {x = 0.5, y = 1},
-    frate = 0, nframes = 2, anim = Game.Anim.Air2(this)},
-  hitflr = {
-    res = "res/chars/telarin/hitflr.png",
-    dim = {w = 125, h = 52}, pad = {x = 0.5, y = 1},
-    frate = {[1] = 2, [2] = 28}, nframes = 2, anim = "play"},
-  hithvy = {
-    res = "res/chars/telarin/hithvy.png",
-    dim = {w = 158, h = 111}, pad = {x = 0.5, y = 1},
-    frate = 2, nframes = 3, anim = "play"},
 }
 
 return actor
