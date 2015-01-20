@@ -10,13 +10,13 @@ Actor = Class {
   super = State,
   
   data = nil,
-  dirs = nil,
+  dlgs = nil,
   info = nil,
   
   create = function(this, init)
     State.create(this, init)
     this.data = ActorData.new(init)
-    this.dirs = List().new()
+    this.dlgs = List().new()
     this.info = init and init.info or {}
   end,
   
@@ -27,8 +27,8 @@ Actor = Class {
   update = function(this, scene)
     State.update(this, scene)
     
-    this.dirs:each(function (i, dir)
-      dir:update{
+    this.dlgs:each(function (i, delegate)
+      delegate:update{
         actor = this,
         scene = scene,
         Math = Math,
@@ -54,9 +54,9 @@ Actor = Class {
   target = function(this, val) return this.data:target(val) end,  
   action = function(this, val) return this.data:action(val) end,
   
-  addKeyb = function(this, init) return this:add(KeybDlg.new(init)) end,
-  addRules = function(this, init) return this:add(ActorDlg.new(init)) end,
-  add = function(this, dir) this.dirs:add(dir); return this end,
+  addKeyb = function(this, init) this:add(KeybDlg.new(init)) end,
+  addRules = function(this, init) this:add(ActorDlg.new(init)) end,
+  add = function(this, delegate) this.dlgs:add(delegate) end,
   
   dist = function(this, actor)
     actor = actor or this:target()

@@ -10,7 +10,7 @@ actor.pad = {x = 0.5, y = 1}
 actor.box = {w = 28, h = 78}
 actor.rad = 14
 actor.mass = 1
-actor.pmap = Game.assets["high elf pal"]
+actor.pmap = Game.Assets["high elf pal"]
 
 actor.states = {
   std = {

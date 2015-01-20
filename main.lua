@@ -7,6 +7,10 @@ if arg and arg[#arg] == "-debug" then require("mobdebug").start() end
 
 require("lib/Moo")
 Moo.Import()
+
+-- Load Game custom program
+Moo.Game = require("tof/ToF")
+
 Dependency "window" (love.window)
 Dependency "graphics" (love.graphics)
 Dependency "keyboard" (love.keyboard)

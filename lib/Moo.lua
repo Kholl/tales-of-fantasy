@@ -122,6 +122,3 @@ require("lib/Math")
 require("lib/List")
 require("lib/Rule")
 require("lib/Cache")
-
--- Load Game custom program
-Moo.Game = require("Game")
