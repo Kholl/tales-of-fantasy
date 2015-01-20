@@ -43,10 +43,14 @@ Game = {
   Rule = {
     Auto = {
       notarget = {
-        chk = function() return actor.info.auto and not actor:target() end,
+        chk = function()
+          return actor.info.auto and (not actor:target() or (actor:target().info.hp == 0))
+        end,
         cmd = function()
           local selectFunc = function(target)
-            return not (actor == target) and not (actor.info.faction == target.info.faction)
+            return not (actor == target)
+              and not (actor.info.faction == target.info.faction)
+              and not (actor.info.hp == 0)
           end
 
           local sortFunc = function(targetA, targetB)
@@ -61,7 +65,9 @@ Game = {
       },
 
       target = function(valid) return {
-        chk = function() return actor.info.auto and actor:target() end,
+        chk = function()
+          return actor.info.auto and actor:target() and (actor:target().info.hp > 0)
+        end,
         cmd = function()
           actor.info.ep = Math.Lim(actor.info.ep +2, {max = actor.info.epmax})
           
@@ -99,6 +105,7 @@ Game = {
       chk = function(vars)
         local actorState = actor.info.state[actor:state()]
         local hit = actorState.hit[actor:curr():frame()]
+        local dmg = actorState.dmg
         if not hit then return false end
         
         local box = hit.box
@@ -112,6 +119,7 @@ Game = {
           h = box.h}
         
         vars.hit = hit
+        vars.dmg = dmg or 0
         vars.hits = scene:getHits(hitbox, function(other)
           local eucl = actor:eucl(other)
           local otherState = other.info.state[other:state()]
@@ -126,20 +134,28 @@ Game = {
       end,
       
       cmd = function(vars)
-        local hit = vars.hit
         vars.hits:each(function(i, other)
           other:target(actor)
+          other.info.hp = Math.Lim(other.info.hp - vars.dmg, {min = 0})
 
           if not (other:state() == "blk" and other:facing(actor)) and
              not (other:state() == "hit" or other:state() == "hitalt") then
-             
-            local action = Math.Pick{"hit", "hitalt"}
-            if other.states[action] then other:start(action) else other:start("hit") end
+            
+            local action
+            if other.info.hp > 0
+              then action = Math.Pick{"hit", "hitalt"}
+              else action = "hitair"
+            end
+            
+            if other.states[action]
+              then other:start(action)
+              else other:start("hit")
+            end
           end
           
           if other.info.massive then return end
           
-          local force = hit.force or {}
+          local force = vars.hit.force or {}
           local dist = actor:dist(other)
           local face = {
             x = -Math.Sign(dist.x),
@@ -177,6 +193,11 @@ Game = {
 
     finish = function(action) return {
       chk = function() return actor:curr():isEnded() end,
+      cmd = function() actor:start(action) end,
+    } end,
+
+    nodie = function(action) return {
+      chk = function() return actor:curr():isEnded() and (actor.info.hp > 0) end,
       cmd = function() actor:start(action) end,
     } end,
 

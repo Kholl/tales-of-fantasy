@@ -32,7 +32,7 @@ return {
     Game.Rule.floor("hitflr"),
   },
   hitflr = {
-    Game.Rule.finish("std"),
+    Game.Rule.nodie("std"),
   },
   atkalt = {
     Game.Rule.attack,

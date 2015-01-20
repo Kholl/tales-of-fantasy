@@ -7,6 +7,7 @@ actor = {}
 actor.action = false
 actor.state = "std"
 actor.box = {w = 24, h = 76}
+actor.rad = 12
 actor.pmap = Game.assets["high elf pal"]
 
 actor.info = {
@@ -24,19 +25,21 @@ actor.info = {
     },
 
     atk = {
+      dmg = 4, -- 12
       hit = {[3] = {box = {x = 0, y = 36, w = 106, h = 44}}},
       rng = {min = 0, max = 106},
       ep = 160,
     },
         
     atkalt = {
+      dmg = 5, -- 15
       hit = {[4] = {box = {x = 0, y = 27, w = 75, h = 54}, force = {x = 140, y = -160}}},
       rng = {min = 0, max = 75},
       ep = 160,
     },
     
     jmp = {
-      rng = {min = 120},
+      rng = {min = 120, max = 140},
       spd = {x = 120, y = -240},
       ep = 120,
     },

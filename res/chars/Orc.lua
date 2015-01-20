@@ -6,6 +6,7 @@ Tales Of Fantasy
 actor = {}
 actor.state = "std"
 actor.box = {w = 30, h = 54}
+actor.rad = 15
 
 actor.info = {
   faction = "orc",
@@ -19,7 +20,9 @@ actor.info = {
       rng = {min = 63},
       ep = 1,
     },
+    
     atk = {
+      dmg = 1, -- 6
       hit = {[2] = {box = {x = 0, y = 0, w = 63, h = 63}}},
       rng = {min = 0, max = 63},
       ep = 180,

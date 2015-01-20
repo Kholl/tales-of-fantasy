@@ -7,6 +7,8 @@ actor = {}
 actor.action = false
 actor.state = "std"
 actor.box = {w = 28, h = 78}
+actor.rad = 14
+actor.mass = 1
 actor.pmap = Game.assets["high elf pal"]
 
 actor.info = {
@@ -24,12 +26,14 @@ actor.info = {
     },
 
     atk = {
+      dmg = 8, -- 20
       hit = {[6] = {box = {x = 0, y = 27, w = 176, h = 54}}},
       rng = {min = 0, max = 176},
       ep = 160,
     },
     
     atkalt = {
+      dmg = 8, -- 24
       hit = {[3] = {box = {x = 0, y = 0, w = 100, h = 90}, force = {x = 100, y = -220}}},
       rng = {min = 0, max = 100},
       ep = 160,
@@ -42,6 +46,7 @@ actor.info = {
     },
     
     atkjmp = {
+      dmg = 10, -- 25
       hit = {[6] = {box = {x = 0, y = 0, w = 100, h = 122}}},
       rng = {min = 0, max = 110},
       ep = 0,
@@ -59,11 +64,11 @@ actor.states = {
   wlk = {
     res = "res/chars/telarin/wlk.png",
     dim = {w = 100, h = 114}, pad = {x = 0.5, y = 1},
-    frate = 2, nframes = 8, anim = "loop"},
+    frate = 3, nframes = 8, anim = "loop"},
   atk = {
     res = "res/chars/telarin/atk1.png",
     dim = {w = 252, h = 81}, pad = {x = 100, y = 1},
-    frate = 2.4, nframes = 7, anim = "play"},
+    frate = 2.5, nframes = 7, anim = "play"},
   atkalt = {
     res = "res/chars/telarin/atk2.png",
     dim = {w = 200, h = 90}, pad = {x = 0.5, y = -5},
@@ -71,7 +76,7 @@ actor.states = {
   atkjmp = {
     res = "res/chars/telarin/atkair.png",
     dim = {w = 200, h = 122}, pad = {x = 0.5, y = 1},
-    frate = 2.2, nframes = 7, anim = "play"},
+    frate = 2.5, nframes = 7, anim = "play"},
   jmp = {
     res = "res/chars/telarin/jmp.png",
     dim = {w = 106, h = 109}, pad = {x = 0.5, y = 1},

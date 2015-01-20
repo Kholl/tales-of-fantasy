@@ -37,7 +37,7 @@ return {
     Game.Rule.floor("hitflr"),
   },
   hitflr = {
-    Game.Rule.finish("std"),
+    Game.Rule.nodie("std"),
   },
   hitalt = {
     Game.Rule.nofloor("hitair"),

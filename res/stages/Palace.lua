@@ -39,7 +39,7 @@ return {
     
     camera = player
     
-    player:pos{x = 160, y = 0, z = 415}
+    player:pos{x = 200, y = 0, z = 425}
     Game.Scene.spawn(scene, "TelArin"):pos{x = 275, y = 0, z = 425}
     Game.Scene.spawn(scene, "HElfBoss"):pos{x = 300, y = 0, z = 350}
     Game.Scene.spawn(scene, "HElfBoss"):pos{x = 250, y = 0, z = 500}        
@@ -48,7 +48,7 @@ return {
     Game.Scene.spawn(scene, "HElf"):pos{x = 325, y = 0, z = 450}
     Game.Scene.spawn(scene, "HElf"):pos{x = 300, y = 0, z = 500}        
     Game.Scene.spawn(scene, "DWarrior"):pos{x = 800, y = 0, z = 350}
-    Game.Scene.spawn(scene, "BHeart"):pos{x = 775, y = 0, z = 500}            
+    Game.Scene.spawn(scene, "BHeart"):pos{x = 775, y = 0, z = 500}
   end,
   
   rules = {

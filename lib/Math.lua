@@ -23,6 +23,8 @@ Math = {
   end,
   
   Dist = function(a, b) return {x = a.x - b.x, y = a.y - b.y, z = a.z - b.z} end,
+  
+  Angle = function(a, b) return math.atan2(a.z - b.z, a.x - b.x) end,
     
   Isect = function(box1, box2)
     local r1 = {x1 = box1.x, y1 = box1.y, x2 = box1.x + box1.w, y2 = box1.y + box1.h}
@@ -49,4 +51,6 @@ Math = {
   end,
   
   Pick = function(list) return list[math.random(1, #list)] end,
+  Ratio = function(a, b) return a / (a + b) end,
+  Linear = function(a, b, k) return (a * k) + (b * (1 - k)) end,
 }

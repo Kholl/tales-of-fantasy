@@ -7,6 +7,8 @@ actor = {}
 actor.action = false
 actor.state = "std"
 actor.box = {w = 120, h = 135}
+actor.rad = 60
+actor.mass = 10
 
 actor.info = {
   faction = "demon",
@@ -24,6 +26,7 @@ actor.info = {
         
     atk = {
       evade = true,
+      dmg = 8, -- 32
       hit = {[3] = {box = {x = 0, y = 0, w = 110, h = 145}, force = {x = 180, y = -220}}},
       rng = {min = 0, max = 110},
       ep = 300,
