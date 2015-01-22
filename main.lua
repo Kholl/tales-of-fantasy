@@ -8,9 +8,6 @@ if arg and arg[#arg] == "-debug" then require("mobdebug").start() end
 require("lib/Moo")
 Moo.Import()
 
--- Load Game custom program
-Moo.Game = require("tof/ToF")
-
 Dependency "window" (love.window)
 Dependency "graphics" (love.graphics)
 Dependency "keyboard" (love.keyboard)
@@ -19,12 +16,14 @@ Dependency "resource" (Cache.new{
   image = love.image.newImageData,
 })
 
+-- Load Game custom program
+Moo.Game = require("tof/ToF")
+
 require("lib/game/ctrl/Scene")
 
 love.load = function(arg)
   love.filesystem.setIdentity("ToF")
   love.filesystem.mkdir(love.filesystem.getSaveDirectory())
-  assert(love.filesystem.exists(love.filesystem.getSaveDirectory()))
   love.graphics.setMode(320, 200)
   scene = Scene.new("res/stages/Palace.lua")
 end

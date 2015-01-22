@@ -6,6 +6,8 @@ Tales Of Fantasy
 return {
   attack = {
     chk = function(vars)
+      if not actor:curr():isStep() then return false end
+
       local actorState = actor.info.state[actor:state()]
       local hit = actorState.hit[actor:curr():frame()]
       local dmg = actorState.dmg
@@ -38,7 +40,7 @@ return {
     
     cmd = function(vars)
       vars.hits:each(function(i, other)
-        other:target(actor)
+        other:target(actor)        
         other.info.hp = Math.Lim(other.info.hp - vars.dmg, {min = 0})
 
         if not (other:state() == "blk" and other:facing(actor)) and

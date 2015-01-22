@@ -79,7 +79,7 @@ actor.info = {
         
     atk = {
       evade = true,
-      dmg = 8, -- 32
+      dmg = 25,
       hit = {[3] = {box = {x = 0, y = 0, w = 110, h = 145}, force = {x = 180, y = -220}}},
       rng = {min = 0, max = 110},
       ep = 300,

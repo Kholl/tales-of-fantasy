@@ -20,10 +20,5 @@ Scroll = Class {
   
   draw = function(this, offset)
     this.drawable:draw(this.data, offset)
-  end,
-  
-  update = Nil,
-  
-  pos = function(this, val) return this.data:pos(val) end,
-  scr = function(this, val) return this.data:scr(val) end,    
+  end,  
 }

@@ -15,6 +15,7 @@ SpriteData = Class {
   frate = nil,
   nframes = nil,  
   ended = nil,
+  step = nil,
   
   create = function(this, init)
     this.frame = init and init.frame or 0
@@ -24,6 +25,7 @@ SpriteData = Class {
     this:rad(init and init.rad or 0)
     this:dim(init and init.dim or {w = 0, h = 0})
     this:pad(init and init.pad or {x = 0.5, h = 0.5})
+    this.step = false
     this.ended = false
   end,
   
@@ -34,7 +36,10 @@ SpriteData = Class {
       else frate = this.frate
     end
     
+    local pframe = this.frame
     this.frame = this.frame + (frame / frate)
+    this.step = not (math.floor(pframe) == math.floor(this.frame))
+    
     return this
   end,
   

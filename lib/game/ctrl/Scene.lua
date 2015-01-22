@@ -9,7 +9,7 @@ require("lib/game/ctrl/Image")
 require("lib/game/ctrl/Text")
 require("lib/game/dlgs/KeybDlg")
 require("lib/game/dlgs/PhysDlg")
-require("lib/game/dlgs/RuleDlg")
+require("lib/game/dlgs/SceneDlg")
 require("lib/game/dlgs/ActorDlg")
 
 Scene = Class {    
@@ -24,14 +24,15 @@ Scene = Class {
   delta = nil,
   frame = nil,
 
-  physdir = nil,
-  ruledir = nil,
+  scenedlg = nil,
+  physdlg = nil,
   scrolls = nil,
   actors = nil,
+  iface = nil,
   
   create = function(this, init)
-    this.physdir = PhysDlg.new(init and init.phys)
-    this.ruledir = RuleDlg.new(init and init.rules)
+    this.scenedlg = SceneDlg.new(init and init.rules)
+    this.physdlg = PhysDlg.new(init and init.phys)
     
     this:off(init and init.off or {x = 0, y = 0})
     this:lim(init and init.lim or {})
@@ -44,7 +45,7 @@ Scene = Class {
 
     this.scrolls = List(Scroll).new()
     this.actors = List(Actor).new()
-    this.ifaces = List().new()
+    this.iface = init.iface or Nil
     
     if init.start then init.start(this) end
   end,
@@ -52,11 +53,11 @@ Scene = Class {
   draw = function(this)
     this.scrolls:each(function(i, scroll) scroll:draw(this) end)
     this.actors:each(function(i, actor) actor:draw(this) end)
-    this.ifaces:each(function(i, iface) iface:draw(this) end)
+    this.iface:draw()
   end,
   
   update = function(this, delta)
-    this.ruledir:update{
+    this.scenedlg:update{
       scene = this,
       Math = Math,
       List = List,
@@ -70,13 +71,12 @@ Scene = Class {
     this.frame = delta * this._fps
     this.time = this.time + delta
 
-    this.ifaces:each(function(i, iface) iface:update(this) end)
-    this.scrolls:each(function(i, scroll) scroll:update(this) end)
-      
+    this.scrolls:each(function(i, scroll) scroll:update(this) end)      
     this.actors:each(function(i, actor)
-      this.physdir:update{actor = actor, scene = this}
+      this.physdlg:update{actor = actor, scene = this}
       actor:update(this)
     end)
+    this.iface:update()
   end,
     
   getActors = function(this, func)

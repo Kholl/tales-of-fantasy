@@ -84,14 +84,14 @@ actor.info = {
         
     atk = {
       evade = true,
-      dmg = 6, -- 24
+      dmg = 20,
       hit = {[2] = {box = {x = 0, y = 53, w = 144, h = 121}, force = {x = 140, y = -180}}},
       rng = {min = 0, max = 144},
       ep = 160,
     },
         
     atkalt = {
-      dmg = 6, -- 18
+      dmg = 15,
       hit = {[3] = {box = {x = 0, y = 74, w = 154, h = 100}}},
       rng = {min = 0, max = 154},
       ep = 160,

@@ -39,6 +39,7 @@ Sprite = Class {
   loop = function(this, scene) this.data:incr(scene.frame):loop() end,
   
   frame = function(this, frame) return this.data:get() end,
+  isStep = function(this) return this.data.step end,
   isEnded = function(this) return this.data.ended end,
 }
 

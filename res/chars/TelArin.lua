@@ -100,14 +100,14 @@ actor.info = {
     },
 
     atk = {
-      dmg = 8, -- 20
+      dmg = 20,
       hit = {[6] = {box = {x = 0, y = 27, w = 176, h = 54}}},
       rng = {min = 0, max = 176},
       ep = 160,
     },
     
     atkalt = {
-      dmg = 8, -- 24
+      dmg = 24,
       hit = {[3] = {box = {x = 0, y = 0, w = 100, h = 90}, force = {x = 100, y = -220}}},
       rng = {min = 0, max = 100},
       ep = 160,
@@ -120,7 +120,7 @@ actor.info = {
     },
     
     atkjmp = {
-      dmg = 10, -- 25
+      dmg = 24,
       hit = {[6] = {box = {x = 0, y = 0, w = 100, h = 122}}},
       rng = {min = 0, max = 110},
       ep = 0,

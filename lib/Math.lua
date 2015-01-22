@@ -41,15 +41,6 @@ Math = {
       (dist <=  (lim and lim.max or Math.MAX) and dist >=  (lim and lim.min or 0))
   end,
   
-  InLimOf = function(keys)
-    local keylist = List().new(keys)
-    return function(dist, lim)
-      return keylist:all(function(key)
-        return Math.InLim(dist[key], lim[key])
-      end)
-    end
-  end,
-  
   Pick = function(list) return list[math.random(1, #list)] end,
   Ratio = function(a, b) return a / (a + b) end,
   Linear = function(a, b, k) return (a * k) + (b * (1 - k)) end,

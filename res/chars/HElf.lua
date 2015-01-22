@@ -106,21 +106,21 @@ actor.info = {
     },
 
     atk = {
-      dmg = 3, -- 9
+      dmg = 5,
       hit = {[2] = {box = {x = 0, y = 0, w = 77, h = 89}}},
       rng = {min = 0, max = 77},
       ep = 160,
     },
 
     atksq1 = {
-      dmg = 3, -- 9
+      dmg = 8,
       hit = {[2] = {box = {x = 0, y = 34, w = 94, h = 47}, force = {x = 80}}},
       rng = {min = 0, max = 94},
       ep = 0,
     },
 
     atkalt = {
-      dmg = 4, -- 12
+      dmg = 10,
       hit = {[2] = {box = {x = 0, y = 11, w = 104, h = 55}}},
       rng = {min = 0, max = 104},
       ep = 160,
@@ -133,7 +133,7 @@ actor.info = {
     },
 
     atkjmp = {
-      dmg = 2, -- 12
+      dmg = 10,
       hit = {[2] = {box = {x = 0, y = 0, w = 60, h = 41}}},
       rng = {min = 0, max = 110},
       ep = 0,

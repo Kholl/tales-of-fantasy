@@ -51,8 +51,7 @@ SpriteDraw = Class {
     
     this.graphics.drawq(this.drawable, this.quads[frame],
       off.x + (pos.x * ratio.x),
-      off.y + (pos.y * ratio.y) + (pos.z * ratio.z),
-      0,
+      off.y + (pos.y * ratio.y) + (pos.z * ratio.z), 0,
       dir.x, dir.y,
       padx % (dim.w +1), pady % (dim.h +1))
   end,

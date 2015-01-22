@@ -74,7 +74,7 @@ actor.info = {
     },
     
     atk = {
-      dmg = 1, -- 6
+      dmg = 4,
       hit = {[2] = {box = {x = 0, y = 0, w = 63, h = 63}}},
       rng = {min = 0, max = 63},
       ep = 180,

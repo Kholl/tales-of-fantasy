@@ -10,5 +10,6 @@ ToF.Rule = require("tof/Rules")
 ToF.Rule.Auto = require("tof/Auto")
 ToF.Scene = require("tof/Scene")
 ToF.Assets = require("tof/Assets")
+ToF.Gui = require("tof/Gui")
 
 return ToF
