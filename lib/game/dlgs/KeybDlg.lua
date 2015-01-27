@@ -41,7 +41,7 @@ KeybDlg = Class {
     this.hashLast = this.hash
     this.hash = ""
     
-    this.keys:each(function(cmd, key)
+    this.keys:each(function(key, cmd)
         if not this.keyboard.isDown(key) then return end
         this.set[cmd] = this.set[cmd] +1
         this.set["i"] = 0
@@ -51,6 +51,6 @@ KeybDlg = Class {
   
   reset = function(this)
     this.set["i"] = 0
-    this.keys:each(function(cmd, key) this.set[cmd] = 0 end)
+    this.keys:each(function(key, cmd) this.set[cmd] = 0 end)
   end,
 }

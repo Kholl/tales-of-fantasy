@@ -7,8 +7,8 @@ return {
   all = {
     Game.Rule.Auto.notarget,
     Game.Rule.Auto.target{
-      std = {wlk = true, jmp = true, atk = true},
-      wlk = {wlk = true, jmp = true},
+      std = {"wlk", "jmp", "atk"},
+      wlk = {"wlk", "jmp"},
     },
   },
   std = {

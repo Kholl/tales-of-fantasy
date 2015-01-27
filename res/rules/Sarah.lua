@@ -7,18 +7,15 @@ return {
   all = {
     Game.Rule.Auto.notarget,
     Game.Rule.Auto.target{
-      std = {
-        wlk = true, jmp = true, run = true, blk = true,
-        atk = true, atkalt = true, atkup = true, atkrnd = true,
-      },
-      atk = {atksq1 = true},
-      atksq1 = {atksq2 = true},
-      atksq2 = {atksq3 = true},
-      wlk = {wlk = true, jmp = true, run = true},
-      run = {run = true, jmp = true, atkrun = true},
-      runend = {dodge = true},
-      jmp = {atkjmp = true},
-      blk = {blk = true},
+      std = {"wlk", "jmp", "run", "blk", "atk", "atkalt", "atkup", "atkrnd"},
+      atk = {"atksq1"},
+      atksq1 = {"atksq2"},
+      atksq2 = {"atksq3"},
+      wlk = {"wlk", "jmp", "run"},
+      run = {"run", "jmp", "atkrun"},
+      runend = {"dodge"},
+      jmp = {"atkjmp"},
+      blk = {"blk"},
     },
   },
   std = {

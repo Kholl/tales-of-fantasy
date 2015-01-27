@@ -9,9 +9,9 @@ ActorDlg = Moo.Class {
   create = function(this, stateRules)
     this.stateRules = {}
     
-    Each(stateRules, function(state, rules)
+    Each(stateRules, function(rules, state)
         this.stateRules[state] = List(Rule).new()
-        Each(rules, function(i, rule) this.stateRules[state]:addNew(rule) end)
+        Each(rules, function(rule) this.stateRules[state]:addNew(rule) end)
     end)
   end,
   
@@ -20,9 +20,9 @@ ActorDlg = Moo.Class {
     local stateRules = this.stateRules[state] or Nil
  
     if this.stateRules.all then
-      this.stateRules.all:each(function(i, rule) rule:execute(context) end)
+      this.stateRules.all:each(function(rule) rule:execute(context) end)
     end
     
-    stateRules:each(function(i, rule) rule:execute(context) end)
+    stateRules:each(function(rule) rule:execute(context) end)
   end,
 }

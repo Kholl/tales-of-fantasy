@@ -8,10 +8,10 @@ SceneDlg = Moo.Class {
   
   create = function(this, rules)
     this.rules = List(Rule).new()
-    Each(rules, function(i, rule) this.rules:addNew(rule) end)
+    Each(rules, function(rule) this.rules:addNew(rule) end)
   end,
   
   update = function(this, context)
-    this.rules:each(function(i, rule) rule:execute(context) end)
+    this.rules:each(function(rule) rule:execute(context) end)
   end,
 }

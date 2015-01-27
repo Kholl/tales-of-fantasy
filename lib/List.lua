@@ -19,6 +19,7 @@ Moo.List = function(class)
     end,
     
     add = function(this, item) table.insert(this.list, item); return item end,
+    addAt = function(this, item, index) table.insert(this.list, index, item); return item end,
     add1st = function(this, item) table.insert(this.list, 1, item); return item end,
     addNew = function(this, init) return this:add(class.new(init)) end,    
       
@@ -28,31 +29,31 @@ Moo.List = function(class)
     
     map = function(this, func)
       local mapped = List(class).new()
-      this:each(function(i, item) mapped[i] = func(item) end)
+      this:each(function(item, i) mapped:addAt(i, func(item)) end)
       return mapped
     end,
     
     reduce = function(this, func)
       local reduce = nil
-      this:each(function(i, item) reduce = func(item, reduce) end)
+      this:each(function(item) reduce = func(item, reduce) end)
       return reduce
     end,
     
     all = function(this, func)
       local all = true
-      this:each(function(i, item) all = all and func(item) end)
+      this:each(function(item) all = all and func(item) end)
       return all
     end,
     
     any = function(this, func)
       local any = false
-      this:each(function(i, item) any = any or func(item) end)
+      this:each(function(item) any = any or func(item) end)
       return any
     end,
     
     filter = function(this, func)
       local filtered = List(class).new()
-      this:each(function(i, item)
+      this:each(function(item)
         if func(item) then filtered:add(item) end
       end)
     

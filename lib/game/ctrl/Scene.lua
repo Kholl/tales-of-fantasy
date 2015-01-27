@@ -51,8 +51,8 @@ Scene = Class {
   end,
   
   draw = function(this)
-    this.scrolls:each(function(i, scroll) scroll:draw(this) end)
-    this.actors:each(function(i, actor) actor:draw(this) end)
+    this.scrolls:each(function(scroll) scroll:draw(this) end)
+    this.actors:each(function(actor) actor:draw(this) end)
     this.iface:draw()
   end,
   
@@ -71,8 +71,8 @@ Scene = Class {
     this.frame = delta * this._fps
     this.time = this.time + delta
 
-    this.scrolls:each(function(i, scroll) scroll:update(this) end)      
-    this.actors:each(function(i, actor)
+    this.scrolls:each(function(scroll) scroll:update(this) end)      
+    this.actors:each(function(actor)
       this.physdlg:update{actor = actor, scene = this}
       actor:update(this)
     end)

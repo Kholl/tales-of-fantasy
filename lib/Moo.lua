@@ -20,7 +20,7 @@ Moo = {
   Each = function(table, func)
     local result = {}
     table = table or {}
-    for key, val in pairs(table) do result[key] = func(key, val) end
+    for key, val in pairs(table) do result[key] = func(val, key) end
     
     return result
   end,
@@ -66,7 +66,7 @@ Moo = {
     class.create = Nil
     class.super = Object
     
-    Moo.Each(definition, function(attribute, value)
+    Moo.Each(definition, function(value, attribute)
       if attribute == "super" then
         class[attribute] = value -- Class keywords
       else
@@ -98,7 +98,7 @@ Moo = {
   end,
   
   Import = function()
-    Moo.Each(Moo, function(key, value)
+    Moo.Each(Moo, function(value, key)
       if rawget(_G, key) == nil then rawset(_G, key, value) end
     end)
   end,

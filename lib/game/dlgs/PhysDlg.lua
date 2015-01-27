@@ -38,7 +38,7 @@ PhysDlg = Class {
           and actor:eucl(other) < (actor:rad() + other:rad())
       end)
     
-      actors:each(function(i, other)
+      actors:each(function(other)
         local ratio = Math.Ratio(actor:mass(), other:mass())      
         local angle = actor:angle(other)
         local dist = actor:rad() + other:rad()

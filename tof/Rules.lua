@@ -39,7 +39,7 @@ return {
     end,
     
     cmd = function(vars)
-      vars.hits:each(function(i, other)
+      vars.hits:each(function(other)
         other:target(actor)        
         other.info.hp = Math.Lim(other.info.hp - vars.dmg, {min = 0})
 

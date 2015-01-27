@@ -27,7 +27,7 @@ Actor = Class {
   update = function(this, scene)
     State.update(this, scene)
     
-    this.dlgs:each(function (i, delegate)
+    this.dlgs:each(function (delegate)
       delegate:update{
         actor = this,
         scene = scene,
