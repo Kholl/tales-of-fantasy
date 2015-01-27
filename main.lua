@@ -21,10 +21,11 @@ Moo.Game = require("tof/ToF")
 
 require("lib/game/ctrl/Scene")
 
+frameDelta = 0
 love.load = function(arg)
   love.filesystem.setIdentity("ToF")
   love.filesystem.mkdir(love.filesystem.getSaveDirectory())
-  love.graphics.setMode(320, 200)
+  love.graphics.setMode(320, 200, false, true)
   scene = Scene.new("res/stages/Palace.lua")
 end
 
