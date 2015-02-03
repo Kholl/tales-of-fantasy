@@ -28,6 +28,7 @@ return {
     Game.Rule.action("atkup"),
     Game.Rule.action("atkrnd")},
   wlk = {
+    Game.Rule.action("run"),
     Game.Rule.action("wlk"),
     Game.Rule.action("jmp"),
     Game.Rule.idle("std"),
@@ -36,10 +37,10 @@ return {
     Game.Rule.action("run"),
     Game.Rule.action("jmp"),
     Game.Rule.action("atkrun"),
+    Game.Rule.action("dodge"),
     Game.Rule.idle("runend"),
   },
   runend = {
-    Game.Rule.action("dodge"),
     Game.Rule.finish("std"),
   },
   blk = {

@@ -12,12 +12,18 @@ Actor = Class {
   data = nil,
   dlgs = nil,
   info = nil,
+  keyb = nil,
+  keyrule = nil,
+  actrule = nil,
   
   create = function(this, init)
     State.create(this, init)
     this.data = ActorData.new(init)
     this.dlgs = List().new()
     this.info = init and init.info or {}
+    this.keyb = false
+    this.keyrule = false
+    this.actrule = false
   end,
   
   draw = function(this, scene)
@@ -27,18 +33,27 @@ Actor = Class {
   update = function(this, scene)
     State.update(this, scene)
     
-    this.dlgs:each(function (delegate)
-      delegate:update{
-        actor = this,
-        scene = scene,
-        Math = Math,
-        List = List,
-        Each = Each,
-        Find = Find,
-        Copy = Copy,
-        Range = Range,
-        Game = Game}
-    end)
+    local context = {
+      actor = this,
+      scene = scene,
+      Math = Math,
+      List = List,
+      Each = Each,
+      Find = Find,
+      Copy = Copy,
+      Range = Range,
+      Game = Game,
+      print = print,
+    }
+    
+    if this.keyb then
+      this.keyb:update(context)
+      this.keyrule:update(context)
+    end
+    
+    if this.actrule then 
+      this.actrule:update(context)
+    end
   
     this:action(false)
   end,
@@ -54,10 +69,20 @@ Actor = Class {
   target = function(this, val) return this.data:target(val) end,  
   action = function(this, val) return this.data:action(val) end,
   
-  addKeyb = function(this, init) this:add(KeybDlg.new(init)) end,
-  addRules = function(this, init) this:add(ActorDlg.new(init)) end,
-  add = function(this, delegate) this.dlgs:add(delegate) end,
+  setKeyb = function(this, keyset, keyrule)
+    this.keyb = KeybDlg.new(keyset)
+    this.keyrule = ActorDlg.new(keyrule)
+  end,
   
+  setRule = function(this, init)
+    this.actrule = ActorDlg.new(init)
+  end,
+  
+  add = function(this, delegate) return this.dlgs:add(delegate) end,
+  
+  isNoKeyset = function(this) return this.keyb:isNoKeyset() end,
+  isKeyset = function(this, keyset) return this.keyb:isKeyset(keyset) end,
+    
   dist = function(this, actor)
     actor = actor or this:target()
     return Math.Dist(this:pos(), actor:pos())

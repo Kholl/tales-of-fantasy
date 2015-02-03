@@ -6,51 +6,101 @@ Moo Object Oriented framework for LUA
 require("lib/List")
 
 KeybDlg = Class {
+  KeyMap = {"b", "a", "d", "u", "l", "r"}, -- rludab
+  
   keyboard = Dependency("keyboard"),
   
-  keys = nil,
-  set = nil,
-  seq = nil,
-  hash = nil,
-  hashLast = nil,
+  list = nil,
+  currlist = nil,  
+  key = nil,
+  prevkey = nil,
+  currkey = nil,
+  minpress = nil,
+  idle = nil,
+  maxidle = nil,
+  match = nil,
+  matchlen = nil,
   
   create = function(this, init)
-    this.keys = List().new(init or {})       
-    this.set = {}
-    this.seq = List().new{}
-    this.hash = ""
-    this.hashLast = ""
-    this:reset()
+    this.keys = init or {}
+    
+    this.list = {}
+    this.currlist = {}
+    this.key = ""
+    this.prevkey = ""
+    this.currkey = ""
+    this.minpress = init.minpress or 1
+    this.idle = 0
+    this.maxidle = init.maxidle or 0.1
+    this.match = ""
+    this.matchlen = 0
   end,
     
   update = function(this, context)
-    
-    context.actor.info.key = this.seq.list
-    context.actor.info.key[0] = this.set
-
-    if this.hash == "" then this.set["i"] = this.set["i"] +1 end
-    
-    if not (this.hashLast == "") and
-       not (this.hash == this.hashLast) then
-       
-      this.seq:add1st(Copy(this.set))
-      this.seq:trim(6)
-      this:reset()
+    local delta = context.scene.delta
+    local keypress = this:updateCurrKey(delta)
+        
+    if this.idle >= this.maxidle then
+      this.idle = 0
+      this.key, this.list = "", {}
+      this.prevkey, this.currkey, this.currlist = "", "", {}
+      this.match, this.matchlen = "", 0
     end
-
-    this.hashLast = this.hash
-    this.hash = ""
     
-    this.keys:each(function(key, cmd)
-        if not this.keyboard.isDown(key) then return end
-        this.set[cmd] = this.set[cmd] +1
-        this.set["i"] = 0
-        this.hash = this.hash .. "," .. cmd
-      end)        
+    if this:isChangedKey() then this:addCurrKey() end
+  end,
+    
+  updateCurrKey = function(this, delta)
+    local keypress = false
+
+    local currlist = {}
+    this.prevkey, this.currkey = this.currkey, ""
+    
+    Each(this.keys, function(key, cmd)
+      if this.keyboard.isDown(key) then
+        keypress, currlist[cmd] = true, true
+      end
+    end)
+    
+    Each(KeybDlg.KeyMap, function(cmd)
+      if currlist[cmd] then
+        this.currkey = this.currkey .. cmd
+      end
+    end)
+
+    if keypress then this.idle = 0 else this.idle = this.idle +delta end
+    return keypress
   end,
   
-  reset = function(this)
-    this.set["i"] = 0
-    this.keys:each(function(key, cmd) this.set[cmd] = 0 end)
+  addCurrKey = function(this)
+    if this.currkey:len() == 0 then return end
+    
+    table.insert(this.list, this.currkey)
+    
+    this.key, this.match, this.matchlen = "", "", 0
+    Each(this.list, function(key) this.key = this.key .. ">" .. key end)
   end,
+
+  isKeyset = function(this, keysets)
+    if this.key:len() == 0 then return end
+    
+    local isMatch = false
+    local keyrev = this.key:reverse()
+    Each(keysets, function(keyset)
+      if not matchKeyset and (keyset:len() >= this.matchlen) then
+        local pos, matchlen = keyrev:find(keyset)
+        if pos == 1 and matchlen >= this.matchlen then
+          isMatch, this.match, this.matchlen = true, keyset, matchlen
+          
+          print(keyrev, this.match, this.matchlen)
+        end
+      end
+    end)
+    
+    return isMatch
+  end,
+  
+  isNoKeyset = function(this) return this.key:len() == 0 end,
+  
+  isChangedKey = function(this) return not (this.currkey:lower() == this.prevkey:lower()) end,  
 }
