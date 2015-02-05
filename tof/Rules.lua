@@ -74,7 +74,6 @@ return {
   end,
 
   action = function(actor, action)
-    if not (actor:action() == action) then return end
     if not (actor:state() == action) then actor:start(action) end
     
     local state = actor.info.state[action]

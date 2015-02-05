@@ -183,34 +183,16 @@ actor.moves = {
 }
 
 actor.rules = {
-  std = {
-    wlk = Game.Rule.action,
-    jmp = Game.Rule.action,
-    run = Game.Rule.action,
-    blk = Game.Rule.action,
-    atk = Game.Rule.action,
-    atkalt = Game.Rule.action,
-    atkup = Game.Rule.action,
-    atkrnd = Game.Rule.action,
-  },
   wlk = {
-    run = Game.Rule.action,
-    wlk = Game.Rule.action,
-    jmp = Game.Rule.action,
     std = Game.Rule.idle,
   },
   run = {
-    run = Game.Rule.action,
-    jmp = Game.Rule.action,
-    atkrun = Game.Rule.action,
-    dodge = Game.Rule.action,
     runend = Game.Rule.idle,
   },
   runend = {
     std = Game.Rule.finish,
   },
   blk = {
-    blk = Game.Rule.action,
     std = Game.Rule.idle,
   },
   dodge = {
@@ -218,17 +200,14 @@ actor.rules = {
   },
   atk = {
     atk = Game.Rule.attack,
-    atksq1 = Game.Rule.chain,
     std = Game.Rule.finish,
   },
   atksq1 = {
     atksq1 = Game.Rule.attack,
-    atksq2 = Game.Rule.chain,
     std = Game.Rule.finish,
   },
   atksq2 = {
     atksq2 = Game.Rule.attack,
-    atksq3 = Game.Rule.chain,
     std = Game.Rule.finish,
   },
   atksq3 = {
@@ -236,7 +215,6 @@ actor.rules = {
     std = Game.Rule.finish,
   },
   jmp = {
-    atkjmp = Game.Rule.action,
     std = Game.Rule.floor,
   },
   jmprun = {

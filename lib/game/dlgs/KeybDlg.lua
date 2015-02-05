@@ -89,7 +89,9 @@ KeybDlg = Class {
   checkMoves = function(this, actor)
     local moves = actor.moves[actor:state()]
     Each(moves, function(action, keyset)
-      if this:isKeyset(keyset) then actor:action(action) end
+      if this:isKeyset(keyset) then
+        Moo.Game.Rule.action(actor, action)
+      end
     end)
   end,
 
