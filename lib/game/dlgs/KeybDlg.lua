@@ -36,18 +36,23 @@ KeybDlg = Class {
     this.matchlen = 0
   end,
     
-  update = function(this, context)
-    local delta = context.scene.delta
+  update = function(this, actor, scene)
+    local delta = scene.delta
     local keypress = this:updateCurrKey(delta)
         
     if this.idle >= this.maxidle then
-      this.idle = 0
-      this.key, this.list = "", {}
-      this.prevkey, this.currkey, this.currlist = "", "", {}
-      this.match, this.matchlen = "", 0
+      this:resetState()
     end
     
     if this:isChangedKey() then this:addCurrKey() end
+    this:checkMoves(actor)
+  end,
+  
+  resetState = function(this)
+    this.idle = 0
+    this.key, this.list = "", {}
+    this.prevkey, this.currkey, this.currlist = "", "", {}
+    this.match, this.matchlen = "", 0
   end,
     
   updateCurrKey = function(this, delta)
@@ -80,22 +85,24 @@ KeybDlg = Class {
     this.key, this.match, this.matchlen = "", "", 0
     Each(this.list, function(key) this.key = this.key .. ">" .. key end)
   end,
+  
+  checkMoves = function(this, actor)
+    local moves = actor.moves[actor:state()]
+    Each(moves, function(action, keyset)
+      if this:isKeyset(keyset) then actor:action(action) end
+    end)
+  end,
 
-  isKeyset = function(this, keysets)
+  isKeyset = function(this, keyset)
     if this.key:len() == 0 then return end
+    if keyset:len() < this.matchlen then return end
     
     local isMatch = false
     local keyrev = this.key:reverse()
-    Each(keysets, function(keyset)
-      if not matchKeyset and (keyset:len() >= this.matchlen) then
-        local pos, matchlen = keyrev:find(keyset)
-        if pos == 1 and matchlen >= this.matchlen then
-          isMatch, this.match, this.matchlen = true, keyset, matchlen
-          
-          print(keyrev, this.match, this.matchlen)
-        end
-      end
-    end)
+    local pos, matchlen = keyrev:find(keyset)
+    if pos == 1 and matchlen >= this.matchlen then
+      isMatch, this.match, this.matchlen = true, keyset, matchlen
+    end
     
     return isMatch
   end,

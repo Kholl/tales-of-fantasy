@@ -144,6 +144,145 @@ actor.states = {
     anim = "play"},
 }
 
+actor.moves = {
+  std = {
+    ["[rl]a>"] = "atkalt",
+    ["ua>u>d>"] = "atkup",
+    ["r[dub]*>"] = "wlk",
+    ["l[dub]*>"] = "wlk",
+    ["[rl]*d[b]*>"] = "wlk",
+    ["[rl]*u[b]*>"] = "wlk",
+    ["a>"] = "atk",
+    ["[rlud]*b>"] = "jmp",
+    ["ab>"] = "atkrnd",
+    ["da>"] = "blk",
+  },
+  wlk = {
+    ["r[dub]*>"] = "wlk",
+    ["l[dub]*>"] = "wlk",
+    ["[rl]*d[b]*>"] = "wlk",
+    ["[rl]*u[b]*>"] = "wlk",
+    ["r>r>"] = "run",
+    ["l>l>"] = "run",
+    ["[rlud]*b>"] = "jmp",
+  },
+  run = {
+    ["r>r>"] = "run",
+    ["l>l>"] = "run",
+    ["ra>r>r>"] = "runatk",
+    ["la>l>l>"] = "runatk",
+    ["[rlud]*b>"] = "jmp",
+    ["rd>r>r>"] = "dodge",
+    ["ld>l>l>"] = "dodge",
+  },
+  jmp = {["[rlud]*a>"] = "atkjmp"},
+  atk = {["a>a>"] = "atksq1"},
+  atksq1 = {["a>a>a>"] = "atksq2"},
+  atksq2 = {["a>a>a>a>"] = "atksq3"},
+  blk = {["da>"] = "blk"},
+}
+
+actor.rules = {
+  std = {
+    wlk = Game.Rule.action,
+    jmp = Game.Rule.action,
+    run = Game.Rule.action,
+    blk = Game.Rule.action,
+    atk = Game.Rule.action,
+    atkalt = Game.Rule.action,
+    atkup = Game.Rule.action,
+    atkrnd = Game.Rule.action,
+  },
+  wlk = {
+    run = Game.Rule.action,
+    wlk = Game.Rule.action,
+    jmp = Game.Rule.action,
+    std = Game.Rule.idle,
+  },
+  run = {
+    run = Game.Rule.action,
+    jmp = Game.Rule.action,
+    atkrun = Game.Rule.action,
+    dodge = Game.Rule.action,
+    runend = Game.Rule.idle,
+  },
+  runend = {
+    std = Game.Rule.finish,
+  },
+  blk = {
+    blk = Game.Rule.action,
+    std = Game.Rule.idle,
+  },
+  dodge = {
+    dodge = Game.Rule.finish,
+  },
+  atk = {
+    atk = Game.Rule.attack,
+    atksq1 = Game.Rule.chain,
+    std = Game.Rule.finish,
+  },
+  atksq1 = {
+    atksq1 = Game.Rule.attack,
+    atksq2 = Game.Rule.chain,
+    std = Game.Rule.finish,
+  },
+  atksq2 = {
+    atksq2 = Game.Rule.attack,
+    atksq3 = Game.Rule.chain,
+    std = Game.Rule.finish,
+  },
+  atksq3 = {
+    atksq3 = Game.Rule.attack,
+    std = Game.Rule.finish,
+  },
+  jmp = {
+    atkjmp = Game.Rule.action,
+    std = Game.Rule.floor,
+  },
+  jmprun = {
+    std = Game.Rule.floor,
+  },
+  hit = {
+    hitair = Game.Rule.nofloor,
+    std = Game.Rule.finish,
+  },
+  hitair = {
+    hitflr = Game.Rule.floor,
+  },
+  hitflr = {
+    std = Game.Rule.finish,
+    die = Game.Rule.died,
+  },
+  hitalt = {
+    hitair = Game.Rule.nofloor,
+    std = Game.Rule.finish,
+  },
+  hithvy = {
+    hitair = Game.Rule.fall,
+  },
+  atkjmp = {
+    atkjmp = Game.Rule.attack,
+    jmp = Game.Rule.finish,
+    std = Game.Rule.floor,
+  },
+  atkalt = {
+    atkalt = Game.Rule.attack,
+    std = Game.Rule.finish,
+  },
+  atkrun = {
+    atkrun = Game.Rule.attack,
+    std = Game.Rule.finish,
+  },
+  atkup = {
+    atkup = Game.Rule.attack,
+    jmp = Game.Rule.finish,
+  },
+  atkrnd = {
+    atkrnd = Game.Rule.attack,
+    std = Game.Rule.finish,
+  },
+}
+
 actor.info = {
   faction = "helf",
   hp =  75, hpmax =  75,

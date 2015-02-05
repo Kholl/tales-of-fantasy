@@ -4,25 +4,24 @@ Moo Object Oriented framework for LUA
 ]]--
 
 ActorDlg = Moo.Class {
-  stateRules = nil,
+  rules = nil,
   
-  create = function(this, stateRules)
-    this.stateRules = {}
-    
-    Each(stateRules, function(rules, state)
-        this.stateRules[state] = List(Rule).new()
-        Each(rules, function(rule) this.stateRules[state]:addNew(rule) end)
-    end)
+  create = function(this, init)
+    this.rules = init.rules or {}
   end,
   
-  update = function(this, context)
-    local state = context.actor:state()
-    local stateRules = this.stateRules[state] or Nil
+  update = function(this, actor, scene)
+    local state = actor:state()
+    local rules = actor.rules[state] or {}
  
-    if this.stateRules.all then
-      this.stateRules.all:each(function(rule) rule:execute(context) end)
+    if rules.all then
+      Each(rules.all, function(rule, action)
+        rule(actor, action)
+      end)
     end
     
-    stateRules:each(function(rule) rule:execute(context) end)
+    Each(rules, function(rule, action)
+      rule(actor, action)
+    end)
   end,
 }

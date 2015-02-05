@@ -7,9 +7,7 @@ return {
   player = function(scene, name)
     return function(keyset)
       local actor = scene.actors:addNew(string.format("res/chars/%s.lua", name))
-      actor:setKeyb(keyset, "res/rules/Keyb.lua")
-      actor:setRule(string.format("res/rules/%s.lua", name))
-      actor.info.auto = false
+      actor:keyb(keyset)
       return actor
     end
   end,
