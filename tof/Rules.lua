@@ -68,9 +68,10 @@ return {
   end,
 
   idle = function(actor, action)
-    if actor:action() == false and not (actor:state() == action) then
+--[[    if actor:action() == false and not (actor:state() == action) then
       actor:start(action)
     end
+  ]]--
   end,
 
   action = function(actor, action)
@@ -91,10 +92,6 @@ return {
 
   died = function(actor, action)
     if actor.info.hp == 0 then actor:start(action) end
-  end,
-
-  chain = function(actor, action)
-    if actor:curr():isEnded() and actor:action() == action then actor:start(action) end
   end,
 
   floor = function(actor, action)

@@ -215,6 +215,7 @@ actor.rules = {
     std = Game.Rule.finish,
   },
   jmp = {
+    atkjmp = Game.Rule.action,
     std = Game.Rule.floor,
   },
   jmprun = {

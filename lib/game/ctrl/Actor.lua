@@ -35,7 +35,6 @@ Actor = Class {
     
     this.keybdlg:update(this, scene)      
     this.actrdlg:update(this, scene)
-    this:action(false)
   end,
   
   keyb = function(this, init) this.keybdlg = KeybDlg.new(init) end,
@@ -49,8 +48,20 @@ Actor = Class {
   mass = function(this, val) return this.data:mass(val) end,
   floor = function(this, val) return this.data:floor(val) end,
   target = function(this, val) return this.data:target(val) end,  
-  action = function(this, val) return this.data:action(val) end,
   
+  action = function(this, action)
+    if not (this:state() == action) then
+      this:start(action)
+    end
+    
+    local state = this.info.state[action]
+    if state.spd then
+      this:spd{
+        x = this.info.dir.x * (state.spd.x or 0),
+        z = this.info.dir.z * (state.spd.z or 0),
+        y = state.spd.y or 0}
+    end    
+  end,
   
   dist = function(this, actor)
     actor = actor or this:target()
