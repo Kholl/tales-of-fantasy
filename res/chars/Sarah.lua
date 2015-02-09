@@ -144,121 +144,99 @@ actor.states = {
     anim = "play"},
 }
 
-actor.moves = {
-  std = {
-    ["[rl]a>"] = "atkalt",
-    ["ua>u>d>"] = "atkup",
-    ["r[dub]*>"] = "wlk",
-    ["l[dub]*>"] = "wlk",
-    ["[rl]*d[b]*>"] = "wlk",
-    ["[rl]*u[b]*>"] = "wlk",
-    ["a>"] = "atk",
-    ["[rlud]*b>"] = "jmp",
-    ["ab>"] = "atkrnd",
-    ["da>"] = "blk",
-  },
-  wlk = {
-    ["r[dub]*>"] = "wlk",
-    ["l[dub]*>"] = "wlk",
-    ["[rl]*d[b]*>"] = "wlk",
-    ["[rl]*u[b]*>"] = "wlk",
-    ["r>r>"] = "run",
-    ["l>l>"] = "run",
-    ["[rlud]*b>"] = "jmp",
-  },
-  run = {
-    ["r>r>"] = "run",
-    ["l>l>"] = "run",
-    ["ra>r>r>"] = "runatk",
-    ["la>l>l>"] = "runatk",
-    ["[rlud]*b>"] = "jmp",
-    ["rd>r>r>"] = "dodge",
-    ["ld>l>l>"] = "dodge",
-  },
-  jmp = {["[rlud]*a>"] = "atkjmp"},
-  atk = {["a>a>"] = "atksq1"},
-  atksq1 = {["a>a>a>"] = "atksq2"},
-  atksq2 = {["a>a>a>a>"] = "atksq3"},
-  blk = {["da>"] = "blk"},
-}
-
 actor.rules = {
+  std = {
+    atkalt = this.isKey{"a[rl]>"},
+    wlk = this.move{"[rlud]+>"},
+    atk = this.isKey{"a>"},
+    jmp = this.isKey{"b[rlud]*>"},
+    atkrnd = this.isKey{"ab>"},
+    blk = this.isKey{"ad>"},
+  },
   wlk = {
-    std = Game.Rule.idle,
+    wlk = this.move{"[rlud]+>"},
+    run = this.move{"r>r>", "l>l>"},
+    jmp = this.isKey{"[rlud]*b>"},
+    atkup = this.isKey{"au>u>d>"},
+    std = this.isNoKey,
   },
   run = {
-    runend = Game.Rule.idle,
+    run = this.move{"r>r>", "l>l>"},
+    atkrun = this.isKey{"ar>r>r>", "al>l>l>"},
+    jmp = this.isKey{"[rlud]*b>"},
+    dodge = this.isKey{"rd>r>r>", "ld>l>l>"},
+    runend = this.isNoKey,
   },
   runend = {
-    std = Game.Rule.finish,
-  },
-  blk = {
-    std = Game.Rule.idle,
-  },
-  dodge = {
-    dodge = Game.Rule.finish,
+    std = this.isEnded,
   },
   atk = {
-    atk = Game.Rule.attack,
-    std = Game.Rule.finish,
+    atksq1 = this.isChain{"a>a>"},
+    atk = this.attack,
+    std = this.isEnded,
   },
   atksq1 = {
-    atksq1 = Game.Rule.attack,
-    std = Game.Rule.finish,
+    atksq2 = this.isChain{"a>a>a>"},
+    atksq1 = this.attack,
+    std = this.isEnded,
   },
   atksq2 = {
-    atksq2 = Game.Rule.attack,
-    std = Game.Rule.finish,
+    atksq3 = this.isChain{"a>a>a>a>"},
+    atksq2 = this.attack,
+    std = this.isEnded,
   },
   atksq3 = {
-    atksq3 = Game.Rule.attack,
-    std = Game.Rule.finish,
+    atksq3 = this.attack,
+    std = this.isEnded,
   },
   jmp = {
-    atkjmp = Game.Rule.action,
-    std = Game.Rule.floor,
+    atkjmp = this.isKey{"a[rlud]*>"},
+    std = this.isFloor,
   },
-  jmprun = {
-    std = Game.Rule.floor,
+  blk = {
+    blk = this.isKey{"ad>"},
+    std = this.isNoKey,
+  },
+  dodge = {
+    std = this.isEnded,
   },
   hit = {
-    hitair = Game.Rule.nofloor,
-    std = Game.Rule.finish,
+    hitair = this.noFloor,
+    std = this.isEnded,
   },
   hitair = {
-    hitflr = Game.Rule.floor,
+    hitflr = this.isFloor,
   },
   hitflr = {
-    std = Game.Rule.finish,
-    die = Game.Rule.died,
+    std = this.isEnded,
+    die = this.isDied,
   },
   hitalt = {
-    hitair = Game.Rule.nofloor,
-    std = Game.Rule.finish,
+    hitair = this.noFloor,
+    std = this.isEnded,
   },
   hithvy = {
-    hitair = Game.Rule.fall,
+    hitair = this.isFall,
   },
   atkjmp = {
-    atkjmp = Game.Rule.attack,
-    jmp = Game.Rule.finish,
-    std = Game.Rule.floor,
+    atkjmp = this.attack,
+    std = this.isFloor,
   },
   atkalt = {
-    atkalt = Game.Rule.attack,
-    std = Game.Rule.finish,
+    atkalt = this.attack,
+    std = this.isEnded,
   },
   atkrun = {
-    atkrun = Game.Rule.attack,
-    std = Game.Rule.finish,
+    atkrun = this.attack,
+    std = this.isEnded,
   },
   atkup = {
-    atkup = Game.Rule.attack,
-    jmp = Game.Rule.finish,
+    atkup = this.attack,
+    std = this.isFloor,
   },
   atkrnd = {
-    atkrnd = Game.Rule.attack,
-    std = Game.Rule.finish,
+    atkrnd = this.attack,
+    std = this.isEnded,
   },
 }
 

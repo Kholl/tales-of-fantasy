@@ -11,8 +11,6 @@ Moo = {
     __call = function(t) return t end,
   }),
 
-  Set = function(key, index) return not (rawget(key, index) == nil) end,
-
   Err = function(message)
     return function(t, key, val) error(string.format(message, key)) end
   end,

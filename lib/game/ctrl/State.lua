@@ -7,11 +7,14 @@ require("lib/game/ctrl/Sprite")
 
 State = Class {
   state = Property("_state"),
-  draw = nil,
+  
+  default = nil,
   states = nil,
+  draw = nil,
   
   create = function(this, init)
     this._state = init and init.state
+    this.default = init and init.state
     
     this.states = {}
     Each(init and init.states, function(state, key)
@@ -41,6 +44,9 @@ State = Class {
 
   start = function(this, state)
     this:state(state)
+    assert(this:curr(), state)
     this:curr():reset()
   end,
+  
+  reset = function(this) this:start(this.default) end,
 }

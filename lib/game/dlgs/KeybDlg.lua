@@ -6,8 +6,6 @@ Moo Object Oriented framework for LUA
 require("lib/List")
 
 KeybDlg = Class {
-  KeyMap = {"b", "a", "d", "u", "l", "r"}, -- rludab
-  
   keyboard = Dependency("keyboard"),
   
   list = nil,
@@ -45,7 +43,6 @@ KeybDlg = Class {
     end
     
     if this:isChangedKey() then this:addCurrKey() end
-    this:checkMoves(actor)
   end,
   
   resetState = function(this)
@@ -62,15 +59,11 @@ KeybDlg = Class {
     this.prevkey, this.currkey = this.currkey, ""
     
     Each(this.keys, function(key, cmd)
-      if this.keyboard.isDown(key) then
-        keypress, currlist[cmd] = true, true
-      end
+      if this.keyboard.isDown(key) then keypress, currlist[cmd] = true, true end
     end)
     
-    Each(KeybDlg.KeyMap, function(cmd)
-      if currlist[cmd] then
-        this.currkey = this.currkey .. cmd
-      end
+    Each(this.keys, function(key, cmd)
+      if currlist[cmd] then this.currkey = this.currkey .. cmd end
     end)
 
     if keypress then this.idle = 0 else this.idle = this.idle +delta end
@@ -83,31 +76,35 @@ KeybDlg = Class {
     table.insert(this.list, this.currkey)
     
     this.key, this.match, this.matchlen = "", "", 0
-    Each(this.list, function(key) this.key = this.key .. ">" .. key end)
+    Each(this.list, function(key) this.key = key .. ">" .. this.key end)
+      
+      print(this.key)
   end,
-  
-  checkMoves = function(this, actor)
-    local moves = actor.moves[actor:state()]
-    Each(moves, function(action, keyset)
-      if this:isKeyset(keyset) then actor:action(action) end
-    end)
-  end,
-
-  isKeyset = function(this, keyset)
-    if this.key:len() == 0 then return end
-    if keyset:len() < this.matchlen then return end
-    
-    local isMatch = false
-    local keyrev = this.key:reverse()
-    local pos, matchlen = keyrev:find(keyset)
-    if pos == 1 and matchlen >= this.matchlen then
-      isMatch, this.match, this.matchlen = true, keyset, matchlen
-    end
-    
-    return isMatch
-  end,
-  
-  isNoKeyset = function(this) return this.key:len() == 0 end,
   
   isChangedKey = function(this) return not (this.currkey:lower() == this.prevkey:lower()) end,  
+  
+  isUp = function(this) return this.keyboard.isDown(this.keys.u) end,
+  isDown = function(this) return this.keyboard.isDown(this.keys.d) end,
+  isLeft = function(this) return this.keyboard.isDown(this.keys.l) end,
+  isRight = function(this) return this.keyboard.isDown(this.keys.r) end,
+  isBtnA = function(this) return this.keyboard.isDown(this.keys.a) end,
+  isBtnB = function(this) return this.keyboard.isDown(this.keys.b) end,
+
+  isNoKey = function(this) return this.key:len() == 0 end,
+  isKey = function(this, keys)
+    if this:isNoKey() then return false end
+    
+    local isMatch = false
+    Each(keys, function(key)
+      if isMatch then return end
+      if key:len() < this.matchlen then return end
+            
+      local pos, matchlen = this.key:find(key)
+      if pos == 1 and matchlen >= this.matchlen then
+        isMatch, this.match, this.matchlen = true, key, matchlen
+      end
+    end)
+    
+    return isMatch
+  end,  
 }

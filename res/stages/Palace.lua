@@ -43,7 +43,7 @@ return {
     }
     
     local player = Game.Scene.player(scene, "Sarah")
-      {r = "right", l = "left", u = "up", d = "down", a = "a", b = "z"}
+      {r = "right", l = "left", u = "up", d = "down", a = "a", b = "s"}      
         
     camera = player
     
