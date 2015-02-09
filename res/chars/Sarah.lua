@@ -147,7 +147,7 @@ actor.states = {
 actor.rules = {
   std = {
     atkalt = this.isKey{"a[rl]>"},
-    wlk = this.move{"[rlud]+>"},
+    wlk = this.isKey{"[rlud]+>"},
     atk = this.isKey{"a>"},
     jmp = this.isKey{"b[rlud]*>"},
     atkrnd = this.isKey{"ab>"},
@@ -155,7 +155,7 @@ actor.rules = {
   },
   wlk = {
     wlk = this.move{"[rlud]+>"},
-    run = this.move{"r>r>", "l>l>"},
+    run = this.isKey{"r>r>", "l>l>"},
     jmp = this.isKey{"[rlud]*b>"},
     atkup = this.isKey{"au>u>d>"},
     std = this.isNoKey,

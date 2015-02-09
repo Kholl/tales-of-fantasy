@@ -13,11 +13,8 @@ ActorDlg = Moo.Class {
   update = function(this, actor, scene)
     local state = actor:state()
     local rules = actor.rules[state] or {}
-    local param = actor.param[state]
     Each(rules, function(rule, action)
-      local event = rule.event
-      local info = rule.info
-      if event(actor, scene) then actor:action(action, info) end
+      if rule(actor, scene) then actor:action(action) end
     end)
   end,
 }
