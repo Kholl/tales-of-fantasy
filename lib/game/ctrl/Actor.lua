@@ -47,19 +47,6 @@ Actor = Class {
   floor = function(this, val) return this.data:floor(val) end,
   target = function(this, val) return this.data:target(val) end,  
   
-  action = function(this, action)
-    if not (this:state() == action) then this:start(action) end
-    if not (this.info.dir.x == 0) then this:dir().x = this.info.dir.x end
-    
-    local state = this.info.state[action] or {}
-    if state.spd then
-      this:spd{
-        x = this.info.dir.x * (state.spd.x or 0),
-        z = this.info.dir.z * (state.spd.z or 0),
-        y = state.spd.y or 0}
-    end    
-  end,
-    
   attack = function(this, scene)
     if not this:curr():isStep() then return false end
 
@@ -123,14 +110,18 @@ Actor = Class {
     end)
   end,
   
-  move = function(key) return function(this)
+  move = function(key) return function(this, scene, next)
     local isKey = this.keybdlg:isKey(key)
-    if isKey then
-      this.info.dir = {x = 0, z = 0}
-      if this.keybdlg:isUp() then this.info.dir.z = -1 end
-      if this.keybdlg:isDown() then this.info.dir.z = 1 end
-      if this.keybdlg:isLeft() then this.info.dir.x = -1 end
-      if this.keybdlg:isRight() then this.info.dir.x = 1 end
+    local state = this.info.state[next] or {}
+    if state.spd and isKey then
+      local spd = this:spd()
+      if state.spd.y then spd.y = state.spd.y end
+      if this.keybdlg:isUp() then spd.z = -(state.spd.z or 0) end
+      if this.keybdlg:isDown() then spd.z = state.spd.z or 0 end
+      if this.keybdlg:isLeft() then spd.x, this:dir().x = -state.spd.x or 0, -1 end
+      if this.keybdlg:isRight() then spd.x, this:dir().x = state.spd.x or 0,  1 end
+      
+      this:spd(spd)    
     end
     return isKey
   end
