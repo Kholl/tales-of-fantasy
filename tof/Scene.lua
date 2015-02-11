@@ -13,9 +13,6 @@ return {
   end,
   
   spawn = function(scene, name)
-    local actor = scene.actors:addNew(string.format("res/chars/%s.lua", name))
-    actor:setRule(string.format("res/rules/%s.lua", name))
-    actor.info.auto = true
-    return actor
+    return scene.actors:addNew(string.format("res/chars/%s.lua", name))
   end,
 }

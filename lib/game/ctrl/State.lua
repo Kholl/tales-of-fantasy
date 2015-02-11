@@ -44,7 +44,6 @@ State = Class {
 
   start = function(this, state)
     this:state(state)
-    assert(this:curr(), state)
     this:curr():reset()
   end,
   

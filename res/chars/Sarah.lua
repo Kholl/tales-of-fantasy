@@ -181,39 +181,39 @@ actor.rules = {
     std = this.isEnded,
   },
   runatk = {
-    runatk = this.attack,
+    this.attack,
     std = this.isEnded,
   },
   atk = {
+    this.attack,
     atksq1 = this.isChain{"a>a>"},
-    atk = this.attack,
     std = this.isEnded,
   },
   atkalt = {
-    atkalt = this.attack,
+    this.attack,
     std = this.isEnded,
   },
   atkup = {
-    atkup = this.attack,
+    this.attack,
     jmp = this.isEnded,
     std = this.isFloor,
   },
   atkrnd = {
-    atkrnd = this.attack,
+    this.attack,
     std = this.isEnded,
   },
   atksq1 = {
+    this.attack,
     atksq2 = this.isChain{"a>a>a>"},
-    atksq1 = this.attack,
     std = this.isEnded,
   },
   atksq2 = {
+    this.attack,
     atksq3 = this.isChain{"a>a>a>a>"},
-    atksq2 = this.attack,
     std = this.isEnded,
   },
   atksq3 = {
-    atksq3 = this.attack,
+    this.attack,
     std = this.isEnded,
   },
   jmp = {
@@ -221,7 +221,7 @@ actor.rules = {
     std = this.isFloor,
   },
   jmpatk = {
-    jmpatk = this.attack,
+    this.attack,
     jmp = this.isEnded,
     std = this.isFloor,
   },

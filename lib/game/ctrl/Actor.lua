@@ -20,7 +20,7 @@ Actor = Class {
     this.data = ActorData.new(init)
     this.rules = init.rules or {}
     this.info = init and init.info or {}
-    this.keybdlg = Nil
+    this.keybdlg = false
     this.actrdlg = ActorDlg.new(init.rules)
   end,
   
@@ -31,7 +31,7 @@ Actor = Class {
   update = function(this, scene)
     State.update(this, scene)
     
-    this.keybdlg:update(this, scene)      
+    if this.keybdlg then this.keybdlg:update(this, scene) end
     this.actrdlg:update(this, scene)
   end,
   
@@ -46,6 +46,50 @@ Actor = Class {
   mass = function(this, val) return this.data:mass(val) end,
   floor = function(this, val) return this.data:floor(val) end,
   target = function(this, val) return this.data:target(val) end,  
+  
+  think = function(this, scene)
+    if not this:target() then
+      local selectFunc = function(target)
+        return not (this == target)
+          and not (this.info.faction == target.info.faction)
+          and not (this.info.hp == 0)
+      end
+
+      local sortFunc = function(targetA, targetB)
+        return this:eucl(targetA) < this:eucl(targetB)
+      end
+
+      this:target(scene:getActors(selectFunc):sort(sortFunc):first())
+    end
+    
+    local dist = this:dist()
+    local eucl = this:eucl()
+    local sel, best = "std", 0
+    local actions = this.rules[this:state()]
+    
+    Each(actions, function(func, action)
+      local state = this.info.state[action]
+      if not state or not state.rng or not Math.InLim(eucl, state.rng) then return end
+      
+      local val = state.spd and state.spd.x or Math.Rand(1, 10)
+      if best < val then sel, best = action, val end
+    end)
+  
+    local state = this.info.state[sel]
+    if not (this:state() == sel) then this:start(sel) end    
+    
+    if state.spd then
+      local dir = {x = -Math.Sign(dist.x), y = 1, z = -Math.Sign(dist.z)}
+      local spd = this:spd()
+      
+      spd.x = dir.x * (state.spd.x or spd.x)
+      spd.y = dir.y * (state.spd.y or spd.y)
+      spd.z = dir.z * (state.spd.z or spd.z)      
+      
+      this:dir(dir)
+      this:spd(spd)
+    end
+  end,
   
   attack = function(this, scene)
     if not this:curr():isStep() then return false end
@@ -111,7 +155,7 @@ Actor = Class {
   end,
   
   move = function(key) return function(this, scene, next)
-    local isKey = this.keybdlg:isKey(key)
+    local isKey = this.keybdlg and this.keybdlg:isKey(key)
     local state = this.info.state[next] or {}
     if state.spd and isKey then
       local spd = this:spd()
@@ -127,8 +171,13 @@ Actor = Class {
   end
   end,
 
-  isKey = function(key) return function(this) return this.keybdlg:isKey(key) end end,
-  isNoKey = function(this) return this.keybdlg:isNoKey() end,
+  isKey = function(key) return function(this)
+    return this.keybdlg and this.keybdlg:isKey(key)
+  end
+  end,
+  
+  isNoKey = function(this) return this.keybdlg and this.keybdlg:isNoKey() end,
+    
   isEnded = function(this) return this:curr():isEnded() end,
   isDied = function(this) return this.info.hp == 0 end,
   isFloor = function(this) return this.data:floor() end,

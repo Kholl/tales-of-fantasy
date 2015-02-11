@@ -9,7 +9,16 @@ actor.state = "std"
 actor.pad = {x = 0.5, y = 1}
 actor.box = {w = 82, h = 144}
 actor.rad = 41
-actor.mass = 10
+actor.mass = 12
+
+actor.info = {
+  faction = "demon",
+  massive = true,
+  hp = 500, hpmax = 500,
+  mp = 500, mpmax = 500,
+  ep =   0, epmax = 300,
+  dir = {x = 0, z = 0},
+}
 
 actor.states = {
   std = {
@@ -68,38 +77,63 @@ actor.states = {
     anim = "play"},
 }
 
-actor.info = {
-  faction = "demon",
-  massive = true,
-  hp = 500, hpmax = 500,
-  mp = 500, mpmax = 500,
-  ep =   0, epmax = 300,
-  dir = {x = 0, z = 0},
-  state = {
-    wlk = {
-      spd = {x = 90, z = 90},
-      rng = {min = 144},
-      ep = 1,
-    },
-        
-    atk = {
-      evade = true,
-      dmg = 20,
-      hit = {[2] = {box = {x = 0, y = 53, w = 144, h = 121}, force = {x = 140, y = -180}}},
-      rng = {min = 0, max = 144},
-      ep = 160,
-    },
-        
-    atkalt = {
-      dmg = 15,
-      hit = {[3] = {box = {x = 0, y = 74, w = 154, h = 100}}},
-      rng = {min = 0, max = 154},
-      ep = 160,
-    },
-    
-    hitflr = {evade = true},
-    die = {evade = true},
+actor.rules = {
+  std = {
+    this.think,
+    atkalt = this.isKey{"a[rl]>"},
+    wlk = this.move{"[rlud]+>"},
+    atk = this.isKey{"a>"},
   },
+  wlk = {
+    this.think,
+    wlk = this.move{"[rlud]+>"},
+    std = this.isNoKey,
+  },
+  atk = {
+    atk = this.attack,
+    std = this.isEnded,
+  },
+  hit = {
+    hitair = this.noFloor,
+    std = this.isEnded,
+  },
+  hitair = {
+    hitflr = this.isFloor,
+  },
+  hitflr = {
+    std = this.isEnded,
+    die = this.isDied,
+  },
+  atkalt = {
+    atkalt = this.attack,
+    std = this.isEnded,
+  },
+}
+
+actor.info.state = {
+  wlk = {
+    spd = {x = 90, z = 90},
+    rng = {min = 144},
+    ep = 1,
+  },
+      
+  atk = {
+    evade = true,
+    dmg = 20,
+    hit = {[2] = {box = {x = 0, y = 53, w = 144, h = 121}, force = {x = 140, y = -180}}},
+    rng = {min = 0, max = 144},
+    ep = 160,
+  },
+      
+  atkalt = {
+    dmg = 15,
+    hit = {[3] = {box = {x = 0, y = 74, w = 154, h = 100}}},
+    rng = {min = 0, max = 154},
+    ep = 160,
+  },
+  
+  hitflr = {evade = true},
+  die = {evade = true},
 }
 
 return actor

@@ -49,17 +49,16 @@ return {
     
     player:pos{x = 200, y = 0, z = 425}
     scene.iface:target(player)
---[[    
-    Game.Scene.spawn(scene, "TelArin"):pos{x = 275, y = 0, z = 425}
-    Game.Scene.spawn(scene, "HElfBoss"):pos{x = 300, y = 0, z = 350}
-    Game.Scene.spawn(scene, "HElfBoss"):pos{x = 250, y = 0, z = 500}        
-    Game.Scene.spawn(scene, "HElf"):pos{x = 375, y = 0, z = 350}
-    Game.Scene.spawn(scene, "HElf"):pos{x = 350, y = 0, z = 400}
-    Game.Scene.spawn(scene, "HElf"):pos{x = 325, y = 0, z = 450}
-    Game.Scene.spawn(scene, "HElf"):pos{x = 300, y = 0, z = 500}        
+    
+--    Game.Scene.spawn(scene, "TelArin"):pos{x = 275, y = 0, z = 425}
+--    Game.Scene.spawn(scene, "HElfBoss"):pos{x = 300, y = 0, z = 350}
+--    Game.Scene.spawn(scene, "HElfBoss"):pos{x = 250, y = 0, z = 500}        
+--    Game.Scene.spawn(scene, "HElf"):pos{x = 375, y = 0, z = 350}
+--    Game.Scene.spawn(scene, "HElf"):pos{x = 350, y = 0, z = 400}
+--    Game.Scene.spawn(scene, "HElf"):pos{x = 325, y = 0, z = 450}
+--    Game.Scene.spawn(scene, "HElf"):pos{x = 300, y = 0, z = 500}        
     Game.Scene.spawn(scene, "BHeart"):pos{x = 750, y = 0, z = 500}
-    Game.Scene.spawn(scene, "DWarrior"):pos{x = 750, y = 0, z = 350}
-]]--
+--    Game.Scene.spawn(scene, "DWarrior"):pos{x = 750, y = 0, z = 350}
   end,
   
   rules = {
