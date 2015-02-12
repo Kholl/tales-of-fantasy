@@ -78,7 +78,7 @@ Actor = Class {
     local state = this.info.state[sel]
     if not (this:state() == sel) then this:start(sel) end    
     
-    if state.spd then
+    if state and state.spd then
       local dir = {x = -Math.Sign(dist.x), y = 1, z = -Math.Sign(dist.z)}
       local spd = this:spd()
       
