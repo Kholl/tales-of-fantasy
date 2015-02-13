@@ -83,13 +83,9 @@ Scene = Class {
     if func then return this.actors:filter(func) else return this.actors end
   end,
   
-  getHits = function(this, hit, func)
-    return this.actors:filter(function(actor) return func(actor) and this:isHit(hit, actor) end)
-  end,
-
-  isHit = function(this, hit, actor)
-    local box, off = actor:hitbox(), this:off()
-    box.x, box.y = box.x + off.x, box.y + off.y
-    return Math.Isect(hit, box)
+  getHits = function(this, actor, hit)
+    return this.actors:filter(function(other)
+      return not (actor == other) and Math.Isect(hit, actor:hitbox(this))
+    end)
   end,
 }

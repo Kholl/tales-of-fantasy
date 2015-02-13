@@ -79,18 +79,22 @@ actor.states = {
 
 actor.rules = {
   std = {
-    this.think,
+--    this.think,
     atkalt = this.isKey{"a[rl]>"},
-    wlk = this.move({"[rlud]+>"},{x = 90, z = 90})
+    wlk = this.isKey{"[rlud]+>"},
     atk = this.isKey{"a>"},
   },
   wlk = {
-    this.think,
-    wlk = this.move({"[rlud]+>"},{x = 90, z = 90})
+--    this.think,
+    wlk = this.move({"[rlud]+>"},{spd = {x = 90, z = 90}}),
     std = this.isNoKey,
   },
   atk = {
-    atk = this.attack,
+    atk = this.attack{
+      dmg = 20,
+      hit = {[2] = {box = {x = 0, y = 53, w = 144, h = 121}}},
+      rng = {min = 0, max = 144},
+    },
     std = this.isEnded,
   },
   hit = {
@@ -105,7 +109,11 @@ actor.rules = {
     die = this.isDied,
   },
   atkalt = {
-    atkalt = this.attack,
+    atkalt = this.attack{
+      dmg = 15,
+      hit = {[3] = {box = {x = 0, y = 74, w = 154, h = 100}}},
+      rng = {min = 0, max = 154},
+    },
     std = this.isEnded,
   },
 }
@@ -119,16 +127,10 @@ actor.info.state = {
       
   atk = {
     evade = true,
-    dmg = 20,
-    hit = {[2] = {box = {x = 0, y = 53, w = 144, h = 121}, force = {x = 140, y = -180}}},
-    rng = {min = 0, max = 144},
     ep = 160,
   },
       
   atkalt = {
-    dmg = 15,
-    hit = {[3] = {box = {x = 0, y = 74, w = 154, h = 100}}},
-    rng = {min = 0, max = 154},
     ep = 160,
   },
   

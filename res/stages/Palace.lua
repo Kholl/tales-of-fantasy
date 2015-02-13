@@ -57,7 +57,7 @@ return {
 --    Game.Scene.spawn(scene, "HElf"):pos{x = 350, y = 0, z = 400}
 --    Game.Scene.spawn(scene, "HElf"):pos{x = 325, y = 0, z = 450}
 --    Game.Scene.spawn(scene, "HElf"):pos{x = 300, y = 0, z = 500}        
---    Game.Scene.spawn(scene, "BHeart"):pos{x = 750, y = 0, z = 500}
+    Game.Scene.spawn(scene, "BHeart"):pos{x = 750, y = 0, z = 500}
 --    Game.Scene.spawn(scene, "DWarrior"):pos{x = 750, y = 0, z = 350}
   end,
   

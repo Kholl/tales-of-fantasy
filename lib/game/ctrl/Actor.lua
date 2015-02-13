@@ -96,22 +96,11 @@ Actor = Class {
 
     local hit = info.hit[this:curr():frame()]
     if not hit then return false end
-      
-    local pos, dim, dir = this:pos(), this:dim(), this:dir()
-    local off = scene:off()
-    
-    local hitbox = {
-      x = pos.x + hit.box.x*dir.x + off.x,
-      y = pos.y + pos.z - dim.h + hit.box.y + off.y,
-      w = hit.box.w * dir.x,
-      h = hit.box.h}
-    
-    local hits = scene:getHits(hitbox, function(other)
-      local eucl = this:eucl(other)
-      
-      return not (this == other)
-        and not (this.info.faction == other.info.faction)
-        and Math.InLim(eucl, info.rng)
+          
+    local atkbox = this:hitbox(scene, hit.box)
+    local hits = scene:getHits(this, atkbox):filter(function(other)
+      return not (this.info.faction == other.info.faction)
+        and Math.InLim(this:eucl(other), info.rng)
     end)
       
     hits:each(function(other)
@@ -135,9 +124,10 @@ Actor = Class {
         x = -Math.Sign(dist.x),
         z = -Math.Sign(dist.z)}
       
-      if hit.force.x then other:spd().x = face.x * hit.force.x end
-      if hit.force.z then other:spd().z = face.z * hit.force.z end
-      if hit.force.y then other:spd().y = hit.force.y end
+      local force = hit.force or {}
+      if force.x then other:spd().x = face.x * hit.force.x end
+      if force.z then other:spd().z = face.z * hit.force.z end
+      if force.y then other:spd().y = hit.force.y end
     end)
   end
   end,
@@ -172,7 +162,7 @@ Actor = Class {
   noFloor = function(this) return not this:isFloor() end,
   isFall = function(this) return this:spd().y > 0 end,
   isChain = function(key) return function(this)
-    return this.keybdlg:isKey(key) and this:isEnded()
+    return this.keybdlg and this.keybdlg:isKey(key) and this:isEnded()
   end
   end,
   
@@ -203,8 +193,15 @@ Actor = Class {
     return (this:dir().x * actor:dir().x) == -1
   end,
     
-  hitbox = function(this)
-    local pos, box = this:pos(), this:box()
-    return {x = pos.x - box.w*0.5, y = pos.y + pos.z - box.h, w = box.w, h = box.h}      
+  hitbox = function(this, scene, box)
+    box = box or this:box()
+    local pos, off = this:pos(), scene:off()
+    
+    return {
+      x = pos.x - box.w*0.5 + off.x,
+      y = pos.y + pos.z - box.h + off.y,
+      w = box.w,
+      h = box.h,
+    }
   end,
 }
