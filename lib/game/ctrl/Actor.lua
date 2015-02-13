@@ -91,79 +91,67 @@ Actor = Class {
     end
   end,
   
-  attack = function(this, scene)
+  attack = function(info) return function(this, scene)
     if not this:curr():isStep() then return false end
 
-    local actorState = this.info.state[this:state()]
-    local hit = actorState.hit[this:curr():frame()]
-    local dmg = actorState.dmg
+    local hit = info.hit[this:curr():frame()]
     if not hit then return false end
-    
-    local box = hit.box
+      
     local pos, dim, dir = this:pos(), this:dim(), this:dir()
     local off = scene:off()
     
     local hitbox = {
-      x = pos.x + box.x*dir.x + off.x,
-      y = pos.y + pos.z - dim.h + box.y + off.y,
-      w = box.w * dir.x,
-      h = box.h}
+      x = pos.x + hit.box.x*dir.x + off.x,
+      y = pos.y + pos.z - dim.h + hit.box.y + off.y,
+      w = hit.box.w * dir.x,
+      h = hit.box.h}
     
-    local vars = {}
-    vars.hit = hit
-    vars.dmg = dmg or 0
-    vars.hits = scene:getHits(hitbox, function(other)
+    local hits = scene:getHits(hitbox, function(other)
       local eucl = this:eucl(other)
-      local otherState = other.info.state[other:state()]
       
       return not (this == other)
-        and not (otherState and otherState.evade)
         and not (this.info.faction == other.info.faction)
-        and Math.InLim(eucl, actorState.rng)
+        and Math.InLim(eucl, info.rng)
     end)
       
-    vars.hits:each(function(other)
+    hits:each(function(other)
+      other:face(this)
       other:target(this)        
-      other.info.hp = Math.Lim(other.info.hp - vars.dmg, {min = 0})
+      other.info.hp = Math.Lim(other.info.hp - info.dmg, {min = 0})
 
-      if not (other:state() == "blk" and other:facing(actor)) and
-         not (other:state() == "hit" or other:state() == "hitalt") then
+      local action
+      if other.info.hp > 0
+        then action = Math.Pick{"hit", "hitalt"}
+        else action = "hitair"
+      end
         
-        local action
-        if other.info.hp > 0
-          then action = Math.Pick{"hit", "hitalt"}
-          else action = "hitair"
-        end
-        
-        if other.states[action]
-          then other:start(action)
-          else other:start("hit")
-        end
+      if other.states[action]
+        then other:start(action)
+        else other:start("hit")
       end
       
-      local force = vars.hit.force or {}
       local dist = this:dist(other)
       local face = {
         x = -Math.Sign(dist.x),
         z = -Math.Sign(dist.z)}
       
-      other:face()
-      if force.x then other:spd().x = face.x * force.x end
-      if force.z then other:spd().z = face.z * force.z end
-      if force.y then other:spd().y = force.y end
+      if hit.force.x then other:spd().x = face.x * hit.force.x end
+      if hit.force.z then other:spd().z = face.z * hit.force.z end
+      if hit.force.y then other:spd().y = hit.force.y end
     end)
+  end
   end,
   
-  move = function(key) return function(this, scene, next)
+  move = function(key, info) return function(this, scene, next)
     local isKey = this.keybdlg and this.keybdlg:isKey(key)
-    local state = this.info.state[next] or {}
-    if state.spd and isKey then
+    
+    if info and info.spd and isKey then
       local spd = this:spd()
-      if state.spd.y then spd.y = state.spd.y end
-      if this.keybdlg:isUp() then spd.z = -(state.spd.z or 0) end
-      if this.keybdlg:isDown() then spd.z = state.spd.z or 0 end
-      if this.keybdlg:isLeft() then spd.x, this:dir().x = -state.spd.x or 0, -1 end
-      if this.keybdlg:isRight() then spd.x, this:dir().x = state.spd.x or 0,  1 end
+      if info.spd.y then spd.y = info.spd.y end
+      if this.keybdlg:isUp() then spd.z = -(info.spd.z or 0) end
+      if this.keybdlg:isDown() then spd.z = info.spd.z or 0 end
+      if this.keybdlg:isLeft() then spd.x, this:dir().x = -info.spd.x or 0, -1 end
+      if this.keybdlg:isRight() then spd.x, this:dir().x = info.spd.x or 0,  1 end
       
       this:spd(spd)    
     end

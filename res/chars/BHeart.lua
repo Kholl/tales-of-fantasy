@@ -81,12 +81,12 @@ actor.rules = {
   std = {
     this.think,
     atkalt = this.isKey{"a[rl]>"},
-    wlk = this.move{"[rlud]+>"},
+    wlk = this.move({"[rlud]+>"},{x = 90, z = 90})
     atk = this.isKey{"a>"},
   },
   wlk = {
     this.think,
-    wlk = this.move{"[rlud]+>"},
+    wlk = this.move({"[rlud]+>"},{x = 90, z = 90})
     std = this.isNoKey,
   },
   atk = {

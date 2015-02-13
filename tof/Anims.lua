@@ -4,9 +4,9 @@ Tales Of Fantasy
 ]]--
 
 return {
-  Air = function(actor)
+  Air = function(actor, max)
     return function(sprite)
-      local k = actor:spd().y / actor.info.state.jmp.spd.y
+      local k = actor:spd().y / max
       return (sprite.data.nframes) * (1 - k) * 0.5
     end
   end,

@@ -41,7 +41,7 @@ actor.states = {
     dim = {w = 62, h = 98},
     frate = 0,
     nframes = 8,
-    anim = Game.Anim.Air(this)},
+    anim = Game.Anim.Air(this, -220)},
   jmpatk = {
     res = "res/chars/lucia/jmpatk.png",
     rad = 0,
@@ -144,76 +144,104 @@ actor.states = {
     frate = 2,
     nframes = 12,
     anim = "idle"},
-  dodge = {
-    res = "res/chars/lucia/atkflr.png",
-    dim = {w = 106, h = 41},
-    frate = {8, 16},
-    nframes = 2,
-    anim = "play"},
 }
 
 actor.rules = {
   std = {
-    atkup = this.move{"au>u>d>"},
+    atkup = this.move({"au>u>d>"},{spd = {y = -220}}),
     atkalt = this.isKey{"a[rl]>"},
     atkrnd = this.isKey{"ab>"},
     blk = this.isKey{"ad>"},
-    jmp = this.move{"b[rlud]*>"},
-    wlk = this.move{"[rlud]+>"},
+    jmp = this.move({"b[rlud]*>"},{spd = {x = 100, y = -220}}),
+    wlk = this.move({"[rlud]+>"},{spd = {x = 100, z = 100}}),
     atk = this.isKey{"a>"},
   },
   wlk = {
-    atkup = this.move{"au>u>d>"},
-    jmp = this.move{"[rlud]*b>"},
-    run = this.move{"r>r>", "l>l>"},
-    wlk = this.move{"[rlud]+>"},
+    atkup = this.move({"au>u>d>"},{spd = {y = -220}}),
+    jmp = this.move({"[rlud]*b>"},{spd = {x = 100, y = -220}}),
+    run = this.move({"r>r>", "l>l>"},{spd = {x = 200}}),
+    wlk = this.move({"[rlud]+>"},{spd = {x = 100, z = 100}}),
     std = this.isNoKey,
   },
   run = {
-    atkup = this.move{"au>u>d>"},
+    atkup = this.move({"au>u>d>"},{spd = {y = -180}}),
     runatk = this.isKey{"ar>r>r>", "al>l>l>"},
-    dodge = this.isKey{"rd>r>r>", "ld>l>l>"},
-    run = this.move{"r>r>", "l>l>"},
-    jmp = this.move{"[rlud]*b>"},
+    run = this.move({"r>r>", "l>l>"},{spd = {x = 200}}),
+    jmp = this.move({"[rlud]*b>"},{spd = {x = 200, y = -180}}),
     runend = this.isNoKey,
   },
   runend = {
     std = this.isEnded,
   },
   runatk = {
-    this.attack,
+    this.attack{
+      dmg = 6,
+      hit = {[3] = {box = {x = 0, y = 0, w = 80, h = 92},force = {x = 180, y = -220}}},
+      rng = {min = 0, max = 80},
+    },
     std = this.isEnded,
   },
   atk = {
-    this.attack,
+    this.attack{
+      dmg = 6,
+      hit = {[5] = {box = {x = 0, y = 0, w = 82, h = 82}}},
+      rng = {min = 0, max = 82},
+    },
     atksq1 = this.isChain{"a>a>"},
     std = this.isEnded,
   },
   atkalt = {
-    this.attack,
+    this.attack{
+      dmg = 10,
+      hit = {[5] = {box = {x = 0, y = 0, w = 82, h = 96}, force = {x = 100, y = -200}}},
+      rng = {min = 0, max = 82},
+    },
     std = this.isEnded,
   },
   atkup = {
-    this.attack,
+    this.attack{
+      dmg = 8,
+      hit = {[1] = {box = {x = 0, y = 0, w = 60, h = 95}, force = {x = 0, y = -220}}},
+      rng = {min = 0, max = 60},
+    },
     jmp = this.isEnded,
     std = this.isFloor,
   },
   atkrnd = {
-    this.attack,
+    this.attack{
+      dmg = 8,
+      hit = {
+        [1] = {box = {x = -81, y = 13, w = 81, h = 69}, force = {x = 100, y = -200}},
+        [3] = {box = {x =   0, y = 13, w = 81, h = 69}, force = {x = 100, y = -200}},
+      },
+      rng = {min = 0, max = 81},
+    },
     std = this.isEnded,
   },
   atksq1 = {
-    this.attack,
+    this.attack{
+      dmg = 8,
+      hit = {[4] = {box = {x = 0, y = 0, w = 100, h = 73}}},
+      rng = {min = 0, max = 100},
+    },
     atksq2 = this.isChain{"a>a>a>"},
     std = this.isEnded,
   },
   atksq2 = {
-    this.attack,
+    this.attack{
+      dmg = 10,
+      hit = {[3] = {box = {x = 0, y = 14, w = 105, h = 51}}},
+      rng = {min = 0, max = 105},
+    },
     atksq3 = this.isChain{"a>a>a>a>"},
     std = this.isEnded,
   },
   atksq3 = {
-    this.attack,
+    this.attack{
+      dmg = 12,
+      hit = {[5] = {box = {x = 0, y = 0, w = 111, h = 85}, force = {x = 180, y = -220}}},
+      rng = {min = 0, max = 111},
+    },
     std = this.isEnded,
   },
   jmp = {
@@ -221,7 +249,11 @@ actor.rules = {
     std = this.isFloor,
   },
   jmpatk = {
-    this.attack,
+    this.attack{
+      dmg = 8,
+      hit = {[3] = {box = {x = 0, y = 0, w = 80, h = 96}, force = {x = 120}}},
+      rng = {min = 0, max = 80},
+    },
     jmp = this.isEnded,
     std = this.isFloor,
   },
@@ -246,113 +278,6 @@ actor.rules = {
   blk = {
     blk = this.isKey{"ad>"},
     std = this.isNoKey,
-  },
-  dodge = {
-    std = this.isEnded,
-  },
-}
-
-actor.info.state = {
-  wlk = {
-    spd = {x = 100, z = 100},
-    rng = {min = 60},
-    ep = 1,
-  },
-  
-  run = {
-    spd = {x = 200},
-    rng = {min = 160},
-    ep = 1,
-  },
-
-  atk = {
-    dmg = 6,
-    hit = {[5] = {box = {x = 0, y = 0, w = 82, h = 82}}},
-    rng = {min = 0, max = 82},
-    ep = 120,
-  },
-  
-  jmp = {
-    rng = {min = 120, max = 140},
-    spd = {x = 100, y = -220},
-    ep = 120,
-  },
-  
-  jmpatk = {
-    dmg = 8,
-    hit = {[3] = {box = {x = 0, y = 0, w = 80, h = 96}, force = {x = 120}}},
-    rng = {min = 0, max = 80},
-    ep = 0,
-  },
-  
-  atkalt = {
-    dmg = 10,
-    hit = {[5] = {box = {x = 0, y = 0, w = 82, h = 96}, force = {x = 100, y = -200}}},
-    rng = {min = 0, max = 82},
-    ep = 120,
-  },
-
-  runatk = {
-    dmg = 6,
-    hit = {[3] = {box = {x = 0, y = 0, w = 80, h = 92}, force = {x = 180, y = -220}}},
-    rng = {min = 0, max = 80},
-    ep = 120,
-  },
-  
-  atkup = {
-    evade = true,
-    dmg = 8,
-    spd = {y = -220},
-    hit = {[1] = {box = {x = 0, y = 0, w = 60, h = 95}, force = {x = 0, y = -220}}},
-    rng = {min = 0, max = 60},
-    ep = 120,
-  },
-  
-  atkrnd = {
-    evade = true,
-    dmg = 8,
-    hit = {
-      [1] = {box = {x = -81, y = 13, w = 81, h = 69}, force = {x = 100, y = -200}},
-      [3] = {box = {x =   0, y = 13, w = 81, h = 69}, force = {x = 100, y = -200}},
-    },
-    rng = {min = 0, max = 81},
-    ep = 120,
-  },
-  
-  atksq1 = {
-    dmg = 8,
-    hit = {[4] = {box = {x = 0, y = 0, w = 100, h = 73}}},
-    rng = {min = 0, max = 100},
-    ep = 0,
-  },
-  
-  atksq2 = {
-    dmg = 10,
-    hit = {[3] = {box = {x = 0, y = 14, w = 105, h = 51}}},
-    rng = {min = 0, max = 105},
-    ep = 0,
-  },
-
-  atksq3 = {
-    dmg = 12,
-    hit = {[5] = {box = {x = 0, y = 0, w = 111, h = 85}, force = {x = 180, y = -220}}},
-    rng = {min = 0, max = 111},
-    ep = 0,
-  },
-  
-  hitflr = {evade = true},
-  die = {evade = true},
-  
-  blk = {
-    rng = {min = 0, max = 40},
-    ep = 1,
-  },
-  
-  dodge = {
-    evade = true,
-    spd = {x = 300},
-    rng = {min = 40, max = 120},
-    ep = 120,
   },
 }
 
