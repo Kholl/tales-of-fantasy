@@ -43,6 +43,7 @@ SpriteDraw = Class {
     local pos = imageData:pos()
     local dir = imageData:dir()
     local pad = spriteData:pad()
+    local rad = spriteData:rad()
     local off = scene:off()
     local ratio = scene:ratio()
     

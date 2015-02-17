@@ -21,10 +21,10 @@ Math = {
       else return val
     end
   end,
-  
+  --[[
   Dist = function(a, b) return {x = a.x - b.x, y = a.y - b.y, z = a.z - b.z} end,
   
-  Angle = function(a, b) return math.atan2(a.z - b.z, a.x - b.x) end,
+  Angle = function(a, b) return  end,
     
   Isect = function(box1, box2)
     local r1 = {x1 = box1.x, y1 = box1.y, x2 = box1.x + box1.w, y2 = box1.y + box1.h}
@@ -40,6 +40,7 @@ Math = {
       (dist >= -(lim and lim.max or Math.MAX) and dist <= -(lim and lim.min or 0)) or
       (dist <=  (lim and lim.max or Math.MAX) and dist >=  (lim and lim.min or 0))
   end,
+  ]]--
   
   Pick = function(list) return list[math.random(1, #list)] end,
   Ratio = function(a, b) return a / (a + b) end,

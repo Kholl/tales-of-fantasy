@@ -79,13 +79,14 @@ actor.states = {
 
 actor.rules = {
   std = {
---    this.think,
+    this.check,
+    this.think,
     atkalt = this.isKey{"a[rl]>"},
     wlk = this.isKey{"[rlud]+>"},
     atk = this.isKey{"a>"},
   },
   wlk = {
---    this.think,
+    this.think,
     wlk = this.move({"[rlud]+>"},{spd = {x = 90, z = 90}}),
     std = this.isNoKey,
   },

@@ -22,6 +22,12 @@ Actor = Class {
     this.info = init and init.info or {}
     this.keybdlg = false
     this.actrdlg = ActorDlg.new(init.rules)
+    
+    -- External functions
+    this.damage = init.damage or Actor.damage
+    this.priority = init.priority or Actor.priority
+    this.isTarget = init.isTarget or Actor.isTarget
+    this.isHit = init.isHit or Actor.isHit
   end,
   
   draw = function(this, scene)
@@ -47,21 +53,16 @@ Actor = Class {
   floor = function(this, val) return this.data:floor(val) end,
   target = function(this, val) return this.data:target(val) end,  
   
-  think = function(this, scene)
-    if not this:target() then
-      local selectFunc = function(target)
-        return not (this == target)
-          and not (this.info.faction == target.info.faction)
-          and not (this.info.hp == 0)
-      end
-
-      local sortFunc = function(targetA, targetB)
-        return this:eucl(targetA) < this:eucl(targetB)
-      end
-
-      this:target(scene:getActors(selectFunc):sort(sortFunc):first())
-    end
+  check = function(this, scene)
+    if this:target() then return end
     
+    local filter = function(actor) return this:isTarget(actor) end
+    local sorter = function(a, b) return this:priority(a) < this:priority(b) end
+    local target = scene:getActors(selectFunc):filter(filter):sort(sorter):first()
+    this:target(target)
+  end,
+    
+  think = function(this, scene)
     local dist = this:dist()
     local eucl = this:eucl()
     local sel, best = "std", 0
@@ -97,42 +98,25 @@ Actor = Class {
     local hit = info.hit[this:curr():frame()]
     if not hit then return false end
           
-    local atkbox = this:hitbox(scene, hit.box)
-    local hits = scene:getHits(this, atkbox):filter(function(other)
-      return not (this.info.faction == other.info.faction)
-        and Math.InLim(this:eucl(other), info.rng)
-    end)
+    scene:getHits(this):each(function(actor)
+      actor:face(this)
+      actor:target(this)
       
-    hits:each(function(other)
-      other:face(this)
-      other:target(this)        
-      other.info.hp = Math.Lim(other.info.hp - info.dmg, {min = 0})
-
-      local action
-      if other.info.hp > 0
-        then action = Math.Pick{"hit", "hitalt"}
-        else action = "hitair"
-      end
-        
-      if other.states[action]
-        then other:start(action)
-        else other:start("hit")
-      end
+      local action = this:damage(actor)
+      actor:start(action or "hit")
       
-      local dist = this:dist(other)
-      local face = {
-        x = -Math.Sign(dist.x),
-        z = -Math.Sign(dist.z)}
+      local dist = this:dist(actor)
+      local face = {x = -Math.Sign(dist.x), z = -Math.Sign(dist.z)}
       
       local force = hit.force or {}
-      if force.x then other:spd().x = face.x * hit.force.x end
-      if force.z then other:spd().z = face.z * hit.force.z end
-      if force.y then other:spd().y = hit.force.y end
+      if force.x then actor:spd().x = face.x * hit.force.x end
+      if force.z then actor:spd().z = face.z * hit.force.z end
+      if force.y then actor:spd().y = hit.force.y end
     end)
   end
   end,
   
-  move = function(key, info) return function(this, scene, next)
+  move = function(key, info) return function(this, scene)
     local isKey = this.keybdlg and this.keybdlg:isKey(key)
     
     if info and info.spd and isKey then
@@ -168,17 +152,19 @@ Actor = Class {
   
   dist = function(this, actor)
     actor = actor or this:target()
-    return Math.Dist(this:pos(), actor:pos())
+    local a, b = this:pos(), actor:pos()
+    return {x = math.abs(a.x - b.x), z = math.abs(a.z - b.z)}
   end,
   
   eucl = function(this, actor)
     local d = this:dist(actor)
-    return math.sqrt(d.x*d.x + d.y*d.y + d.z*d.z)
+    return math.sqrt(d.x * d.x + d.z * d.z)
   end,
   
   angle = function(this, actor)
     actor = actor or this:target()
-    local angle = Math.Angle(this:pos(), actor:pos())
+    local a, b = this:pos(), actor:pos()
+    local angle = math.atan2(a.z - b.z, a.x - b.x)
     return {x = math.cos(angle), z = math.sin(angle)}
   end,
   
@@ -188,20 +174,19 @@ Actor = Class {
     return this
   end,
   
-  facing = function(this, actor)
-    actor = actor or this:target()
-    return (this:dir().x * actor:dir().x) == -1
-  end,
+  damage = function(this, actor) end,
+  priority = function(this, actor) return this:eucl(actor) end,
+  isTarget = function(this, actor) return not (this == actor) end,
+  isHit = function(this, actor)
+    local f = Math.Sign(this:dir().x)
+    local d = this:dist(actor)
+    if (f ==  1 and this:pos().x < actor:pos().x) or
+       (f == -1 and this:pos().x > actor:pos().x) then
+      
+      local x, z = (this:dim().w * 0.5) + actor:rad(), actor:rad()
+      return d.x < x and d.z < z
+    end
     
-  hitbox = function(this, scene, box)
-    box = box or this:box()
-    local pos, off = this:pos(), scene:off()
-    
-    return {
-      x = pos.x - box.w*0.5 + off.x,
-      y = pos.y + pos.z - box.h + off.y,
-      w = box.w,
-      h = box.h,
-    }
+    return false
   end,
 }
