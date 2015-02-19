@@ -14,7 +14,10 @@ ActorDlg = Moo.Class {
     local state = actor:state()
     local rules = actor.rules[state] or {}
     Each(rules, function(rule, action)
-      if rule(actor, scene) and not (actor:state() == action) then
+      if rule(actor, scene)
+        and actor.states[action]
+        and not (actor:state() == action) then
+        
         actor:start(action)
       end
     end)

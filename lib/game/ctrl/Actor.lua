@@ -181,7 +181,7 @@ Actor = Class {
     actor:start(action or "hit")
       
     local dist = this:dist(actor)
-    local dirx = Math.Sign(dist.x)
+    local dirx = Math.Sign(actor:pos().x - this:pos().x)
       
     local force = hit.force or {}
     if force.x then actor:spd().x = dirx * hit.force.x end
