@@ -10,6 +10,7 @@ Moo.List = function(class)
     create = function(this, list) this.list = list or {} end,
     
     clear = function(this) this.list = {} end,
+    empty = function(this) return this:size() == 0 end,
     size = function(this) return #this.list end,
     each = function(this, func) Moo.Each(this.list, func) end,
     

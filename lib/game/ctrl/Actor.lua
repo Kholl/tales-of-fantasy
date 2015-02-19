@@ -24,10 +24,10 @@ Actor = Class {
     this.actrdlg = ActorDlg.new(init.rules)
     
     -- External functions
-    this.damage = init.damage or Actor.damage
     this.priority = init.priority or Actor.priority
     this.isTarget = init.isTarget or Actor.isTarget
     this.isHit = init.isHit or Actor.isHit
+    this.hit = init.hit or Actor.hit
   end,
   
   draw = function(this, scene)
@@ -53,6 +53,7 @@ Actor = Class {
   floor = function(this, val) return this.data:floor(val) end,
   target = function(this, val) return this.data:target(val) end,  
   
+  -- Delegates
   check = function(this, scene)
     if this:target() then return end
     
@@ -93,62 +94,47 @@ Actor = Class {
   end,
   
   attack = function(info) return function(this, scene)
-    if not this:curr():isStep() then return false end
-
-    local hit = info.hit[this:curr():frame()]
-    if not hit then return false end
-          
-    scene:getHits(this):each(function(actor)
-      actor:face(this)
-      actor:target(this)
-      
-      local action = this:damage(actor)
-      actor:start(action or "hit")
-      
-      local dist = this:dist(actor)
-      local face = {x = -Math.Sign(dist.x), z = -Math.Sign(dist.z)}
-      
-      local force = hit.force or {}
-      if force.x then actor:spd().x = face.x * hit.force.x end
-      if force.z then actor:spd().z = face.z * hit.force.z end
-      if force.y then actor:spd().y = hit.force.y end
-    end)
+    scene:getHits(this):each(function(actor) this:hit(actor, info) end)
   end
   end,
-  
-  move = function(key, info) return function(this, scene)
-    local isKey = this.keybdlg and this.keybdlg:isKey(key)
+
+  move = function(info) return function(this, scene)
+    local spd = this:spd()
+    if info.spd.y then spd.y = info.spd.y end
+    if this.keybdlg:isUp() then spd.z = -(info.spd.z or 0) end
+    if this.keybdlg:isDown() then spd.z = info.spd.z or 0 end
+    if this.keybdlg:isLeft() then spd.x, this:dir().x = -info.spd.x or 0, -1 end
+    if this.keybdlg:isRight() then spd.x, this:dir().x = info.spd.x or 0,  1 end
     
-    if info and info.spd and isKey then
-      local spd = this:spd()
-      if info.spd.y then spd.y = info.spd.y end
-      if this.keybdlg:isUp() then spd.z = -(info.spd.z or 0) end
-      if this.keybdlg:isDown() then spd.z = info.spd.z or 0 end
-      if this.keybdlg:isLeft() then spd.x, this:dir().x = -info.spd.x or 0, -1 end
-      if this.keybdlg:isRight() then spd.x, this:dir().x = info.spd.x or 0,  1 end
-      
-      this:spd(spd)    
-    end
-    return isKey
-  end
-  end,
-
-  isKey = function(key) return function(this)
-    return this.keybdlg and this.keybdlg:isKey(key)
+    this:spd(spd)
   end
   end,
   
+  isKey = function(key, cmd) return function(this)
+    local event = this.keybdlg and this.keybdlg:isKey(key)
+    if event and cmd then cmd(this, scene) end
+    return event
+  end
+  end,
+  
+  isFrame = function(nframe, cmd) return function(this, scene)
+    local event = this:curr():isStep() and this:curr():frame() == nframe
+    if event and cmd then cmd(this, scene) end
+    return event
+  end
+  end,
+      
+  isChain = function(key) return function(this)
+    return this.keybdlg and this.keybdlg:isKey(key) and this:isEnded()
+  end
+  end,
+
   isNoKey = function(this) return this.keybdlg and this.keybdlg:isNoKey() end,
-    
   isEnded = function(this) return this:curr():isEnded() end,
   isDied = function(this) return this.info.hp == 0 end,
   isFloor = function(this) return this.data:floor() end,
   noFloor = function(this) return not this:isFloor() end,
   isFall = function(this) return this:spd().y > 0 end,
-  isChain = function(key) return function(this)
-    return this.keybdlg and this.keybdlg:isKey(key) and this:isEnded()
-  end
-  end,
   
   dist = function(this, actor)
     actor = actor or this:target()
@@ -174,7 +160,6 @@ Actor = Class {
     return this
   end,
   
-  damage = function(this, actor) end,
   priority = function(this, actor) return this:eucl(actor) end,
   isTarget = function(this, actor) return not (this == actor) end,
   isHit = function(this, actor)
@@ -188,5 +173,19 @@ Actor = Class {
     end
     
     return false
+  end,
+  
+  hit = function(this, actor, hit)
+    actor:face(this)
+    actor:target(this)
+    actor:start(action or "hit")
+      
+    local dist = this:dist(actor)
+    local dirx = Math.Sign(dist.x)
+      
+    local force = hit.force or {}
+    if force.x then actor:spd().x = dirx * hit.force.x end
+    if force.y then actor:spd().y = hit.force.y end
+    if force.z then actor:spd().z = hit.force.z end
   end,
 }

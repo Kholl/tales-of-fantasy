@@ -80,22 +80,18 @@ actor.states = {
 actor.rules = {
   std = {
     this.check,
-    this.think,
+--    this.think,
     atkalt = this.isKey{"a[rl]>"},
     wlk = this.isKey{"[rlud]+>"},
     atk = this.isKey{"a>"},
   },
   wlk = {
-    this.think,
+--    this.think,
     wlk = this.move({"[rlud]+>"},{spd = {x = 90, z = 90}}),
     std = this.isNoKey,
   },
   atk = {
-    atk = this.attack{
-      dmg = 20,
-      hit = {[2] = {box = {x = 0, y = 53, w = 144, h = 121}}},
-      rng = {min = 0, max = 144},
-    },
+    this.isFrame(2, this.attack{dmg = 20}),
     std = this.isEnded,
   },
   hit = {
@@ -110,11 +106,7 @@ actor.rules = {
     die = this.isDied,
   },
   atkalt = {
-    atkalt = this.attack{
-      dmg = 15,
-      hit = {[3] = {box = {x = 0, y = 74, w = 154, h = 100}}},
-      rng = {min = 0, max = 154},
-    },
+    this.isFrame(3, this.attack{dmg = 15}),
     std = this.isEnded,
   },
 }

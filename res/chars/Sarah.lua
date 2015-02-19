@@ -148,100 +148,24 @@ actor.states = {
 
 actor.rules = {
   std = {
-    atkup = this.move({"au>u>d>"},{spd = {y = -220}}),
+    atkup = this.isKey({"au>u>d>"}, this.move{spd = {y = -220}}),
     atkalt = this.isKey{"a[rl]>"},
     atkrnd = this.isKey{"ab>"},
     blk = this.isKey{"ad>"},
-    jmp = this.move({"b[rlud]*>"},{spd = {x = 100, y = -220}}),
+    jmp = this.isKey({"b[rlud]*>"}, this.move{spd = {x = 100, y = -220}}),
     wlk = this.isKey{"[rlud]+>"},
     atk = this.isKey{"a>"},
   },
   wlk = {
-    atkup = this.move({"au>u>d>"},{spd = {y = -220}}),
-    jmp = this.move({"[rlud]*b>"},{spd = {x = 100, y = -220}}),
+    atkup = this.isKey({"au>u>d>"}, this.move{spd = {y = -220}}),
+    jmp = this.isKey({"[rlud]*b>"}, this.move{spd = {x = 100, y = -220}}),
     run = this.isKey{"r>r>", "l>l>"},
-    wlk = this.move({"[rlud]+>"},{spd = {x = 100, z = 100}}),
+    wlk = this.isKey({"[rlud]+>"}, this.move{spd = {x = 100, z = 100}}),
     std = this.isNoKey,
   },
-  run = {
-    atkup = this.move({"au>u>d>"},{spd = {y = -180}}),
-    runatk = this.isKey{"ar>r>r>", "al>l>l>"},
-    run = this.move({"r>r>", "l>l>"},{spd = {x = 200}}),
-    jmp = this.move({"[rlud]*b>"},{spd = {x = 200, y = -180}}),
-    runend = this.isNoKey,
-  },
-  runend = {
-    std = this.isEnded,
-  },
-  runatk = {
-    this.attack{
-      dmg = 6,
-      hit = {[3] = {box = {x = 0, y = 0, w = 80, h = 92},force = {x = 180, y = -220}}},
-      rng = {min = 0, max = 80},
-    },
-    std = this.isEnded,
-  },
   atk = {
-    this.attack{
-      dmg = 6,
-      hit = {[5] = {box = {x = 0, y = 0, w = 82, h = 82}}},
-      rng = {min = 0, max = 82},
-    },
+    atk = this.isFrame(5, this.attack{dmg = 6}),
     atksq1 = this.isChain{"a>a>"},
-    std = this.isEnded,
-  },
-  atkalt = {
-    this.attack{
-      dmg = 10,
-      hit = {[5] = {box = {x = 0, y = 0, w = 82, h = 96}, force = {x = 100, y = -200}}},
-      rng = {min = 0, max = 82},
-    },
-    std = this.isEnded,
-  },
-  atkup = {
-    this.attack{
-      dmg = 8,
-      hit = {[1] = {box = {x = 0, y = 0, w = 60, h = 95}, force = {x = 0, y = -220}}},
-      rng = {min = 0, max = 60},
-    },
-    jmp = this.isEnded,
-    std = this.isFloor,
-  },
-  atkrnd = {
-    this.attack{
-      dmg = 8,
-      hit = {
-        [1] = {box = {x = -81, y = 13, w = 81, h = 69}, force = {x = 100, y = -200}},
-        [3] = {box = {x =   0, y = 13, w = 81, h = 69}, force = {x = 100, y = -200}},
-      },
-      rng = {min = 0, max = 81},
-    },
-    std = this.isEnded,
-  },
-  atksq1 = {
-    this.attack{
-      dmg = 8,
-      hit = {[4] = {box = {x = 0, y = 0, w = 100, h = 73}}},
-      rng = {min = 0, max = 100},
-    },
-    atksq2 = this.isChain{"a>a>a>"},
-    std = this.isEnded,
-  },
-  atksq2 = {
-    this.attack{
-      dmg = 10,
-      hit = {[3] = {box = {x = 0, y = 14, w = 105, h = 51}}},
-      rng = {min = 0, max = 105},
-    },
-    atksq3 = this.isChain{"a>a>a>a>"},
-    std = this.isEnded,
-  },
-  atksq3 = {
-    this.attack{
-      dmg = 12,
-      hit = {[5] = {box = {x = 0, y = 0, w = 111, h = 85}, force = {x = 180, y = -220}}},
-      rng = {min = 0, max = 111},
-    },
     std = this.isEnded,
   },
   jmp = {
@@ -249,13 +173,50 @@ actor.rules = {
     std = this.isFloor,
   },
   jmpatk = {
-    this.attack{
-      dmg = 8,
-      hit = {[3] = {box = {x = 0, y = 0, w = 80, h = 96}, force = {x = 120}}},
-      rng = {min = 0, max = 80},
-    },
+    jmpatk = this.isFrame(3, this.attack{dmg = 8, force = {x = 120}}),
     jmp = this.isEnded,
     std = this.isFloor,
+  },
+  run = {
+    atkup = this.isKey({"au>u>d>"}, this.move{spd = {y = -180}}),
+    runatk = this.isKey{"ar>r>r>", "al>l>l>"},
+    run = this.isKey({"r>r>", "l>l>"}, this.move{spd = {x = 200}}),
+    jmp = this.isKey({"[rlud]*b>"}, this.move{spd = {x = 200, y = -180}}),
+    runend = this.isNoKey,
+  },
+  runend = {
+    std = this.isEnded,
+  },
+  runatk = {
+    runatk = this.isFrame(3, this.attack{dmg = 6, force = {x = 180, y = -220}}),
+    std = this.isEnded,
+  },
+  atkalt = {
+    atkalt = this.isFrame(5, this.attack{dmg = 10, force = {x = 100, y = -200}}),
+    std = this.isEnded,
+  },
+  atkup = {
+    atkup = this.isFrame(1, this.attack{dmg = 8, force = {y = -220}}),
+    jmp = this.isEnded,
+    std = this.isFloor,
+  },
+  atkrnd = {
+    atkrnd = this.isFrame(1, this.attack{dmg = 8, force = {x = 100, y = -200}}),
+    std = this.isEnded,
+  },
+  atksq1 = {
+    atksq1 = this.isFrame(4, this.attack{dmg = 8}),
+    atksq2 = this.isChain{"a>a>a>"},
+    std = this.isEnded,
+  },
+  atksq2 = {
+    atksq2 = this.isFrame(3, this.attack{dmg = 10}),
+    atksq3 = this.isChain{"a>a>a>a>"},
+    std = this.isEnded,
+  },
+  atksq3 = {
+    atksq3 = this.isFrame(5, this.attack{dmg = 12}),
+    std = this.isEnded,
   },
   hit = {
     hitair = this.noFloor,
