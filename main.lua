@@ -17,7 +17,7 @@ Dependency "resource" (Cache.new{
 })
 
 -- Load Game custom program
-Moo.Game = require("tof/ToF")
+Moo.Game = require("res/game/ToF")
 
 require("lib/game/ctrl/Scene")
 

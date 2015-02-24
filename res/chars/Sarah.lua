@@ -157,8 +157,8 @@ actor.rules = {
     atk = this.isKey{"a>"},
   },
   wlk = {
-    atkup = this.isKey({"au>u>d>"}, this.move{spd = {y = -220}}),
-    jmp = this.isKey({"[rlud]*b>"}, this.move{spd = {x = 100, y = -220}}),
+    atkup = this.isKey({"au>u>d>"}, this.move{spd = {y = -200}}),
+    jmp = this.isKey({"[rlud]*b>"}, this.move{spd = {x = 100, y = -200}}),
     run = this.isKey{"r>r>", "l>l>"},
     wlk = this.isKey({"[rlud]+>"}, this.move{spd = {x = 100, z = 100}}),
     std = this.isNoKey,

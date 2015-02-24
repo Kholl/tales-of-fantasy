@@ -77,8 +77,6 @@ KeybDlg = Class {
     
     this.key, this.match, this.matchlen = "", "", 0
     Each(this.list, function(key) this.key = key .. ">" .. this.key end)
-      
-      print(this.key)
   end,
   
   isChangedKey = function(this) return not (this.currkey:lower() == this.prevkey:lower()) end,  

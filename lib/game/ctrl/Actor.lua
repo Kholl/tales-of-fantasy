@@ -4,24 +4,28 @@ Moo Object Oriented framework for LUA
 ]]--
 
 require("lib/game/ctrl/State")
+require("lib/game/ctrl/dlgs/ActorDlg")
 require("lib/game/data/ActorData")
 
 Actor = Class {
   super = State,
   
+  keyb = nil,
+  auto = nil,
+  actor = nil,
+
   data = nil,
   info = nil,
-  rules = nil,
-  keybdlg = nil,
-  actrdlg = nil,
   
   create = function(this, init)
     State.create(this, init)
+    
     this.data = ActorData.new(init)
-    this.rules = init.rules or {}
+    this.actor = ActorDlg.new(init)
     this.info = init and init.info or {}
-    this.keybdlg = false
-    this.actrdlg = ActorDlg.new(init.rules)
+    
+    this.keyb = false
+    this.auto = false
     
     -- External functions
     this.priority = init.priority or Actor.priority
@@ -37,11 +41,12 @@ Actor = Class {
   update = function(this, scene)
     State.update(this, scene)
     
-    if this.keybdlg then this.keybdlg:update(this, scene) end
-    this.actrdlg:update(this, scene)
-  end,
+    if this.auto then this.auto:update(this, scene)
+    elseif this.keyb then this.keyb:update(this, scene)
+    end
   
-  keyb = function(this, init) this.keybdlg = KeybDlg.new(init) end,
+    this.actor:update(this, scene)
+  end,
   
   dim = function(this) return this:curr():dim() end,
   box = function(this) return this:curr():box() end,
@@ -51,95 +56,20 @@ Actor = Class {
   spd = function(this, val) return this.data:spd(val) end,
   mass = function(this, val) return this.data:mass(val) end,
   floor = function(this, val) return this.data:floor(val) end,
-  target = function(this, val) return this.data:target(val) end,  
-  
-  -- Delegates
-  check = function(this, scene)
-    if this:target() then return end
+  target = function(this, val) return this.data:target(val) end,
     
-    local filter = function(actor) return this:isTarget(actor) end
-    local sorter = function(a, b) return this:priority(a) < this:priority(b) end
-    local target = scene:getActors(selectFunc):filter(filter):sort(sorter):first()
-    this:target(target)
-  end,
-    
-  think = function(this, scene)
-    local dist = this:dist()
-    local eucl = this:eucl()
-    local sel, best = "std", 0
-    local actions = this.rules[this:state()]
-    
-    Each(actions, function(func, action)
-      local state = this.info.state[action]
-      if not state or not state.rng or not Math.InLim(eucl, state.rng) then return end
-      
-      local val = state.spd and state.spd.x or Math.Rand(1, 10)
-      if best < val then sel, best = action, val end
-    end)
+  useKeyb = function(this, dlg) this.keyb = dlg; return this end,
+  useAuto = function(this, dlg) this.auto = dlg; return this end,
   
-    local state = this.info.state[sel]
-    if not (this:state() == sel) then this:start(sel) end    
-    
-    if state and state.spd then
-      local dir = {x = -Math.Sign(dist.x), y = 1, z = -Math.Sign(dist.z)}
-      local spd = this:spd()
-      
-      spd.x = dir.x * (state.spd.x or spd.x)
-      spd.y = dir.y * (state.spd.y or spd.y)
-      spd.z = dir.z * (state.spd.z or spd.z)      
-      
-      this:dir(dir)
-      this:spd(spd)
-    end
-  end,
-  
-  attack = function(info) return function(this, scene)
-    scene:getHits(this):each(function(actor) this:hit(actor, info) end)
-  end
-  end,
-
-  move = function(info) return function(this, scene)
-    local spd = this:spd()
-    if info.spd.y then spd.y = info.spd.y end
-    if this.keybdlg:isUp() then spd.z = -(info.spd.z or 0) end
-    if this.keybdlg:isDown() then spd.z = info.spd.z or 0 end
-    if this.keybdlg:isLeft() then spd.x, this:dir().x = -info.spd.x or 0, -1 end
-    if this.keybdlg:isRight() then spd.x, this:dir().x = info.spd.x or 0,  1 end
-    
-    this:spd(spd)
-  end
-  end,
-  
-  isKey = function(key, cmd) return function(this)
-    local event = this.keybdlg and this.keybdlg:isKey(key)
-    if event and cmd then cmd(this, scene) end
-    return event
-  end
-  end,
-  
-  isFrame = function(nframe, cmd) return function(this, scene)
-    local event = this:curr():isStep() and this:curr():frame() == nframe
-    if event and cmd then cmd(this, scene) end
-    return event
-  end
-  end,
-      
-  isChain = function(key) return function(this)
-    return this.keybdlg and this.keybdlg:isKey(key) and this:isEnded()
-  end
-  end,
-
-  isNoKey = function(this) return this.keybdlg and this.keybdlg:isNoKey() end,
-  isEnded = function(this) return this:curr():isEnded() end,
-  isDied = function(this) return this.info.hp == 0 end,
-  isFloor = function(this) return this.data:floor() end,
-  noFloor = function(this) return not this:isFloor() end,
-  isFall = function(this) return this:spd().y > 0 end,
-  
-  dist = function(this, actor)
+  distrel = function(this, actor)
     actor = actor or this:target()
     local a, b = this:pos(), actor:pos()
-    return {x = math.abs(a.x - b.x), z = math.abs(a.z - b.z)}
+    return {x = a.x - b.x, z = a.z - b.z}
+  end,
+  
+  dist = function(this, actor)
+    local d = this:distrel(actor)
+    return {x = math.abs(d.x), z = math.abs(d.z)}
   end,
   
   eucl = function(this, actor)
@@ -160,15 +90,62 @@ Actor = Class {
     return this
   end,
   
+  -- Actions  
+  attack = function(info) return function(this, scene)
+    scene:getHits(this):each(function(actor) this:hit(actor, info) end)
+  end
+  end,
+
+  move = function(info) return function(this, scene)
+    local spd = this:spd()
+    if info.spd.y then spd.y = info.spd.y end
+    if this.keyb:isUp() then spd.z = -(info.spd.z or 0) end
+    if this.keyb:isDown() then spd.z = info.spd.z or 0 end
+    if this.keyb:isLeft() then spd.x, this:dir().x = -(info.spd.x or 0), -1 end
+    if this.keyb:isRight() then spd.x, this:dir().x = (info.spd.x or 0),  1 end
+    
+    this:spd(spd)
+  end
+  end,
+  
+  -- Triggers
+  isKey = function(key, cmd) return function(this)
+    local event = this.keyb and this.keyb:isKey(key) or false
+    if event and cmd then cmd(this, scene) end
+    return event
+  end
+  end,
+  
+  isFrame = function(nframe, cmd) return function(this, scene)
+    local event = this:curr():isStep() and this:curr():frame() == nframe
+    if event and cmd then cmd(this, scene) end
+    return event
+  end
+  end,
+      
+  isChain = function(key) return function(this)
+    return this.keyb:isKey(key) and this:isEnded()
+  end
+  end,
+
+  isNoKey = function(this) return this.keyb:isNoKey() end,
+  isEnded = function(this) return this:curr():isEnded() end,
+  isDied = function(this) return this.info.hp == 0 end,
+  isFloor = function(this) return this.data:floor() end,
+  noFloor = function(this) return not this:isFloor() end,
+  isFall = function(this) return this:spd().y > 0 end,
+  
+  -- Customizable functions
   priority = function(this, actor) return this:eucl(actor) end,
   isTarget = function(this, actor) return not (this == actor) end,
-  isHit = function(this, actor)
+  isHit = function(this, actor, state)
+    state = state or this:state() 
     local f = Math.Sign(this:dir().x)
     local d = this:dist(actor)
     if (f ==  1 and this:pos().x < actor:pos().x) or
        (f == -1 and this:pos().x > actor:pos().x) then
       
-      local x, z = (this:dim().w * 0.5) + actor:rad(), actor:rad()
+      local x, z = (this.states[state]:dim().w * 0.5) + actor:rad(), actor:rad()
       return d.x < x and d.z < z
     end
     

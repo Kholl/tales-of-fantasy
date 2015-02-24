@@ -12,10 +12,7 @@ PhysDlg = Class {
     this.grav = (init and init.grav) or 0
   end,
   
-  update = function(this, context)
-    local actor = context.actor
-    local scene = context.scene
-    
+  update = function(this, actor, scene)
     local spd = actor:spd()
     local pos = actor:pos()
     

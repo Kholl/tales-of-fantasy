@@ -87,7 +87,7 @@ Moo = {
       local instance = setmetatable({}, {__index = class})
       
       if type(init) == "string" then
-        init = Moo.Load{this = instance, Game = Moo.Game}(init)
+        init = Moo.Load{this = instance, Math = Math, Game = Moo.Game}(init)
       end
       
       instance:create(init)
@@ -112,7 +112,6 @@ Moo = {
 }
 
 -- Foundation classes
-require("lib/Math")
-require("lib/List")
-require("lib/Rule")
 require("lib/Cache")
+require("lib/List")
+require("lib/Math")

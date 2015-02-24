@@ -7,10 +7,8 @@ require("lib/game/ctrl/Scroll")
 require("lib/game/ctrl/Actor")
 require("lib/game/ctrl/Image")
 require("lib/game/ctrl/Text")
-require("lib/game/dlgs/KeybDlg")
-require("lib/game/dlgs/PhysDlg")
-require("lib/game/dlgs/SceneDlg")
-require("lib/game/dlgs/ActorDlg")
+require("lib/game/ctrl/dlgs/PhysDlg")
+require("lib/game/ctrl/dlgs/ScriptDlg")
 
 Scene = Class {    
   graphics = Dependency("graphics"),
@@ -24,15 +22,16 @@ Scene = Class {
   delta = nil,
   frame = nil,
 
-  scenedlg = nil,
-  physdlg = nil,
+  script = nil,
+  phys = nil,
+  
   scrolls = nil,
   actors = nil,
   iface = nil,
   
   create = function(this, init)
-    this.scenedlg = SceneDlg.new(init and init.rules)
-    this.physdlg = PhysDlg.new(init and init.phys)
+    this.script = ScriptDlg.new(init)
+    this.phys = PhysDlg.new(init)
     
     this:off(init and init.off or {x = 0, y = 0})
     this:lim(init and init.lim or {})
@@ -57,25 +56,16 @@ Scene = Class {
   end,
   
   update = function(this, delta)
-    this.scenedlg:update{
-      scene = this,
-      Math = Math,
-      List = List,
-      Each = Each,
-      Find = Find,
-      Copy = Copy,
-      Range = Range,
-      Game = Game}
+    this.script:update(this)
   
     this.delta = delta
     this.time = this.time + delta
     this.frame = delta * this._fps
       
     this.scrolls:each(function(scroll) scroll:update(this) end)      
-    this.actors:each(function(actor)
-      this.physdlg:update{actor = actor, scene = this}
-      actor:update(this)
-    end)
+    this.actors:each(function(actor) this.phys:update(actor, this) end)
+    this.actors:each(function(actor) actor:update(this) end)
+  
     this.iface:update()
   end,
     
