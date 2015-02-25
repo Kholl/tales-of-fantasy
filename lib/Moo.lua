@@ -84,7 +84,23 @@ Moo = {
   
   Create = function(class)
     return function(init)
-      local instance = setmetatable({}, {__index = class})
+      local instance = setmetatable({}, {
+        __index = rawget(class, "[]") or class,
+        __newindex = rawget(class, "[?]") or nil,
+        __concat = rawget(class, "..") or nil,
+        __call = rawget(class, "()") or nil,
+        __eq   = rawget(class, "==") or nil,
+        __le   = rawget(class, "<=") or nil,
+        __lt   = rawget(class, "<") or nil,
+        __len  = rawget(class, "#") or nil,
+        __add  = rawget(class, "+") or nil,
+        __mul  = rawget(class, "*") or nil,
+        __sub  = rawget(class, "-") or nil,
+        __div  = rawget(class, "/") or nil,
+        __mod  = rawget(class, "%") or nil,
+        __pow  = rawget(class, "^") or nil,
+        __unm  = rawget(class, "_") or nil,
+      })
       
       if type(init) == "string" then
         init = Moo.Load{this = instance, Math = Math, Game = Moo.Game}(init)
@@ -112,6 +128,7 @@ Moo = {
 }
 
 -- Foundation classes
-require("lib/Cache")
-require("lib/List")
-require("lib/Math")
+require("lib/util/Cache")
+require("lib/sets/List")
+require("lib/math/Math")
+require("lib/func/Func")
