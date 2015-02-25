@@ -49,11 +49,7 @@ SpriteData = Class {
   end,
   
   limit = function(this)
-    if this.frame >= this.nframes then
-      print("SET ENDED")
-      this.ended = true
-    end
-    
+    if this.frame >= this.nframes then this.ended = true end
     this.frame = Math.Lim(this.frame, {min = 0, max = this.nframes})
     return this
   end,
