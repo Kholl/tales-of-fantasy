@@ -165,8 +165,8 @@ actor.rules = {
   },
   atk = {
     this.isFrame(5, this.attack{dmg = 6}),
-    atksq1 = this.isChain{"a>a>"},
     std = this.isEnded,
+    atksq1 = this.isChain{"a>a>"},
   },
   jmp = {
     jmpatk = this.isKey{"a[rlud]*>"},
@@ -206,13 +206,13 @@ actor.rules = {
   },
   atksq1 = {
     this.isFrame(4, this.attack{dmg = 8}),
-    atksq2 = this.isChain{"a>a>a>"},
     std = this.isEnded,
+    atksq2 = this.isChain{"a>a>a>"},
   },
   atksq2 = {
     this.isFrame(3, this.attack{dmg = 10}),
-    atksq3 = this.isChain{"a>a>a>a>"},
     std = this.isEnded,
+    atksq3 = this.isChain{"a>a>a>a>"},
   },
   atksq3 = {
     this.isFrame(5, this.attack{dmg = 12}),
