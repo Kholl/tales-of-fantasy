@@ -28,10 +28,7 @@ Actor = Class {
     this.auto = false
     
     -- External functions
-    this.priority = init.priority or Actor.priority
-    this.isTarget = init.isTarget or Actor.isTarget
     this.isHit = init.isHit or Actor.isHit
-    this.hit = init.hit or Actor.hit
   end,
   
   draw = function(this, scene)
@@ -51,6 +48,7 @@ Actor = Class {
   dim = function(this) return this:curr():dim() end,
   box = function(this) return this:curr():box() end,
   rad = function(this) return this:curr():rad() end,
+    
   dir = function(this, val) return this.data:dir(val) end,
   pos = function(this, val) return this.data:pos(val) end,    
   spd = function(this, val) return this.data:spd(val) end,
@@ -89,69 +87,7 @@ Actor = Class {
     this:dir().x = Math.Sign(actor:pos().x - this:pos().x)
     return this
   end,
-  
-  -- Actions  
-  attack = function(info) return function(this, scene)
-    scene:getHits(this):each(function(actor) this:hit(actor, info) end)
-  end
-  end,
-
-  move = function(info) return function(this, scene)
-    local spd = this:spd()
-    if info.spd.y then spd.y = info.spd.y end
-    if this.keyb:isUp() then spd.z = -(info.spd.z or 0) end
-    if this.keyb:isDown() then spd.z = info.spd.z or 0 end
-    if this.keyb:isLeft() then spd.x, this:dir().x = -(info.spd.x or 0), -1 end
-    if this.keyb:isRight() then spd.x, this:dir().x = (info.spd.x or 0),  1 end
     
-    this:spd(spd)
-  end
-  end,
-  
-  -- Triggers
-  isKey = function(key, cmd) return function(this)
-    local event = this.keyb and this.keyb:isKey(key) or false
-    if event and cmd then cmd(this, scene) end
-    return event
-  end
-  end,
-  
-  isFrame = function(nframe, cmd) return function(this, scene)
-    local event = this:curr():isStep() and this:curr():frame() == nframe
-    if event and cmd then cmd(this, scene) end
-    return event
-  end
-  end,
-      
-  isChain = function(key) return function(this)
-    return this.keyb:isKey(key) and this:isEnded()
-  end
-  end,
-
-  isNoKey = function(this) return this.keyb:isNoKey() end,
-  isEnded = function(this) return this:curr():isEnded() end,
-  isDied = function(this) return this.info.hp == 0 end,
-  isFloor = function(this) return this.data:floor() end,
-  noFloor = function(this) return not this:isFloor() end,
-  isFall = function(this) return this:spd().y > 0 end,
-  
-  -- Customizable functions
-  priority = function(this, actor) return this:eucl(actor) end,
-  isTarget = function(this, actor) return not (this == actor) end,
-  isHit = function(this, actor, state)
-    state = state or this:state() 
-    local f = Math.Sign(this:dir().x)
-    local d = this:dist(actor)
-    if (f ==  1 and this:pos().x < actor:pos().x) or
-       (f == -1 and this:pos().x > actor:pos().x) then
-      
-      local x, z = (this.states[state]:dim().w * 0.5) + actor:rad(), actor:rad()
-      return d.x < x and d.z < z
-    end
-    
-    return false
-  end,
-  
   hit = function(this, actor, hit)
     actor:face(this)
     actor:target(this)
@@ -165,4 +101,55 @@ Actor = Class {
     if force.y then actor:spd().y = hit.force.y end
     if force.z then actor:spd().z = hit.force.z end
   end,
+
+  -- Actions  
+  move = function(info) return function(this, scene)
+    local spd = this:spd()
+    if info.spd.y then spd.y = info.spd.y end
+    if this.keyb:isUp() then spd.z = -(info.spd.z or 0) end
+    if this.keyb:isDown() then spd.z = info.spd.z or 0 end
+    if this.keyb:isLeft() then spd.x, this:dir().x = -(info.spd.x or 0), -1 end
+    if this.keyb:isRight() then spd.x, this:dir().x = (info.spd.x or 0),  1 end
+    
+    this:spd(spd)
+    
+    return true
+  end
+  end,
+  
+  hitAll = function(hit) return function(this, scene)
+    scene:getHits(this):each(function(actor) this:hit(actor, hit) end)
+  end
+  end,
+  
+  -- Triggers
+  isKey = function(key) return F(function(this)
+    return this.keyb and this.keyb:isKey(key)
+  end)
+  end,
+  
+  isFrame = function(nframe) return F(function(this)
+    return this:curr():isStep() and this:curr():frame() == nframe
+  end)
+  end,
+      
+  isEnded = F(function(this) return this:curr():isEnded() end),
+  isDied = F(function(this) return this.info.hp == 0 end),
+  isFloor = F(function(this) return this.data:floor() end),
+  isFall = F(function(this) return this:spd().y > 0 end),
+  
+  -- Customizable functions
+  isHit = function(this, actor, state)
+    state = state or this:state() 
+    local f = Math.Sign(this:dir().x)
+    local d = this:dist(actor)
+    if (f ==  1 and this:pos().x < actor:pos().x) or
+       (f == -1 and this:pos().x > actor:pos().x) then
+      
+      local x, z = (this.states[state]:dim().w * 0.5) + actor:rad(), actor:rad()
+      return d.x < x and d.z < z
+    end
+    
+    return false
+  end,  
 }

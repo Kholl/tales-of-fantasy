@@ -103,7 +103,11 @@ Moo = {
       })
       
       if type(init) == "string" then
-        init = Moo.Load{this = instance, Math = Math, Game = Moo.Game}(init)
+        init = Moo.Load{
+          this = instance,
+          Math = Math,
+          Game = Moo.Game,
+          }(init)
       end
       
       instance:create(init)

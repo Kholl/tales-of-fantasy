@@ -86,9 +86,13 @@ KeybDlg = Class {
   isBtnA = function(this) return this.keyboard.isDown(this.keys.a) end,
   isBtnB = function(this) return this.keyboard.isDown(this.keys.b) end,
 
-  isNoKey = function(this) return this.key:len() == 0 end,
   isKey = function(this, keys)
-    if this:isNoKey() then return false end
+    
+    -- Return FALSE if no key was pressed.
+    -- Return TRUE if any keys were pressed and none specified.
+    if this.key:len() == 0 then return false
+    elseif keys == nil then return true
+    end
     
     local isMatch = false
     Each(keys, function(key)

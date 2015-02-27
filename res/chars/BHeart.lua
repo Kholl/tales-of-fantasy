@@ -85,14 +85,14 @@ actor.rules = {
   },
   wlk = {
     wlk = this.isKey({"[rlud]+>"}, this.move{spd = {x = 90, z = 90}}),
-    std = this.isNoKey,
+    std = -this.isKey(),
   },
   atk = {
-    this.isFrame(2, this.attack{dmg = 20}),
+    this.isFrame(2) / this.hitAll{dmg = 20},
     std = this.isEnded,
   },
   hit = {
-    hitair = this.noFloor,
+    hitair = -this.isFloor,
     std = this.isEnded,
   },
   hitair = {
@@ -103,7 +103,7 @@ actor.rules = {
     die = this.isDied,
   },
   atkalt = {
-    this.isFrame(3, this.attack{dmg = 15}),
+    this.isFrame(3) / this.hitAll{dmg = 15},
     std = this.isEnded,
   },
 }
