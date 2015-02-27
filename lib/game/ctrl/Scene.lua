@@ -42,8 +42,8 @@ Scene = Class {
     this.delta = 0
     this.frame = 0
 
-    this.scrolls = List(Scroll).new()
-    this.actors = List(Actor).new()
+    this.scrolls = L{}
+    this.actors = L{}
     this.iface = init.iface or Nil
     
     if init.start then init.start(this) end
@@ -68,6 +68,9 @@ Scene = Class {
   
     this.iface:update()
   end,
+  
+  addScroll = function(this, init) return this.scrolls:add(Scroll.new(init)) end,
+  addActor = function(this, init) return this.actors:add(Actor.new(init)) end,
     
   getActors = function(this, func)
     if func then return this.actors:filter(func) else return this.actors end
