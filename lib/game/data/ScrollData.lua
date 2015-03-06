@@ -9,8 +9,8 @@ ScrollData = Class {
   scr = Property("_scr"), -- Scroll    
 
   create = function(this, init)
-    this:pos(init and init.pos or {x = 0, y = 0})
-    this:mul(init and init.mul or {x = 1, y = 1})
+    this:pos(XY(init and init.pos or {0, 0}))
+    this:mul(XY(init and init.mul or {1, 1}))
     this:scr(init and init.scr or {x = "repeat", y = "repeat"})
   end,
 }

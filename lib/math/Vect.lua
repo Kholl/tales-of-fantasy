@@ -21,7 +21,9 @@ end
 
 -- Alias
 WH = function(init) return Vect{"w", "h"}.new(init) end
+XY = function(init) return Vect{"x", "y"}.new(init) end
 XYZ = function(init) return Vect{"x", "y", "z"}.new(init) end
+RGB = function(init) return Vect{"r", "g", "b"}.new(init) end
 
 -- Test suite
 if __TEST then

@@ -6,7 +6,6 @@ Moo Object Oriented framework for LUA
 require("lib/game/ctrl/Scroll")
 require("lib/game/ctrl/Actor")
 require("lib/game/ctrl/Image")
-require("lib/game/ctrl/Text")
 require("lib/game/ctrl/dlgs/PhysDlg")
 require("lib/game/ctrl/dlgs/ScriptDlg")
 
@@ -27,7 +26,6 @@ Scene = Class {
   
   scrolls = nil,
   actors = nil,
-  iface = nil,
   
   create = function(this, init)
     this.script = ScriptDlg.new(init)
@@ -44,7 +42,6 @@ Scene = Class {
 
     this.scrolls = {}
     this.actors = {}
-    this.iface = init.iface or Nil
     
     if init.start then init.start(this) end
   end,
@@ -52,7 +49,6 @@ Scene = Class {
   draw = function(this)
     List.each(this.scrolls, function(scroll) scroll:draw(this) end)
     List.each(this.actors, function(actor) actor:draw(this) end)
-    this.iface:draw()
   end,
   
   update = function(this, delta)
@@ -65,8 +61,6 @@ Scene = Class {
     List.each(this.scrolls, function(scroll) scroll:update(this) end)      
     List.each(this.actors, function(actor) this.phys:update(actor, this) end)
     List.each(this.actors, function(actor) actor:update(this) end)
-  
-    this.iface:update()
   end,
   
   addScroll = function(this, init) return List.add(this.scrolls, Scroll.new(init)) end,

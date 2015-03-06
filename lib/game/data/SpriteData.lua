@@ -21,9 +21,9 @@ SpriteData = Class {
     this.frame = init and init.frame or 0
     this.frate = init and init.frate or 0
     this.nframes = init and init.nframes or 1
-    this:box(init and init.box or {w = 0, h = 0})
     this:rad(init and init.rad or 0)
-    this:dim(init and init.dim or {w = 0, h = 0})
+    this:box(WH(init and init.box or {0, 0}))
+    this:dim(WH(init and init.dim or {0, 0}))
     this:pad(init and init.pad or {x = 0.5, h = 0.5})
     this.step = false
     this.ended = false
