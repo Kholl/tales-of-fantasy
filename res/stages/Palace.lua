@@ -55,7 +55,7 @@ return {
     end,
   
     update = function(scene)
-      scene.actors:sort(function(a, b) return a:pos().z < b:pos().z end)
+      List.sort(scene.actors, function(a, b) return a:pos().z < b:pos().z end)
       
       local off = {
         x = 160 - (camera:pos().x * scene:ratio().x),

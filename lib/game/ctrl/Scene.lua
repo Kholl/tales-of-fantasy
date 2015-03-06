@@ -42,16 +42,16 @@ Scene = Class {
     this.delta = 0
     this.frame = 0
 
-    this.scrolls = L{}
-    this.actors = L{}
+    this.scrolls = {}
+    this.actors = {}
     this.iface = init.iface or Nil
     
     if init.start then init.start(this) end
   end,
   
   draw = function(this)
-    this.scrolls:each(function(scroll) scroll:draw(this) end)
-    this.actors:each(function(actor) actor:draw(this) end)
+    List.each(this.scrolls, function(scroll) scroll:draw(this) end)
+    List.each(this.actors, function(actor) actor:draw(this) end)
     this.iface:draw()
   end,
   
@@ -62,22 +62,22 @@ Scene = Class {
     this.time = this.time + delta
     this.frame = delta * this._fps
       
-    this.scrolls:each(function(scroll) scroll:update(this) end)      
-    this.actors:each(function(actor) this.phys:update(actor, this) end)
-    this.actors:each(function(actor) actor:update(this) end)
+    List.each(this.scrolls, function(scroll) scroll:update(this) end)      
+    List.each(this.actors, function(actor) this.phys:update(actor, this) end)
+    List.each(this.actors, function(actor) actor:update(this) end)
   
     this.iface:update()
   end,
   
-  addScroll = function(this, init) return this.scrolls:add(Scroll.new(init)) end,
-  addActor = function(this, init) return this.actors:add(Actor.new(init)) end,
+  addScroll = function(this, init) return List.add(this.scrolls, Scroll.new(init)) end,
+  addActor = function(this, init) return List.add(this.actors, Actor.new(init)) end,
     
   getActors = function(this, func)
-    if func then return this.actors:filter(func) else return this.actors end
+    if func then return List.filter(this.actors, func) else return this.actors end
   end,
   
   getHits = function(this, actor)
-    return this.actors:filter(function(other)
+    return List.filter(this.actors, function(other)
       return not (actor == other) and actor:isHit(other)
     end)
   end,

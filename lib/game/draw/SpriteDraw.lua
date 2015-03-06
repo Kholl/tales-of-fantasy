@@ -25,7 +25,7 @@ SpriteDraw = Class {
     
     this.quads = {}
     
-    Range(0, nframes-1, function(i)
+    for i = 0, nframes -1 do
       local x = (i % hframes) * dim.w
       local y = math.floor(i / hframes) * dim.w
       
@@ -34,7 +34,7 @@ SpriteDraw = Class {
         dim.w, dim.h,
         this.drawable:getWidth(),
         this.drawable:getHeight())
-    end)
+    end
   end,
   
   draw = function(this, spriteData, imageData, scene)

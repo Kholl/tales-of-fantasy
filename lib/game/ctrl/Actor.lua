@@ -118,7 +118,8 @@ Actor = Class {
   end,
   
   hitAll = function(hit) return function(this, scene)
-    scene:getHits(this):each(function(actor) this:hit(actor, hit) end)
+    local hits = scene:getHits(this)
+    List.each(hits, function(actor) this:hit(actor, hit) end)
   end
   end,
   

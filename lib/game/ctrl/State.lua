@@ -17,7 +17,7 @@ State = Class {
     this.default = init and init.state
     
     this.states = {}
-    Each(init and init.states, function(state, key)
+    List.each(init and init.states, function(state, key)
       this.states[key] = Sprite.new{
         res = state.res,
         rad = state.rad or init.rad,

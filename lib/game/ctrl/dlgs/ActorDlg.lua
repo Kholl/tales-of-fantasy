@@ -13,7 +13,7 @@ ActorDlg = Moo.Class {
   update = function(this, actor, scene)
     local state = actor:state()
     local rules = this.rules[state] or {}
-    Each(rules, function(rule, action)
+    List.each(rules, function(rule, action)
       if rule(actor, scene)
         and actor.states[action]
         and not (actor:state() == action) then

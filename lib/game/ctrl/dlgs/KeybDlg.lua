@@ -56,11 +56,11 @@ KeybDlg = Class {
     local currlist = {}
     this.prevkey, this.currkey = this.currkey, ""
     
-    Each(this.keys, function(key, cmd)
+    List.each(this.keys, function(key, cmd)
       if this.keyboard.isDown(key) then keypress, currlist[cmd] = true, true end
     end)
     
-    Each(this.keys, function(key, cmd)
+    List.each(this.keys, function(key, cmd)
       if currlist[cmd] then this.currkey = this.currkey .. cmd end
     end)
 
@@ -74,7 +74,7 @@ KeybDlg = Class {
     table.insert(this.list, this.currkey)
     
     this.key, this.match, this.matchlen = "", "", 0
-    Each(this.list, function(key) this.key = key .. ">" .. this.key end)
+    List.each(this.list, function(key) this.key = key .. ">" .. this.key end)
   end,
   
   isChangedKey = function(this) return not (this.currkey:lower() == this.prevkey:lower()) end,  
@@ -95,7 +95,7 @@ KeybDlg = Class {
     end
     
     local isMatch = false
-    Each(keys, function(key)
+    List.each(keys, function(key)
       if isMatch then return end
       if key:len() < this.matchlen then return end
             

@@ -14,22 +14,7 @@ Moo = {
   Err = function(message)
     return function(t, key, val) error(string.format(message, key)) end
   end,
-  
-  Each = function(table, func)
-    local result = {}
-    table = table or {}
-    for key, val in pairs(table) do result[key] = func(val, key) end
-    
-    return result
-  end,
-  
-  Find = function(table, value)
-    local result = false
-    for key, val in pairs(table) do if val == value then return key end end
-    
-    return false
-  end,
-  
+--[[  
   Copy = function(src, dst)
     dst = dst or {}
     for key, val in pairs(src) do dst[key] = val end
@@ -42,7 +27,7 @@ Moo = {
     
     return result
   end,
-  
+  ]]--
   Property = function(attr)
     return function(obj, val)
       if not (val == nil) then obj[attr] = val end
@@ -64,7 +49,7 @@ Moo = {
     class.create = Nil
     class.super = Object
     
-    Moo.Each(definition, function(value, attribute)
+    List.each(definition, function(value, attribute)
       if attribute == "super" then
         class[attribute] = value -- Class keywords
       else
@@ -105,6 +90,7 @@ Moo = {
       if type(init) == "string" then
         init = Moo.Load{
           this = instance,
+          List = List,
           Math = Math,
           Game = Moo.Game,
           }(init)
@@ -116,7 +102,7 @@ Moo = {
   end,
   
   Import = function()
-    Moo.Each(Moo, function(value, key)
+    List.each(Moo, function(value, key)
       if rawget(_G, key) == nil then rawset(_G, key, value) end
     end)
   end,
@@ -132,7 +118,7 @@ Moo = {
 }
 
 -- Foundation classes
-require("lib/util/Cache")
 require("lib/sets/List")
 require("lib/math/Math")
 require("lib/func/Func")
+require("lib/util/Cache")
