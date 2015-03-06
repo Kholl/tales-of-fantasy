@@ -6,11 +6,16 @@ Moo Object Oriented framework for LUA
 List = {
   add = function(list, item) table.insert(list, item); return item end,
   sort = function(list, func) table.sort(list, func); return this end,
-  each = function(list, func) for key, val in pairs(list) do func(val, key) end end,
+  
+  each = function(list, func)
+    local res = {}
+    for key, val in pairs(list) do res[key] = func(val, key) end
+    return res
+  end,
 
   filter = function(list, func)
-    local filtered = {}
-    List.each(list, function(item) if func(item) then List.add(filtered, item) end end)
-    return filtered
+    local res = {}
+    List.each(list, function(val, key) if func(val) then res[key] = item end end)
+    return res
   end,
 }

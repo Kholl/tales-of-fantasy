@@ -5,6 +5,9 @@ Tales Of Fantasy
 
 if arg and arg[#arg] == "-debug" then require("mobdebug").start() end
 
+__DEBUG = (arg and arg[#arg] == "-debug")
+__TEST = true
+
 require("lib/Moo")
 Moo.Import()
 
