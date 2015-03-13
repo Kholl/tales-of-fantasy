@@ -6,6 +6,7 @@ Moo Object Oriented framework for LUA
 require("lib/game/ctrl/Scroll")
 require("lib/game/ctrl/Actor")
 require("lib/game/ctrl/Image")
+require("lib/game/ctrl/Text")
 require("lib/game/ctrl/dlgs/PhysDlg")
 require("lib/game/ctrl/dlgs/ScriptDlg")
 
@@ -71,7 +72,7 @@ Scene = Class {
   end,
   
   getHits = function(this, actor)
-    return List.filter(this.actors, function(other)
+    return this:getActors(function(other)
       return not (actor == other) and actor:isHit(other)
     end)
   end,

@@ -15,9 +15,9 @@ ActorData = Class {
   action = Property("_action"), -- Action
 
   create = function(this, init)
-    this:pos(XYZ(init and init.pos or {0, 0, 0}))
-    this:dir(XYZ(init and init.dir or {1, 1, 0}))
-    this:spd(XYZ(init and init.spd or {0, 0, 0}))
+    this:pos(init and init.pos or {x = 0, y = 0, z = 0})
+    this:dir(init and init.dir or {x = 1, y = 1, z = 0})
+    this:spd(init and init.spd or {x = 0, y = 0, z = 0})
     this:mass(init and init.mass or 1)
     this:floor(init and init.floor or true)
     this:target(init and init.target or false)

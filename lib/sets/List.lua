@@ -15,7 +15,7 @@ List = {
 
   filter = function(list, func)
     local res = {}
-    List.each(list, function(val, key) if func(val) then res[key] = item end end)
+    for key, val in pairs(list) do if func(val) then res[key] = val end end
     return res
   end,
 }
