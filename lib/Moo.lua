@@ -74,7 +74,6 @@ Moo = {
         __newindex = rawget(class, "[?]") or nil,
         __concat = rawget(class, "..") or nil,
         __call = rawget(class, "()") or nil,
-        __eq   = rawget(class, "==") or nil,
         __le   = rawget(class, "<=") or nil,
         __lt   = rawget(class, "<") or nil,
         __len  = rawget(class, "#") or nil,

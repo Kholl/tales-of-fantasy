@@ -40,8 +40,8 @@ PhysDlg = Class {
         local angle = actor:angle(other)
         local dist = actor:rad() + other:rad()
         
-        pos.x = Math.Linear(actor:pos().x, other:pos().x + angle.x * dist, ratio)
-        pos.z = Math.Linear(actor:pos().z, other:pos().z + angle.z * dist, ratio)
+        pos.x = Math.Linear(pos.x, other:pos().x + angle.x * dist, ratio)
+        pos.z = Math.Linear(pos.z, other:pos().z + angle.z * dist, ratio)
       end)
     end
 
@@ -54,6 +54,8 @@ PhysDlg = Class {
     pos.y = Math.Lim(pos.y, lim.y)
     pos.z = Math.Lim(pos.z, lim.z)
     
+    actor:spd(spd)
+    actor:pos(pos)
     actor:floor(pos[this.grav] == 0)    
     if actor:floor() then spd[this.grav] = 0 end
   end,
