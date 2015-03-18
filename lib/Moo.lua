@@ -14,20 +14,7 @@ Moo = {
   Err = function(message)
     return function(t, key, val) error(string.format(message, key)) end
   end,
---[[  
-  Copy = function(src, dst)
-    dst = dst or {}
-    for key, val in pairs(src) do dst[key] = val end
-    return dst
-  end,
-
-  Range = function(initial, final, func)
-    local result = {}
-    for i = initial, final do result[i] = func(i) end
-    
-    return result
-  end,
-  ]]--
+  
   Property = function(attr)
     return function(obj, val)
       if not (val == nil) then obj[attr] = val end
@@ -87,9 +74,7 @@ Moo = {
       })
       
       if type(init) == "string" then
-        local env = _G
-        env.this = instance
-        init = Moo.Load(env)(init)
+        init = Moo.Load(init, instance)
       end
       
       instance:create(init)
@@ -103,13 +88,11 @@ Moo = {
     end)
   end,
   
-  Load = function(env)
-    return function(file)
-      local func, errmsg = loadfile(file)
-      
-      assert(func, errmsg)
-      return setfenv(func, env)()
-    end
+  Load = function(file, instance)
+    local func, errmsg = loadfile(file)      
+    assert(func, errmsg)
+    
+    return func()
   end,
 }
 

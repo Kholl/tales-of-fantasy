@@ -4,21 +4,21 @@ Tales Of Fantasy
 ]]--
 
 return {
-  Air = function(actor, max)
-    return function(sprite)
+  Air = function(max)
+    return function(sprite, actor, scene)
       local k = actor:spd().y / max
       return (sprite.data.nframes) * (1 - k) * 0.5
     end
   end,
 
-  Air2 = function(actor)
-    return function(sprite)
+  Air2 = function()
+    return function(sprite, actor, scene)
       if actor:spd().y < 0 then return 0 else return 1 end
     end
   end,
 
-  Air3 = function(actor, threshold)
-    return function(sprite)
+  Air3 = function(threshold)
+    return function(sprite, actor, scene)
       local value = actor:spd().y
       
       if value < -threshold then return 0

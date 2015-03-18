@@ -44,7 +44,7 @@ actor.states = {
     dim = {w = 222, h = 141},
     frate = 0,
     nframes = 2,
-    anim = Game.Anim.Air2(this)},
+    anim = Game.Anim.Air2()},
   hitflr = {
     res = "res/chars/bheart/hitflr.png",
     dim = {w = 254, h = 69},

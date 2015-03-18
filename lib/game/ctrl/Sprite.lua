@@ -21,9 +21,9 @@ Sprite = Class {
     this.drawable:draw(this.data, imageData, scene)
   end,
   
-  update = function(this, scene)
-    if type(this.anim) == "string" then this[this.anim](this, scene)
-    elseif type(this.anim) == "function" then this.data:set(this.anim(this))
+  update = function(this, actor, scene)
+    if type(this.anim) == "string" then this[this.anim](this, actor, scene)
+    elseif type(this.anim) == "function" then this.data:set(this.anim(this, actor, scene))
     end
   end,
   
@@ -34,9 +34,9 @@ Sprite = Class {
   
   reset = function(this) this.data:reset() end,
     
-  idle = function(this, scene) end,
-  play = function(this, scene) this.data:incr(scene.frame):limit() end,
-  loop = function(this, scene) this.data:incr(scene.frame):loop() end,
+  idle = function(this, actor, scene) end,
+  play = function(this, actor, scene) this.data:incr(scene.frame):limit() end,
+  loop = function(this, actor, scene) this.data:incr(scene.frame):loop() end,
   
   frame = function(this, frame) return this.data:get() end,
   isStep = function(this) return this.data.step end,

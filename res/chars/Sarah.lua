@@ -41,7 +41,7 @@ actor.states = {
     dim = {w = 62, h = 98},
     frate = 0,
     nframes = 8,
-    anim = Game.Anim.Air(this, -220)},
+    anim = Game.Anim.Air(-220)},
   jmpatk = {
     res = "res/chars/lucia/jmpatk.png",
     rad = 0,
@@ -115,7 +115,7 @@ actor.states = {
     dim = {w = 110, h = 49},
     frate = 0,
     nframes = 4,
-    anim = Game.Anim.Air3(this, 60)},
+    anim = Game.Anim.Air3(60)},
   hitflr = {
     res = "res/chars/lucia/hitflr.png",
     dim = {w = 110, h = 49},

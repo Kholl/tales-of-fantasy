@@ -37,7 +37,7 @@ State = Class {
   end,
   
   update = function(this, scene)
-    this:curr():update(scene)
+    this:curr():update(this, scene)
   end,
     
   curr = function(this) return this.states[this:state()] end,
