@@ -27,6 +27,7 @@ ActorDlg = Moo.Class {
   execute = function(this, actor, scene, rules)    
     local state = actor:state()
     local stateRules = rules[state] or {}
+    
     List.each(stateRules, function(rule, action)
       if rule(actor, scene)
         and actor.states[action]

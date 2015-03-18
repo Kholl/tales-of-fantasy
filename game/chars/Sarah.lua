@@ -147,6 +147,9 @@ actor.states = {
 }
 
 actor.rules = {
+  wlk = {
+    Actor.move{spd = {x = 100, z = 100}},
+  },
   atk = {
     Actor.isFrame(5) / Actor.hitAll{dmg = 6},
     std = Actor.isEnded,
@@ -158,6 +161,9 @@ actor.rules = {
     Actor.isFrame(3) / Actor.hitAll{dmg = 8, force = {x = 120}},
     jmp = Actor.isEnded,
     std = Scene.isFloor,
+  },
+  run = {
+    Actor.move{spd = {x = 200}},
   },
   runend = {
     std = Actor.isEnded,
@@ -225,7 +231,7 @@ actor.keybrules = {
     atkup = Actor.isKey{"au>u>d>"} / Actor.move{spd = {y = -200}},
     jmp = Actor.isKey{"[rlud]*b>"} / Actor.move{spd = {x = 100, y = -200}},
     run = Actor.isKey{"r>r>", "l>l>"},
-    wlk = Actor.isKey{"[rlud]+>"} / Actor.move{spd = {x = 100, z = 100}},
+    wlk = Actor.isKey{"[rlud]+>"},
     std = -Actor.isKey(),
   },
   atk = {
@@ -237,7 +243,7 @@ actor.keybrules = {
   run = {
     atkup = Actor.isKey{"au>u>d>"} / Actor.move{spd = {y = -180}},
     runatk = Actor.isKey{"ar>r>r>", "al>l>l>"},
-    run = Actor.isKey{"r>r>", "l>l>"} / Actor.move{spd = {x = 200}},
+    run = Actor.isKey{"r>r>", "l>l>"},
     jmp = Actor.isKey{"[rlud]*b>"} / Actor.move{spd = {x = 200, y = -180}},
     runend = -Actor.isKey(),
   },

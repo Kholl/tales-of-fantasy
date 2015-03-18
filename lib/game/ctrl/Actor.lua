@@ -88,20 +88,6 @@ Actor = Class {
     if force.z then actor:spd().z = hit.force.z end
   end,
   
-  isHit = function(this, actor, state)
-    state = state or this:state() 
-    local f = Math.Sign(this:dir().x)
-    local d = this:dist(actor)
-    if (f ==  1 and this:pos().x < actor:pos().x) or
-       (f == -1 and this:pos().x > actor:pos().x) then
-      
-      local x, z = (this.states[state]:dim().w * 0.5) + actor:rad(), actor:rad()
-      return d.x < x and d.z < z
-    end
-    
-    return false
-  end,  
-  
   -- Actions  
   act = function(action) return F(function(actor, scene)
     State.start(actor, action)
@@ -137,6 +123,22 @@ Actor = Class {
   end,
   
   -- Triggers
+  isHit = function(state) return F(function(actor, scene, target)
+    target = target or actor:target()
+    state = state or actor:state() 
+    local f = Math.Sign(actor:dir().x)
+    local d = actor:dist(target)
+    if (f ==  1 and actor:pos().x < target:pos().x) or
+       (f == -1 and actor:pos().x > target:pos().x) then
+      
+      local x, z = (actor.states[state]:dim().w * 0.5) + target:rad(), target:rad()
+      return d.x < x and d.z < z
+    end
+    
+    return false
+  end)
+  end,  
+  
   isKey = function(key) return F(function(actor, scene)
     return actor:isKeyb() and actor:keyb():isKey(key)
   end)

@@ -72,7 +72,7 @@ Scene = Class {
   
   getHits = function(this, actor)
     return this:getActors(function(other)
-      return not (actor == other) and actor:isHit(other)
+      return not (actor == other) and Actor.isHit()(actor, this, other)
     end)
   end,
   

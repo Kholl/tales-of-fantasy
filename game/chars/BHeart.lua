@@ -101,12 +101,16 @@ actor.rules = {
 
 actor.autorules = {
   std = {
-    wlk = Actor.isTarget,
     -Actor.isTarget / Actor.find,
+    wlk = Actor.isTarget,
+    atk = Actor.isTarget ^ Actor.isHit("atk"),
   },
   
   wlk = {
-    wlk = Actor.isTarget / Actor.move{spd = {x = 90, z = 90}},
+    Actor.move{spd = {x = 90, z = 90}},
+    std = -Actor.isTarget,
+    wlk = Actor.isTarget ^ -Actor.isHit("atk"),
+    atk = Actor.isTarget ^ Actor.isHit("atk"),
   },
 }
 
