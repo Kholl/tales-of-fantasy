@@ -10,7 +10,8 @@ ActorData = Class {
   dir = Property("_dir"), -- Direction
   spd = Property("_spd"), -- Speed
   mass = Property("_mass"), -- Mass
-  floor = Property("_floor"), -- On floor
+  keyb = Property("_keyb"),
+  auto = Property("_auto"),  
   target = Property("_target"), -- Target
   action = Property("_action"), -- Action
 
@@ -19,7 +20,8 @@ ActorData = Class {
     this:dir(init and init.dir or {x = 1, y = 1, z = 0})
     this:spd(init and init.spd or {x = 0, y = 0, z = 0})
     this:mass(init and init.mass or 1)
-    this:floor(init and init.floor or true)
+    this:keyb(init and init.keyb or false)
+    this:auto(init and init.auto or false)
     this:target(init and init.target or false)
     this:action(init and init.action or false)
   end,

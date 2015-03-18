@@ -18,4 +18,9 @@ List = {
     for key, val in pairs(list) do if func(val) then res[key] = val end end
     return res
   end,
+  
+  sort = function(list, eval)
+    table.sort(list, function(a, b) return eval(a) < eval(b) end)
+    return list
+  end,
 }

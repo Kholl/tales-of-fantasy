@@ -60,8 +60,8 @@ Scene = Class {
     this.frame = delta * this._fps
       
     List.each(this.scrolls, function(scroll) scroll:update(this) end)      
-    List.each(this.actors, function(actor) this.phys:update(actor, this) end)
     List.each(this.actors, function(actor) actor:update(this) end)
+    List.each(this.actors, function(actor) this.phys:update(actor, this) end)
   end,
   
   addScroll = function(this, init) return List.add(this.scrolls, Scroll.new(init)) end,
@@ -76,4 +76,7 @@ Scene = Class {
       return not (actor == other) and actor:isHit(other)
     end)
   end,
+  
+  -- Triggers
+  isFloor = F(function(actor, scene) return scene.phys:isFloor(actor) end),
 }

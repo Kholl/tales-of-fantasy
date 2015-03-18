@@ -79,13 +79,15 @@ KeybDlg = Class {
   
   isChangedKey = function(this) return not (this.currkey:lower() == this.prevkey:lower()) end,  
   
-  isUp = function(this) return this.keyboard.isDown(this.keys.u) end,
-  isDown = function(this) return this.keyboard.isDown(this.keys.d) end,
-  isLeft = function(this) return this.keyboard.isDown(this.keys.l) end,
-  isRight = function(this) return this.keyboard.isDown(this.keys.r) end,
-  isBtnA = function(this) return this.keyboard.isDown(this.keys.a) end,
-  isBtnB = function(this) return this.keyboard.isDown(this.keys.b) end,
-
+  direction = function(this, actor)
+    local kx, kz = 0, 0
+    if this.keyboard.isDown(this.keys.l) then kx = -1 end
+    if this.keyboard.isDown(this.keys.r) then kx =  1 end
+    if this.keyboard.isDown(this.keys.u) then kz = -1 end
+    if this.keyboard.isDown(this.keys.d) then kz =  1 end
+    return kx, kz
+  end,
+  
   isKey = function(this, keys)
     
     -- Return FALSE if no key was pressed.

@@ -3,18 +3,19 @@ Moo Object Oriented framework for LUA
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-Enemy = Moo.Class {
-  create = function(this, init)
+Enemy = {  
+  filter = function(actor, scene) return function(other)
+    return not (actor == other)
+  end
   end,
   
-  update = function(this, actor, scene)
-    if not actor:target() then return this:findTarget(actor, scene) end
+  eval = function(actor, scene) return function(other)
+    return actor:eucl(other)
+  end
   end,
   
-  findTarget = function(this, actor, scene)
-    local filter = function(other) return actor:isTarget(other) end
-    local sorter = function(a, b) return actor:priority(a) < actor:priority(b) end
-    local target = scene:getActors():filter(filter):sort(sorter):first()
-    actor:target(target)
+  direction = function(this, actor)
+    local dist = actor:distrel()
+    return -Math.Sign(dist.x), -Math.Sign(dist.z)
   end,
 }

@@ -5,15 +5,13 @@ Moo Object Oriented framework for LUA
 
 require("lib/game/ctrl/State")
 require("lib/game/ctrl/dlgs/ActorDlg")
+require("lib/game/ctrl/dlgs/KeybDlg")
 require("lib/game/data/ActorData")
 
 Actor = Class {
   super = State,
   
-  keyb = nil,
-  auto = nil,
   actor = nil,
-
   data = nil,
   info = nil,
   
@@ -23,12 +21,6 @@ Actor = Class {
     this.data = ActorData.new(init)
     this.actor = ActorDlg.new(init)
     this.info = init and init.info or {}
-    
-    this.keyb = false
-    this.auto = false
-    
-    -- External functions
-    this.isHit = init.isHit or Actor.isHit
   end,
   
   draw = function(this, scene)
@@ -36,12 +28,8 @@ Actor = Class {
   end,
   
   update = function(this, scene)
-    State.update(this, scene)
-    
-    if this.auto then this.auto:update(this, scene)
-    elseif this.keyb then this.keyb:update(this, scene)
-    end
-  
+    State.update(this, scene)    
+    if this:isKeyb() then this:keyb():update(this, scene) end
     this.actor:update(this, scene)
   end,
   
@@ -53,12 +41,10 @@ Actor = Class {
   pos = function(this, val) return this.data:pos(val) end,    
   spd = function(this, val) return this.data:spd(val) end,
   mass = function(this, val) return this.data:mass(val) end,
-  floor = function(this, val) return this.data:floor(val) end,
+  keyb = function(this, val) return this.data:keyb(val) end,
+  auto = function(this, val) return this.data:auto(val) end,
   target = function(this, val) return this.data:target(val) end,
     
-  useKeyb = function(this, dlg) this.keyb = dlg; return this end,
-  useAuto = function(this, dlg) this.auto = dlg; return this end,
-  
   distrel = function(this, actor)
     actor = actor or this:target()
     local a, b = this:pos(), actor:pos()
@@ -101,45 +87,7 @@ Actor = Class {
     if force.y then actor:spd().y = hit.force.y end
     if force.z then actor:spd().z = hit.force.z end
   end,
-
-  -- Actions  
-  move = function(info) return function(this, scene)
-    local spd = this:spd()
-    if info.spd.y then spd.y = info.spd.y end
-    if this.keyb:isUp() then spd.z = -(info.spd.z or 0) end
-    if this.keyb:isDown() then spd.z = info.spd.z or 0 end
-    if this.keyb:isLeft() then spd.x, this:dir().x = -(info.spd.x or 0), -1 end
-    if this.keyb:isRight() then spd.x, this:dir().x = (info.spd.x or 0),  1 end
-    
-    this:spd(spd)
-    
-    return true
-  end
-  end,
   
-  hitAll = function(hit) return function(this, scene)
-    local hits = scene:getHits(this)
-    List.each(hits, function(actor) this:hit(actor, hit) end)
-  end
-  end,
-  
-  -- Triggers
-  isKey = function(key) return F(function(this)
-    return this.keyb and this.keyb:isKey(key)
-  end)
-  end,
-  
-  isFrame = function(nframe) return F(function(this)
-    return this:curr():isStep() and this:curr():frame() == nframe
-  end)
-  end,
-      
-  isEnded = F(function(this) return this:curr():isEnded() end),
-  isDied = F(function(this) return this.info.hp == 0 end),
-  isFloor = F(function(this) return this.data:floor() end),
-  isFall = F(function(this) return this:spd().y > 0 end),
-  
-  -- Customizable functions
   isHit = function(this, actor, state)
     state = state or this:state() 
     local f = Math.Sign(this:dir().x)
@@ -153,4 +101,56 @@ Actor = Class {
     
     return false
   end,  
+  
+  -- Actions  
+  act = function(action) return F(function(actor, scene)
+    State.start(actor, action)
+  end)
+  end,
+  
+  find = F(function(actor, scene)
+    local auto = actor:auto()
+    local actors = scene:getActors()
+    actors = List.filter(actors, auto.filter(actor, scene))
+    actors = List.sort(actors, auto.eval(actor, scene))
+    actor:target(actors[1])
+  end),
+  
+  move = function(info) return function(actor, scene)
+    local spd = actor:spd()
+    if info.spd.y then spd.y = info.spd.y end
+        
+    local kx, kz = (actor:keyb() or actor:auto()):direction(actor)
+    if not (kx == 0) then spd.x, actor:dir().x = kx * (info.spd.x or 0), kx end
+    if not (kz == 0) then spd.z, actor:dir().z = kz * (info.spd.z or 0), kz end
+    
+    actor:spd(spd)
+    
+    return true
+  end
+  end,
+  
+  hitAll = function(hit) return function(actor, scene)
+    local hits = scene:getHits(actor)
+    List.each(hits, function(other) actor:hit(other, hit) end)
+  end
+  end,
+  
+  -- Triggers
+  isKey = function(key) return F(function(actor, scene)
+    return actor:isKeyb() and actor:keyb():isKey(key)
+  end)
+  end,
+  
+  isFrame = function(nframe) return F(function(actor, scene)
+    return actor:curr():isStep() and actor:curr():frame() == nframe
+  end)
+  end,
+      
+  isDied = F(function(this) return this.info.hp == 0 end),
+  isFall = F(function(this) return this:spd().y > 0 end),
+  isKeyb = F(function(this) return not (this:keyb() == false) end),
+  isAuto = F(function(this) return not (this:auto() == false) end),
+  isEnded = F(function(this) return this:curr():isEnded() end),
+  isTarget = F(function(this) return not (this:auto() == false or this:target() == false) end),  
 }

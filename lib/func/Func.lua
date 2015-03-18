@@ -44,6 +44,7 @@ if __TEST then
   assert((-c)(5, 3) == true)
   assert(d(5) == 10)
   assert((d..d)(5) == 20)
+  assert(((a + b) / d)(5, 3) == 10)
   assert((a / d)(5, 3) == 10)
   assert((-a / d)(5, 3) == nil)
 end

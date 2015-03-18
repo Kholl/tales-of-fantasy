@@ -34,7 +34,7 @@ return {
       }
       
       local player = scene:addActor("res/chars/Sarah.lua")
-      player:useKeyb(Game.Keyb.new{r = "right", l = "left", u = "up", d = "down", a = "a", b = "s"})
+      player:keyb(KeybDlg.new{r = "right", l = "left", u = "up", d = "down", a = "a", b = "s"})
       player:pos{x = 200, y = 0, z = 425}
          
       camera = player
@@ -47,15 +47,18 @@ return {
   --    Game.Scene.spawn(scene, "HElf"):pos{x = 350, y = 0, z = 400}
   --    Game.Scene.spawn(scene, "HElf"):pos{x = 325, y = 0, z = 450}
   --    Game.Scene.spawn(scene, "HElf"):pos{x = 300, y = 0, z = 500}        
-      scene:addActor("res/chars/BHeart.lua"):pos{x = 750, y = 0, z = 500}
---      enemy:auto(Game.Enemy.new())
+
+      local bheart = scene:addActor("res/chars/BHeart.lua")
+      bheart:auto(Game.Enemy)
+      bheart:pos{x = 750, y = 0, z = 500}
+
   --    Game.Scene.spawn(scene, "DWarrior"):pos{x = 750, y = 0, z = 350}
   
       return "update"
     end,
   
     update = function(scene)
-      List.sort(scene.actors, function(a, b) return a:pos().z < b:pos().z end)
+      List.sort(scene.actors, function(actor) return actor:pos().z end)
       
       local off = {
         x = 160 - (camera:pos().x * scene:ratio().x),

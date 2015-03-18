@@ -78,54 +78,48 @@ actor.states = {
 }
 
 actor.rules = {
-  std = {
-    atkalt = this.isKey{"a[rl]>"},
-    wlk = this.isKey{"[rlud]+>"},
-    atk = this.isKey{"a>"},
-  },
-  wlk = {
-    wlk = this.isKey({"[rlud]+>"}, this.move{spd = {x = 90, z = 90}}),
-    std = -this.isKey(),
-  },
   atk = {
-    this.isFrame(2) / this.hitAll{dmg = 20},
-    std = this.isEnded,
+    Actor.isFrame(2) / Actor.hitAll{dmg = 20},
+    std = Actor.isEnded,
   },
   hit = {
-    hitair = -this.isFloor,
-    std = this.isEnded,
+    hitair = -Scene.isFloor,
+    std = Actor.isEnded,
   },
   hitair = {
-    hitflr = this.isFloor,
+    hitflr = Scene.isFloor,
   },
   hitflr = {
-    std = this.isEnded,
-    die = this.isDied,
+    std = Actor.isEnded,
+    die = Actor.isDied,
   },
   atkalt = {
-    this.isFrame(3) / this.hitAll{dmg = 15},
-    std = this.isEnded,
+    Actor.isFrame(3) / Actor.hitAll{dmg = 15},
+    std = Actor.isEnded,
   },
 }
 
-actor.info.state = {
-  wlk = {
-    spd = {x = 90, z = 90},
-    rng = {min = 144},
-    ep = 1,
-  },
-      
-  atk = {
-    evade = true,
-    ep = 160,
-  },
-      
-  atkalt = {
-    ep = 160,
+actor.autorules = {
+  std = {
+    wlk = Actor.isTarget,
+    -Actor.isTarget / Actor.find,
   },
   
-  hitflr = {evade = true},
-  die = {evade = true},
+  wlk = {
+    wlk = Actor.isTarget / Actor.move{spd = {x = 90, z = 90}},
+  },
+}
+
+actor.keybrules = {
+  std = {
+    atkalt = Actor.isKey{"a[rl]>"},
+    wlk = Actor.isKey{"[rlud]+>"},
+    atk = Actor.isKey{"a>"},    
+  },
+  wlk = {
+    wlk = Actor.isKey{"[rlud]+>"}  / Actor.move{spd = {x = 90, z = 90}},
+    std = -Actor.isKey(),
+  },
 }
 
 return actor

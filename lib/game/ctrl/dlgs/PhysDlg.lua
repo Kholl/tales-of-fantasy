@@ -56,7 +56,8 @@ PhysDlg = Class {
     
     actor:spd(spd)
     actor:pos(pos)
-    actor:floor(pos[this.grav] == 0)    
-    if actor:floor() then spd[this.grav] = 0 end
+    if this:isFloor(actor) then spd[this.grav] = 0 end
   end,
+  
+  isFloor = function(this, actor) return actor:pos()[this.grav] == 0 end,
 }

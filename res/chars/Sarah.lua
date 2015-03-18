@@ -147,98 +147,109 @@ actor.states = {
 }
 
 actor.rules = {
-  std = {
-    atkup = this.isKey{"au>u>d>"} / this.move{spd = {y = -220}},
-    atkalt = this.isKey{"a[rl]>"},
-    atkrnd = this.isKey{"ab>"},
-    blk = this.isKey{"ad>"},
-    jmp = this.isKey{"b[rlud]*>"} / this.move{spd = {x = 100, y = -220}},
-    wlk = this.isKey{"[rlud]+>"},
-    atk = this.isKey{"a>"},
-  },
-  wlk = {
-    atkup = this.isKey{"au>u>d>"} / this.move{spd = {y = -200}},
-    jmp = this.isKey{"[rlud]*b>"} / this.move{spd = {x = 100, y = -200}},
-    run = this.isKey{"r>r>", "l>l>"},
-    wlk = this.isKey{"[rlud]+>"} / this.move{spd = {x = 100, z = 100}},
-    std = -this.isKey(),
-  },
   atk = {
-    this.isFrame(5) / this.hitAll{dmg = 6},
-    std = this.isEnded,
-    atksq1 = this.isKey{"a>a>"} ^ this.isEnded,
+    Actor.isFrame(5) / Actor.hitAll{dmg = 6},
+    std = Actor.isEnded,
   },
   jmp = {
-    jmpatk = this.isKey{"a[rlud]*>"},
-    std = this.isFloor,
+    std = Scene.isFloor,
   },
   jmpatk = {
-    this.isFrame(3) / this.hitAll{dmg = 8, force = {x = 120}},
-    jmp = this.isEnded,
-    std = this.isFloor,
-  },
-  run = {
-    atkup = this.isKey{"au>u>d>"} / this.move{spd = {y = -180}},
-    runatk = this.isKey{"ar>r>r>", "al>l>l>"},
-    run = this.isKey{"r>r>", "l>l>"} / this.move{spd = {x = 200}},
-    jmp = this.isKey{"[rlud]*b>"} / this.move{spd = {x = 200, y = -180}},
-    runend = -this.isKey(),
+    Actor.isFrame(3) / Actor.hitAll{dmg = 8, force = {x = 120}},
+    jmp = Actor.isEnded,
+    std = Scene.isFloor,
   },
   runend = {
-    std = this.isEnded,
+    std = Actor.isEnded,
   },
   runatk = {
-    this.isFrame(3) / this.hitAll{dmg = 6, force = {x = 180, y = -220}},
-    std = this.isEnded,
+    Actor.isFrame(3) / Actor.hitAll{dmg = 6, force = {x = 180, y = -220}},
+    std = Actor.isEnded,
   },
   atkalt = {
-    this.isFrame(5) / this.hitAll{dmg = 10, force = {x = 100, y = -200}},
-    std = this.isEnded,
+    Actor.isFrame(5) / Actor.hitAll{dmg = 10, force = {x = 100, y = -200}},
+    std = Actor.isEnded,
   },
   atkup = {
-    this.isFrame(1) / this.hitAll{dmg = 8, force = {y = -220}},
-    jmp = this.isEnded,
-    std = this.isFloor,
+    Actor.isFrame(1) / Actor.hitAll{dmg = 8, force = {y = -220}},
+    jmp = Actor.isEnded,
+    std = Scene.isFloor,
   },
   atkrnd = {
-    this.isFrame(1) / this.hitAll{dmg = 8, force = {x = 100, y = -200}},
-    std = this.isEnded,
+    Actor.isFrame(1) / Actor.hitAll{dmg = 8, force = {x = 100, y = -200}},
+    std = Actor.isEnded,
   },
   atksq1 = {
-    this.isFrame(4) / this.hitAll{dmg = 8},
-    std = this.isEnded,
-    atksq2 = this.isKey{"a>a>a>"} ^ this.isEnded,
+    Actor.isFrame(4) / Actor.hitAll{dmg = 8},
+    std = Actor.isEnded,
   },
   atksq2 = {
-    this.isFrame(3) / this.hitAll{dmg = 10},
-    std = this.isEnded,
-    atksq3 = this.isKey{"a>a>a>a>"} ^ this.isEnded,
+    Actor.isFrame(3) / Actor.hitAll{dmg = 10},
+    std = Actor.isEnded,
   },
   atksq3 = {
-    this.isFrame(5) / this.hitAll{dmg = 12},
-    std = this.isEnded,
+    Actor.isFrame(5) / Actor.hitAll{dmg = 12},
+    std = Actor.isEnded,
   },
   hit = {
-    hitair = -this.isFloor,
-    std = this.isEnded,
+    hitair = -Scene.isFloor,
+    std = Actor.isEnded,
   },
   hitair = {
-    hitflr = this.isFloor,
+    hitflr = Scene.isFloor,
   },
   hitflr = {
-    std = this.isEnded,
-    die = this.isDied,
+    std = Actor.isEnded,
+    die = Actor.isDied,
   },
   hitalt = {
-    hitair = -this.isFloor,
-    std = this.isEnded,
+    hitair = -Scene.isFloor,
+    std = Actor.isEnded,
   },
   hithvy = {
-    hitair = this.isFall,
+    hitair = Actor.isFall,
+  },
+}
+
+actor.keybrules = {
+  std = {
+    atkup = Actor.isKey{"au>u>d>"} / Actor.move{spd = {y = -220}},
+    atkalt = Actor.isKey{"a[rl]>"},
+    atkrnd = Actor.isKey{"ab>"},
+    blk = Actor.isKey{"ad>"},
+    jmp = Actor.isKey{"b[rlud]*>"} / Actor.move{spd = {x = 100, y = -220}},
+    wlk = Actor.isKey{"[rlud]+>"},
+    atk = Actor.isKey{"a>"},
+  },
+  wlk = {
+    atkup = Actor.isKey{"au>u>d>"} / Actor.move{spd = {y = -200}},
+    jmp = Actor.isKey{"[rlud]*b>"} / Actor.move{spd = {x = 100, y = -200}},
+    run = Actor.isKey{"r>r>", "l>l>"},
+    wlk = Actor.isKey{"[rlud]+>"} / Actor.move{spd = {x = 100, z = 100}},
+    std = -Actor.isKey(),
+  },
+  atk = {
+    atksq1 = Actor.isKey{"a>a>"} ^ Actor.isEnded,
+  },
+  jmp = {
+    jmpatk = Actor.isKey{"a[rlud]*>"},
+  },
+  run = {
+    atkup = Actor.isKey{"au>u>d>"} / Actor.move{spd = {y = -180}},
+    runatk = Actor.isKey{"ar>r>r>", "al>l>l>"},
+    run = Actor.isKey{"r>r>", "l>l>"} / Actor.move{spd = {x = 200}},
+    jmp = Actor.isKey{"[rlud]*b>"} / Actor.move{spd = {x = 200, y = -180}},
+    runend = -Actor.isKey(),
+  },
+  atksq1 = {
+    atksq2 = Actor.isKey{"a>a>a>"} ^ Actor.isEnded,
+  },
+  atksq2 = {
+    atksq3 = Actor.isKey{"a>a>a>a>"} ^ Actor.isEnded,
   },
   blk = {
-    blk = this.isKey{"ad>"},
-    std = -this.isKey(),
+    blk = Actor.isKey{"ad>"},
+    std = -Actor.isKey(),
   },
 }
 

@@ -87,12 +87,9 @@ Moo = {
       })
       
       if type(init) == "string" then
-        init = Moo.Load{
-          this = instance,
-          List = List,
-          Math = Math,
-          Game = Moo.Game,
-          }(init)
+        local env = _G
+        env.this = instance
+        init = Moo.Load(env)(init)
       end
       
       instance:create(init)
