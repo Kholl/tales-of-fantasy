@@ -24,9 +24,10 @@ PhysDlg = Class {
     end
     k[this.grav] = 1    
     
-    pos.x = pos.x + (spd.x * scene.delta)
-    pos.y = pos.y + (spd.y * scene.delta)
-    pos.z = pos.z + (spd.z * scene.delta)
+    local delta = scene:delta()
+    pos.x = pos.x + (spd.x * delta)
+    pos.y = pos.y + (spd.y * delta)
+    pos.z = pos.z + (spd.z * delta)
     
     if actor:rad() > 0 then
       local actors = scene:getActors(function(other)
@@ -45,9 +46,9 @@ PhysDlg = Class {
       end)
     end
 
-    spd.x = spd.x + (k.x * this.drag.x * scene.delta)
-    spd.y = spd.y + (k.y * this.drag.y * scene.delta)
-    spd.z = spd.z + (k.z * this.drag.z * scene.delta)
+    spd.x = spd.x + (k.x * this.drag.x * delta)
+    spd.y = spd.y + (k.y * this.drag.y * delta)
+    spd.z = spd.z + (k.z * this.drag.z * delta)
     
     local lim = scene:lim()
     pos.x = Math.Lim(pos.x, lim.x)

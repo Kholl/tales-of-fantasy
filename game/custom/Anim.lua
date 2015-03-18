@@ -3,7 +3,7 @@ Tales Of Fantasy
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-return {
+Anim = {
   Air = function(max)
     return function(sprite, actor, scene)
       local k = actor:spd().y / max

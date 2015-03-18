@@ -22,18 +22,18 @@ return {
   commands = {
     start = function(scene)
       scene:addScroll{
-        res = "res/backs/palace.bg1.png",
+        res = "game/backs/palace.bg1.png",
         scr = {x = "clamp", y = "clamp"},
         pos = {x = 0, y = 0},
       }
       
       scene:addScroll{
-        res = "res/backs/palace.bg2.png",
+        res = "game/backs/palace.bg2.png",
         scr = {x = "repeat", y = "clamp"},
         pos = {x = 256, y = 0},
       }
       
-      local player = scene:addActor("res/chars/Sarah.lua")
+      local player = scene:addActor("game/chars/Sarah.lua")
       player:keyb(KeybDlg.new{r = "right", l = "left", u = "up", d = "down", a = "a", b = "s"})
       player:pos{x = 200, y = 0, z = 425}
          
@@ -48,8 +48,8 @@ return {
   --    Game.Scene.spawn(scene, "HElf"):pos{x = 325, y = 0, z = 450}
   --    Game.Scene.spawn(scene, "HElf"):pos{x = 300, y = 0, z = 500}        
 
-      local bheart = scene:addActor("res/chars/BHeart.lua")
-      bheart:auto(Game.Enemy)
+      local bheart = scene:addActor("game/chars/BHeart.lua")
+      bheart:auto(Enemy)
       bheart:pos{x = 750, y = 0, z = 500}
 
   --    Game.Scene.spawn(scene, "DWarrior"):pos{x = 750, y = 0, z = 350}

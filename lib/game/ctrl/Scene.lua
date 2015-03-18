@@ -17,9 +17,9 @@ Scene = Class {
   off = Property("_off"),
   lim = Property("_lim"),
   ratio = Property("_ratio"),
+  delta = Property("_delta"),
   
   time = nil,
-  delta = nil,
   frame = nil,
 
   script = nil,
@@ -36,9 +36,9 @@ Scene = Class {
     this:lim(init and init.lim or {})
     this:fps(init and init.fps or 24)    
     this:ratio(init and init.ratio or {x = 1, y = 1, z = 1})
+    this:delta(0)
     
     this.time = 0
-    this.delta = 0
     this.frame = 0
 
     this.scrolls = {}
@@ -47,17 +47,16 @@ Scene = Class {
     if init.start then init.start(this) end
   end,
   
-  draw = function(this)
+  draw = function(this, game)
     List.each(this.scrolls, function(scroll) scroll:draw(this) end)
     List.each(this.actors, function(actor) actor:draw(this) end)
   end,
   
-  update = function(this, delta)
+  update = function(this, game)
     this.script:update(this)
   
-    this.delta = delta
-    this.time = this.time + delta
-    this.frame = delta * this._fps
+    this.time = this._delta + this.time
+    this.frame = this._delta * this._fps
       
     List.each(this.scrolls, function(scroll) scroll:update(this) end)      
     List.each(this.actors, function(actor) actor:update(this) end)

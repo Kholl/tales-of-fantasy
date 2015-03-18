@@ -19,23 +19,24 @@ Dependency "resource" (Cache.new{
   image = love.image.newImageData,
 })
 
--- Load Game custom program
-Moo.Game = require("res/game/ToF")
-
 require("lib/game/ctrl/Scene")
 
-frameDelta = 0
+local game
 love.load = function(arg)
-  love.filesystem.setIdentity("ToF")
+  game = loadfile("game/main.lua")()
+
+  love.filesystem.setIdentity(game.dir)
   love.filesystem.mkdir(love.filesystem.getSaveDirectory())
-  love.graphics.setMode(320, 200, false, true)
-  scene = Scene.new("res/stages/Palace.lua")
+  love.graphics.setMode(game.view.w, game.view.h, game.view.full, game.view.sync)  
+  
+  scene = Scene.new(game.scenes.start)
 end
 
 love.draw = function()
-  scene:draw()
+  scene:draw(game)
 end
 
 love.update = function(delta)
-  scene:update(delta)
+  scene:delta(delta)
+  scene:update(game)
 end
