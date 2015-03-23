@@ -79,50 +79,50 @@ actor.states = {
 
 actor.rules = {
   atk = {
-    Actor.isFrame(2) / Actor.hitAll{dmg = 20},
-    std = Actor.isEnded,
+    ActorScript.isFrame(2) / ActorScript.hitAll{dmg = 20},
+    std = ActorScript.isEnded,
   },
   hit = {
     hitair = -Scene.isFloor,
-    std = Actor.isEnded,
+    std = ActorScript.isEnded,
   },
   hitair = {
     hitflr = Scene.isFloor,
   },
   hitflr = {
-    std = Actor.isEnded,
-    die = Actor.isDied,
+    std = ActorScript.isEnded,
+    die = ActorScript.isDied,
   },
   atkalt = {
-    Actor.isFrame(3) / Actor.hitAll{dmg = 15},
-    std = Actor.isEnded,
+    ActorScript.isFrame(3) / ActorScript.hitAll{dmg = 15},
+    std = ActorScript.isEnded,
   },
 }
 
 actor.autorules = {
   std = {
-    -Actor.isTarget / Actor.find,
-    wlk = Actor.isTarget,
-    atk = Actor.isTarget ^ Actor.isHit("atk"),
+    -ActorScript.isTarget / ActorScript.find,
+    wlk = ActorScript.isTarget,
+    atk = ActorScript.isTarget ^ ActorScript.isHit("atk"),
   },
   
   wlk = {
-    Actor.move{spd = {x = 90, z = 90}},
-    std = -Actor.isTarget,
-    wlk = Actor.isTarget ^ -Actor.isHit("atk"),
-    atk = Actor.isTarget ^ Actor.isHit("atk"),
+    ActorScript.move{spd = {x = 90, z = 90}},
+    std = -ActorScript.isTarget,
+    wlk = ActorScript.isTarget ^ -ActorScript.isHit("atk"),
+    atk = ActorScript.isTarget ^ ActorScript.isHit("atk"),
   },
 }
 
 actor.keybrules = {
   std = {
-    atkalt = Actor.isKey{"a[rl]>"},
-    wlk = Actor.isKey{"[rlud]+>"},
-    atk = Actor.isKey{"a>"},    
+    atkalt = ActorScript.isKey{"a[rl]>"},
+    wlk = ActorScript.isKey{"[rlud]+>"},
+    atk = ActorScript.isKey{"a>"},    
   },
   wlk = {
-    wlk = Actor.isKey{"[rlud]+>"}  / Actor.move{spd = {x = 90, z = 90}},
-    std = -Actor.isKey(),
+    wlk = ActorScript.isKey{"[rlud]+>"}  / ActorScript.move{spd = {x = 90, z = 90}},
+    std = -ActorScript.isKey(),
   },
 }
 

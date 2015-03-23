@@ -97,8 +97,8 @@ Moo = {
 }
 
 -- Foundation classes
-require("lib/sets/List")
-require("lib/func/Func")
-require("lib/math/Vect")
-require("lib/math/Math")
+require("lib/util/List")
+require("lib/util/Func")
+require("lib/util/Vect")
+require("lib/util/Math")
 require("lib/util/Cache")

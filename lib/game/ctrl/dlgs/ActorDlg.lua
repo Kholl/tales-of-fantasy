@@ -18,8 +18,8 @@ ActorDlg = Moo.Class {
     
     this:execute(actor, scene, this.rules)
     
-    if actor:isKeyb() then this:execute(actor, scene, this.keybrules)
-    elseif actor:isAuto() then this:execute(actor, scene, this.autorules)
+    if actor:keyb() then this:execute(actor, scene, this.keybrules)
+    elseif actor:auto() then this:execute(actor, scene, this.autorules)
 --  elseif actor:isScrp() then this:execute(this.scrprules[state])
     end
   end,
