@@ -83,11 +83,11 @@ actor.rules = {
     std = ActorScript.isEnded,
   },
   hit = {
-    hitair = -Scene.isFloor,
+    hitair = -SceneScript.isFloor,
     std = ActorScript.isEnded,
   },
   hitair = {
-    hitflr = Scene.isFloor,
+    hitflr = SceneScript.isFloor,
   },
   hitflr = {
     std = ActorScript.isEnded,

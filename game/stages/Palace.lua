@@ -34,7 +34,7 @@ return {
       }
       
       local player = scene:addActor("game/chars/Sarah.lua")
-      player:keyb(KeybDlg.new{r = "right", l = "left", u = "up", d = "down", a = "a", b = "s"})
+      player:keyb(KeybDlg.new("conf/keyb1.lua"))
       player:pos{x = 200, y = 0, z = 425}
          
       camera = player

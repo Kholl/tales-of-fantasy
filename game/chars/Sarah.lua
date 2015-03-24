@@ -155,12 +155,12 @@ actor.rules = {
     std = ActorScript.isEnded,
   },
   jmp = {
-    std = Scene.isFloor,
+    std = SceneScript.isFloor,
   },
   jmpatk = {
     ActorScript.isFrame(3) / ActorScript.hitAll{dmg = 8, force = {x = 120}},
     jmp = ActorScript.isEnded,
-    std = Scene.isFloor,
+    std = SceneScript.isFloor,
   },
   run = {
     ActorScript.move{spd = {x = 200}},
@@ -179,7 +179,7 @@ actor.rules = {
   atkup = {
     ActorScript.isFrame(1) / ActorScript.hitAll{dmg = 8, force = {y = -220}},
     jmp = ActorScript.isEnded,
-    std = Scene.isFloor,
+    std = SceneScript.isFloor,
   },
   atkrnd = {
     ActorScript.isFrame(1) / ActorScript.hitAll{dmg = 8, force = {x = 100, y = -200}},
@@ -198,18 +198,18 @@ actor.rules = {
     std = ActorScript.isEnded,
   },
   hit = {
-    hitair = -Scene.isFloor,
+    hitair = -SceneScript.isFloor,
     std = ActorScript.isEnded,
   },
   hitair = {
-    hitflr = Scene.isFloor,
+    hitflr = SceneScript.isFloor,
   },
   hitflr = {
     std = ActorScript.isEnded,
     die = ActorScript.isDied,
   },
   hitalt = {
-    hitair = -Scene.isFloor,
+    hitair = -SceneScript.isFloor,
     std = ActorScript.isEnded,
   },
   hithvy = {

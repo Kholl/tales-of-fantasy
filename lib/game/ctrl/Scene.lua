@@ -3,44 +3,26 @@ Moo Object Oriented framework for LUA
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
+require("lib/game/data/SceneData")
+require("lib/game/script/SceneScript")
 require("lib/game/ctrl/Scroll")
 require("lib/game/ctrl/Actor")
-require("lib/game/ctrl/Image")
-require("lib/game/ctrl/Text")
 require("lib/game/ctrl/dlgs/PhysDlg")
 require("lib/game/ctrl/dlgs/ScriptDlg")
 
 Scene = Class {    
-  graphics = Dependency("graphics"),
-  
-  fps = Property("_fps"),
-  off = Property("_off"),
-  lim = Property("_lim"),
-  ratio = Property("_ratio"),
-  delta = Property("_delta"),
-  
-  time = nil,
-  frame = nil,
-
-  script = nil,
+  data = nil,
   phys = nil,
+  script = nil,
   
   scrolls = nil,
   actors = nil,
   
   create = function(this, init)
-    this.script = ScriptDlg.new(init)
+    this.data = SceneData.new(init)
     this.phys = PhysDlg.new(init)
+    this.script = ScriptDlg.new(init)
     
-    this:off(init and init.off or {x = 0, y = 0})
-    this:lim(init and init.lim or {})
-    this:fps(init and init.fps or 24)    
-    this:ratio(init and init.ratio or {x = 1, y = 1, z = 1})
-    this:delta(0)
-    
-    this.time = 0
-    this.frame = 0
-
     this.scrolls = {}
     this.actors = {}
     
@@ -55,13 +37,21 @@ Scene = Class {
   update = function(this, game)
     this.script:update(this)
   
-    this.time = this._delta + this.time
-    this.frame = this._delta * this._fps
+    this:time(this.data._delta + this.data._time)
+    this:frame(this.data._delta * this.data._fps)
       
     List.each(this.scrolls, function(scroll) scroll:update(this) end)      
     List.each(this.actors, function(actor) actor:update(this) end)
     List.each(this.actors, function(actor) this.phys:update(actor, this) end)
   end,
+  
+  fps = function(this, val) return this.data:fps(val) end,
+  off = function(this, val) return this.data:off(val) end,
+  lim = function(this, val) return this.data:lim(val) end,
+  ratio = function(this, val) return this.data:ratio(val) end,
+  delta = function(this, val) return this.data:delta(val) end,
+  time = function(this, val) return this.data:time(val) end,
+  frame = function(this, val) return this.data:frame(val) end,
   
   addScroll = function(this, init) return List.add(this.scrolls, Scroll.new(init)) end,
   addActor = function(this, init) return List.add(this.actors, Actor.new(init)) end,
@@ -75,7 +65,4 @@ Scene = Class {
       return not (actor == other) and ActorScript.isHit()(actor, this, other)
     end)
   end,
-  
-  -- Triggers
-  isFloor = F(function(actor, scene) return scene.phys:isFloor(actor) end),
 }
