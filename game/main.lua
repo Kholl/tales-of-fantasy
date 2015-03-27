@@ -6,7 +6,7 @@ Tales Of Fantasy
 require("game/custom/Anim")
 require("game/custom/PMap")
 require("game/custom/Asset")
-require("game/custom/ctrl/Enemy")
+require("game/custom/ctrl/dlg/EnemyDlg")
 
 return {
   dir = "ToF",

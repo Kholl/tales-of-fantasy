@@ -37,7 +37,7 @@ SpriteData = Class {
     end
     
     local pframe = this.frame
-    this.frame = this.frame + (frame / frate)
+    this.frame = this.frame + (1 / frate)
     this.step = not (math.floor(pframe) == math.floor(this.frame))
     
     return this

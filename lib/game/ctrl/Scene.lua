@@ -30,19 +30,31 @@ Scene = Class {
   end,
   
   draw = function(this, game)
-    List.each(this.scrolls, function(scroll) scroll:draw(this) end)
-    List.each(this.actors, function(actor) actor:draw(this) end)
+    List.each(this.scrolls, function(scroll) scroll:draw(this, game) end)
+    List.each(this.actors, function(actor) actor:draw(this, game) end)
+  end,
+  
+  step = function(this, game)
+    this.script:step(this, this, game)
+    List.each(this.scrolls, function(scroll) scroll:step(this, game) end)
+    List.each(this.actors, function(actor) actor:step(this, game) end)
+    List.each(this.actors, function(actor) this.phys:step(actor, this, game) end)      
   end,
   
   update = function(this, game)
-    this.script:update(this)
-  
+    local lastframe = math.floor(this.data._frame)
+    
+    -- Move time to game context
     this:time(this.data._delta + this.data._time)
-    this:frame(this.data._delta * this.data._fps)
+    this:frame(this.data._time * this.data._fps)
+    this.data._step = (math.floor(this.data._frame) > lastframe)
+        
+    this.script:update(this, this, game)
+    List.each(this.scrolls, function(scroll) scroll:update(this, game) end)
+    List.each(this.actors, function(actor) actor:update(this, game) end)
+    List.each(this.actors, function(actor) this.phys:update(actor, this, game) end)      
       
-    List.each(this.scrolls, function(scroll) scroll:update(this) end)      
-    List.each(this.actors, function(actor) actor:update(this) end)
-    List.each(this.actors, function(actor) this.phys:update(actor, this) end)
+    if this.data._step then this:step(game) end
   end,
   
   fps = function(this, val) return this.data:fps(val) end,

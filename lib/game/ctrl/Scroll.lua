@@ -3,13 +3,10 @@ Moo Object Oriented framework for LUA
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-require("lib/game/ctrl/Image")
 require("lib/game/data/ScrollData")
 require("lib/game/draw/ScrollDraw")
 
 Scroll = Class {
-  super = Image,
-  
   drawable = nil,
   data = nil,
   
@@ -18,7 +15,10 @@ Scroll = Class {
     this.data = ScrollData.new(init)
   end,
   
-  draw = function(this, offset)
-    this.drawable:draw(this.data, offset)
-  end,  
+  draw = function(this, scene, game)
+    this.drawable:draw(this.data, scene, game)
+  end,
+  
+  step = Nil,
+  update = Nil,
 }

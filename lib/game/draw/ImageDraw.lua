@@ -37,16 +37,4 @@ ImageDraw = Class {
     local w, h = this.drawable:getWidth(), this.drawable:getHeight()
     this.quad = this.graphics.newQuad(0, 0, 0, 0, w, h)
   end,
-  
-  draw = function(this, data)
-    local pos = data:pos()
-    local dim = data:dim()
-    local col = data:col()
-    
-    local r, g, b, a = this.graphics.getColor()
-    this.quad:setViewport(0, 0, dim.w, dim.h)
-    this.graphics.setColor(col.r, col.g, col.b)
-    this.graphics.drawq(this.drawable, this.quad, pos.x, pos.y)
-    this.graphics.setColor(r, g, b, a)
-  end,
 }

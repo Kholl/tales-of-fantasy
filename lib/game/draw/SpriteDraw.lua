@@ -37,7 +37,7 @@ SpriteDraw = Class {
     end
   end,
   
-  draw = function(this, spriteData, imageData, scene)
+  draw = function(this, spriteData, imageData, scene, game)
     local frame = spriteData:get()
     local dim = spriteData:dim()
     local pos = imageData:pos()

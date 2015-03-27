@@ -12,8 +12,10 @@ ScriptDlg = Moo.Class {
     this.state = "start"
   end,
   
-  update = function(this, object)
+  update = function(this, object, scene, game)
     local command = this.commands[this.state] or {}
     this.state = command(object)
   end,
+
+  step = Nil, -- Temporary due to camera adjustments
 }

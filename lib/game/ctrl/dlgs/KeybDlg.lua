@@ -31,8 +31,10 @@ KeybDlg = Class {
     this.match = ""
     this.matchlen = 0
   end,
+  
+  step = Nil,
     
-  update = function(this, actor, scene)
+  update = function(this, actor, scene, game)
     local delta = scene:delta()
     local keypress = this:updateCurrKey(delta)
         

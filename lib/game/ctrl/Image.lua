@@ -6,7 +6,7 @@ Moo Object Oriented framework for LUA
 require("lib/game/data/ImageData")
 require("lib/game/draw/ImageDraw")
 
-Image = Class {
+ImageDelete = Class {
   drawable = nil,
   data = nil,
   

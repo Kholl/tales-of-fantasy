@@ -32,12 +32,16 @@ State = Class {
     end)
   end,
   
-  draw = function(this, data, scene)
-    this:curr():draw(data, scene)
+  draw = function(this, data, scene, game)
+    this:curr():draw(data, scene, game)
   end,
   
-  update = function(this, scene)
-    this:curr():update(this, scene)
+  step = function(this, scene, game)
+    this:curr():step(this, scene, game)
+  end,
+  
+  update = function(this, scene, game)
+    this:curr():update(this, scene, game)
   end,
     
   curr = function(this) return this.states[this:state()] end,

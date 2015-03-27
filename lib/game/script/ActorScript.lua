@@ -13,12 +13,12 @@ ActorScript = {
   find = F(function(actor, scene)
     local auto = actor:auto()
     local actors = scene:getActors()
-    actors = List.filter(actors, auto.filter(actor, scene))
-    actors = List.sort(actors, auto.eval(actor, scene))
+    actors = List.filter(actors, auto:filter(actor, scene))
+    actors = List.sort(actors, auto:eval(actor, scene))
     actor:target(actors[1])
   end),
   
-  move = function(info) return function(actor, scene)
+  move = function(info) return F(function(actor, scene)
     local spd = actor:spd()
     if info.spd.y then spd.y = info.spd.y end
         
@@ -29,13 +29,13 @@ ActorScript = {
     actor:spd(spd)
     
     return true
-  end
+  end)
   end,
   
-  hitAll = function(hit) return function(actor, scene)
+  hitAll = function(hit) return F(function(actor, scene)
     local hits = scene:getHits(actor)
     List.each(hits, function(other) actor:hit(other, hit) end)
-  end
+  end)
   end,
   
   -- Triggers

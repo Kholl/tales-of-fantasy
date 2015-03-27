@@ -49,7 +49,7 @@ return {
   --    Game.Scene.spawn(scene, "HElf"):pos{x = 300, y = 0, z = 500}        
 
       local bheart = scene:addActor("game/chars/BHeart.lua")
-      bheart:auto(Enemy)
+      bheart:auto(EnemyDlg.new())
       bheart:pos{x = 750, y = 0, z = 500}
 
   --    Game.Scene.spawn(scene, "DWarrior"):pos{x = 750, y = 0, z = 350}

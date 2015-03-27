@@ -17,15 +17,17 @@ Sprite = Class {
     this.anim = (init and init.anim) or "idle"
   end,
   
-  draw = function(this, imageData, scene)
-    this.drawable:draw(this.data, imageData, scene)
+  draw = function(this, imageData, scene, game)
+    this.drawable:draw(this.data, imageData, scene, game)
   end,
   
-  update = function(this, actor, scene)
-    if type(this.anim) == "string" then this[this.anim](this, actor, scene)
-    elseif type(this.anim) == "function" then this.data:set(this.anim(this, actor, scene))
+  step = function(this, actor, scene, game)
+    if type(this.anim) == "string" then this[this.anim](this, actor, scene, game)
+    elseif type(this.anim) == "function" then this.data:set(this.anim(this, actor, scene, game))
     end
   end,
+  
+  update = Nil,
   
   box = function(this) return this.data:box() end,
   rad = function(this) return this.data:rad() end,
@@ -34,9 +36,9 @@ Sprite = Class {
   
   reset = function(this) this.data:reset() end,
     
-  idle = function(this, actor, scene) end,
-  play = function(this, actor, scene) this.data:incr(scene:frame()):limit() end,
-  loop = function(this, actor, scene) this.data:incr(scene:frame()):loop() end,
+  idle = function(this, actor, scene, game) end,
+  play = function(this, actor, scene, game) this.data:incr(scene:frame()):limit() end,
+  loop = function(this, actor, scene, game) this.data:incr(scene:frame()):loop() end,
   
   frame = function(this, frame) return this.data:get() end,
   isStep = function(this) return this.data.step end,
