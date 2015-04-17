@@ -14,7 +14,6 @@ actor.info = {
   faction = "helf",
   hp =  75, hpmax =  75,
   mp = 125, mpmax = 125,
-  ep =   0, epmax = 300,
   dir = {x = 0, z = 0},
 }
 
@@ -148,7 +147,7 @@ actor.states = {
 
 actor.rules = {
   wlk = {
-    ActorScript.move{spd = {x = 100, z = 100}},
+    ActorScript.move{x = 100, z = 100},
   },
   atk = {
     ActorScript.isFrame(5) / ActorScript.hitAll{dmg = 6},
@@ -163,7 +162,7 @@ actor.rules = {
     std = SceneScript.isFloor,
   },
   run = {
-    ActorScript.move{spd = {x = 200}},
+    ActorScript.move{x = 200},
   },
   runend = {
     std = ActorScript.isEnded,
@@ -219,17 +218,17 @@ actor.rules = {
 
 actor.keybrules = {
   std = {
-    atkup = ActorScript.isKey{"au>u>d>"} / ActorScript.move{spd = {y = -220}},
+    atkup = ActorScript.isKey{"au>u>d>"} / ActorScript.move{y = -220},
     atkalt = ActorScript.isKey{"a[rl]>"},
     atkrnd = ActorScript.isKey{"ab>"},
     blk = ActorScript.isKey{"ad>"},
-    jmp = ActorScript.isKey{"b[rlud]*>"} / ActorScript.move{spd = {x = 100, y = -220}},
+    jmp = ActorScript.isKey{"b[rlud]*>"} / ActorScript.move{x = 100, y = -220},
     wlk = ActorScript.isKey{"[rlud]+>"},
     atk = ActorScript.isKey{"a>"},
   },
   wlk = {
-    atkup = ActorScript.isKey{"au>u>d>"} / ActorScript.move{spd = {y = -200}},
-    jmp = ActorScript.isKey{"[rlud]*b>"} / ActorScript.move{spd = {x = 100, y = -200}},
+    atkup = ActorScript.isKey{"au>u>d>"} / ActorScript.move{y = -200},
+    jmp = ActorScript.isKey{"[rlud]*b>"} / ActorScript.move{x = 100, y = -200},
     run = ActorScript.isKey{"r>r>", "l>l>"},
     wlk = ActorScript.isKey{"[rlud]+>"},
     std = -ActorScript.isKey(),
@@ -241,10 +240,10 @@ actor.keybrules = {
     jmpatk = ActorScript.isKey{"a[rlud]*>"},
   },
   run = {
-    atkup = ActorScript.isKey{"au>u>d>"} / ActorScript.move{spd = {y = -180}},
+    atkup = ActorScript.isKey{"au>u>d>"} / ActorScript.move{y = -180},
     runatk = ActorScript.isKey{"ar>r>r>", "al>l>l>"},
     run = ActorScript.isKey{"r>r>", "l>l>"},
-    jmp = ActorScript.isKey{"[rlud]*b>"} / ActorScript.move{spd = {x = 200, y = -180}},
+    jmp = ActorScript.isKey{"[rlud]*b>"} / ActorScript.move{x = 200, y = -180},
     runend = -ActorScript.isKey(),
   },
   atksq1 = {

@@ -7,6 +7,7 @@ require("lib/game/ctrl/State")
 require("lib/game/ctrl/dlgs/ActorDlg")
 require("lib/game/ctrl/dlgs/KeybDlg")
 require("lib/game/data/ActorData")
+require("lib/game/script/Script")
 require("lib/game/script/ActorScript")
 
 Actor = Class {
@@ -55,7 +56,7 @@ Actor = Class {
   target = function(this, val) return this.data:target(val) end,
     
   distrel = function(this, actor)
-    actor = actor or this:target()
+    actor = actor or this:target() or this
     local a, b = this:pos(), actor:pos()
     return {x = a.x - b.x, z = a.z - b.z}
   end,
@@ -71,14 +72,14 @@ Actor = Class {
   end,
   
   angle = function(this, actor)
-    actor = actor or this:target()
+    actor = actor or this:target() or this
     local a, b = this:pos(), actor:pos()
     local angle = math.atan2(a.z - b.z, a.x - b.x)
     return {x = math.cos(angle), z = math.sin(angle)}
   end,
   
   face = function(this, actor)
-    actor = actor or this:target()
+    actor = actor or this:target() or this
     this:dir().x = Math.Sign(actor:pos().x - this:pos().x)
     return this
   end,

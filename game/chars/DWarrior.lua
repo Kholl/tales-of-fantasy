@@ -11,6 +11,14 @@ actor.box = {w = 120, h = 135}
 actor.rad = 60
 actor.mass = 10
 
+actor.info = {
+  faction = "demon",
+  massive = true,
+  hp = 750, hpmax = 750,
+  mp = 250, mpmax = 250,
+  dir = {x = 0, z = 0},
+}
+
 actor.states = {
   std = {
     res = "game/chars/dwarrior/std.png",
@@ -36,7 +44,7 @@ actor.states = {
     dim = {w = 206, h = 104},
     frate = 0,
     nframes = 2,
-    anim = Game.Anim.Air2(this)},
+    anim = Anim.Air2()},
   hitflr = {
     res = "game/chars/dwarrior/hitflr.png",
     dim = {w = 200, h = 78},
@@ -63,30 +71,50 @@ actor.states = {
     anim = "play"},
 }
 
-actor.info = {
-  faction = "demon",
-  massive = true,
-  hp = 750, hpmax = 750,
-  mp = 250, mpmax = 250,
-  ep =   0, epmax = 300,
-  dir = {x = 0, z = 0},
-  state = {
-    wlk = {
-      spd = {x = 60, z = 60},
-      rng = {min = 110},
-      ep = 1,
-    },
-        
-    atk = {
-      evade = true,
-      dmg = 25,
-      hit = {[3] = {box = {x = 0, y = 0, w = 110, h = 145}, force = {x = 180, y = -220}}},
-      rng = {min = 0, max = 110},
-      ep = 300,
-    },
-    
-    hitflr = {evade = true},
-    die = {evade = true},
+actor.rules = {
+  wlk = {
+    ActorScript.move{x = 60, z = 60},
+  },
+  atk = {
+    ActorScript.isFrame(3) / ActorScript.hitAll{dmg = 25, force = {x = 180, y = -220}},
+    std = ActorScript.isEnded,
+  },
+  hit = {
+    hitair = -SceneScript.isFloor,
+    std = ActorScript.isEnded,
+  },
+  hitair = {
+    hitflr = SceneScript.isFloor,
+  },
+  hitflr = {
+    std = ActorScript.isEnded,
+    die = ActorScript.isDied,
+  },
+}
+
+actor.autorules = {
+  std = {
+    -ActorScript.isTarget / ActorScript.find,
+    wlk = ActorScript.isTarget,
+    atk = ActorScript.isTarget ^ ActorScript.isHit("atk"),
+  },
+  
+  wlk = {
+    std = -ActorScript.isTarget,
+    wlk = ActorScript.isTarget,
+    atk = ActorScript.isTarget ^ ActorScript.isHit("atk"),
+  },
+}
+
+actor.keybrules = {
+  std = {
+    atkalt = ActorScript.isKey{"a[rl]>"},
+    wlk = ActorScript.isKey{"[rlud]+>"},
+    atk = ActorScript.isKey{"a>"},    
+  },
+  wlk = {
+    wlk = ActorScript.isKey{"[rlud]+>"}  / ActorScript.move{x = 90, z = 90},
+    std = -ActorScript.isKey(),
   },
 }
 

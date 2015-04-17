@@ -16,7 +16,6 @@ actor.info = {
   massive = true,
   hp = 500, hpmax = 500,
   mp = 500, mpmax = 500,
-  ep =   0, epmax = 300,
   dir = {x = 0, z = 0},
 }
 
@@ -78,6 +77,9 @@ actor.states = {
 }
 
 actor.rules = {
+  wlk = {
+    ActorScript.move{x = 90, z = 90},
+  },
   atk = {
     ActorScript.isFrame(2) / ActorScript.hitAll{dmg = 20},
     std = ActorScript.isEnded,
@@ -107,9 +109,8 @@ actor.autorules = {
   },
   
   wlk = {
-    ActorScript.move{spd = {x = 90, z = 90}},
     std = -ActorScript.isTarget,
-    wlk = ActorScript.isTarget ^ -ActorScript.isHit("atk"),
+    wlk = ActorScript.isTarget,
     atk = ActorScript.isTarget ^ ActorScript.isHit("atk"),
   },
 }
@@ -121,7 +122,7 @@ actor.keybrules = {
     atk = ActorScript.isKey{"a>"},    
   },
   wlk = {
-    wlk = ActorScript.isKey{"[rlud]+>"}  / ActorScript.move{spd = {x = 90, z = 90}},
+    wlk = ActorScript.isKey{"[rlud]+>"}  / ActorScript.move{x = 90, z = 90},
     std = -ActorScript.isKey(),
   },
 }

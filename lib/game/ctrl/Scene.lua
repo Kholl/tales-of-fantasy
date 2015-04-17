@@ -4,6 +4,7 @@ Moo Object Oriented framework for LUA
 ]]--
 
 require("lib/game/data/SceneData")
+require("lib/game/script/Script")
 require("lib/game/script/SceneScript")
 require("lib/game/ctrl/Scroll")
 require("lib/game/ctrl/Actor")

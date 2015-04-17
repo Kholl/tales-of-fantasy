@@ -10,7 +10,14 @@ actor.pad = {x = 0.5, y = 1}
 actor.box = {w = 28, h = 78}
 actor.rad = 14
 actor.mass = 1
-actor.pmap = Game.Assets["high elf pal"]
+actor.pmap = Asset["high elf pal"]
+
+actor.info = {
+  faction = "helf",
+  hp = 300, hpmax = 300,
+  mp = 100, mpmax = 100,
+  dir = {x = 0, z = 0},
+}
 
 actor.states = {
   std = {
@@ -50,7 +57,7 @@ actor.states = {
     dim = {w = 106, h = 109},
     frate = 0,
     nframes = 3,
-    anim = Game.Anim.Air3(this, 60)},
+    anim = Anim.Air3(60)},
   hit = {
     res = "game/chars/telarin/hit.png",
     dim = {w = 132, h = 84},
@@ -63,7 +70,7 @@ actor.states = {
     dim = {w = 111, h = 77},
     frate = 0,
     nframes = 2,
-    anim = Game.Anim.Air2(this)},
+    anim = Anim.Air2()},
   hitflr = {
     res = "game/chars/telarin/hitflr.png",
     dim = {w = 125, h = 52},
@@ -85,49 +92,75 @@ actor.states = {
     anim = "play"},
 }
 
-actor.info = {
-  faction = "helf",
-  hp = 300, hpmax = 300,
-  mp = 100, mpmax = 100,
-  ep =   0, epmax = 300,
-  dir = {x = 0, z = 0},
+actor.rules = {
+  wlk = {
+    ActorScript.move{x = 90, z = 90},
+  },
+  atk = {
+    ActorScript.isFrame(6) / ActorScript.hitAll{dmg = 20},
+    std = ActorScript.isEnded,
+  },
+  hit = {
+    hitair = -SceneScript.isFloor,
+    std = ActorScript.isEnded,
+  },
+  hitair = {
+    hitflr = SceneScript.isFloor,
+  },
+  hitflr = {
+    std = ActorScript.isEnded,
+    die = ActorScript.isDied,
+  },
+  atkalt = {
+    ActorScript.isFrame(3) / ActorScript.hitAll{dmg = 24},
+    std = ActorScript.isEnded,    
+  },
+  jmp = {
+    std = SceneScript.isFloor,
+  },
+  jmpatk = {
+    ActorScript.isFrame(6) / ActorScript.hitAll{dmg = 24},
+    jmp = ActorScript.isEnded,
+    std = SceneScript.isFloor,
+  },  
+}
 
-  state = {
-    wlk = {
-      spd = {x = 90, z = 90},
-      rng = {min = 100},
-      ep = 1,
-    },
+actor.autorules = {
+  std = {
+    -ActorScript.isTarget / ActorScript.find,
+    wlk = ActorScript.isTarget,
+    atk = ActorScript.isTarget ^ ActorScript.isHit("atk"),
+    atkalt = ActorScript.isTarget ^ ActorScript.isHit("atkalt"),
+    jmp = (ActorScript.isTarget ^ ActorScript.isRange("x", 140, 120)) / ActorScript.move{x = 100, y = -240},
+  },
+  
+  wlk = {
+    std = -ActorScript.isTarget,
+    wlk = ActorScript.isTarget,
+    atk = ActorScript.isTarget ^ ActorScript.isHit("atk"),
+    atkalt = ActorScript.isTarget ^ ActorScript.isHit("atkalt") ^ Script.random(2),
+    jmp = (ActorScript.isTarget ^ ActorScript.isRange("x", 140, 120)) / ActorScript.move{x = 100, y = -240},
+  },
+  
+  jmp = {
+    atkjmp = ActorScript.isTarget ^ ActorScript.isHit("atkjmp"),
+  },
+}
 
-    atk = {
-      dmg = 20,
-      hit = {[6] = {box = {x = 0, y = 27, w = 176, h = 54}}},
-      rng = {min = 0, max = 176},
-      ep = 160,
-    },
-    
-    atkalt = {
-      dmg = 24,
-      hit = {[3] = {box = {x = 0, y = 0, w = 100, h = 90}, force = {x = 100, y = -220}}},
-      rng = {min = 0, max = 100},
-      ep = 160,
-    },
-    
-    jmp = {
-      rng = {min = 120, max = 140},
-      spd = {x = 120, y = -240},
-      ep = 120,
-    },
-    
-    atkjmp = {
-      dmg = 24,
-      hit = {[6] = {box = {x = 0, y = 0, w = 100, h = 122}}},
-      rng = {min = 0, max = 110},
-      ep = 0,
-    },
-    
-    hitflr = {evade = true},
-    die = {evade = true},
+actor.keybrules = {
+  std = {
+    atkalt = ActorScript.isKey{"a[rl]>"},
+    jmp = ActorScript.isKey{"b[rlud]*>"} / ActorScript.move{x = 100, y = -220},
+    wlk = ActorScript.isKey{"[rlud]+>"},
+    atk = ActorScript.isKey{"a>"},
+  },
+  wlk = {
+    jmp = ActorScript.isKey{"[rlud]*b>"} / ActorScript.move{x = 100, y = -200},
+    wlk = ActorScript.isKey{"[rlud]+>"},
+    std = -ActorScript.isKey(),
+  },
+  jmp = {
+    jmpatk = ActorScript.isKey{"a[rlud]*>"},
   },
 }
 

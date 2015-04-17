@@ -18,13 +18,13 @@ ActorScript = {
     actor:target(actors[1])
   end),
   
-  move = function(info) return F(function(actor, scene)
+  move = function(force) return F(function(actor, scene)
     local spd = actor:spd()
-    if info.spd.y then spd.y = info.spd.y end
+    if force.y then spd.y = force.y end
         
     local kx, kz = (actor:keyb() or actor:auto()):direction(actor)
-    if not (kx == 0) then spd.x, actor:dir().x = kx * (info.spd.x or 0), kx end
-    if not (kz == 0) then spd.z, actor:dir().z = kz * (info.spd.z or 0), kz end
+    if not (kx == 0) then spd.x, actor:dir().x = kx * (force.x or 0), kx end
+    if not (kz == 0) then spd.z, actor:dir().z = kz * (force.z or 0), kz end
     
     actor:spd(spd)
     
@@ -53,8 +53,15 @@ ActorScript = {
     
     return false
   end)
-  end,  
+  end,
   
+  isRange = function(k, max, min) return F(function(actor, scene)
+    local min = min or 0
+    local dist = actor:dist()
+    return (dist[k] >= min) and (dist[k] <= max) 
+  end)
+  end,
+
   isKey = function(key) return F(function(actor, scene)
     return actor:keyb() and actor:keyb():isKey(key)
   end)

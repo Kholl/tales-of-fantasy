@@ -39,21 +39,45 @@ return {
          
       camera = player
       
-      
+      local spawn
   --    Game.Scene.spawn(scene, "TelArin"):pos{x = 275, y = 0, z = 425}
-  --    Game.Scene.spawn(scene, "HElfBoss"):pos{x = 300, y = 0, z = 350}
-  --    Game.Scene.spawn(scene, "HElfBoss"):pos{x = 250, y = 0, z = 500}        
-  --    Game.Scene.spawn(scene, "HElf"):pos{x = 375, y = 0, z = 350}
-  --    Game.Scene.spawn(scene, "HElf"):pos{x = 350, y = 0, z = 400}
-  --    Game.Scene.spawn(scene, "HElf"):pos{x = 325, y = 0, z = 450}
-  --    Game.Scene.spawn(scene, "HElf"):pos{x = 300, y = 0, z = 500}        
+      
+      spawn = scene:addActor("game/chars/TelArin.lua")
+      spawn:auto(EnemyDlg.new())
+      spawn:pos{x = 275, y = 0, z = 425}
+      
+      spawn = scene:addActor("game/chars/HElfBoss.lua")
+      spawn:auto(EnemyDlg.new())
+      spawn:pos{x = 300, y = 0, z = 350}
+      
+      spawn = scene:addActor("game/chars/HElfBoss.lua")
+      spawn:auto(EnemyDlg.new())
+      spawn:pos{x = 250, y = 0, z = 500}
+      
+      spawn = scene:addActor("game/chars/HElf.lua")
+      spawn:auto(EnemyDlg.new())
+      spawn:pos{x = 375, y = 0, z = 350}
+      
+      spawn = scene:addActor("game/chars/HElf.lua")
+      spawn:auto(EnemyDlg.new())
+      spawn:pos{x = 350, y = 0, z = 400}
+      
+      spawn = scene:addActor("game/chars/HElf.lua")
+      spawn:auto(EnemyDlg.new())
+      spawn:pos{x = 325, y = 0, z = 450}
+      
+      spawn = scene:addActor("game/chars/HElf.lua")
+      spawn:auto(EnemyDlg.new())
+      spawn:pos{x = 300, y = 0, z = 500}
 
-      local bheart = scene:addActor("game/chars/BHeart.lua")
-      bheart:auto(EnemyDlg.new())
-      bheart:pos{x = 750, y = 0, z = 500}
+      spawn = scene:addActor("game/chars/BHeart.lua")
+      spawn:auto(EnemyDlg.new())
+      spawn:pos{x = 750, y = 0, z = 500}
 
-  --    Game.Scene.spawn(scene, "DWarrior"):pos{x = 750, y = 0, z = 350}
-  
+      spawn = scene:addActor("game/chars/DWarrior.lua")
+      spawn:auto(EnemyDlg.new())
+      spawn:pos{x = 750, y = 0, z = 350}
+
       return "update"
     end,
   

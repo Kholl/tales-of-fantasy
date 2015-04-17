@@ -9,7 +9,7 @@ EnemyDlg = Moo.Class {
   
   create = function(this, init)
     this.dir = {x = 0, z = 0}
-    this.refresh = init and init.refresh or 33
+    this.refresh = init and init.refresh or 30
   end,
   
   step = function(this, actor, scene)

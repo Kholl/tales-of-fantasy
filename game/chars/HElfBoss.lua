@@ -9,7 +9,14 @@ actor.state = "std"
 actor.pad = {x = 0.5, y = 1}
 actor.box = {w = 24, h = 76}
 actor.rad = 12
-actor.pmap = Game.Assets["high elf pal"]
+actor.pmap = Asset["high elf pal"]
+
+actor.info = {
+  faction = "helf",
+  hp = 125, hpmax = 125,
+  mp =  75, mpmax =  75,
+  dir = {x = 0, z = 0},
+}
 
 actor.states = {
   std = {
@@ -43,7 +50,7 @@ actor.states = {
     dim = {w = 60, h = 101},
     frate = 0,
     nframes = 2,
-    anim = Game.Anim.Air2(this)},
+    anim = Anim.Air2()},
   hit = {
     res = "game/chars/delfboss/hit.png",
     dim = {w = 96, h = 77},
@@ -56,7 +63,7 @@ actor.states = {
     dim = {w = 116, h = 46},
     frate = 0,
     nframes = 2,
-    anim = Game.Anim.Air2(this)},
+    anim = Anim.Air2()},
   hitflr = {
     res = "game/chars/delfboss/hitflr.png",
     dim = {w = 123, h = 31},
@@ -75,42 +82,64 @@ actor.states = {
     anim = "play"},
 }
 
-actor.info = {
-  faction = "helf",
-  hp = 125, hpmax = 125,
-  mp =  75, mpmax =  75,
-  ep =   0, epmax = 300,
-  dir = {x = 0, z = 0},
-  
-  state = {
-    wlk = {
-      spd = {x = 100, z = 100},
-      rng = {min = 75},
-      ep = 1,
-    },
+actor.rules = {
+  wlk = {
+    ActorScript.move{x = 100, z = 100},
+  },
+  atk = {
+    ActorScript.isFrame(3) / ActorScript.hitAll{dmg = 8},
+    std = ActorScript.isEnded,
+  },
+  hit = {
+    hitair = -SceneScript.isFloor,
+    std = ActorScript.isEnded,
+  },
+  hitair = {
+    hitflr = SceneScript.isFloor,
+  },
+  hitflr = {
+    std = ActorScript.isEnded,
+    die = ActorScript.isDied,
+  },
+  atkalt = {
+    ActorScript.isFrame(4) / ActorScript.hitAll{dmg = 12},
+    std = ActorScript.isEnded,    
+  },
+  jmp = {
+    std = SceneScript.isFloor,
+  },
+}
 
-    atk = {
-      dmg = 8,
-      hit = {[3] = {box = {x = 0, y = 36, w = 106, h = 44}}},
-      rng = {min = 0, max = 106},
-      ep = 160,
-    },
-        
-    atkalt = {
-      dmg = 12,
-      hit = {[4] = {box = {x = 0, y = 27, w = 75, h = 54}, force = {x = 140, y = -160}}},
-      rng = {min = 0, max = 75},
-      ep = 160,
-    },
-    
-    jmp = {
-      rng = {min = 120, max = 140},
-      spd = {x = 120, y = -240},
-      ep = 120,
-    },
-    
-    hitflr = {evade = true},
-    die = {evade = true},
+actor.autorules = {
+  std = {
+    -ActorScript.isTarget / ActorScript.find,
+    wlk = ActorScript.isTarget,
+    atk = ActorScript.isTarget ^ ActorScript.isHit("atk"),
+    atkalt = ActorScript.isTarget ^ ActorScript.isHit("atkalt"),
+    jmp = (ActorScript.isTarget ^ ActorScript.isRange("x", 140, 120)) / ActorScript.move{x = 100, y = -240},
+  },
+  
+  wlk = {
+    ActorScript.move{x = 100, z = 100},
+    std = -ActorScript.isTarget,
+    wlk = ActorScript.isTarget,
+    atk = ActorScript.isTarget ^ ActorScript.isHit("atk"),
+    atkalt = ActorScript.isTarget ^ ActorScript.isHit("atkalt") ^ Script.random(2),
+    jmp = (ActorScript.isTarget ^ ActorScript.isRange("x", 140, 120)) / ActorScript.move{x = 100, y = -240},
+  },
+}
+
+actor.keybrules = {
+  std = {
+    atkalt = ActorScript.isKey{"a[rl]>"},
+    jmp = ActorScript.isKey{"b[rlud]*>"} / ActorScript.move{x = 100, y = -220},
+    wlk = ActorScript.isKey{"[rlud]+>"},
+    atk = ActorScript.isKey{"a>"},
+  },
+  wlk = {
+    jmp = ActorScript.isKey{"[rlud]*b>"} / ActorScript.move{x = 100, y = -200},
+    wlk = ActorScript.isKey{"[rlud]+>"},
+    std = -ActorScript.isKey(),
   },
 }
 
