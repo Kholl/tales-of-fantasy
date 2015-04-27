@@ -4,6 +4,7 @@ Moo Object Oriented framework for LUA
 ]]--
 
 EnemyDlg = Moo.Class {
+  ruleset = "autorules",
   dir = nil,
   refresh = nil,
   

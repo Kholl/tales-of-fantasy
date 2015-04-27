@@ -6,7 +6,7 @@ Moo Object Oriented framework for LUA
 ActorScript = {
   -- Actions  
   act = function(action) return F(function(actor, scene)
-    State.start(actor, action)
+    actor:start(action)
   end)
   end,
   
@@ -22,7 +22,7 @@ ActorScript = {
     local spd = actor:spd()
     if force.y then spd.y = force.y end
         
-    local kx, kz = (actor:keyb() or actor:auto()):direction(actor)
+    local kx, kz = actor:auto():direction(actor)
     if not (kx == 0) then spd.x, actor:dir().x = kx * (force.x or 0), kx end
     if not (kz == 0) then spd.z, actor:dir().z = kz * (force.z or 0), kz end
     
@@ -63,7 +63,7 @@ ActorScript = {
   end,
 
   isKey = function(key) return F(function(actor, scene)
-    return actor:keyb() and actor:keyb():isKey(key)
+    return actor:auto():isKey(key)
   end)
   end,
   

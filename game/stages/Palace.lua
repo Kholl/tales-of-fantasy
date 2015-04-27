@@ -3,42 +3,51 @@ Tales Of Fantasy
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-local camera
-
 return {
   fps = 30,
-  
-  lim = {
-    x = {min = 180, max = 6400},
-    y = {max = 0},
-    z = {min = 250, max = 500},
-  },
-  
+  ratio = {x = 1, y = 1, z = 1/2},
   drag = {x = -240, y = 480, z = -240},
   grav = "y",
   
-  ratio = {x = 1, y = 1, z = 1/2},
-  
-  commands = {
+  script = {
     start = function(scene)
+      scene:lim{
+        x = {min = 0, max = 480},
+        y = {max = 0},
+        z = {min = 360, max = 480},
+      }
+      
       scene:addScroll{
-        res = "game/backs/palace.bg1.png",
+        res = "game/backs/palace.bg3.png",
         scr = {x = "clamp", y = "clamp"},
         pos = {x = 0, y = 0},
       }
       
-      scene:addScroll{
-        res = "game/backs/palace.bg2.png",
-        scr = {x = "repeat", y = "clamp"},
-        pos = {x = 256, y = 0},
-      }
+      scene:off{x = -80, y = 0}
       
       local player = scene:addActor("game/chars/Sarah.lua")
-      player:keyb(KeybDlg.new("conf/keyb1.lua"))
-      player:pos{x = 200, y = 0, z = 425}
-         
-      camera = player
-      
+--      player:auto(KeybDlg.new("conf/keyb1.lua"))
+      player:pos{x = 200, y = 0, z = 400}
+
+      local telarin = scene:addActor("game/chars/TelArin.lua")
+      telarin:pos{x = 680, y = 0, z = 400}
+      telarin:dir{x = -1, y = 1, z = 0}
+      telarin:auto(ScriptDlg.new{script = {
+        start = function()
+          ActorScript.act("wlk")(telarin, scene)
+          return "move"
+        end,
+        move = function()
+          if telarin:pos().x <= 280 then
+            ActorScript.act("std")(telarin, scene)
+            return "stop"
+          end
+        end,
+        stop = function()
+        end,
+      }})
+
+--[[      
       local spawn
   --    Game.Scene.spawn(scene, "TelArin"):pos{x = 275, y = 0, z = 425}
       
@@ -77,11 +86,12 @@ return {
       spawn = scene:addActor("game/chars/DWarrior.lua")
       spawn:auto(EnemyDlg.new())
       spawn:pos{x = 750, y = 0, z = 350}
-
+]]--
       return "update"
     end,
   
     update = function(scene)
+--[[
       List.sort(scene.actors, function(actor) return actor:pos().z end)
       
       local off = {
@@ -89,7 +99,7 @@ return {
         y = 100 - (camera:pos().z * scene:ratio().z) - (camera:pos().y * scene:ratio().y)}
       off.y = Math.Lim(off.y, {min = -56, max = 0})
       scene:off(off)
-      
+]]--      
       return "update"
     end,
   }

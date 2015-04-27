@@ -10,13 +10,14 @@ require("game/custom/ctrl/dlg/EnemyDlg")
 
 return {
   dir = "ToF",
+  fps = 30,
   view = {
     w = 320,
-    h = 200,
+    h = 240,
     full = false,
     sync = true
   },
   scenes = {
-    start = "game/stages/Palace.lua",
+    palace = "game/stages/Palace.lua",
   },
 }

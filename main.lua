@@ -29,7 +29,8 @@ love.load = function(arg)
   love.filesystem.mkdir(love.filesystem.getSaveDirectory())
   love.graphics.setMode(game.view.w, game.view.h, game.view.full, game.view.sync)  
   
-  scene = Scene.new(game.scenes.start)
+  scene = Scene.new(game.scenes.palace)
+  scene:update(game) -- Preloads with delta 0
 end
 
 love.draw = function()
@@ -37,6 +38,7 @@ love.draw = function()
 end
 
 love.update = function(delta)
+  delta = math.min(delta, 1/game.fps)
   scene:delta(delta)
   scene:update(game)
 end

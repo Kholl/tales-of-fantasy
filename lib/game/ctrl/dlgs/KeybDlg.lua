@@ -5,7 +5,8 @@ Moo Object Oriented framework for LUA
 
 KeybDlg = Class {
   keyboard = Dependency("keyboard"),
-  
+  ruleset = "keybrules",
+
   list = nil,
   currlist = nil,  
   key = nil,

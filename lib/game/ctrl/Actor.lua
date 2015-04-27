@@ -31,14 +31,14 @@ Actor = Class {
   
   step = function(this, scene, game)
     State.step(this, scene, game)    
-    if this:keyb() then this:keyb():step(this, scene, game) end
+--    if this:keyb() then this:keyb():step(this, scene, game) end
     if this:auto() then this:auto():step(this, scene, game) end
     this.actor:step(this, scene, game)
   end,
   
   update = function(this, scene, game)
     State.update(this, scene, game)    
-    if this:keyb() then this:keyb():update(this, scene, game) end
+--    if this:keyb() then this:keyb():update(this, scene, game) end
     if this:auto() then this:auto():update(this, scene, game) end
     this.actor:update(this, scene, game)
   end,
@@ -51,7 +51,6 @@ Actor = Class {
   pos = function(this, val) return this.data:pos(val) end,    
   spd = function(this, val) return this.data:spd(val) end,
   mass = function(this, val) return this.data:mass(val) end,
-  keyb = function(this, val) return this.data:keyb(val) end,
   auto = function(this, val) return this.data:auto(val) end,
   target = function(this, val) return this.data:target(val) end,
     

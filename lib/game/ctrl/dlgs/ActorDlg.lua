@@ -17,10 +17,8 @@ ActorDlg = Moo.Class {
   step = function(this, actor, scene, game)
     this:execute(actor, scene, game, this.rules)
     
-    if actor:keyb() then this:execute(actor, scene, game, this.keybrules)
-    elseif actor:auto() then this:execute(actor, scene, game, this.autorules)
---  elseif actor:isScrp() then this:execute(this.scrprules[state])
-    end
+    local ruleset = actor:auto() and actor:auto().ruleset
+    if ruleset and this[ruleset] then this:execute(actor, scene, game, this[ruleset]) end
   end,
   
   update = Nil,
@@ -33,7 +31,7 @@ ActorDlg = Moo.Class {
       if rule(actor, scene)
         and actor.states[action]
         and not (actor:state() == action) then
-        
+  
         actor:start(action)
       end
     end)

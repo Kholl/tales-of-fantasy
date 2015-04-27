@@ -29,7 +29,7 @@ SpriteData = Class {
     this.ended = false
   end,
   
-  incr = function(this, frame)
+  incr = function(this)
     local frate
     if type(this.frate) == "table"
       then frate = this.frate[math.floor(this.frame) +1] or this.frate[1]

@@ -47,18 +47,17 @@ Scene = Class {
     
     -- Move time to game context
     this:time(this.data._delta + this.data._time)
-    this:frame(this.data._time * this.data._fps)
+    this:frame(this.data._time * game.fps)
     this.data._step = (math.floor(this.data._frame) > lastframe)
         
     this.script:update(this, this, game)
     List.each(this.scrolls, function(scroll) scroll:update(this, game) end)
     List.each(this.actors, function(actor) actor:update(this, game) end)
     List.each(this.actors, function(actor) this.phys:update(actor, this, game) end)      
-      
+    
     if this.data._step then this:step(game) end
   end,
   
-  fps = function(this, val) return this.data:fps(val) end,
   off = function(this, val) return this.data:off(val) end,
   lim = function(this, val) return this.data:lim(val) end,
   ratio = function(this, val) return this.data:ratio(val) end,

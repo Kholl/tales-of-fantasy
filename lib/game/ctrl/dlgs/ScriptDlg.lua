@@ -4,18 +4,35 @@ Moo Object Oriented framework for LUA
 ]]--
 
 ScriptDlg = Moo.Class {
+  ruleset = false,
   state = nil,
-  commands = nil,
+  script = nil,
   
   create = function(this, init)
-    this.commands = init.commands or {}
-    this.state = "start"
+    this.script = init.script or {}
+    this.state = init.state or "start"
   end,
   
   update = function(this, object, scene, game)
-    local command = this.commands[this.state] or {}
-    this.state = command(object)
+    local command = this.script[this.state] or {}
+    local state = command(object)
+    if state then this.state = state end
   end,
-
-  step = Nil, -- Temporary due to camera adjustments
+  
+  step = Nil, -- Temporary due to camera adjustments  
+  
+  filter = function(this, actor, scene) return function(other)
+    return false
+  end
+  end,
+  
+  eval = function(this, actor, scene) return function(other)
+    return false
+  end
+  end,
+    
+  direction = function(this, actor)
+    local dir = actor:dir()
+    return dir.x, dir.z
+  end,
 }
