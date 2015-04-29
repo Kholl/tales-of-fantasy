@@ -3,8 +3,6 @@ Moo Object Oriented framework for LUA
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-require("lib/game/data/ImageData")
-
 ActorData = Class {
   pos = Property("_pos"), -- Position
   dir = Property("_dir"), -- Direction

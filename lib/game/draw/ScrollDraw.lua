@@ -8,11 +8,19 @@ ScrollDraw = Class {
   graphics = Dependency("graphics"),
   window = Dependency("window"),
   
-  scroll = nil,
+  drawable = nil,  
   quad = nil,
   
   create = function(this, init)
-    ImageDraw.create(this, init)
+    local imageName = init and init.res    
+    local image
+    
+    if init.pmap
+      then image = this.resource:getFx("image", imageName)(init.pmap.name, init.pmap.func)
+      else image = this.resource:get("image", imageName)
+    end
+    
+    this.drawable = this.graphics.newImage(image)
     
     local w, h = this.drawable:getWidth(), this.drawable:getHeight()
     this.quad = this.graphics.newQuad(0, 0, 0, 0, w, h)

@@ -15,7 +15,9 @@ Dependency "window" (love.window)
 Dependency "graphics" (love.graphics)
 Dependency "keyboard" (love.keyboard)
 Dependency "filesystem" (love.filesystem)
-Dependency "resource" (Cache.new{
+
+require("lib/game/Resources")
+Dependency "resource" (Resources.new{
   image = love.image.newImageData,
 })
 

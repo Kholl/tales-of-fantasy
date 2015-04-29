@@ -3,16 +3,23 @@ Moo Object Oriented framework for LUA
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-require "lib/game/draw/ImageDraw"
-
 SpriteDraw = Class {  
-  super = ImageDraw,
+  resource = Dependency("resource"),
   graphics = Dependency("graphics"),
   
+  drawable = nil,
   quads = nil,
   
   create = function(this, init)
-    ImageDraw.create(this, init)
+    local imageName = init and init.res    
+    local image
+    
+    if init.pmap
+      then image = this.resource:getFx("image", imageName)(init.pmap.name, init.pmap.func)
+      else image = this.resource:get("image", imageName)
+    end
+    
+    this.drawable = this.graphics.newImage(image)
     
     local nframes = init and init.nframes or 1
     local hframes = init and init.hframes or nframes

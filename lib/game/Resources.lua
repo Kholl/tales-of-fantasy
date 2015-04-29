@@ -3,7 +3,9 @@ Moo Object Oriented framework for LUA
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-Cache = Moo.Class {
+Resources = Class {
+  filesystem = Dependency("filesystem"),
+  
   loader = nil,
   resources = nil,
   
@@ -25,5 +27,22 @@ Cache = Moo.Class {
   set = function(this, name, value)
     this.resources[name] = value
     return value
+  end,
+  
+  getFx = function(this, kind, name)
+      return function(post, command)
+        local postname = string.format("%s~%s", name, post)
+        local res = this:get(this, postname)
+        if not res then
+print("Generating ".. love.filesystem.getUserDirectory() .. postname)
+          res = command(this:safeload(kind, name))
+          this.filesystem.mkdir(postname)
+          this.filesystem.remove(postname)
+          res:encode(postname)
+          this:set(postname, res)
+        end
+        
+        return res
+    end
   end,
 }

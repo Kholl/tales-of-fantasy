@@ -5,8 +5,8 @@ Tales Of Fantasy
 
 Asset = {
   ["high elf pal"] = {
-    name = "~helf",
-    func = PMap.Pal{
+    name = "helf",
+    func = FX.MapPixel{
       ["000000"] = {r =  34, g =  85, b =  51},
       ["223355"] = {r = 119, g =  68, b =  34},
       ["444477"] = {r = 153, g = 102, b =  68},
