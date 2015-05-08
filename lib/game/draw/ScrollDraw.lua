@@ -29,8 +29,8 @@ ScrollDraw = Class {
   draw = function(this, data, scene, game)
     local pos = data:pos()
     local mul = data:mul()
-    local off = scene:off()
     local scr = data:scr()
+    local off = scene:off()
     
     local w, h = this.graphics.getWidth(), this.graphics.getHeight()
     local x = ((off.x * mul.x) + pos.x)

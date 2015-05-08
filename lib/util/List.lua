@@ -5,6 +5,7 @@ Moo Object Oriented framework for LUA
 
 List = {
   add = function(list, item) table.insert(list, item); return item end,
+  rem = function(list, item) table.remove(list, List.find(list, item)) end,
   sort = function(list, func) table.sort(list, func); return this end,
   
   each = function(list, func)
@@ -15,9 +16,7 @@ List = {
 
   filter = function(list, func)
     local res = {}
-    for key, val in pairs(list) do if func(val) then
-      res[key] = val
-    end end
+    for key, val in pairs(list) do if func(val) then res[key] = val end end
     return res
   end,
   
@@ -26,5 +25,10 @@ List = {
         return eval(a) < eval(b)
       end)
     return list
+  end,
+  
+  find = function(list, item)
+    for key, val in pairs(list) do if val == item then return key end end
+    return nil
   end,
 }

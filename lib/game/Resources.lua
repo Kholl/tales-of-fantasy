@@ -34,7 +34,6 @@ Resources = Class {
         local postname = string.format("%s~%s", name, post)
         local res = this:get(this, postname)
         if not res then
-print("Generating ".. love.filesystem.getUserDirectory() .. postname)
           res = command(this:safeload(kind, name))
           this.filesystem.mkdir(postname)
           this.filesystem.remove(postname)

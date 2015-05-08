@@ -15,6 +15,7 @@ Dependency "window" (love.window)
 Dependency "graphics" (love.graphics)
 Dependency "keyboard" (love.keyboard)
 Dependency "filesystem" (love.filesystem)
+Dependency "image" (love.image)
 
 require("lib/game/Resources")
 Dependency "resource" (Resources.new{

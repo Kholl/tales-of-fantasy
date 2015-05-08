@@ -18,6 +18,7 @@ Scene = Class {
   
   scrolls = nil,
   actors = nil,
+  items = nil,
   
   create = function(this, init)
     this.data = SceneData.new(init)
@@ -26,6 +27,7 @@ Scene = Class {
     
     this.scrolls = {}
     this.actors = {}
+    this.items = {}
     
     if init.start then init.start(this) end
   end,
@@ -33,6 +35,7 @@ Scene = Class {
   draw = function(this, game)
     List.each(this.scrolls, function(scroll) scroll:draw(this, game) end)
     List.each(this.actors, function(actor) actor:draw(this, game) end)
+    List.each(this.items, function(item) item:draw(nil, game) end)
   end,
   
   step = function(this, game)
@@ -54,7 +57,8 @@ Scene = Class {
     List.each(this.scrolls, function(scroll) scroll:update(this, game) end)
     List.each(this.actors, function(actor) actor:update(this, game) end)
     List.each(this.actors, function(actor) this.phys:update(actor, this, game) end)      
-    
+    List.each(this.items, function(item) item:update(this, game) end)
+
     if this.data._step then this:step(game) end
   end,
   
@@ -65,6 +69,8 @@ Scene = Class {
   time = function(this, val) return this.data:time(val) end,
   frame = function(this, val) return this.data:frame(val) end,
   
+  add = function(this, item) return List.add(this.items, item) end,
+  kill = function(this, item) return List.rem(this.items, item) end,
   addScroll = function(this, init) return List.add(this.scrolls, Scroll.new(init)) end,
   addActor = function(this, init) return List.add(this.actors, Actor.new(init)) end,
     
