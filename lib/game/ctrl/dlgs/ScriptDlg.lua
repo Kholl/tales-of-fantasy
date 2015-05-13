@@ -13,9 +13,9 @@ ScriptDlg = Moo.Class {
     this.state = init.state or "start"
   end,
   
-  update = function(this, object, scene, game)
+  update = function(this, delta, actor, scene, game)
     local command = this.script[this.state] or {}
-    local state = command(object)
+    local state = command(actor)
     if state then this.state = state end
   end,
   

@@ -21,8 +21,7 @@ Animator = Class {
   draw = Nil,
   step = Nil,
   
-  update = function(this, scene, game)
-    local delta = scene:delta()
+  update = function(this, delta, scene, game)
     this.time.t = this.time.t + delta    
     this.time.k = (this.time.t / this.time.fin)
     

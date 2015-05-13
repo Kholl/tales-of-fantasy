@@ -14,7 +14,7 @@ PhysDlg = Class {
   
   step = Nil,
   
-  update = function(this, actor, scene, game)
+  update = function(this, delta, actor, scene, game)
     local spd = actor:spd()
     local pos = actor:pos()
     
@@ -26,7 +26,6 @@ PhysDlg = Class {
     end
     k[this.grav] = 1    
     
-    local delta = scene:delta()
     pos.x = pos.x + (spd.x * delta)
     pos.y = pos.y + (spd.y * delta)
     pos.z = pos.z + (spd.z * delta)

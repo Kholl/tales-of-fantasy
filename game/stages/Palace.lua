@@ -3,7 +3,6 @@ Tales Of Fantasy
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-require("lib/game/ctrl/Frame")
 require("lib/game/ctrl/Animator")
 
 return {
@@ -42,11 +41,7 @@ return {
         end,
         move = function()
           if telarin:pos().x <= 280 then            
-            local dialog = Frame.new{
-              res = "game/ui/dialog.png",
-              pos = {x = 40, y = 40},
-              dim = {w = 240, h = 160},
-              border = 30}
+--[[            local dialog = 
             
             scene:add(dialog)
             scene:add(Animator.new{
@@ -54,7 +49,7 @@ return {
                 prop = dialog:dim(),
                 key = 'h',
                 val = {ini = 60, fin = 160}})
-          
+]]--          
             ActorScript.act("std")(telarin, scene)
             
 --            Script.decelerate TODO

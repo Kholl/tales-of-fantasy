@@ -15,8 +15,8 @@ Frame = Class {
     this.data = FrameData.new(init)
   end,
   
-  draw = function(this, scene, game)
-    this.drawable:draw(this.data, scene, game)
+  draw = function(this, group, game)
+    this.drawable:draw(this.data, group, game)
   end,
   
   step = Nil,

@@ -40,8 +40,8 @@ State = Class {
     this:curr():step(this, scene, game)
   end,
   
-  update = function(this, scene, game)
-    this:curr():update(this, scene, game)
+  update = function(this, delta, scene, game)
+    this:curr():update(delta, this, scene, game)
   end,
     
   curr = function(this) return this.states[this:state()] end,

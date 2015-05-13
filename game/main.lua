@@ -8,6 +8,8 @@ require("game/custom/Anim")
 require("game/custom/Asset")
 require("game/custom/ctrl/dlg/EnemyDlg")
 
+require("lib/game/ctrl/Frame")
+
 return {
   dir = "ToF",
   fps = 30,
@@ -18,6 +20,15 @@ return {
     sync = true
   },
   scenes = {
-    palace = "game/stages/Palace.lua",
+    start = "game/stages/Palace.lua",
+  },
+  interface = {
+    items = {
+      Frame.new{
+        res = "game/ui/dialog.png",
+        pos = {x = 40, y = 40},
+        dim = {w = 240, h = 160},
+        border = 30}
+    }
   },
 }

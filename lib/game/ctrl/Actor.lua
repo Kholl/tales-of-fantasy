@@ -36,11 +36,11 @@ Actor = Class {
     this.actor:step(this, scene, game)
   end,
   
-  update = function(this, scene, game)
-    State.update(this, scene, game)    
+  update = function(this, delta, scene, game)
+    State.update(this, delta, scene, game)    
 --    if this:keyb() then this:keyb():update(this, scene, game) end
     if this:auto() then this:auto():update(this, scene, game) end
-    this.actor:update(this, scene, game)
+    this.actor:update(delta, this, scene, game)
   end,
   
   dim = function(this) return this:curr():dim() end,

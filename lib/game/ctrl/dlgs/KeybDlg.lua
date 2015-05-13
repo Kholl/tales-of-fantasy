@@ -35,8 +35,7 @@ KeybDlg = Class {
   
   step = Nil,
     
-  update = function(this, actor, scene, game)
-    local delta = scene:delta()
+  update = function(this, delta, actor, scene, game)
     local keypress = this:updateCurrKey(delta)
         
     if this.idle >= this.maxidle then

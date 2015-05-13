@@ -18,16 +18,14 @@ Scene = Class {
   
   scrolls = nil,
   actors = nil,
-  items = nil,
   
   create = function(this, init)
     this.data = SceneData.new(init)
     this.phys = PhysDlg.new(init)
     this.script = ScriptDlg.new(init)
     
-    this.scrolls = {}
-    this.actors = {}
-    this.items = {}
+    this.scrolls = init.scrolls or {}
+    this.actors = init.actors or {}
     
     if init.start then init.start(this) end
   end,
@@ -35,7 +33,6 @@ Scene = Class {
   draw = function(this, game)
     List.each(this.scrolls, function(scroll) scroll:draw(this, game) end)
     List.each(this.actors, function(actor) actor:draw(this, game) end)
-    List.each(this.items, function(item) item:draw(nil, game) end)
   end,
   
   step = function(this, game)
@@ -45,19 +42,18 @@ Scene = Class {
     List.each(this.actors, function(actor) this.phys:step(actor, this, game) end)      
   end,
   
-  update = function(this, game)
+  update = function(this, delta, game)
     local lastframe = math.floor(this.data._frame)
     
     -- Move time to game context
-    this:time(this.data._delta + this.data._time)
+    this:time(delta + this.data._time)
     this:frame(this.data._time * game.fps)
     this.data._step = (math.floor(this.data._frame) > lastframe)
         
-    this.script:update(this, this, game)
-    List.each(this.scrolls, function(scroll) scroll:update(this, game) end)
-    List.each(this.actors, function(actor) actor:update(this, game) end)
-    List.each(this.actors, function(actor) this.phys:update(actor, this, game) end)      
-    List.each(this.items, function(item) item:update(this, game) end)
+    this.script:update(delta, this, game)
+    List.each(this.scrolls, function(scroll) scroll:update(delta, this, game) end)
+    List.each(this.actors, function(actor) actor:update(delta, this, game) end)
+    List.each(this.actors, function(actor) this.phys:update(delta, actor, this, game) end)      
 
     if this.data._step then this:step(game) end
   end,
@@ -65,12 +61,9 @@ Scene = Class {
   off = function(this, val) return this.data:off(val) end,
   lim = function(this, val) return this.data:lim(val) end,
   ratio = function(this, val) return this.data:ratio(val) end,
-  delta = function(this, val) return this.data:delta(val) end,
   time = function(this, val) return this.data:time(val) end,
   frame = function(this, val) return this.data:frame(val) end,
   
-  add = function(this, item) return List.add(this.items, item) end,
-  kill = function(this, item) return List.rem(this.items, item) end,
   addScroll = function(this, init) return List.add(this.scrolls, Scroll.new(init)) end,
   addActor = function(this, init) return List.add(this.actors, Actor.new(init)) end,
     
