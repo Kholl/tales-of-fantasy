@@ -26,7 +26,7 @@ ScrollDraw = Class {
     this.quad = this.graphics.newQuad(0, 0, 0, 0, w, h)
   end,
   
-  draw = function(this, data, scene, game)
+  draw = function(this, data, scene)
     local pos = data:pos()
     local mul = data:mul()
     local scr = data:scr()

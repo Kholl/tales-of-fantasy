@@ -3,26 +3,23 @@ Moo Object Oriented framework for LUA
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-require("lib/game/draw/FrameDraw")
+require("lib/game/ctrl/Graphic")
 require("lib/game/data/FrameData")
+require("lib/game/draw/FrameDraw")
 
 Frame = Class {
-  drawable = nil,
-  data = nil,
+  super = Graphic,
   
   create = function(this, init)
+    Graphic.create(this, init)
     this.drawable = FrameDraw.new(init)
     this.data = FrameData.new(init)
   end,
   
-  draw = function(this, group, game)
-    this.drawable:draw(this.data, group, game)
-  end,
+  draw = function(this, parent)
+    this.drawable:draw(this.data, parent)
+    Graphic.draw(this, parent)
+  end,    
   
-  step = Nil,
-  update = Nil,
-  
-  pos = function(this, val) return this.data:pos(val) end,
-  dim = function(this, val) return this.data:dim(val) end,
   border = function(this, val) return this.data:border(val) end,
 }

@@ -23,12 +23,6 @@ return {
     start = "game/stages/Palace.lua",
   },
   interface = {
-    items = {
-      Frame.new{
-        res = "game/ui/dialog.png",
-        pos = {x = 40, y = 40},
-        dim = {w = 240, h = 160},
-        border = 30}
-    }
+    items = {}
   },
 }

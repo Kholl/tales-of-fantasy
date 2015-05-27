@@ -17,8 +17,8 @@ Sprite = Class {
     this.anim = (init and init.anim) or "idle"
   end,
   
-  draw = function(this, imageData, scene, game)
-    this.drawable:draw(this.data, imageData, scene, game)
+  draw = function(this, imageData, scene)
+    this.drawable:draw(this.data, imageData, scene)
   end,
   
   step = function(this, actor, scene, game)

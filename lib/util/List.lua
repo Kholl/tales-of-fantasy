@@ -31,4 +31,9 @@ List = {
     for key, val in pairs(list) do if val == item then return key end end
     return nil
   end,
+  
+  copyTo = function(dst, src)
+    for key, val in pairs(src) do dst[key] = val end
+    return dst
+  end,
 }

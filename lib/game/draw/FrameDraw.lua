@@ -3,7 +3,11 @@ Moo Object Oriented framework for LUA
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
+require("lib/game/draw/GraphicDraw")
+
 FrameDraw = Class {
+  super = GraphicDraw,
+  
   resource = Dependency("resource"),
   graphics = Dependency("graphics"),
   image = Dependency("image"),
@@ -46,36 +50,9 @@ FrameDraw = Class {
     this.drawables.d:setWrap('repeat', 'repeat')
     this.drawables.l:setWrap('repeat', 'repeat')
     this.drawables.r:setWrap('repeat', 'repeat')
-    this.quads.bg = this.graphics.newQuad(0, 0, wb, hb, wb, hb)
-    this.quads.u = this.graphics.newQuad(0, 0, wb, b, wb, b)
-    this.quads.d = this.graphics.newQuad(0, 0, wb, b, wb, b)
-    this.quads.l = this.graphics.newQuad(0, 0, b, hb, b, hb)
-    this.quads.r = this.graphics.newQuad(0, 0, b, hb, b, hb)
-  end,
-
-  draw = function(this, data, group, game)
-    local dim = data:dim()
-    local pos = data:pos()
-    local b = data:border()
-    local off = group and group:pos() or {x = 0, y = 0}
-    local x, y = pos.x + off.x, pos.y + off.y
-    local w, h = math.ceil(dim.w), math.ceil(dim.h)
-    local wb, hb = w - 2*b, h - 2*b
-    
-    this.quads.bg:setViewport(b, b, wb, hb)
-    this.quads.u:setViewport(0, 0, wb, b)
-    this.quads.d:setViewport(0, 0, wb, b)
-    this.quads.l:setViewport(0, 0, b, hb)
-    this.quads.r:setViewport(0, 0, b, hb)
-    this.graphics.drawq(this.drawables.bg, this.quads.bg, x + b, y + b)
-    this.graphics.drawq(this.drawables.u, this.quads.u, x + b, y)
-    this.graphics.drawq(this.drawables.d, this.quads.d, x + b, y + h - b)
-    this.graphics.drawq(this.drawables.l, this.quads.l, x, y + b)
-    this.graphics.drawq(this.drawables.r, this.quads.r, x + w - b, y + b)
-    this.graphics.draw(this.drawables.ul, x, y)
-    this.graphics.draw(this.drawables.ur, x + w - b, y)
-    this.graphics.draw(this.drawables.dl, x, y + h - b)
-    this.graphics.draw(this.drawables.dr, x + w - b, y + h - b)
+    this.quads.bg = this.graphics.newQuad(0, 0, w, h, w, h)
+    this.quads.w = this.graphics.newQuad(0, 0, w, b, w, b)
+    this.quads.h = this.graphics.newQuad(0, 0, b, h, b, h)
   end,
   
   border = function(this, x, y, w, h) return function(src)
@@ -84,4 +61,22 @@ FrameDraw = Class {
     return dst
   end
   end,
+
+  doDraw = function(this, data, x, y, w, h)
+    local b = data:border()
+    
+    this.quads.bg:setViewport(0, 0, w, h, w, h)
+    this.graphics.drawq(this.drawables.bg, this.quads.bg, x, y)    
+    
+    this.quads.w:setViewport(0, 0, w, b, w, b)
+    this.quads.h:setViewport(0, 0, b, h, b, h)
+    this.graphics.drawq(this.drawables.u, this.quads.w, x, y - b)
+    this.graphics.drawq(this.drawables.d, this.quads.w, x, y + h)
+    this.graphics.drawq(this.drawables.l, this.quads.h, x - b, y)
+    this.graphics.drawq(this.drawables.r, this.quads.h, x + w, y)
+    this.graphics.draw(this.drawables.ul, x - b, y - b)
+    this.graphics.draw(this.drawables.ur, x + w, y - b)
+    this.graphics.draw(this.drawables.dl, x - b, y + h)
+    this.graphics.draw(this.drawables.dr, x + w, y + h)
+  end,  
 }

@@ -15,8 +15,8 @@ Scroll = Class {
     this.data = ScrollData.new(init)
   end,
   
-  draw = function(this, scene, game)
-    this.drawable:draw(this.data, scene, game)
+  draw = function(this, scene, area)
+    this.drawable:draw(this.data, scene)
   end,
   
   step = Nil,

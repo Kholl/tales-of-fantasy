@@ -32,8 +32,8 @@ State = Class {
     end)
   end,
   
-  draw = function(this, data, scene, game)
-    this:curr():draw(data, scene, game)
+  draw = function(this, data, scene)
+    this:curr():draw(data, scene)
   end,
   
   step = function(this, scene, game)

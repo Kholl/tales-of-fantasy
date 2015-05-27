@@ -25,8 +25,8 @@ Actor = Class {
     this.info = init and init.info or {}
   end,
   
-  draw = function(this, scene, game)
-    State.draw(this, this.data, scene, game)
+  draw = function(this, scene)
+    State.draw(this, this.data, scene)
   end,
   
   step = function(this, scene, game)

@@ -30,9 +30,9 @@ Scene = Class {
     if init.start then init.start(this) end
   end,
   
-  draw = function(this, game)
-    List.each(this.scrolls, function(scroll) scroll:draw(this, game) end)
-    List.each(this.actors, function(actor) actor:draw(this, game) end)
+  draw = function(this, area)
+    List.each(this.scrolls, function(scroll) scroll:draw(this) end)
+    List.each(this.actors, function(actor) actor:draw(this) end)
   end,
   
   step = function(this, game)

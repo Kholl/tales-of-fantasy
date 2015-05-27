@@ -4,6 +4,8 @@ Tales Of Fantasy
 ]]--
 
 require("lib/game/ctrl/Animator")
+require("lib/game/ctrl/Frame")
+require("lib/game/ctrl/Text")
 
 return {
   fps = 30,
@@ -12,7 +14,7 @@ return {
   grav = "y",
   
   script = {
-    start = function(scene)
+    start = function(scene, game)
       scene:lim{
         x = {min = 0, max = 480},
         y = {max = 0},
@@ -40,19 +42,28 @@ return {
           return "move"
         end,
         move = function()
-          if telarin:pos().x <= 280 then            
---[[            local dialog = 
+          if telarin:pos().x <= 280 then
             
-            scene:add(dialog)
-            scene:add(Animator.new{
-                func = Animator.Decel,
-                prop = dialog:dim(),
-                key = 'h',
-                val = {ini = 60, fin = 160}})
-]]--          
+            game.ui:add(Frame.new{
+              res = "game/ui/dialog.png",
+              pos = {x = 40, y = 40},
+              dim = {w = 240, h = 160},
+              border = 30,
+              list = {
+                Animator.new{func = Animator.Decel, prop = "dim", key = "h", from = 60, to = 160},
+                Text.new{
+                  res = "game/ui/medieval.png",
+                  txt = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890 ,;.:-+/%?!",
+--                  color = {r = 0, g = 1, b = 0},
+--                  align = 'center',
+--                  list = {
+--                    Animator.new{func = Animator.Linear, prop = "pos", key = "y", from = 0, to = -12 * 24, at = 3, time = 6},
+--                  }
+                }
+              }})
+            
             ActorScript.act("std")(telarin, scene)
             
---            Script.decelerate TODO
             return "stop"
           end
         end,

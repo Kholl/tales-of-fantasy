@@ -5,13 +5,15 @@ Moo Object Oriented framework for LUA
 
 require("lib/game/data/GraphicData")
 
-FrameData = Class {
+TextData = Class {
   super = GraphicData,
   
-  border = Property("_border"), -- Border size
+  txt = Property("_txt"), -- Text
+  align = Property("_align"), -- Align
   
   create = function(this, init)
     GraphicData.create(this, init)
-    this:border(init and init.border or 0)
+    this:txt(init and init.txt or "")
+    this:align(init and init.align or 'left')
   end,
 }

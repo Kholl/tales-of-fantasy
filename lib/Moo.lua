@@ -55,7 +55,7 @@ Moo = {
   end,
   
   Create = function(class)
-    return function(init)
+    return function(init, custom)
       local instance = setmetatable({}, {
         __index = rawget(class, "[]") or class,
         __newindex = rawget(class, "[?]") or nil,
@@ -75,6 +75,9 @@ Moo = {
       
       if type(init) == "string" then
         init = Moo.Load(init, instance)
+        if custom then
+          List.copyTo(init, custom)
+        end
       end
       
       instance:create(init)
