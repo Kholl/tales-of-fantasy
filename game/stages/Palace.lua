@@ -45,20 +45,23 @@ return {
           if telarin:pos().x <= 280 then
             
             game.ui:add(Frame.new{
-              res = "game/ui/dialog.png",
-              pos = {x = 40, y = 40},
-              dim = {w = 240, h = 160},
-              border = 30,
+              res = "game/ui/dialog2.png",
+              dim = {w = 254, h = 160},
+              align = {w = 0.5, h = 0.5},
+              bgColor = {r = 0, g = 0, b = 0},
+              bgAlpha = 0.75,
+              bdSize = {w = 7, h = 12},
               list = {
-                Animator.new{func = Animator.Decel, prop = "dim", key = "h", from = 60, to = 160},
+                Animator.new{func = Animator.Decel, prop = "dim", key = "h", v = {24, 160}, t = {0, 1}},
                 Text.new{
                   res = "game/ui/medieval.png",
-                  txt = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890 ,;.:-+/%?!",
---                  color = {r = 0, g = 1, b = 0},
---                  align = 'center',
---                  list = {
---                    Animator.new{func = Animator.Linear, prop = "pos", key = "y", from = 0, to = -12 * 24, at = 3, time = 6},
---                  }
+                  txt = "ABCDE FGHIJ KLMNO PQRST UVWXYZ abcde fghij klmnop qrstu vwxyz 12345 67890 ,;.:-+/%?!",
+                  txtalign = 'center',
+                  color = {r = 0.3, g = 0.8, b = 0.3},
+                  list = {  
+                    Animator.new{func = Animator.Linear, prop = "alpha", v = {0, 1}, t = {1, 2}},
+                    Animator.new{func = Animator.Linear, prop = "pos", key = "y", v = {0, -1}, t = {3, 6}},
+                  } 
                 }
               }})
             

@@ -8,10 +8,10 @@ require("lib/game/data/GraphicData")
 FrameData = Class {
   super = GraphicData,
   
-  border = Property("_border"), -- Border size
+  bdSize = Property("_bdSize"), -- Border size
   
   create = function(this, init)
     GraphicData.create(this, init)
-    this:border(init and init.border or 0)
+    this:bdSize(init and init.bdSize or {w = 0, h = 0})
   end,
 }

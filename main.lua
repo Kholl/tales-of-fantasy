@@ -39,15 +39,16 @@ love.load = function(arg)
   love.filesystem.mkdir(love.filesystem.getSaveDirectory())
   
   game.ui = Graphic.new(game.interface)
-  game.ui:update(0, game) -- Preloads UI with delta 0
-  
   game.scene = Scene.new(game.scenes.start)
-  game.scene:update(0, game) -- Preloads SCENE with delta 0
+  
+  -- Preload assets
+  game.scene:update(0, game)
+  game.ui:update(0, game)
 end
 
 love.draw = function()
   game.scene:draw()
-  game.ui:draw(game)
+  game.ui:draw{x = 0, y = 0, w = game.view.w, h = game.view.h}
 end
 
 love.update = function(delta)

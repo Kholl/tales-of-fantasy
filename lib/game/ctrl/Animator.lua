@@ -8,38 +8,39 @@ Animator = Class {
   func = nil,
   prop = nil,
   key = nil,
-  val = nil,
-  time = nil,
+  v = nil,
+  v0 = nil,
+  v1 = nil,
+  k = nil,
+  t0 = nil,
+  t1 = nil,
           
   create = function(this, init)
     this.func = init.func or Animator.Linear
     this.prop = init.prop
-    this.key = init.key
+    this.key = init.key or false
     
-    this.val = {}
-    this.val.ini = init.from or 0
-    this.val.fin = init.to or 100
+    this.v0, this.v1 = init.v[1], init.v[2]
+    this.t0, this.t1 = init.t[1], init.t[2]
     
-    this.time = {}
-    this.time.t = 0
-    this.time.ini = init.at or 0
-    this.time.fin = init.time or 1
+    this.t = 0
   end,
   
   draw = Nil,
   step = Nil,
   
   update = function(this, delta, group, game)
-    this.time.t = this.time.t + delta    
-    this.time.k = math.max(0, ((this.time.t - this.time.ini) / this.time.fin))
-    local value = this.func(this.val.ini, this.val.fin, this.time.k)
+    this.t = this.t + delta    
+    this.k = math.min(1, math.max(0, ((this.t - this.t0) / (this.t1 - this.t0))))
+    local value = this.func(this.v0, this.v1, this.k)
     
-    local property = group[this.prop](group)
+    local data = group.data
+    local property = data[this.prop](data)
     if this.key then property[this.key] = value else property = value end
     
-    group[this.prop](group, property)
+    data[this.prop](data, property)
     
-    if this.time.t > this.time.fin then group:rem(this) end
+    if this.t > this.t1 then group:rem(this) end
   end,
   
   Linear = function(a, b, k) return a*(1-k) + b*k end,
