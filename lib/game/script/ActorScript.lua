@@ -20,11 +20,17 @@ ActorScript = {
   
   move = function(force) return F(function(actor, scene)
     local spd = actor:spd()
+    local dir = actor:dir()
     if force.y then spd.y = force.y end
-        
-    local kx, kz = actor:auto():direction(actor)
-    if not (kx == 0) then spd.x, actor:dir().x = kx * (force.x or 0), kx end
-    if not (kz == 0) then spd.z, actor:dir().z = kz * (force.z or 0), kz end
+    
+    local kx, kz
+    if actor:auto()
+      then kx, kz = actor:auto():direction(actor)
+      else kx, kz = dir.x, dir.z
+    end
+  
+    if not (kx == 0) then spd.x, dir.x = kx * (force.x or 0), kx end
+    if not (kz == 0) then spd.z, dir.z = kz * (force.z or 0), kz end
     
     actor:spd(spd)
     

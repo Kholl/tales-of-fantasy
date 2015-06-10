@@ -17,8 +17,12 @@ Moo = {
   
   Property = function(attr)
     return function(obj, val)
-      if not (val == nil) then obj[attr] = val end
-      return obj[attr]
+      if val == nil then
+        return obj[attr]
+      end
+      
+      obj[attr] = val
+      return obj
     end
   end,
   

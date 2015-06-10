@@ -32,6 +32,7 @@ local game
 love.load = function(arg)
   game = loadfile("game/main.lua")()
   game.dim = function() return { w = game.view.w, h = game.view.h } end
+  game.time = 0
   
   love.filesystem.setIdentity(game.dir)
   love.graphics.setMode(game.view.w, game.view.h, game.view.full, game.view.sync)  

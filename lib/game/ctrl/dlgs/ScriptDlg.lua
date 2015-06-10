@@ -10,12 +10,17 @@ ScriptDlg = Moo.Class {
   
   create = function(this, init)
     this.script = init.script or {}
-    this.state = init.state or "start"
+    this.state = init.state or 'start'    
   end,
   
-  update = function(this, delta, actor, game)
-    local command = this.script[this.state] or {}
-    local state = command(actor, game)
+  update = function(this, delta, object, game)
+    local command 
+    if type(this.script) == 'function'
+      then command = this.script
+      else command = this.script[this.state] or Nil
+    end
+        
+    local state = command(object, game)
     if state then this.state = state end
   end,
   

@@ -19,6 +19,16 @@ return {
     full = false,
     sync = true
   },
+  keyb = {
+    {
+      r = "right",
+      l = "left",
+      u = "up",
+      d = "down",
+      a = "a",
+      b = "s",
+    },
+  },
   scenes = {
     start = "game/stages/Palace.lua",
   },

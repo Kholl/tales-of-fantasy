@@ -10,6 +10,8 @@ require("lib/game/draw/FrameDraw")
 Frame = Class {
   super = Graphic,
   
+  drawable = nil,
+  
   create = function(this, init)
     Graphic.create(this, init)
     this.drawable = FrameDraw.new(init)

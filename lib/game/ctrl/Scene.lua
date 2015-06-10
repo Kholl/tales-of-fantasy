@@ -64,8 +64,8 @@ Scene = Class {
   time = function(this, val) return this.data:time(val) end,
   frame = function(this, val) return this.data:frame(val) end,
   
-  addScroll = function(this, init) return List.add(this.scrolls, Scroll.new(init)) end,
-  addActor = function(this, init) return List.add(this.actors, Actor.new(init)) end,
+  addScroll = function(this, init, custom) return List.add(this.scrolls, Scroll.new(init, custom)) end,
+  addActor = function(this, init, custom) return List.add(this.actors, Actor.new(init, custom)) end,
     
   getActors = function(this, func)
     if func then return List.filter(this.actors, func) else return this.actors end

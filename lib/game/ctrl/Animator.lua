@@ -29,19 +29,22 @@ Animator = Class {
   draw = Nil,
   step = Nil,
   
-  update = function(this, delta, group, game)
-    this.t = this.t + delta    
-    this.k = math.min(1, math.max(0, ((this.t - this.t0) / (this.t1 - this.t0))))
-    local value = this.func(this.v0, this.v1, this.k)
+  update = function(this, delta, object, game)
+    local t = object:time()
+    if t > this.t1 then return end
     
-    local data = group.data
+    local k = math.min(1, math.max(0, ((t - this.t0) / (this.t1 - this.t0))))
+    local v = this.func(this.v0, this.v1, k)
+    
+    local data = object.data
     local property = data[this.prop](data)
-    if this.key then property[this.key] = value else property = value end
+    if type(property) == 'table' then property[this.key] = v else property = v end
     
     data[this.prop](data, property)
-    
-    if this.t > this.t1 then group:rem(this) end
   end,
+  
+  reset = function(this) this.t = this.t0 end,
+  finish = function(this) this.t = this.t1 end,
   
   Linear = function(a, b, k) return a*(1-k) + b*k end,
   Accel = function(a, b, k) return a*(1-(k*k)) + b*k*k end,

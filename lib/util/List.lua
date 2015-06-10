@@ -4,9 +4,17 @@ Moo Object Oriented framework for LUA
 ]]--
 
 List = {
-  add = function(list, item) table.insert(list, item); return item end,
-  rem = function(list, item) table.remove(list, List.find(list, item)) end,
   sort = function(list, func) table.sort(list, func); return this end,
+  
+  add = function(list, item)
+    table.insert(list, item)
+    return item
+  end,
+  
+  rem = function(list, item)
+    local key = List.find(list, item)
+    list[key] = nil
+  end,
   
   each = function(list, func)
     local res = {}
