@@ -24,8 +24,8 @@ Dependency "resource" (Resources.new{
   font = function(fontName) return love.graphics.newImageFont(fontName, Resources.GLYPH) end,
 })
 
-require("lib/game/ctrl/Scene")
-require("lib/game/ctrl/Graphic")
+require("lib/game/stage/scene/Scene")
+require("lib/game/ui/graphic/Graphic")
 
 local game
 

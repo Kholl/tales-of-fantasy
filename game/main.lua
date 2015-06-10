@@ -6,9 +6,9 @@ Tales Of Fantasy
 require("game/custom/FX")
 require("game/custom/Anim")
 require("game/custom/Asset")
-require("game/custom/ctrl/dlg/EnemyDlg")
+require("game/custom/EnemyDlg")
 
-require("lib/game/ctrl/Frame")
+require("lib/game/ui/frame/Frame")
 
 return {
   dir = "ToF",

@@ -3,10 +3,10 @@ Tales Of Fantasy
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-require("lib/game/ctrl/Animator")
-require("lib/game/ctrl/Frame")
-require("lib/game/ctrl/Text")
-require("lib/game/ctrl/Image")
+require("lib/game/ui/animator/Animator")
+require("lib/game/ui/frame/Frame")
+require("lib/game/ui/text/Text")
+require("lib/game/ui/image/Image")
 
 return {
   fps = 30,
