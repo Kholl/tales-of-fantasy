@@ -22,7 +22,6 @@ GraphicDraw = Class {
   draw = function(this, data, parent)
     if data:hidden() then return end    
     
-    local align = data:align()
     local color = data:color()
     local alpha = data:alpha()
     local bgColor = data:bgColor()
@@ -43,17 +42,17 @@ GraphicDraw = Class {
       this.graphics.drawq(this.bgDrawable, this.bgQuad, x, y)
     end
     
+    this.graphics.setColor(color.r * 255, color.g * 255, color.b * 255, alpha * 255)
+
+    this.doDraw(this, data, x, y, w, h)
+    
     local bdColor = data:bdColor()
     if bdColor then
       this.graphics.setColor(bdColor.r * 255, bdColor.g * 255, bdColor.b * 255, alpha * 255)
       this.graphics.rectangle('line', x, y, w, h)
     end
     
-    this.graphics.setColor(color.r * 255, color.g * 255, color.b * 255, alpha * 255)
-
-    this.doDraw(this, data, x, y, w, h)
-    
+    this.graphics.setColor(255, 255, 255, 255)    
     this.graphics.setScissor() 
-    this.graphics.setColor(255, 255, 255, 255)
   end,
 }

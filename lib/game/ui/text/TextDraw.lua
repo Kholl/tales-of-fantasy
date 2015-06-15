@@ -21,6 +21,6 @@ TextDraw = Class {
   
   doDraw = function(this, data, x, y, w, h)
     this.graphics.setFont(this.font)
-    this.graphics.printf(data:txt(), x, y, w, data:txtalign())
+    this.graphics.printf(data:txt(), x, y, w, data:align())
   end,
 }

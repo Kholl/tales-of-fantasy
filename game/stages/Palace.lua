@@ -3,10 +3,10 @@ Tales Of Fantasy
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-require("lib/game/ui/animator/Animator")
+require("lib/game/ui/dialog/Dialog")
 require("lib/game/ui/frame/Frame")
-require("lib/game/ui/text/Text")
 require("lib/game/ui/image/Image")
+require("lib/game/ui/text/Text")
 
 return {
   fps = 30,
@@ -46,52 +46,36 @@ return {
       
       ActorScript.act("std")(scene.actors.telarin, scene)
       
-      game.ui:add(Frame.new{
-        res = "game/ui/dialog2.png",
-        dim = {w = 254, h = 160},
-        align = {x = 0.5, y = 0.5},
-        bgColor = {r = 0, g = 0, b = 0},
-        bgAlpha = 0.75,
-        bdSize = {w = 7, h = 12},
-        list = {
-          rollIn  = Animator.new("lib/preset/Animator/RollH.lua", {t = {0, 1},   v = {24, 160}}),
---          rollOut = Animator.new("lib/preset/Animator/RollH.lua", {t = {11, 12}, v = {160, 24}}),
-          portrait = Image.new{
-            res = "game/chars/Lucia/portrait-m.png",
-            dim = {w = 40, h = 60},
-            pos = {x = 20, y = nil},
-            align = {x = nil, y = 0.5},
-            bdColor = {r = 0.3, g = 0.8, b = 0.3},
-            bgColor = {r = 0, g = 0, b = 0},
-            list = {
-              fadeIn  = Animator.new("lib/preset/Animator/Fade.lua", {t = {1, 2}}),
-              fadeOut = Animator.new("lib/preset/Animator/Fade.lua", {t = {10, 11}, v = {1, 0}}),
+      game.ui:add(Dialog.new("game/preset/dialog/Dialog.lua", {
+        seqtime = {[0] = 10, 21},
+        seq = {
+          [0] = {
+            image = {
+              img = "game/chars/Lucia/portrait-m.png",
+              pos = {x = 20, y = 0.5},
+              dim = {w = 40, h = 60},
+              dir = {x =  1, y = 1},
+            },
+            text = {
+              txt = "ABCDEF\nGHIJKL\nMNOPQR\nSTUVWX\nYZ\nabcdef\nghijkl\nmnopqr\nstuvwx\nyz\n12345\n67890\n ,;.:-+/%?!",
+              pos = {x = 1, y = 0},
             },
           },
-          text = Text.new{
-            res = "game/ui/medieval.png",
-            txt = "ABCDEF\nGHIJKL\nMNOPQR\nSTUVWX\nYZ\nabcdef\nghijkl\nmnopqr\nstuvwx\nyz\n12345\n67890\n ,;.:-+/%?!",
-            align = {x = 1, y = 0},
-            dim = {w = 254 - 80, h = 13 * 21},
-            txtalign = 'left',
-            color = {r = 0.3, g = 0.8, b = 0.3},
-            list = {
-              fadeIn  = Animator.new("lib/preset/Animator/Fade.lua",       {t = {1, 2}}),
-              scroll  = Animator.new("lib/preset/Animator/ScrollDown.lua", {t = {4, 10}}),
-              fadeOut = Animator.new("lib/preset/Animator/Fade.lua",       {t = {10, 11}, v = {1, 0}}),
+          [1] = {
+            image = {
+              img = "game/chars/TelArin/portrait-m.png",
+              pal = "game/preset/imagefx/HElf.lua",
+              pos = {x = -20, y = 0.5},
+              dim = {w = 48, h = 48},
+              dir = {x = -1, y = 1},
+            },
+            text = {
+              txt = "BLABLA\nBLABLA\nBLABLA\nBLABLA\nBL\nblabla\nblabla\nblabla\nblabla\nbl\n12345\n67890\n ,;.:-+/%?!",
+              pos = {x = 0, y = 0},
             },
           },
         },
-        script = {
-          start = function(dialog, ui)
-            if dialog:time() < 11 then return end
-            
-            dialog:get("portrait"):pos{x = -20, y = nil}:time(0)
-            dialog:get("text"):align{x = 0, y = 0}:time(0)          
-            dialog:time(0)
-          end,
-        },
-      })
+      }))
 
 --[[        script = {
           start = function(dialog, ui)

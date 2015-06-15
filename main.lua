@@ -20,6 +20,7 @@ Dependency "image" (love.image)
 
 require("lib/game/Resources")
 Dependency "resource" (Resources.new{
+  file = Moo.Load,
   image = love.image.newImageData,
   font = function(fontName) return love.graphics.newImageFont(fontName, Resources.GLYPH) end,
 })

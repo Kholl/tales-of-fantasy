@@ -4,8 +4,8 @@ Moo Object Oriented framework for LUA
 ]]--
 
 require("lib/game/ui/graphic/Graphic")
-require("lib/game/ui/image/ImageData")
 require("lib/game/ui/image/ImageDraw")
+require("lib/game/fx/ImageFX")
 
 Image = Class {
   super = Graphic,
@@ -13,11 +13,13 @@ Image = Class {
   create = function(this, init)
     Graphic.create(this, init)
     this.drawable = ImageDraw.new(init)
-    this.data = ImageData.new(init)
   end,
   
   draw = function(this, parent)
     Graphic.draw(this, parent)
     this.drawable:draw(this.data, parent)
   end,    
+  
+  img = function(this, val) this.drawable:img(val) end,
+  pal = function(this, val) this.drawable:pal(val) end,
 }

@@ -20,6 +20,9 @@ Animator = Class {
     this.prop = init.prop
     this.key = init.key or false
     
+    if not init.v then init.v = {0, 1} end
+    if not init.t then init.t = {0, 1} end
+    
     this.v0, this.v1 = init.v[1], init.v[2]
     this.t0, this.t1 = init.t[1], init.t[2]
     

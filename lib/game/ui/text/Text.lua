@@ -20,4 +20,7 @@ Text = Class {
     Graphic.draw(this, parent)
     this.drawable:draw(this.data, parent)
   end,
+  
+  txt = function(this, val) this.data:txt(val) end,
+  align = function(this, val) this.data:align(val) end,
 }

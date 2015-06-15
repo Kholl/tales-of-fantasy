@@ -9,11 +9,11 @@ TextData = Class {
   super = GraphicData,
   
   txt = Property("_txt"), -- Text
-  txtalign = Property("_txtalign"), -- Text Alignment
+  align = Property("_align"), -- Alignment
   
   create = function(this, init)
     GraphicData.create(this, init)
     this:txt(init and init.txt or "")
-    this:txtalign(init and init.txtalign or 'left')
+    this:align(init and init.align or 'left')
   end,
 }

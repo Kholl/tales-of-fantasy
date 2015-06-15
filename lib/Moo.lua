@@ -15,13 +15,15 @@ Moo = {
     return function(t, key, val) error(string.format(message, key)) end
   end,
   
-  Property = function(attr)
+  Property = function(attr, funcname)
     return function(obj, val)
-      if val == nil then
-        return obj[attr]
+      if val == nil then return obj[attr] end
+      
+      if not (rawget(obj, attr) == val) then
+        obj[attr] = val
+        if funcname and obj[funcname] then obj[funcname](obj) end
       end
       
-      obj[attr] = val
       return obj
     end
   end,
@@ -49,6 +51,8 @@ Moo = {
     end)
     
     class.new = Moo.Create(class)
+    class.push = Moo.Push
+    class.pull = Moo.Pull
     
     setmetatable(class, {
       __index = class.super or Moo.Err("Property or method '%s' is unknown"),
@@ -89,13 +93,24 @@ Moo = {
     end
   end,
   
+  Push = function(instance, props)
+    List.each(props, function(value, property) instance[property](instance, value) end)
+    return instance
+  end,
+  
+  Pull = function(instance, props)
+    local values = {}
+    List.each(props, function(property) values[property] = instance[property](instance) end)
+    return values
+  end,
+  
   Import = function()
     List.each(Moo, function(value, key)
       if rawget(_G, key) == nil then rawset(_G, key, value) end
     end)
   end,
   
-  Load = function(file, instance)
+  Load = function(file)
     local func, errmsg = loadfile(file)      
     assert(func, errmsg)
     

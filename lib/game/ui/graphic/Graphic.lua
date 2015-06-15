@@ -4,6 +4,7 @@ Moo Object Oriented framework for LUA
 ]]--
 
 require("lib/game/ui/graphic/GraphicData")
+require("lib/game/ui/animator/Animator")
 
 Graphic = Class {  
   graphics = Dependency("graphics"),
@@ -38,13 +39,15 @@ Graphic = Class {
     List.each(this.list, function(item) item:update(delta, this, game) end)
   end,
 
+  anm = function(this, init) List.add(this.list, Animator.new(init)) end,
   add = function(this, item) List.add(this.list, item) end,
   rem = function(this, item) List.rem(this.list, item) end,
   has = function(this, key) return not (this.list[key] == nil) end,
   get = function(this, key) return this.list[key] end,
   
+  dim = function(this, val) return this.data:dim(val) end,
   pos = function(this, val) return this.data:pos(val) end,
-  align = function(this, val) return this.data:align(val) end,
+  dir = function(this, val) return this.data:dir(val) end,  
   color = function(this, val) return this.data:color(val) end,
   alpha = function(this, val) return this.data:alpha(val) end,
   bgColor = function(this, val) return this.data:bgColor(val) end,
