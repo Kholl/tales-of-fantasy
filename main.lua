@@ -57,5 +57,5 @@ love.update = function(delta)
   delta = math.min(delta, 1/game.fps)
   
   game.scene:update(delta, game)
-  game.ui:update(delta, game)
+  game.ui:update(delta, nil, game)
 end

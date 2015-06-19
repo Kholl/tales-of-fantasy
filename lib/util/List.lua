@@ -4,6 +4,8 @@ Moo Object Oriented framework for LUA
 ]]--
 
 List = {
+  last = function(list) return list[#list] end,
+  
   sort = function(list, func) table.sort(list, func); return this end,
   
   add = function(list, item)

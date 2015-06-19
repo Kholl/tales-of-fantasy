@@ -8,37 +8,36 @@ require("lib/game/ui/frame/Frame")
 Dialog = Class {
   super = Frame,
   
-  anim = nil,
+  seqid = Property("_seqid", "reload"),
+
   seq = nil,
-  seqid = nil,
   seqtime = nil,
   
   create = function(this, init)
-    Frame.create(this, init)
+    Frame.create(this, init)    
     
-    this.anim = init.anim
     this.seq = init.seq
-    this.seqtime = init.seqtime
+    this.seqtime = init.seqtime      
+    this:seqid(init.seqid or 1)
     
-    this:sequence(0)
+    this:get("out"):play(List.last(this.seqtime))
   end,
   
   update = function(this, delta, parent, game)
-    Frame.update(this, delta, game)    
-    if this:time() <= this.seqtime[this.seqid] then return end
-    
-    if this.seqid < #this.seqtime then
-      this:sequence(this.seqid +1)
-    else
-      parent:rem(this)
-    end
+    Frame.update(this, delta, game)
+
+    if this._seqid < #this.seqtime and this:time() > this.seqtime[this._seqid] then this:seqid(this._seqid +1) end
+    if this:get("out"):ended(this) then parent:rem(this) end
   end,
   
-  sequence = function(this, seqid)
-    this.seqid = seqid % (#this.seq +1)
+  reload = function(this)
+    local interval = this.seqtime[this._seqid] - (this.seqtime[this._seqid -1] or 0)
+    this:get("text"):get("scr"):dur(interval -2) -- Two extra reading seconds
     
-    List.each(this.seq[this.seqid], function(props, item)
-      this:get(item):push(props):time(0)
+    List.each(this.seq[this._seqid], function(props, key)
+      local item = this:get(key)
+      item:push(props):time(0)
+      item:get("out"):playTo(interval)
     end)
   end,
 }

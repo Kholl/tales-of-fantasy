@@ -21,6 +21,7 @@ Text = Class {
     this.drawable:draw(this.data, parent)
   end,
   
-  txt = function(this, val) this.data:txt(val) end,
+  txt = function(this, val) this.data:txt(val) end,    
+  fit = function(this, val) this.data:fit(val) end,
   align = function(this, val) this.data:align(val) end,
 }

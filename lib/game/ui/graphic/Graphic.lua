@@ -25,7 +25,7 @@ Graphic = Class {
   draw = function(this, parent)
     if this.data:hidden() then return end
     local area = this.data:area(parent)
-        
+    
     List.each(this.list, function(item) item:draw(area) end)
   end,
   
@@ -33,7 +33,7 @@ Graphic = Class {
     List.each(this.list, function(item) item:step(this, game) end)
   end,
   
-  update = function(this, delta, game)
+  update = function(this, delta, parent, game)
     this.data:update(delta, this, game)
     this.script:update(delta, this, game)
     List.each(this.list, function(item) item:update(delta, this, game) end)
@@ -43,7 +43,7 @@ Graphic = Class {
   add = function(this, item) List.add(this.list, item) end,
   rem = function(this, item) List.rem(this.list, item) end,
   has = function(this, key) return not (this.list[key] == nil) end,
-  get = function(this, key) return this.list[key] end,
+  get = function(this, key) return this.list[key] or Nil end,
   
   dim = function(this, val) return this.data:dim(val) end,
   pos = function(this, val) return this.data:pos(val) end,

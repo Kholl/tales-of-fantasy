@@ -38,85 +38,63 @@ return {
 
   script = {
     start = function(scene, game)
-        ActorScript.act("wlk")(scene.actors.telarin, scene)
-        return "moving"
-      end,
-    moving = function(scene, game)
-      if scene.actors.telarin:pos().x > 280 then return "moving" end
+      ActorScript.act("wlk")(scene.actors.telarin, scene)
+      return "move"
+    end,
+    move = function(scene, game)
+      if scene.actors.telarin:pos().x > 280 then return end
       
       ActorScript.act("std")(scene.actors.telarin, scene)
       
       game.ui:add(Dialog.new("game/preset/dialog/Dialog.lua", {
-        seqtime = {[0] = 10, 21},
+        seqtime = {5, 15},
         seq = {
-          [0] = {
+          {
             image = {
               img = "game/chars/Lucia/portrait-m.png",
-              pos = {x = 20, y = 0.5},
+              pos = {x = 10, y = 0.5},
               dim = {w = 40, h = 60},
               dir = {x =  1, y = 1},
             },
             text = {
-              txt = "ABCDEF\nGHIJKL\nMNOPQR\nSTUVWX\nYZ\nabcdef\nghijkl\nmnopqr\nstuvwx\nyz\n12345\n67890\n ,;.:-+/%?!",
-              pos = {x = 1, y = 0},
+              txt = "What happens? Everguardian Telhari, report me.",
+              pos = {x = 1, y = 0.5},
+              fit = {w = false, h = false},
             },
           },
-          [1] = {
+          {
             image = {
               img = "game/chars/TelArin/portrait-m.png",
               pal = "game/preset/imagefx/HElf.lua",
-              pos = {x = -20, y = 0.5},
+              pos = {x = -10, y = 0.5},
               dim = {w = 48, h = 48},
               dir = {x = -1, y = 1},
             },
             text = {
-              txt = "BLABLA\nBLABLA\nBLABLA\nBLABLA\nBL\nblabla\nblabla\nblabla\nblabla\nbl\n12345\n67890\n ,;.:-+/%?!",
+              txt = "Elfinn Princess, the Green Tower defenses are being attacked by an army of Orq mercenaries. We have to leave the tower through the Hidden Backdoor. I will escort you.",
               pos = {x = 0, y = 0},
+              fit = {w = false, h = true},
             },
           },
         },
       }))
-
---[[        script = {
-          start = function(dialog, ui)
-            dialog:anm("lib/preset/Animator/RollH.lua", {v = {24, 160}, t = {0, 1}})
-            dialog:get("portrait"):anm("lib/preset/Animator/Fade.lua", {t = {1, 2}})
-            dialog:get("text"):anm("lib/preset/Animator/Fade.lua", {t = {1, 2}})
-            dialog:get("text"):anm("lib/preset/Animator/ScrollDown.lua", {t = {4, 10}})
-            
-            return "update"
-          end,
-          update = function(dialog, ui)
-            if dialog:time() < 10 then return "update" end
-            if not Dependency("keyboard").isDown(game.keyb[1].a) then return "update" end
-            
-            dialog:get("portrait"):anm("lib/preset/Animator/Fade.lua", {v = {1, 0}, t = {0, 1}})
-            dialog:get("text"):anm("lib/preset/Animator/Fade.lua", {v = {1, 0}, t = {0, 1}})
-            dialog:anm("lib/preset/Animator/RollH.lua", {v = {160, 24}, t = {1, 2}})
-            
-            dialog:get("portrait"):anm("lib/preset/Animator/Fade.lua", {t = {3, 4}})
-            dialog:get("text"):anm("lib/preset/Animator/Fade.lua", {t = {3, 4}})
-            dialog:anm("lib/preset/Animator/RollH.lua", {v = {24, 160}, t = {2, 3}})
-            
-            dialog:time(0)
-            return "next"
-          end,
-          
-          next = function(dialog)
-            if dialog:time() < 2 then return "next" end
-            
-            dialog:get("portrait"):pos{x = -20, y = nil}
-            dialog:get("text"):pos{x = -80, y = 0}:txt(POLLO)
-            dialog:time(0)
-            
-            return "update"
-          end,
-        },]]--
-      
-      return "talking"
+      return "talk"
     end,
-    talking = function(scene, game)
+    talk = function(scene, game)
+      if game.ui:time() > 18 then return "leave" end
       scene.actors.telarin:pos().x = 280
+    end,
+    leave = function(scene, game)
+      scene.actors.telarin:dir{x = 1, y = 1, z = 0}
+      ActorScript.act("wlk")(scene.actors.player, scene)
+      ActorScript.act("wlk")(scene.actors.telarin, scene)      
+      return "finish"
+    end,
+    finish = function(scene, game)
+      if (scene.actors.telarin:pos().x < 450) or
+         (scene.actors.player:pos().x  < 450) then return end
+      
+      assert(false)
     end,
 --      }})
 
