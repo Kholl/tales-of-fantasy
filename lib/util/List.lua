@@ -4,9 +4,17 @@ Moo Object Oriented framework for LUA
 ]]--
 
 List = {
+  asTable = function(items)
+    if not (type(items) == "table") then items = {items} end
+    return items
+  end,
+    
   last = function(list) return list[#list] end,
   
-  sort = function(list, func) table.sort(list, func); return this end,
+  sort = function(list, func)
+    table.sort(list, func)
+    return this
+  end,
   
   add = function(list, item)
     table.insert(list, item)
@@ -18,15 +26,30 @@ List = {
     list[key] = nil
   end,
   
+  empty = function(list) return #list == 0 end,
+  pick = function(list) return list[math.random(1, #list)] end,
+  
   each = function(list, func)
     local res = {}
-    for key, val in pairs(list) do res[key] = func(val, key) end
+    for key, val in pairs(list) do
+      res[key] = func(val, key)
+    end
     return res
   end,
 
   filter = function(list, func)
     local res = {}
-    for key, val in pairs(list) do if func(val) then res[key] = val end end
+    for key, val in pairs(list) do
+      if func(val, key) then res[key] = val end
+    end
+    return res
+  end,
+  
+  select = function(list, func)
+    local res = nil
+    for key, val in pairs(list) do
+      if (res == nil) and func(val, key) then res = key end
+    end
     return res
   end,
   
@@ -45,5 +68,9 @@ List = {
   copyTo = function(dst, src)
     for key, val in pairs(src) do dst[key] = val end
     return dst
+  end,
+  
+  print = function(list)
+    for key, val in pairs(list) do io.write(string.format("%s\t%s\n", key, val)) end
   end,
 }

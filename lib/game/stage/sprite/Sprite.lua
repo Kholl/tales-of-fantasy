@@ -27,7 +27,9 @@ Sprite = Class {
     end
   end,
   
-  update = Nil,
+  update = function(this, delta, actor, scene, game)
+    this.data:time(this.data:time() + delta)
+  end,
   
   box = function(this) return this.data:box() end,
   rad = function(this) return this.data:rad() end,
@@ -41,7 +43,7 @@ Sprite = Class {
   loop = function(this, actor, scene, game) this.data:incr(scene:frame()):loop() end,
   
   frame = function(this, frame) return this.data:get() end,
-  isStep = function(this) return this.data.step end,
-  isEnded = function(this) return this.data.ended end,
+  isStep = function(this) return this.data:isStep() end,
+  isEnded = function(this) return this.data:isEnded() end,
 }
 

@@ -15,13 +15,15 @@ Moo = {
     return function(t, key, val) error(string.format(message, key)) end
   end,
   
-  Property = function(attr, funcname)
+  Property = function(attr, config)
+    local trigger = config and config.trigger or false
+    
     return function(obj, val)
       if val == nil then return obj[attr] end
       
       if not (rawget(obj, attr) == val) then
         obj[attr] = val
-        if funcname and obj[funcname] then obj[funcname](obj) end
+        if trigger and obj[trigger] then obj[trigger](obj) end
       end
       
       return obj

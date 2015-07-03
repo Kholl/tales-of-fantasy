@@ -50,7 +50,14 @@ Animator = Class {
     
     local data = object.data
     local property = data[this.prop](data)
-    if type(property) == 'table' then property[this.key] = v else property = v end
+    
+    if type(property) == 'table' and type(this.key) == 'table' then
+      List.each(this.key, function(key) property[key] = v end)
+    elseif type(property) == 'table' and type(this.key) == 'string' then
+      property[this.key] = v
+    else
+      property = v
+    end
     
     data[this.prop](data, property)
   end,

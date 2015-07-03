@@ -1,0 +1,145 @@
+--[[
+Tales Of Fantasy
+@author Manuel Coll <mkhollv@gmail.com>
+]]--
+
+require("lib/game/ui/dialog/Dialog")
+require("lib/game/ui/frame/Frame")
+require("lib/game/ui/image/Image")
+require("lib/game/ui/text/Text")
+
+return {
+  fps = 30,
+  ratio = {x = 1, y = 1, z = 1/2},
+  drag = {x = -300, y = 480, z = -300},
+  pos = {x = 0.5, y = 0.5},
+  dim = {w = 1, h = 0.5},
+  color = {r = 0, g = 0, b = 0},
+  grav = "y",
+  lim = {
+    x = {min = 0, max = 480},
+    y = {max = 0},
+    z = {min = 0, max = 480},
+  },
+  off = {x = -80, y = 0},
+  
+  scrolls = {
+    Scroll.new{
+      res = "game/backs/palace.bg1.png",
+      scr = {x = "clamp", y = "clamp"},
+      pos = {x = 0, y = 0},
+      dim = {w = 256, h = 256},
+    },
+    Scroll.new{
+      res = "game/backs/palace.bg2.png",
+      scr = {x = "repeat", y = "clamp"},
+      pos = {x = 256, y = 0},
+      dim = {w = nil, h = 256},
+    },
+  },
+  
+  actors = {
+    player = Actor.new("game/chars/Sarah.lua", {
+      pos = {x = 0, y = 0, z = 475},
+      dir = {x = 1, y = 1, z = 0},
+    }),
+--[[    telarin = Actor.new("game/chars/TelArin.lua", {
+      pos = {x = 100, y = 0, z = 425},
+      dir = {x = 1, y = 1, z = 0}
+    }),
+]]    dqueen = Actor.new("game/chars/DQueen.lua", {
+      pos = {x = 200, y = 0, z = 450},
+      dir = {x = -1, y = 1, z = 0},
+    }),
+  },
+  
+  list = {
+    Animator.new{prop = "color", key = {"r", "g", "b"}, t = {0, 1}},
+    Animator.new{prop = "dim", key = "h", v = {0.5, 1}, t = {1, 2}},
+  },
+  
+  script = {
+    start = function(scene, game)
+      ActorScript.act("wlk")(scene:actor("player"), scene)
+--      ActorScript.act("wlk")(scene:actor("telarin"), scene)
+      return "move"
+    end,
+    
+    move = function(scene, game)
+      if game.ui:time() > 2 then
+        local player = scene:actor("player")
+--        local telarin = scene:actor("telarin")
+        local dqueen = scene:actor("dqueen")
+        
+        ActorScript.act("std")(player, scene)
+--        ActorScript.act("std")(telarin, scene)
+        
+        player:auto(KeybDlg.new(game.keyb[1]))
+--        telarin:auto(EnemyDlg.new())
+        dqueen:auto(EnemyDlg.new())
+        
+--        telarin:target(dqueen)
+--        dqueen:target(telarin)
+        
+        return "stop"
+      end
+    end,
+  },
+}
+--      }})
+
+--[[      
+      local spawn
+  --    Game.Scene.spawn(scene, "TelArin"):pos{x = 275, y = 0, z = 425}
+      
+      spawn = scene:addActor("game/chars/TelArin.lua")
+      spawn:auto(EnemyDlg.new())
+      spawn:pos{x = 275, y = 0, z = 425}
+      
+      spawn = scene:addActor("game/chars/HElfBoss.lua")
+      spawn:auto(EnemyDlg.new())
+      spawn:pos{x = 300, y = 0, z = 350}
+      
+      spawn = scene:addActor("game/chars/HElfBoss.lua")
+      spawn:auto(EnemyDlg.new())
+      spawn:pos{x = 250, y = 0, z = 500}
+      
+      spawn = scene:addActor("game/chars/HElf.lua")
+      spawn:auto(EnemyDlg.new())
+      spawn:pos{x = 375, y = 0, z = 350}
+      
+      spawn = scene:addActor("game/chars/HElf.lua")
+      spawn:auto(EnemyDlg.new())
+      spawn:pos{x = 350, y = 0, z = 400}
+      
+      spawn = scene:addActor("game/chars/HElf.lua")
+      spawn:auto(EnemyDlg.new())
+      spawn:pos{x = 325, y = 0, z = 450}
+      
+      spawn = scene:addActor("game/chars/HElf.lua")
+      spawn:auto(EnemyDlg.new())
+      spawn:pos{x = 300, y = 0, z = 500}
+
+      spawn = scene:addActor("game/chars/BHeart.lua")
+      spawn:auto(EnemyDlg.new())
+      spawn:pos{x = 750, y = 0, z = 500}
+
+      spawn = scene:addActor("game/chars/DWarrior.lua")
+      spawn:auto(EnemyDlg.new())
+      spawn:pos{x = 750, y = 0, z = 350}
+]]--
+--      return "update"
+--    end,
+  
+--    update = function(scene)
+--[[
+      List.sort(scene.actors, function(actor) return actor:pos().z end)
+      
+      local off = {
+        x = 160 - (camera:pos().x * scene:ratio().x),
+        y = 100 - (camera:pos().z * scene:ratio().z) - (camera:pos().y * scene:ratio().y)}
+      off.y = Math.Lim(off.y, {min = -56, max = 0})
+      scene:off(off)
+]]--      
+--      return "update"
+--    end,

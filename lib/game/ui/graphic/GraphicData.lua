@@ -13,8 +13,9 @@ GraphicData = Class {
   bgImage = Property("_bgImage"), -- Background image
   bgAlpha = Property("_bgAlpha"), -- Background alpha
   bdColor = Property("_bdColor"), -- Border color
-  hidden = Property("_hidden"), -- Hidden
+  hide = Property("_hide"), -- Hide
   time = Property("_time"), -- Local time
+  tmul = Property("_tmul"), -- Local time multiplier
   
   create = function(this, init)
     this:dim(init and init.dim or {w = 1, h = 1})
@@ -26,13 +27,15 @@ GraphicData = Class {
     this:bgImage(init and init.bgImage or false)
     this:bgAlpha(init and init.bgAlpha or 1)
     this:bdColor(init and init.bdColor or false)
-    this:hidden(init and init.hidden or false)
+    this:hide(init and init.hide or false)
   
     this:time(0)
+    this:tmul(1)
+    if init.stop then this:tmul(0) end
   end,
   
   update = function(this, delta, object, game)
-    this._time = this._time + delta
+    this._time = math.max(0, this._time + (this._tmul * delta))
   end,
   
   area = function(this, parent)

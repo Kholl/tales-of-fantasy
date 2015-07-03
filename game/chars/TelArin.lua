@@ -35,7 +35,7 @@ actor.states = {
   atk = {
     res = "game/chars/telarin/atk1.png",
     dim = {w = 252, h = 81}, pad = {x = 100, y = 1},
-    frate = 2.5,
+    frate = 4,
     nframes = 7,
     anim = "play"},
   atkalt = {
@@ -48,7 +48,7 @@ actor.states = {
     res = "game/chars/telarin/atkair.png",
     rad = 0,
     dim = {w = 200, h = 122},
-    frate = 2.5,
+    frate = 3,
     nframes = 7,
     anim = "play"},
   jmp = {
@@ -118,7 +118,7 @@ actor.rules = {
   jmp = {
     std = SceneScript.isFloor,
   },
-  jmpatk = {
+  atkjmp = {
     ActorScript.isFrame(6) / ActorScript.hitAll{dmg = 24},
     jmp = ActorScript.isEnded,
     std = SceneScript.isFloor,
@@ -160,7 +160,7 @@ actor.keybrules = {
     std = -ActorScript.isKey(),
   },
   jmp = {
-    jmpatk = ActorScript.isKey{"a[rlud]*>"},
+    atkjmp = ActorScript.isKey{"a[rlud]*>"},
   },
 }
 

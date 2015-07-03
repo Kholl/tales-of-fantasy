@@ -30,15 +30,13 @@ Actor = Class {
   
   step = function(this, scene, game)
     State.step(this, scene, game)    
---    if this:keyb() then this:keyb():step(this, scene, game) end
-    if this:auto() then this:auto():step(this, scene, game) end
     this.actor:step(this, scene, game)
+    if this:auto() then this:auto():step(this, scene, game) end
   end,
   
   update = function(this, delta, scene, game)
     State.update(this, delta, scene, game)    
---    if this:keyb() then this:keyb():update(this, scene, game) end
-    if this:auto() then this:auto():update(this, scene, game) end
+    if this:auto() then this:auto():update(delta, this, scene, game) end
     this.actor:update(delta, this, scene, game)
   end,
   
@@ -57,6 +55,20 @@ Actor = Class {
     actor = actor or this:target() or this
     local a, b = this:pos(), actor:pos()
     return {x = a.x - b.x, z = a.z - b.z}
+  end,
+  
+  distout = function(this, actor)
+    local dist = this:distrel(actor)
+    local dhit = this:disthit(actor)
+    return {x = dist.x - dhit.x, z = dist.z - dhit.z}
+  end,
+  
+  disthit = function(this, actor)
+    actor = actor or this:target() or this
+    return {
+      x = (this:dim().w + actor:box().w) * 0.5,
+      z = (this:rad() + actor:rad()) * 0.5,
+    }
   end,
   
   dist = function(this, actor)
@@ -85,7 +97,7 @@ Actor = Class {
   hit = function(this, actor, hit)
     actor:face(this)
     actor:target(this)
-    actor:start(action or "hit")
+    actor:state(action or "hit")
       
     local dist = this:dist(actor)
     local dirx = Math.Sign(actor:pos().x - this:pos().x)

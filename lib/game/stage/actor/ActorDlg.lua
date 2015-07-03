@@ -26,14 +26,10 @@ ActorDlg = Moo.Class {
   execute = function(this, actor, scene, game, rules)    
     local state = actor:state()
     local stateRules = rules[state] or {}
-    
-    List.each(stateRules, function(rule, action)
-      if rule(actor, scene)
-        and actor.states[action]
-        and not (actor:state() == action) then
-  
-        actor:start(action)
-      end
+    local action = List.select(stateRules, function(rule, action)
+      return rule(actor, scene)
     end)
+
+    if action and actor.states[action] then actor:state(action) end
   end,
 }

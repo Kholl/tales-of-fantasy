@@ -23,7 +23,7 @@ Graphic = Class {
   end,
   
   draw = function(this, parent)
-    if this.data:hidden() then return end
+    if this.data:hide() then return end
     local area = this.data:area(parent)
     
     List.each(this.list, function(item) item:draw(area) end)
@@ -54,6 +54,13 @@ Graphic = Class {
   bgImage = function(this, val) return this.data:bgImage(val) end,
   bgAlpha = function(this, val) return this.data:bgAlpha(val) end,
   bdColor = function(this, val) return this.data:bdColor(val) end,
-  hidden = function(this, val) return this.data:hidden(val) end,
+  hide = function(this, val) return this.data:hide(val) end,
   time = function(this, val) return this.data:time(val) end,
+  tmul = function(this, val) return this.data:tmul(val) end,
+  
+  show = function(this) this.data:hide(false) end,
+  hide = function(this) this.data:hide(true) end,
+  stop = function(this) this.data:tmul(0) end,
+  play = function(this) this.data:tmul(1) end,
+  back = function(this) this.data:tmul(-1) end,
 }

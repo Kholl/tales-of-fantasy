@@ -3,18 +3,18 @@ Moo Object Oriented framework for LUA
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-require("lib/game/Script")
-
 ActorScript = {
   -- Actions  
   act = function(action) return F(function(actor, scene)
-    actor:start(action)
+    actor:state(action)
   end)
   end,
   
   find = F(function(actor, scene)
     local auto = actor:auto()
     local actors = scene:getActors()
+    if not auto then return end
+    
     actors = List.filter(actors, auto:filter(actor, scene))
     actors = List.sort(actors, auto:eval(actor, scene))
     actor:target(actors[1])
@@ -47,26 +47,35 @@ ActorScript = {
   end,
   
   -- Triggers
-  isHit = function(state) return F(function(actor, scene, target)
+  isTargetHit = function(states) return F(function(actor, scene, target)
     target = target or actor:target()
-    state = state or actor:state() 
-    local f = Math.Sign(actor:dir().x)
-    local d = actor:dist(target)
-    if (f ==  1 and actor:pos().x < target:pos().x) or
-       (f == -1 and actor:pos().x > target:pos().x) then
-      
-      local x, z = (actor.states[state]:dim().w * 0.5) + target:rad(), target:rad()
-      return d.x < x and d.z < z
-    end
+    if target == false then return false end
     
-    return false
+    states = List.asTable(states or actor:state())
+    local select = List.select(states, function(state)
+      local f = Math.Sign(actor:dir().x)
+      local d = actor:dist(target)
+      
+      if (f ==  1 and actor:pos().x < target:pos().x) or
+         (f == -1 and actor:pos().x > target:pos().x) then
+        
+        local z = (actor:rad() + target:rad()) * 0.5
+        local x = (actor.states[state]:dim().w + target:box().w) * 0.5
+        
+        return (d.x < x) and (d.z < z)
+      end
+    end)
+  
+    return not (select == nil)
   end)
   end,
   
   isRange = function(k, max, min) return F(function(actor, scene)
-    local min = min or 0
     local dist = actor:dist()
-    return (dist[k] >= min) and (dist[k] <= max) 
+    local ok = true
+    if ok and min then ok = ok and (dist[k] >= min) end
+    if ok and max then ok = ok and (dist[k] <= max) end
+    return ok
   end)
   end,
 
@@ -85,5 +94,5 @@ ActorScript = {
   isKeyb = F(function(actor, scene) return not (actor:keyb() == false) end),
   isAuto = F(function(actor, scene) return not (actor:auto() == false) end),
   isEnded = F(function(actor, scene) return actor:curr():isEnded() end),
-  isTarget = F(function(actor, scene) return not (actor:auto() == false or actor:target() == false) end),  
+  isTarget = F(function(actor, scene) return not (actor:target() == false) end),  
 }

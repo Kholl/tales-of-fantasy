@@ -5,20 +5,8 @@ Moo Object Oriented framework for LUA
 
 EnemyDlg = Moo.Class {
   ruleset = "autorules",
-  dir = nil,
-  refresh = nil,
   
-  create = function(this, init)
-    this.dir = {x = 0, z = 0}
-    this.refresh = init and init.refresh or 30
-  end,
-  
-  step = function(this, actor, scene)
-    if math.floor(scene:frame()) % this.refresh == 0 then
-      this.dir = false
-    end
-  end,
-  
+  step = Nil,
   update = Nil,
   
   filter = function(this, actor, scene) return function(other)
@@ -32,17 +20,12 @@ EnemyDlg = Moo.Class {
   end,
   
   direction = function(this, actor)
-    if not this.dir then
-      local dist = actor:distrel()
-      local dim = actor:target():dim()
-      local kx, kz = Math.Sign(dim.w - math.abs(dist.x)), -1
-      
-      this.dir = {
-        x = kx * Math.Sign(dist.x),
-        z = kz * Math.Sign(dist.z),
-      }
-    end
-    
-    return this.dir.x, this.dir.z
+    local dhit = actor:disthit()
+    local dist = actor:distrel()
+    local x, z = dist.x, dist.z
+    if dhit.x < 0 then x = 0 end
+    if dhit.z < 0 then z = 0 end
+   
+    return -Math.Sign(x), -Math.Sign(z)
   end,
 }

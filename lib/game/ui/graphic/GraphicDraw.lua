@@ -20,7 +20,7 @@ GraphicDraw = Class {
   end,
 
   draw = function(this, data, parent)
-    if data:hidden() then return end    
+    if data:hide() then return end    
     
     local color = data:color()
     local alpha = data:alpha()

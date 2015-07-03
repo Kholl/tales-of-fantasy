@@ -6,7 +6,7 @@ Moo Object Oriented framework for LUA
 require("lib/game/stage/sprite/Sprite")
 
 State = Class {
-  state = Property("_state"),
+  state = Property("_state", {trigger = "reset"}),
   
   default = nil,
   states = nil,
@@ -43,13 +43,7 @@ State = Class {
   update = function(this, delta, scene, game)
     this:curr():update(delta, this, scene, game)
   end,
-    
-  curr = function(this) return this.states[this:state()] end,
-
-  start = function(this, state)
-    this:state(state)
-    this:curr():reset()
-  end,
   
-  reset = function(this) this:start(this.default) end,
+  reset = function(this) this:curr():reset() end,    
+  curr = function(this) return this.states[this:state()] end,
 }

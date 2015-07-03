@@ -218,20 +218,20 @@ actor.rules = {
 
 actor.keybrules = {
   std = {
-    atkup = ActorScript.isKey{"au>u>d>"} / ActorScript.move{y = -220},
-    atkalt = ActorScript.isKey{"a[rl]>"},
-    atkrnd = ActorScript.isKey{"ab>"},
     blk = ActorScript.isKey{"ad>"},
     jmp = ActorScript.isKey{"b[rlud]*>"} / ActorScript.move{x = 100, y = -220},
     wlk = ActorScript.isKey{"[rlud]+>"},
     atk = ActorScript.isKey{"a>"},
+    atkup = ActorScript.isKey{"au>u>d>"} / ActorScript.move{y = -220},
+    atkalt = ActorScript.isKey{"a[rl]>"},
+    atkrnd = ActorScript.isKey{"ab>"},
   },
   wlk = {
-    atkup = ActorScript.isKey{"au>u>d>"} / ActorScript.move{y = -200},
-    jmp = ActorScript.isKey{"[rlud]*b>"} / ActorScript.move{x = 100, y = -200},
-    run = ActorScript.isKey{"r>r>", "l>l>"},
-    wlk = ActorScript.isKey{"[rlud]+>"},
+    jmp =  ActorScript.isKey{"[rlud]*b>"} / ActorScript.move{x = 100, y = -200},
+    run =  ActorScript.isKey{"r>r>", "l>l>"},
+    wlk =  ActorScript.isKey{"[rlud]+>"},
     std = -ActorScript.isKey(),
+    atkup = ActorScript.isKey{"au>u>d>"} / ActorScript.move{y = -200},
   },
   atk = {
     atksq1 = ActorScript.isKey{"a>a>"} ^ ActorScript.isEnded,
@@ -240,10 +240,10 @@ actor.keybrules = {
     jmpatk = ActorScript.isKey{"a[rlud]*>"},
   },
   run = {
-    atkup = ActorScript.isKey{"au>u>d>"} / ActorScript.move{y = -180},
-    runatk = ActorScript.isKey{"ar>r>r>", "al>l>l>"},
     run = ActorScript.isKey{"r>r>", "l>l>"},
     jmp = ActorScript.isKey{"[rlud]*b>"} / ActorScript.move{x = 200, y = -180},
+    atkup = ActorScript.isKey{"au>u>d>"} / ActorScript.move{y = -180},
+    runatk =  ActorScript.isKey{"ar>r>r>", "al>l>l>"},
     runend = -ActorScript.isKey(),
   },
   atksq1 = {
@@ -253,7 +253,7 @@ actor.keybrules = {
     atksq3 = ActorScript.isKey{"a>a>a>a>"} ^ ActorScript.isEnded,
   },
   blk = {
-    blk = ActorScript.isKey{"ad>"},
+    blk =  ActorScript.isKey{"ad>"},
     std = -ActorScript.isKey(),
   },
 }

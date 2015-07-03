@@ -11,14 +11,12 @@ require("game/custom/EnemyDlg")
 require("lib/game/ui/frame/Frame")
 
 return {
+  x = 0, y = 0,
+  w = 320, h = 240,
+  full = false,
+  sync = true,
   dir = "ToF",
   fps = 30,
-  view = {
-    w = 320,
-    h = 240,
-    full = false,
-    sync = true
-  },
   keyb = {
     {
       r = "right",
@@ -29,9 +27,8 @@ return {
       b = "s",
     },
   },
-  scenes = {
-    start = "game/stages/Palace.lua",
-  },
+--  start = "game/stages/Palace.1.lua",
+  start = "game/stages/Palace.2.lua",
   interface = {
     items = {}
   },
