@@ -28,7 +28,7 @@ KeybDlg = Class {
     this.currkey = ""
     this.minpress = init.minpress or 1
     this.idle = 0
-    this.maxidle = init.maxidle or 0.066
+    this.maxidle = init.maxidle or 0.1
     this.match = ""
     this.matchlen = 0
   end,
@@ -108,7 +108,7 @@ KeybDlg = Class {
         isMatch, this.match, this.matchlen = true, key, matchlen
       end
     end)
-    
+
     return isMatch
   end,  
 }

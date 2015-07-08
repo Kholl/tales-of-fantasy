@@ -19,8 +19,7 @@ SpriteData = Class {
   _nframes = nil,  
   
   create = function(this, init)
-    this._isStep = false
-    this._isEnded = false
+    this._isStep, this._isEnded = false, false
     this._frate = init and init.frate or 0
     this._nframes = init and init.nframes or 1
     
@@ -52,22 +51,12 @@ SpriteData = Class {
   end,
   
   limit = function(this)
-    if this._frame >= this._nframes then this._isEnded = true end
+    this._isEnded = (this._frame > this._nframes)
     this._frame = Math.Lim(this._frame, {min = 0, max = this._nframes})
     return this
   end,
 
-  get = function(this)
-    return Math.Lim(math.floor(this._frame), {min = 0, max = this._nframes -1})
-  end,
-  
-  set = function(this, val)
-    this._frame = Math.Lim(math.floor(val), {min = 0, max = this._nframes -1})
-  end,
-  
-  reset = function(this, val)
-    this._time = 0
-    this._frame = 0
-    this._isEnded = false
-  end,
+  get = function(this) return Math.Lim(math.floor(this._frame), {min = 0, max = this._nframes -1}) end,  
+  set = function(this, val) this._frame = Math.Lim(math.floor(val), {min = 0, max = this._nframes -1}) end,
+  reset = function(this, val) this._time, this._frame, this._isEnded, this._isStep = 0, 0, false, false end,
 }

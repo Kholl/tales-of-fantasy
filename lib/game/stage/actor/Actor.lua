@@ -60,7 +60,7 @@ Actor = Class {
   distout = function(this, actor)
     local dist = this:distrel(actor)
     local dhit = this:disthit(actor)
-    return {x = dist.x - dhit.x, z = dist.z - dhit.z}
+    return {x = math.abs(dist.x) - dhit.x, z = math.abs(dist.z) - dhit.z}
   end,
   
   disthit = function(this, actor)

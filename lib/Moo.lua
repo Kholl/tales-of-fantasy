@@ -44,7 +44,7 @@ Moo = {
     class.create = Nil
     class.super = Object
     
-    List.each(definition, function(value, attribute)
+    Moo.List.each(definition, function(value, attribute)
       if attribute == "super" then
         class[attribute] = value -- Class keywords
       else
@@ -86,7 +86,7 @@ Moo = {
       if type(init) == "string" then
         init = Moo.Load(init, instance)
         if custom then
-          List.copyTo(init, custom)
+          Moo.List.copyTo(init, custom)
         end
       end
       
@@ -96,18 +96,18 @@ Moo = {
   end,
   
   Push = function(instance, props)
-    List.each(props, function(value, property) instance[property](instance, value) end)
+    Moo.List.each(props, function(value, property) instance[property](instance, value) end)
     return instance
   end,
   
   Pull = function(instance, props)
     local values = {}
-    List.each(props, function(property) values[property] = instance[property](instance) end)
+    Moo.List.each(props, function(property) values[property] = instance[property](instance) end)
     return values
   end,
   
   Import = function()
-    List.each(Moo, function(value, key)
+    Moo.List.each(Moo, function(value, key)
       if rawget(_G, key) == nil then rawset(_G, key, value) end
     end)
   end,
@@ -123,5 +123,4 @@ Moo = {
 -- Foundation classes
 require("lib/util/List")
 require("lib/util/Func")
-require("lib/util/Vect")
 require("lib/util/Math")

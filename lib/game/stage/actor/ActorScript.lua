@@ -51,7 +51,7 @@ ActorScript = {
     target = target or actor:target()
     if target == false then return false end
     
-    states = List.asTable(states or actor:state())
+    states = states or {actor:state()}
     local select = List.select(states, function(state)
       local f = Math.Sign(actor:dir().x)
       local d = actor:dist(target)
@@ -71,7 +71,9 @@ ActorScript = {
   end,
   
   isRange = function(k, max, min) return F(function(actor, scene)
-    local dist = actor:dist()
+    if not actor:target() then return false end
+    
+    local dist = actor:distout()
     local ok = true
     if ok and min then ok = ok and (dist[k] >= min) end
     if ok and max then ok = ok and (dist[k] <= max) end

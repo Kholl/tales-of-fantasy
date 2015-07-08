@@ -3,7 +3,7 @@ Moo Object Oriented framework for LUA
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-ActorDlg = Moo.Class {
+ActorDlg = Class {
   rules = nil,
   keybrules = nil,
   autorules = nil,
@@ -26,10 +26,11 @@ ActorDlg = Moo.Class {
   execute = function(this, actor, scene, game, rules)    
     local state = actor:state()
     local stateRules = rules[state] or {}
-    local action = List.select(stateRules, function(rule, action)
+    local actions = List.filter(stateRules, function(rule, action)
       return rule(actor, scene)
     end)
-
+  
+    local action = next(actions)
     if action and actor.states[action] then actor:state(action) end
   end,
 }
