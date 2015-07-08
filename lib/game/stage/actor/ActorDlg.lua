@@ -26,11 +26,6 @@ ActorDlg = Class {
   execute = function(this, actor, scene, game, rules)    
     local state = actor:state()
     local stateRules = rules[state] or {}
-    local actions = List.filter(stateRules, function(rule, action)
-      return rule(actor, scene)
-    end)
-  
-    local action = next(actions)
-    if action and actor.states[action] then actor:state(action) end
+    IndexList.select(stateRules, function(rule, action) return rule(actor, scene) end)
   end,
 }

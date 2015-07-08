@@ -19,7 +19,7 @@ Func = Moo.Class {
   -- Function composition
   [".."] = function(a, b) return Func.new(function(...) return a(b(...)) end) end,
   -- Function chaining
-  ["/"] = function(a, b) return Func.new(function(...) if a(...) then return b(...) end end) end,
+  ["/"] = function(a, b) return Func.new(function(...) if a(...) then return true, b(...) end end) end,
 }
 
 -- Alias
@@ -44,7 +44,7 @@ if __TEST then
   assert((-c)(5, 3) == true)
   assert(d(5) == 10)
   assert((d..d)(5) == 20)
-  assert(((a + b) / d)(5, 3) == 10)
-  assert((a / d)(5, 3) == 10)
+  assert(((a + b) / d)(5, 3) == true, 10)
+  assert((a / d)(5, 3) == true, 10)
   assert((-a / d)(5, 3) == nil)
 end
