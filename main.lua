@@ -26,6 +26,7 @@ Dependency "resource" (Resources.new{
 })
 
 require("lib/game/ui/graphic/Graphic")
+require("lib/game/dlgs/KeybDlg")
 require("lib/game/Script")
 
 local game
@@ -35,6 +36,11 @@ love.load = function(arg)
   
   game = Load("game/main.lua")
   game.ui = Graphic.new(game.interface)
+  
+  game.control = {}
+  game.control[1] = KeybDlg.new(game.keyb[1])
+  game.checkHit = Game.checkHit
+  game.checkDmg = Game.checkDmg
   
   love.filesystem.setIdentity(game.dir)
   love.graphics.setMode(game.w, game.h, game.full, game.sync)  
@@ -48,8 +54,10 @@ love.draw = function()
 end
 
 love.update = function(delta)
-  delta = math.min(delta, 1/game.fps)
+  delta = math.min(delta, 1/game.fps) * 1
   
   game.scene:update(delta, nil, game)
   game.ui:update(delta, nil, game)
+  
+  game.control[1]:update(delta, game)
 end

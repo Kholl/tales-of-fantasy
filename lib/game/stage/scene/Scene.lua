@@ -91,9 +91,9 @@ Scene = Class {
     if func then return List.filter(this.actors, func) else return this.actors end
   end,
   
-  getHits = function(this, actor)
+  getHits = function(this, actor, game)
     return this:getActors(function(other)
-      return not (actor == other) and ActorScript.isTargetHit()(actor, this, other)
+      return ActorScript.isTargetHit{actor:state()}(actor, this, game, other)
     end)
   end,
 }

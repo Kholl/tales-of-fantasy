@@ -3,6 +3,8 @@ Tales Of Fantasy
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
+require("game/custom/FX")
+
 Asset = {
   ["high elf pal"] = {
     name = "helf",

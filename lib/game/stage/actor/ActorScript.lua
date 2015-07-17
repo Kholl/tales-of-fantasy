@@ -5,32 +5,24 @@ Moo Object Oriented framework for LUA
 
 ActorScript = {
   -- Actions  
-  act = function(action) return F(function(actor, scene)
+  act = function(action) return F(function(actor)
     actor:state(action)
   end)
   end,
   
-  find = F(function(actor, scene)
-    local auto = actor:auto()
-    local actors = scene:getActors()
-    if not auto then return end
-    
-    actors = List.filter(actors, auto:filter(actor, scene))
-    actors = List.sort(actors, auto:eval(actor, scene))
-    actor:target(actors[1])
-  end),
+  set = function(property, value) return F(function(actor)
+    actor[property](actor, value)
+  end)
+  end,
+
+  faceTarget = F(function(actor) actor:face() end),
   
   move = function(force) return F(function(actor, scene)
     local spd = actor:spd()
     local dir = actor:dir()
     if force.y then spd.y = force.y end
     
-    local kx, kz
-    if actor:auto()
-      then kx, kz = actor:auto():direction(actor)
-      else kx, kz = dir.x, dir.z
-    end
-  
+    local kx, kz = dir.x, dir.z
     if not (kx == 0) then spd.x, dir.x = kx * (force.x or 0), kx end
     if not (kz == 0) then spd.z, dir.z = kz * (force.z or 0), kz end
     
@@ -40,33 +32,57 @@ ActorScript = {
   end)
   end,
   
-  hitAll = function(hit) return F(function(actor, scene)
-    local hits = scene:getHits(actor)
-    List.each(hits, function(other) actor:hit(other, hit) end)
+  hitAll = function(hit) return F(function(actor, scene, game)
+    local hits = scene:getHits(actor, game)
+    List.each(hits, function(other)
+      if not (hit.dmg == nil) then other:dmg(hit.dmg) end
+      if not (hit.force == nil) then other:force(actor, hit.force) end
+    end)
   end)
   end,
-  
+
   -- Triggers
-  isTargetHit = function(states) return F(function(actor, scene, target)
+  isDmg = F(function(actor) return actor:dmg() > 0 end),
+
+  isTargetHit = function(states) return F(function(actor, scene, game, target)
     target = target or actor:target()
-    if target == false then return false end
-    
-    states = states or {actor:state()}
+    if actor == target then return false end
+    if not target then return false end
+    if not game.checkHit(actor, target) then return false end
+        
+    local facing = (actor:dir().x == Math.Sign(target:pos().x - actor:pos().x))
+    if not facing then return false end
+
+    local d = actor:dist(target)
+    local z = math.max(actor:rad(), target:rad())
+
     local select = List.select(states, function(state)
-      local f = Math.Sign(actor:dir().x)
-      local d = actor:dist(target)
-      
-      if (f ==  1 and actor:pos().x < target:pos().x) or
-         (f == -1 and actor:pos().x > target:pos().x) then
-        
-        local z = (actor:rad() + target:rad()) * 0.5
-        local x = (actor.states[state]:dim().w + target:box().w) * 0.5
-        
-        return (d.x < x) and (d.z < z)
-      end
+      local x = (actor.states[state]:dim().w + target:box().w) * 0.5        
+      return (d.x < x) and (d.z < z)
     end)
   
     return not (select == nil)
+  end)
+  end,
+
+  isHitTarget = F(function(actor, scene)
+    local target = actor:target()
+    if not target then return false end
+    
+    local facing = (target:dir().x == Math.Sign(actor:pos().x - target:pos().x))
+    if not facing then return false end
+      
+    local d = target:dist(actor)
+    local h = target:disthit(actor)
+    
+    return (d.x < h.x) and (d.z < h.z)
+  end),
+
+  isTargetState = function(pattern) return F(function(actor, scene)
+    local target = actor:target()
+    if not target then return false end
+    
+    return not (string.match(target:state(), pattern) == nil)
   end)
   end,
   
@@ -77,12 +93,20 @@ ActorScript = {
     local ok = true
     if ok and min then ok = ok and (dist[k] >= min) end
     if ok and max then ok = ok and (dist[k] <= max) end
+    
     return ok
   end)
   end,
 
-  isKey = function(key) return F(function(actor, scene)
-    return actor:auto():isKey(key)
+  isKey = function(key) return F(function(actor, scene, game)
+    local player = actor:player()
+    return game.control[player]:isKey(key)
+  end)
+  end,
+
+  isKeypress = function(key) return F(function(actor, scene, game)
+    local player = actor:player()
+    return game.control[player]:isKeypress(key)
   end)
   end,
   
@@ -97,4 +121,15 @@ ActorScript = {
   isAuto = F(function(actor, scene) return not (actor:auto() == false) end),
   isEnded = F(function(actor, scene) return actor:curr():isEnded() end),
   isTarget = F(function(actor, scene) return not (actor:target() == false) end),  
+  
+  pick = function(list) return F(function(actor, scene, game)
+    return list[math.random(1, #list)](actor, scene, game)
+  end)
+  end,
+
+  all = function(list) return F(function(actor, scene, game)
+    List.each(list, function(rule) rule(actor, scene, game) end)
+    return false
+  end)
+  end,
 }

@@ -5,27 +5,28 @@ Moo Object Oriented framework for LUA
 
 ActorDlg = Class {
   rules = nil,
-  keybrules = nil,
-  autorules = nil,
+  run = nil,
   
-  create = function(this, init)
-    this.rules = init.rules or {}
-    this.keybrules = init.keybrules or {}
-    this.autorules = init.autorules or {}
+  create = function(this, rules)
+    this.rules = rules or {}
+    this.run = true
   end,
   
+  draw = Nil,
+  
   step = function(this, actor, scene, game)
-    this:execute(actor, scene, game, this.rules)
+    if not this.run then return end
     
-    local ruleset = actor:auto() and actor:auto().ruleset
-    if ruleset and this[ruleset] then this:execute(actor, scene, game, this[ruleset]) end
+    local rules = this.rules.all or {}
+    IndexList.each(rules, function(rule, index) rule(actor, scene, game) end)
+    
+    local state = actor:state()
+    local stateRules = this.rules[state] or {}
+    IndexList.select(stateRules, function(rule, index) return rule(actor, scene, game) end)
   end,
   
   update = Nil,
   
-  execute = function(this, actor, scene, game, rules)    
-    local state = actor:state()
-    local stateRules = rules[state] or {}
-    IndexList.select(stateRules, function(rule, action) return rule(actor, scene) end)
-  end,
+  play = function(this) this.run = true end,
+  stop = function(this) this.run = false end,
 }

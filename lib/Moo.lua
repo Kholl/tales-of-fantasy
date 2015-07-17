@@ -20,9 +20,14 @@ Moo = {
     
     return function(obj, val)
       if val == nil then return obj[attr] end
+      local pval = rawget(obj, attr)
       
-      if not (rawget(obj, attr) == val) then
-        obj[attr] = val
+      if not (pval == val) then
+        if type(pval) == "table"
+          then Moo.List.copy(obj[attr], val)
+          else rawset(obj, attr, val)
+        end
+      
         if trigger and obj[trigger] then obj[trigger](obj) end
       end
       
@@ -86,7 +91,7 @@ Moo = {
       if type(init) == "string" then
         init = Moo.Load(init, instance)
         if custom then
-          Moo.List.copyTo(init, custom)
+          Moo.List.copy(init, custom)
         end
       end
       

@@ -31,10 +31,10 @@ Sprite = Class {
     this.data:time(this.data:time() + delta)
   end,
   
-  box = function(this) return this.data:box() end,
-  rad = function(this) return this.data:rad() end,
-  dim = function(this) return this.data:dim() end,
-  pad = function(this) return this.data:pad() end,
+  box = function(this, val) return this.data:box(val) end,
+  rad = function(this, val) return this.data:rad(val) end,
+  dim = function(this, val) return this.data:dim(val) end,
+  pad = function(this, val) return this.data:pad(val) end,
   
   reset = function(this) this.data:reset() end,
     

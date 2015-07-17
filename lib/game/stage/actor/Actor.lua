@@ -3,54 +3,68 @@ Moo Object Oriented framework for LUA
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-require("lib/game/stage/actor/ActorDlg")
 require("lib/game/stage/actor/ActorScript")
 require("lib/game/stage/actor/ActorData")
+require("lib/game/stage/actor/ActorDlg")
 require("lib/game/stage/state/State")
-require("lib/game/dlgs/KeybDlg")
 
 Actor = Class {
   super = State,
   
-  actor = nil,
   data = nil,
+  list = nil,
   info = nil,
   
   create = function(this, init)
     State.create(this, init)
     
     this.data = ActorData.new(init)
-    this.actor = ActorDlg.new(init)
+    this.list = init and init.list or {}
     this.info = init and init.info or {}
   end,
   
   draw = function(this, scene)
     State.draw(this, this.data, scene)
+    List.each(this.list, function(item) item:draw(this, scene) end)
   end,
   
   step = function(this, scene, game)
-    State.step(this, scene, game)    
-    this.actor:step(this, scene, game)
-    if this:auto() then this:auto():step(this, scene, game) end
+    State.step(this, scene, game)
+    List.each(this.list, function(item) item:step(this, scene, game) end)
   end,
   
   update = function(this, delta, scene, game)
     State.update(this, delta, scene, game)    
-    if this:auto() then this:auto():update(delta, this, scene, game) end
-    this.actor:update(delta, this, scene, game)
+    List.each(this.list, function(item) item:update(delta, this, scene, game) end)
   end,
+  
+  add = function(this, item) List.add(this.list, item) end,
+  rem = function(this, item) List.rem(this.list, item) end,
+  has = function(this, key) return not (this.list[key] == nil) end,
+  get = function(this, key) return this.list[key] or Nil end,
   
   dim = function(this) return this:curr():dim() end,
   box = function(this) return this:curr():box() end,
   rad = function(this) return this:curr():rad() end,
     
-  dir = function(this, val) return this.data:dir(val) end,
   pos = function(this, val) return this.data:pos(val) end,    
   spd = function(this, val) return this.data:spd(val) end,
+  sca = function(this, val) return this.data:sca(val) end,    
+  dmg = function(this, val) return this.data:dmg(val) end,    
   mass = function(this, val) return this.data:mass(val) end,
-  auto = function(this, val) return this.data:auto(val) end,
   target = function(this, val) return this.data:target(val) end,
+  player = function(this, val) return this.data:player(val) end,
+  
+  dir = function(this, val)
+    if val == nil then return this.data:dir() end
     
+    local sca = this:sca()
+    if not (val.x == nil or val.x == 0) then sca.w = Math.Abs(sca.w) * val.x end
+    
+    this.data:sca(sca)
+    return this.data:dir(val)
+  end,
+  
   distrel = function(this, actor)
     actor = actor or this:target() or this
     local a, b = this:pos(), actor:pos()
@@ -67,8 +81,7 @@ Actor = Class {
     actor = actor or this:target() or this
     return {
       x = (this:dim().w + actor:box().w) * 0.5,
-      z = (this:rad() + actor:rad()) * 0.5,
-    }
+      z = math.max(this:rad(), actor:rad()) }
   end,
   
   dist = function(this, actor)
@@ -89,22 +102,18 @@ Actor = Class {
   end,
   
   face = function(this, actor)
-    actor = actor or this:target() or this
-    this:dir().x = Math.Sign(actor:pos().x - this:pos().x)
-    return this
+    actor = actor or this:target() or this    
+    return this:dir{
+      x = Math.Sign(actor:pos().x - this:pos().x),
+      z = Math.Sign(actor:pos().z - this:pos().z) }
   end,
     
-  hit = function(this, actor, hit)
-    actor:face(this)
-    actor:target(this)
-    actor:state(action or "hit")
-      
-    local dist = this:dist(actor)
-    local dirx = Math.Sign(actor:pos().x - this:pos().x)
-      
-    local force = hit.force or {}
-    if force.x then actor:spd().x = dirx * hit.force.x end
-    if force.y then actor:spd().y = hit.force.y end
-    if force.z then actor:spd().z = hit.force.z end
+  force = function(this, actor, force)
+    force = force or {}
+    
+    local dirx = Math.Sign(this:pos().x - actor:pos().x)  
+    if force.x then this:spd().x = dirx * force.x end
+    if force.y then this:spd().y = force.y end
+    if force.z then this:spd().z = force.z end
   end,
 }

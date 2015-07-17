@@ -19,7 +19,7 @@ Func = Moo.Class {
   -- Function composition
   [".."] = function(a, b) return Func.new(function(...) return a(b(...)) end) end,
   -- Function chaining
-  ["/"] = function(a, b) return Func.new(function(...) if a(...) then return true, b(...) end end) end,
+  ["/"] = function(a, b) assert(a); assert(b) return Func.new(function(...) if a(...) then return true, b(...) end end) end,
 }
 
 -- Alias

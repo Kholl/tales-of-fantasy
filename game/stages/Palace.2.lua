@@ -21,7 +21,7 @@ return {
     y = {max = 0},
     z = {min = 0, max = 480},
   },
-  off = {x = -80, y = 0},
+  off = {x = 0, y = 0},
   
   scrolls = {
     Scroll.new{
@@ -40,14 +40,17 @@ return {
   
   actors = {
     player = Actor.new("game/chars/Sarah.lua", {
-      pos = {x = 0, y = 0, z = 475},
+      player = 1,
+--      pos = {x = 0, y = 0, z = 475},
+      pos = {x = 100, y = 0, z = 475},
       dir = {x = 1, y = 1, z = 0},
     }),
 --[[    telarin = Actor.new("game/chars/TelArin.lua", {
       pos = {x = 100, y = 0, z = 425},
       dir = {x = 1, y = 1, z = 0}
     }),
-]]    dqueen = Actor.new("game/chars/DQueen.lua", {
+]]    
+    dqueen = Actor.new("game/chars/DQueen.lua", {
       pos = {x = 200, y = 0, z = 450},
       dir = {x = -1, y = 1, z = 0},
     }),
@@ -60,23 +63,30 @@ return {
   
   script = {
     start = function(scene, game)
-      ActorScript.act("wlk")(scene:actor("player"), scene)
---      ActorScript.act("wlk")(scene:actor("telarin"), scene)
+      local player = scene:actor("player")
+      player:get("keyb"):stop()
+      player:state("wlk")
+      
       return "move"
     end,
     
     move = function(scene, game)
       if game.ui:time() > 2 then
         local player = scene:actor("player")
+        
+        player:get("keyb"):play()
+        player:state("std")
+
 --        local telarin = scene:actor("telarin")
         local dqueen = scene:actor("dqueen")
-        
-        ActorScript.act("std")(player, scene)
+        dqueen:target(player)
 --        ActorScript.act("std")(telarin, scene)
+  
+--        player:get("keyb"):keys(game.keyb[1])
+--        player:auto(KeybDlg.new(game.keyb[1]))
         
-        player:auto(KeybDlg.new(game.keyb[1]))
 --        telarin:auto(EnemyDlg.new())
-        dqueen:auto(EnemyDlg.new())
+--        dqueen:auto(EnemyDlg.new())
         
 --        telarin:target(dqueen)
 --        dqueen:target(telarin)

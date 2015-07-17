@@ -3,12 +3,7 @@ Tales Of Fantasy
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-require("game/custom/FX")
-require("game/custom/Anim")
-require("game/custom/Asset")
-require("game/custom/EnemyDlg")
-
-require("lib/game/ui/frame/Frame")
+require("game/custom/Game")
 
 return {
   x = 0, y = 0,

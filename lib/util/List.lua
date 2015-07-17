@@ -37,11 +37,9 @@ Moo.ListGenerator = function(iterator) return {
   end,
   
   select = function(list, func)
-    local res = nil
     for key, val in iterator(list) do
-      if (res == nil) and func(val, key) then res = key end
+      if func(val, key) then return key end
     end
-    return res
   end,
   
   sort = function(list, eval)
@@ -56,13 +54,9 @@ Moo.ListGenerator = function(iterator) return {
     return nil
   end,
   
-  copyTo = function(dst, src)
+  copy = function(dst, src)
     for key, val in iterator(src) do dst[key] = val end
     return dst
-  end,
-  
-  print = function(list)
-    for key, val in iterator(list) do io.write(string.format("%s\t%s\n", key, val)) end
   end,
 }
 end

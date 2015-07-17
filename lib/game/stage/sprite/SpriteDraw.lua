@@ -44,13 +44,13 @@ SpriteDraw = Class {
     end
   end,
   
-  draw = function(this, spriteData, imageData, scene)
+  draw = function(this, spriteData, actorData, scene)
     local frame = spriteData:get()
     local dim = spriteData:dim()
-    local pos = imageData:pos()
-    local dir = imageData:dir()
     local pad = spriteData:pad()
     local rad = spriteData:rad()
+    local pos = actorData:pos()
+    local sca = actorData:sca()
     local off = scene:off()
     local ratio = scene:ratio()
     
@@ -60,7 +60,7 @@ SpriteDraw = Class {
     this.graphics.drawq(this.drawable, this.quads[frame],
       off.x + (pos.x * ratio.x),
       off.y + (pos.y * ratio.y) + (pos.z * ratio.z), 0,
-      dir.x, dir.y,
+      sca.w, sca.h,
       padx % (dim.w +1), pady % (dim.h +1))
   end,
 }
