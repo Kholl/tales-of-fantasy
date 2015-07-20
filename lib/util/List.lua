@@ -58,6 +58,16 @@ Moo.ListGenerator = function(iterator) return {
     for key, val in iterator(src) do dst[key] = val end
     return dst
   end,
+  
+  divide = function(list)
+    local keys, vals = {}, {}
+    for key, val in iterator(src) do
+      table.insert(keys, key)
+      table.insert(vals, val)
+    end
+    
+    return keys, vals
+  end,
 }
 end
 

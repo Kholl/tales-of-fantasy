@@ -14,6 +14,13 @@ Script = {
   end)
   end,
 
+  pick = function(list) return F(function()
+    local keys, vals = List.divide(list)
+    local key = keys[math.random(1, #keys)]
+    return list[key]
+  end)
+  end,
+
   loadScene = function(game, name)
     game.scene = Scene.new(name)
     game.ui:time(0)

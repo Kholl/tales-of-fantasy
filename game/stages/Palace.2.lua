@@ -41,15 +41,15 @@ return {
   actors = {
     player = Actor.new("game/chars/Sarah.lua", {
       player = 1,
---      pos = {x = 0, y = 0, z = 475},
-      pos = {x = 100, y = 0, z = 475},
+      pos = {x = 0, y = 0, z = 475},
       dir = {x = 1, y = 1, z = 0},
     }),
---[[    telarin = Actor.new("game/chars/TelArin.lua", {
+
+    telarin = Actor.new("game/chars/TelArin.lua", {
       pos = {x = 100, y = 0, z = 425},
       dir = {x = 1, y = 1, z = 0}
     }),
-]]    
+
     dqueen = Actor.new("game/chars/DQueen.lua", {
       pos = {x = 200, y = 0, z = 450},
       dir = {x = -1, y = 1, z = 0},
@@ -67,6 +67,8 @@ return {
       player:get("keyb"):stop()
       player:state("wlk")
       
+      scene:actor("telarin"):state("wlk")
+      
       return "move"
     end,
     
@@ -76,20 +78,13 @@ return {
         
         player:get("keyb"):play()
         player:state("std")
+        
+        local telarin = scene:actor("telarin")
+        telarin:state("std")
 
---        local telarin = scene:actor("telarin")
         local dqueen = scene:actor("dqueen")
-        dqueen:target(player)
---        ActorScript.act("std")(telarin, scene)
-  
---        player:get("keyb"):keys(game.keyb[1])
---        player:auto(KeybDlg.new(game.keyb[1]))
-        
---        telarin:auto(EnemyDlg.new())
---        dqueen:auto(EnemyDlg.new())
-        
---        telarin:target(dqueen)
---        dqueen:target(telarin)
+        dqueen:target(telarin)
+        telarin:target(dqueen)
         
         return "stop"
       end
