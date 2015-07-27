@@ -3,27 +3,23 @@ Moo Object Oriented framework for LUA
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-Func = Moo.Class {
-  func = nil,
-  
-  create = function(this, func) this.func = func end,
-  
+Func = Moo.Operator {
   -- Function call
-  ["()"] = function(a, ...) return a.func(...) end,
+  ["()"] = function(a, ...) return a[1](...) end,
   -- Function negation
-  ["_"] = function(a) return Func.new(function(...) return not a(...) end) end,
+  ["_"] = function(a) return F(function(...) return not a(...) end) end,
   -- Function and
-  ["^"]  = function(a, b) return Func.new(function(...) return a(...) and b(...) end) end,
+  ["^"]  = function(a, b) return F(function(...) return a(...) and b(...) end) end,
   -- Function or
-  ["+"]  = function(a, b) return Func.new(function(...) return a(...) or b(...) end) end,
+  ["+"]  = function(a, b) return F(function(...) return a(...) or b(...) end) end,
   -- Function composition
-  [".."] = function(a, b) return Func.new(function(...) return a(b(...)) end) end,
+  [".."] = function(a, b) return F(function(...) return a(b(...)) end) end,
   -- Function chaining
-  ["/"] = function(a, b) assert(a); assert(b) return Func.new(function(...) if a(...) then return true, b(...) end end) end,
+  ["/"] = function(a, b) return F(function(...) if a(...) then return true, b(...) end end) end,
 }
 
 -- Alias
-F = function(func) return Func.new(func) end
+F = function(func) return Func{func} end
 
 -- Test suite
 if __TEST then
