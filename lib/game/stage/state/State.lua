@@ -5,7 +5,7 @@ Moo Object Oriented framework for LUA
 
 require("lib/game/stage/sprite/Sprite")
 
-State = Class {
+StateUnused = Class {
   state = Property("_state", {trigger = "reset"}),
   
   default = nil,

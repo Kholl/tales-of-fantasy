@@ -14,11 +14,12 @@ ImageDraw = Class {
   drawable = nil,
   quad = nil,
   
-  img = Property("_img", "reload"),
-  pal = Property("_pal", "reload"),
+  img = Property("_img", {trigger = "reload"}),
+  pal = Property("_pal", {trigger = "reload"}),
 
   create = function(this, init)
     GraphicDraw.create(this, init)
+    
     this._img = false
     this._pal = false
     this:img(init.img)

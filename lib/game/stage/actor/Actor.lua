@@ -9,33 +9,64 @@ require("lib/game/stage/actor/ActorDlg")
 require("lib/game/stage/state/State")
 
 Actor = Class {
-  super = State,
-  
   data = nil,
   list = nil,
   info = nil,
   
+  spriteData = nil,
+  spriteDraw = nil,
+  
   create = function(this, init)
-    State.create(this, init)
-    
     this.data = ActorData.new(init)
+      
+    this.spriteData = {}    
+    this.spriteDraw = {}
+    
+    List.each(init and init.states, function(state, key)
+      this.spriteDraw[key] = SpriteDraw.new{
+        res = state.res or init.res,
+        pmap = state.pmap or init.pmap,
+        nframes = state.nframes or init.nframes,
+        hframes = state.hframes or init.hframes,
+        dim = state.dim or init.dim}
+      
+      this.spriteData[key] = SpriteData.new{
+        box = state.box or init.box,
+        dim = state.dim or init.dim,
+        pad = state.pad or init.pad,
+        
+        anim = state.anim,
+        frate = state.frate,
+        nframes = state.nframes}      
+    end)
+
     this.list = init and init.list or {}
     this.info = init and init.info or {}
   end,
   
   draw = function(this, scene)
-    State.draw(this, this.data, scene)
+    this:getDraw():draw(this:getData(), this.data, scene)
     List.each(this.list, function(item) item:draw(this, scene) end)
   end,
   
   step = function(this, scene, game)
-    State.step(this, scene, game)
+    this:getData():step(this, scene, game)
     List.each(this.list, function(item) item:step(this, scene, game) end)
   end,
   
   update = function(this, delta, scene, game)
-    State.update(this, delta, scene, game)    
+    this:getData():update(delta, this, scene, game)
     List.each(this.list, function(item) item:update(delta, this, scene, game) end)
+  end,
+  
+  getDraw = function(this, state)
+    state = state or this.data:state()
+    return this.spriteDraw[state]
+  end,
+  
+  getData = function(this, state)
+    state = state or this.data:state()
+    return this.spriteData[state]
   end,
   
   add = function(this, item) List.add(this.list, item) end,
@@ -43,14 +74,18 @@ Actor = Class {
   has = function(this, key) return not (this.list[key] == nil) end,
   get = function(this, key) return this.list[key] or Nil end,
   
-  dim = function(this) return this:curr():dim() end,
-  box = function(this) return this:curr():box() end,
-  rad = function(this) return this:curr():rad() end,
+  dim = function(this, state) return this:getData(state):dim() end,
+  box = function(this, state) return this:getData(state):box() end,
+  pad = function(this, state) return this:getData(state):pad() end,
+  frame = function(this) return this:getData():frame() end,
+  isStep = function(this) return this:getData():isStep() end,
+  isEnded = function(this) return this:getData():isEnded() end,
     
   pos = function(this, val) return this.data:pos(val) end,    
   spd = function(this, val) return this.data:spd(val) end,
-  sca = function(this, val) return this.data:sca(val) end,    
   dmg = function(this, val) return this.data:dmg(val) end,    
+  rad = function(this, val) return this.data:rad(val) end,    
+  flip = function(this, val) return this.data:flip(val) end,
   mass = function(this, val) return this.data:mass(val) end,
   target = function(this, val) return this.data:target(val) end,
   player = function(this, val) return this.data:player(val) end,
@@ -58,13 +93,21 @@ Actor = Class {
   dir = function(this, val)
     if val == nil then return this.data:dir() end
     
-    local sca = this:sca()
-    if not (val.x == nil or val.x == 0) then sca.w = Math.Abs(sca.w) * val.x end
+    local flip = this.data:flip()
+    if not (val.x == nil or val.x == 0) then flip.h = val.x end
     
-    this.data:sca(sca)
+    this.data:flip(flip)
     return this.data:dir(val)
   end,
-  
+    
+  state = function(this, val)
+    local state = this.data:state()
+    if (val == nil) or (val == state) then return state end
+    
+    this:getData(val):reset()
+    return this.data:state(val)
+  end,
+
   distrel = function(this, actor)
     actor = actor or this:target() or this
     local a, b = this:pos(), actor:pos()
@@ -102,10 +145,13 @@ Actor = Class {
   end,
   
   face = function(this, actor)
-    actor = actor or this:target() or this    
-    return this:dir{
-      x = Math.Sign(actor:pos().x - this:pos().x),
-      z = Math.Sign(actor:pos().z - this:pos().z) }
+    actor = actor or this:target() or this
+    local drel = actor:distrel(this)
+    local dhit = actor:disthit(this)
+    local dir = {x = Math.Sign(drel.x), z = Math.Sign(drel.z)}
+    if drel.z > -dhit.z and drel.z < dhit.z then dir.z = 0 end
+    
+    return this:dir(dir)
   end,
     
   force = function(this, actor, force)

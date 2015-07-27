@@ -16,7 +16,7 @@ ActorDlg = Class {
   
   step = function(this, actor, scene, game)
     if not this.run then return end
-    
+  
     local rules = this.rules.all or {}
     IndexList.each(rules, function(rule, index) rule(actor, scene, game) end)
     

@@ -36,7 +36,8 @@ return {
     }),
     telarin = Actor.new("game/chars/TelArin.lua", {
       pos = {x = 680, y = 0, z = 300},
-      dir = {x = -1, y = 1, z = 0}
+      dir = {x = -1, y = 1, z = 0},
+      flip = {h = -1, v = 1},
     }),
   },
   
@@ -47,7 +48,9 @@ return {
   
   script = {
     start = function(scene, game)
-      ActorScript.act("wlk")(scene:actor("telarin"), scene)
+      scene:actor("player"):get("keyb"):stop()
+      scene:actor("telarin"):get("AI"):stop()
+      scene:actor("telarin"):state("wlk")
       return "move"
     end,
     
@@ -86,17 +89,17 @@ return {
           },
         }))
           
-        ActorScript.act("std")(scene:actor("telarin"), scene)
+        scene:actor("telarin"):state("std")
         return "talk"
       end
     end,
     
     talk = function(scene, game)
       if game.ui:time() > 19 then
+        scene:actor("player"):state("wlk")
         scene:actor("player"):dir{x = 1, y = 1, z = 0}
+        scene:actor("telarin"):state("wlk")
         scene:actor("telarin"):dir{x = 1, y = 1, z = 0}
-        ActorScript.act("wlk")(scene:actor("player"), scene)
-        ActorScript.act("wlk")(scene:actor("telarin"), scene)      
         return "leave"
       end
     end,

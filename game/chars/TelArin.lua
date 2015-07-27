@@ -22,10 +22,10 @@ actor.info = {
 actor.states = {
   std = { res = "game/chars/telarin/std.png", dim = {w = 100, h =  80}, frate = 10, nframes = 2, anim = "loop"},
   wlk = { res = "game/chars/telarin/wlk.png", dim = {w = 100, h = 114}, frate =  3, nframes = 8, anim = "loop"},
-  bck = { res = "game/chars/telarin/wlk.png", dim = {w = 100, h = 114}, frate =  4, nframes = 8, anim = "loop"},
-  atk1 = { res = "game/chars/telarin/atk1.png", dim = {w = 252, h = 81}, frate = 4, nframes = 7, anim = "play",
+  bck = { res = "game/chars/telarin/wlk.png", dim = {w = 100, h = 114}, frate =  4, nframes = 8, anim = "looprev"},
+  atk1 = { res = "game/chars/telarin/atk1.png", dim = {w = 252, h = 81}, frate = {4,4,4,4,6,4,4}, nframes = 7, anim = "play",
            pad = {x = 100, y = 1}},
-  atk2 = { res = "game/chars/telarin/atk2.png", dim = {w = 200, h = 90}, frate = 3, nframes = 4, anim = "play",
+  atk2 = { res = "game/chars/telarin/atk2.png", dim = {w = 200, h = 90}, frate = {3,3,6,3}, nframes = 4, anim = "play",
            pad = {x = 0.5, y = -5}},
   jmp = { res = "game/chars/telarin/jmp.png", dim = {w = 106, h = 109}, frate = 0, nframes = 3, anim = Anim.Air3(60)},
   hit = { res = "game/chars/telarin/hit.png", dim = {w = 132, h =  84}, frate = 4, nframes = 2, anim = "play"},
@@ -40,14 +40,13 @@ actor.list = {}
 actor.list.auto = ActorDlg.new{
   all = {  ActorScript.isDmg / ActorScript.set("dmg", 0) / ActorScript.act("hit") },
   wlk = {  ActorScript.move{x =  90, z = 90} },
-  bck = {  ActorScript.move{x = -60, z = 60} },
+  bck = {  ActorScript.move{x = -60} },
   jmp = {  SceneScript.isFloor / ActorScript.act("std") },
-  hit = {  ActorScript.set("dmg", 0),
-          -SceneScript.isFloor / ActorScript.act("hitair"),
+  hit = { -SceneScript.isFloor / ActorScript.act("hitair"),
            ActorScript.isEnded / ActorScript.act("std") },
-  atk1 = { ActorScript.isFrame(6) / ActorScript.hitAll{dmg = 20},
+  atk1 = { ActorScript.isFrame(4) / ActorScript.hitAll{dmg = 20},
            ActorScript.isEnded / ActorScript.act("std") },
-  atk2 = { ActorScript.isFrame(3) / ActorScript.hitAll{dmg = 24},
+  atk2 = { ActorScript.isFrame(2) / ActorScript.hitAll{dmg = 24},
            ActorScript.isEnded / ActorScript.act("std") },
   hitair = {  SceneScript.isFloor / ActorScript.act("hitflr") },
   hithvy = { -SceneScript.isFloor / ActorScript.act("hitair"),
@@ -78,7 +77,7 @@ actor.list.AI = ActorDlg.new{
   
   bck = {
     ActorScript.faceTarget,
-    ActorScript.isRange("x", nil, 80) / ActorScript.act("std"),
+    ActorScript.isRange("x", nil, 30) / ActorScript.act("std"),
   },
   
   jmp = {

@@ -49,13 +49,7 @@ Moo = {
     class.create = Nil
     class.super = Object
     
-    Moo.List.each(definition, function(value, attribute)
-      if attribute == "super" then
-        class[attribute] = value -- Class keywords
-      else
-        class[attribute] = value -- Class method
-      end
-    end)
+    Moo.List.copy(class, definition)
     
     class.new = Moo.Create(class)
     class.push = Moo.Push

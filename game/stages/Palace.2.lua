@@ -3,6 +3,8 @@ Tales Of Fantasy
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
+require("lib/game/stage/camera/Camera")
+
 require("lib/game/ui/dialog/Dialog")
 require("lib/game/ui/frame/Frame")
 require("lib/game/ui/image/Image")
@@ -41,32 +43,35 @@ return {
   actors = {
     player = Actor.new("game/chars/Sarah.lua", {
       player = 1,
-      pos = {x = 0, y = 0, z = 475},
+      pos = {x = 100, y = 0, z = 400},
       dir = {x = 1, y = 1, z = 0},
     }),
 
     telarin = Actor.new("game/chars/TelArin.lua", {
-      pos = {x = 100, y = 0, z = 425},
+      pos = {x = 75, y = 0, z = 450},
       dir = {x = 1, y = 1, z = 0}
     }),
-
+--[[
     dqueen = Actor.new("game/chars/DQueen.lua", {
       pos = {x = 200, y = 0, z = 450},
       dir = {x = -1, y = 1, z = 0},
     }),
+]]
   },
   
   list = {
     Animator.new{prop = "color", key = {"r", "g", "b"}, t = {0, 1}},
     Animator.new{prop = "dim", key = "h", v = {0.5, 1}, t = {1, 2}},
+    camera = Camera.new{},
   },
   
   script = {
     start = function(scene, game)
-      local player = scene:actor("player")
-      player:get("keyb"):stop()
-      player:state("wlk")
+      scene:get("camera"):add("player")
       
+      scene:actor("player"):get("keyb"):stop()
+      scene:actor("player"):state("wlk")
+      scene:actor("telarin"):get("AI"):stop()
       scene:actor("telarin"):state("wlk")
       
       return "move"
@@ -74,17 +79,9 @@ return {
     
     move = function(scene, game)
       if game.ui:time() > 2 then
-        local player = scene:actor("player")
-        
-        player:get("keyb"):play()
-        player:state("std")
-        
-        local telarin = scene:actor("telarin")
-        telarin:state("std")
-
-        local dqueen = scene:actor("dqueen")
-        dqueen:target(telarin)
-        telarin:target(dqueen)
+        scene:actor("player"):get("keyb"):play()
+        scene:actor("player"):state("std")
+        scene:actor("telarin"):state("std")
         
         return "stop"
       end

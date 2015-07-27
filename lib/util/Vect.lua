@@ -3,37 +3,34 @@ Moo Object Oriented framework for LUA
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-Vect = Moo.Class {
-  
-  create = function(this, init)
-    List.each(init, function(v, k) this[k] = init[k] end)
-  end,
-  
-  eval = function(init, func)
-    return Vect.new(List.each(init, func))
+require("lib/game/util/List")
+
+VectUnused = function(coord) return Moo.Class {
+  create = function(this, init, eval)
+    Moo.List.each(coord, function(v, k) this[k] = eval(init[k]) end)
   end,
   
   sign = function(a)
-    return Vect.eval(a, function(v, k) 
+    return Vect.new(a, function(v, k) 
       if a[k] == 0 then return 0 else return a[k] / math.abs(a[k]) end
     end)
   end,
   
   ["_"] = function(a)
-    return Vect.eval(a, function(v, k) return -a[k] end)
+    return Vect.new(a, function(v, k) return -a[k] end)
   end,
   
   ["+"] = function(a, b)
     if type(b) == 'number' 
-      then return Vect.eval(a, function(v, k) return a[k] + b end)
-      else return Vect.eval(a, function(v, k) return a[k] + b[k] end)
+      then return Vect.new(a, function(v, k) return a[k] + b end)
+      else return Vect.new(a, function(v, k) return a[k] + b[k] end)
     end
   end,
   
   ["-"] = function(a, b)
     if type(b) == 'number' 
-      then return Vect.eval(a, function(v, k) return a[k] - b end)
-      else return Vect.eval(a, function(v, k) return a[k] - b[k] end)
+      then return Vect.new(a, function(v, k) return a[k] - b end)
+      else return Vect.new(a, function(v, k) return a[k] - b[k] end)
     end
   end,
   
@@ -51,6 +48,7 @@ Vect = Moo.Class {
     end
   end,
 }
+end
 
 -- Alisases
 V = function(init) return Vect.new(init) end

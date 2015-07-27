@@ -6,7 +6,7 @@ Moo Object Oriented framework for LUA
 require("lib/game/stage/sprite/SpriteData")
 require("lib/game/stage/sprite/SpriteDraw")
 
-Sprite = Class {
+SpriteUnused = Class {
   drawable = nil,
   data = nil,
   anim = nil,

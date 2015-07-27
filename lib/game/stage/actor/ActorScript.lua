@@ -35,7 +35,7 @@ ActorScript = {
   hitAll = function(hit) return F(function(actor, scene, game)
     local hits = scene:getHits(actor, game)
     List.each(hits, function(other)
-      if not (hit.dmg == nil) then other:dmg(hit.dmg) end
+      other:dmg(hit.dmg)
       if not (hit.force == nil) then other:force(actor, hit.force) end
     end)
   end)
@@ -49,15 +49,15 @@ ActorScript = {
     if actor == target then return false end
     if not target then return false end
     if not game.checkHit(actor, target) then return false end
-        
-    local facing = (actor:dir().x == Math.Sign(target:pos().x - actor:pos().x))
+    
+    local facing = (actor:flip().h == Math.Sign(target:pos().x - actor:pos().x))
     if not facing then return false end
 
     local d = actor:dist(target)
     local z = math.max(actor:rad(), target:rad())
 
     local select = List.select(states, function(state)
-      local x = (actor.states[state]:dim().w + target:box().w) * 0.5        
+      local x = (actor:dim(state).w + target:box().w) * 0.5        
       return (d.x < x) and (d.z < z)
     end)
   
@@ -69,7 +69,7 @@ ActorScript = {
     local target = actor:target()
     if not target then return false end
     
-    local facing = (target:dir().x == Math.Sign(actor:pos().x - target:pos().x))
+    local facing = (target:flip().h == Math.Sign(actor:pos().x - target:pos().x))
     if not facing then return false end
       
     local d = target:dist(actor)
@@ -111,7 +111,7 @@ ActorScript = {
   end,
   
   isFrame = function(nframe) return F(function(actor, scene)
-    return actor:curr():isStep() and actor:curr():frame() == nframe
+    return actor:isStep() and actor:frame() == nframe
   end)
   end,
       
@@ -119,7 +119,7 @@ ActorScript = {
   isFall = F(function(actor, scene) return actor:spd().y > 0 end),
   isKeyb = F(function(actor, scene) return not (actor:keyb() == false) end),
   isAuto = F(function(actor, scene) return not (actor:auto() == false) end),
-  isEnded = F(function(actor, scene) return actor:curr():isEnded() end),
+  isEnded = F(function(actor, scene) return actor:isEnded() end),
   isTarget = F(function(actor, scene) return not (actor:target() == false) end),  
   
   pick = function(list) return F(function(actor, scene, game)

@@ -51,7 +51,7 @@ actor.list = {}
 actor.list.auto = ActorDlg.new{
   all = {  ActorScript.isDmg / ActorScript.set("dmg", 0) / ActorScript.act("hit") },
   wlk = {  ActorScript.move{x =  100, z = 100} },
-  bck = {  ActorScript.move{x = -100, z = 100} },
+  bck = {  ActorScript.move{x = -100} },
   jmp = {  SceneScript.isFloor / ActorScript.act("stdup") },
   blk = {  ActorScript.isEnded / ActorScript.act("std") },
   hit = { -SceneScript.isFloor / ActorScript.act("hitair"),
@@ -94,7 +94,7 @@ actor.list.auto = ActorDlg.new{
 actor.list.AI = ActorDlg.new{
   std = {
     ActorScript.isRange("x", nil, 20) / ActorScript.act("wlk"),
-    ActorScript.isRange("x", 0) ^ Script.random(2) / ActorScript.act("jmpbck") / ActorScript.move{x = -200, y = -200},
+    ActorScript.isRange("x", 0) ^ Script.random(6) / ActorScript.act("jmpbck") / ActorScript.move{x = -200, y = -200},
     ActorScript.isRange("x", 0) / ActorScript.act("bck"),
     ActorScript.isTargetState("atk-") ^ ActorScript.isHitTarget / ActorScript.act("blk"),
     ActorScript.pick{

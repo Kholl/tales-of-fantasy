@@ -8,7 +8,7 @@ require("lib/game/ui/frame/Frame")
 Dialog = Class {
   super = Frame,
   
-  seqid = Property("_seqid", "reload"),
+  seqid = Property("_seqid", {trigger = "reload"}),
 
   seq = nil,
   seqtime = nil,

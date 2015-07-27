@@ -43,14 +43,13 @@ actor.states = {
 
 actor.list = {}
 actor.list.auto = ActorDlg.new{
-  all = {  ActorScript.isDmg / ActorScript.act("hit") },
+  all = {  ActorScript.isDmg / ActorScript.set("dmg", 0) / ActorScript.act("hit") },
   wlk = {  ActorScript.move{x = 100, z = 100} },
   atk = {  ActorScript.isFrame(5) / ActorScript.hitAll{dmg = 6},
            ActorScript.isEnded / ActorScript.act("std") },
   jmp = {  SceneScript.isFloor / ActorScript.act("std") },
   run = {  ActorScript.move{x = 200} },
-  hit = {  ActorScript.set("dmg", 0),
-          -SceneScript.isFloor / ActorScript.act("hitair"),
+  hit = { -SceneScript.isFloor / ActorScript.act("hitair"),
            ActorScript.isEnded / ActorScript.act("std") },
   atkup = { ActorScript.isFrame(1) / ActorScript.hitAll{dmg = 8, force = {y = -220}},
             ActorScript.isEnded / ActorScript.act("jmp"),
