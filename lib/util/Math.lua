@@ -10,11 +10,11 @@ Math = {
   Rand = math.random,
   
   Sign = function(val)
-    if val == 0 then return 0 end
-    if type(val) == "number" then return val / math.abs(val) end
-    if type(val) == "table" then return Moo.List.each(val, Math.Sign) end
-    
-    error("Value is not number nor table")
+    if val == 0 then return 0
+    elseif type(val) == "number" then return val / math.abs(val)
+    elseif type(val) == "table" then return Moo.List.each(val, Math.Sign)
+    else error("Value is not number nor table")
+    end
   end,
   
   Lim = function(val, lim)
@@ -24,30 +24,10 @@ Math = {
         elseif lim.min then return math.max(val, lim.min)
         else return val
       end
+    elseif type(val) == "table" then return Moo.List.each(val, Math.Lim)
+    else error("Value is not number nor table")
     end
-    
-    return Moo.Li
   end,
-  --[[
-  Dist = function(a, b) return {x = a.x - b.x, y = a.y - b.y, z = a.z - b.z} end,
-  
-  Angle = function(a, b) return  end,
-    
-  Isect = function(box1, box2)
-    local r1 = {x1 = box1.x, y1 = box1.y, x2 = box1.x + box1.w, y2 = box1.y + box1.h}
-    local r2 = {x1 = box2.x, y1 = box2.y, x2 = box2.x + box2.w, y2 = box2.y + box2.h}
-    
-    out = (r1.x1 < r2.x1 and r1.x2 < r2.x1) or (r1.y1 < r2.y1 and r1.y2 < r2.y1) or
-          (r1.x1 > r2.x2 and r1.x2 > r2.x2) or (r1.y1 > r2.y2 and r1.y2 > r2.y2)
-    return not out
-  end,
-  
-  InLim = function(dist, lim)
-    return 
-      (dist >= -(lim and lim.max or Math.MAX) and dist <= -(lim and lim.min or 0)) or
-      (dist <=  (lim and lim.max or Math.MAX) and dist >=  (lim and lim.min or 0))
-  end,
-  ]]--
   
   Pick = function(list) return list[math.random(1, #list)] end,
   Ratio = function(a, b) return a / (a + b) end,
