@@ -19,16 +19,10 @@ PhysDlg = Class {
     local pos = actor:pos()
     
     local k = {x = 0, y = 0, z = 0}
-    if pos[this.grav] == 0 then
-      k.x = Math.Sign(spd.x)
-      k.y = Math.Sign(spd.y)
-      k.z = Math.Sign(spd.z)
-    end
+    if pos[this.grav] == 0 then k = Math.Sign(spd) end
     k[this.grav] = 1    
     
-    pos.x = pos.x + (spd.x * delta)
-    pos.y = pos.y + (spd.y * delta)
-    pos.z = pos.z + (spd.z * delta)
+    pos = pos + (spd * delta)
     
     if actor:rad() > 0 then
       local actors = scene:getActors(function(other)

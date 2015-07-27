@@ -4,10 +4,10 @@ Moo Object Oriented framework for LUA
 ]]--
 
 GraphicData = Class {
-  pos = Property("_pos"), -- Position
-  dim = Property("_dim"), -- Dimension
-  dir = Property("_dir"), -- Direction
-  color = Property("_color"), -- Foreground color
+  pos = Property("_pos", {use = XYZ}), -- Position
+  dim = Property("_dim", {use = WH}), -- Dimension
+  dir = Property("_dir", {use = XY}), -- Direction
+  color = Property("_color", {use = RGB}), -- Foreground color
   alpha = Property("_alpha"), -- Alpha
   bgColor = Property("_bgColor"), -- Background color
   bgImage = Property("_bgImage"), -- Background image

@@ -3,58 +3,53 @@ Moo Object Oriented framework for LUA
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-require("lib/game/util/List")
+require("lib/util/List")
 
-VectUnused = function(coord) return Moo.Class {
-  create = function(this, init, eval)
-    Moo.List.each(coord, function(v, k) this[k] = eval(init[k]) end)
-  end,
-  
-  sign = function(a)
-    return Vect.new(a, function(v, k) 
-      if a[k] == 0 then return 0 else return a[k] / math.abs(a[k]) end
-    end)
-  end,
-  
+Vect = function(coord) return Moo.Operator {
   ["_"] = function(a)
-    return Vect.new(a, function(v, k) return -a[k] end)
+    return Vect(coord)(Moo.List.each(coord, function(v, k) return -a[k] end))
   end,
-  
+
   ["+"] = function(a, b)
     if type(b) == 'number' 
-      then return Vect.new(a, function(v, k) return a[k] + b end)
-      else return Vect.new(a, function(v, k) return a[k] + b[k] end)
+      then return Vect(coord)(Moo.List.each(coord, function(v, k) return (a[k] or 0) + b end))
+      else return Vect(coord)(Moo.List.each(coord, function(v, k) return (a[k] or 0) + (b[k] or 0) end))
     end
   end,
   
   ["-"] = function(a, b)
     if type(b) == 'number' 
-      then return Vect.new(a, function(v, k) return a[k] - b end)
-      else return Vect.new(a, function(v, k) return a[k] - b[k] end)
+      then return Vect(coord)(Moo.List.each(coord, function(v, k) return (a[k] or 0) - b end))
+      else return Vect(coord)(Moo.List.each(coord, function(v, k) return (a[k] or 0) - (b[k] or 0) end))
     end
   end,
   
   ["*"] = function(a, b)
     if type(b) == 'number' 
-      then return Vect.eval(a, function(v, k) return a[k] * b end)
-      else return Vect.eval(a, function(v, k) return a[k] * b[k] end)
+      then return Vect(coord)(Moo.List.each(coord, function(v, k) return (a[k] or 1) * b end))
+      else return Vect(coord)(Moo.List.each(coord, function(v, k) return (a[k] or 1) * (b[k] or 1) end))
     end
   end,
   
   ["/"] = function(a, b)
     if type(b) == 'number' 
-      then return Vect.eval(a, function(v, k) return a[k] / b end)
-      else return Vect.eval(a, function(v, k) return a[k] / b[k] end)
+      then return Vect(coord)(Moo.List.each(coord, function(v, k) return (a[k] or 1) / b end))
+      else return Vect(coord)(Moo.List.each(coord, function(v, k) return (a[k] or 1) / (b[k] or 1) end))
     end
   end,
 }
 end
 
 -- Alisases
-V = function(init) return Vect.new(init) end
+-- 2D Coordinates
+XY = Vect{x = 1, y = 2}
+-- 3D Coordinates
+XYZ = Vect{x = 1, y = 2, z = 3}
+-- Dimension coordinates (width height)
+WH = Vect{w = 1, h = 2}
 
 if __TEST then
-  local a, r = V{x = 1, y = 2, z = 3}, 0
+  local a, r = XYZ{x = 1, y = 2, z = 3}, 0
   r = a + a; assert(r.x == 2 and r.y == 4 and r.z == 6)
   r = a - a; assert(r.x == 0 and r.y == 0 and r.z == 0)
   r = a * a; assert(r.x == 1 and r.y == 4 and r.z == 9)
@@ -63,7 +58,4 @@ if __TEST then
   r = a - 1; assert(r.x == 0 and r.y == 1 and r.z == 2)
   r = a * 1; assert(r.x == 1 and r.y == 2 and r.z == 3)
   r = a / 1; assert(r.x == 1 and r.y == 2 and r.z == 3)
-  
-  local b = V{x = 5, y = 0, z = -5}
-  r = b:sign(); assert(r.x == 1 and r.y == 0 and r.z == -1)
 end

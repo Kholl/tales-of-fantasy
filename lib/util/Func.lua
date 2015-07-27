@@ -7,26 +7,26 @@ Func = Moo.Operator {
   -- Function call
   ["()"] = function(a, ...) return a[1](...) end,
   -- Function negation
-  ["_"] = function(a) return F(function(...) return not a(...) end) end,
+  ["_"] = function(a) return F{function(...) return not a(...) end} end,
   -- Function and
-  ["^"]  = function(a, b) return F(function(...) return a(...) and b(...) end) end,
+  ["^"]  = function(a, b) return F{function(...) return a(...) and b(...) end} end,
   -- Function or
-  ["+"]  = function(a, b) return F(function(...) return a(...) or b(...) end) end,
+  ["+"]  = function(a, b) return F{function(...) return a(...) or b(...) end} end,
   -- Function composition
-  [".."] = function(a, b) return F(function(...) return a(b(...)) end) end,
+  [".."] = function(a, b) return F{function(...) return a(b(...)) end} end,
   -- Function chaining
-  ["/"] = function(a, b) return F(function(...) if a(...) then return true, b(...) end end) end,
+  ["/"] = function(a, b) return F{function(...) if a(...) then return true, b(...) end end} end,
 }
 
 -- Alias
-F = function(func) return Func{func} end
+F = Func
 
 -- Test suite
 if __TEST then
-  local a = F(function(a, b) return a > b end)
-  local b = F(function(a, b) return a < b end)
-  local c = F(function(a, b) return a == b end)
-  local d = F(function(a) return a * 2 end)
+  local a = F{function(a, b) return a > b end}
+  local b = F{function(a, b) return a < b end}
+  local c = F{function(a, b) return a == b end}
+  local d = F{function(a) return a * 2 end}
   assert(a(5, 3) == true)
   assert(b(5, 3) == false)
   assert(c(5, 3) == false)

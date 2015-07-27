@@ -11,8 +11,8 @@ Camera = Class {
   
   create = function(this, init)
     this.targets = init and init.targets or {}
-    this.pos = init and init.pos or {x = 0, y = 0, z = 0}
-    this.dst = init and init.dst or {x = 0, y = 0, z = 0}
+    this.pos = XYZ(init and init.pos or {x = 0, y = 0, z = 0})
+    this.dst = XYZ(init and init.dst or {x = 0, y = 0, z = 0})
     this.time = init and init.time or 0.12
   end,
   
@@ -24,25 +24,17 @@ Camera = Class {
     List.each(this.targets, function(target)
       local target = scene:actor(target)
       local targetpos = target:pos()
-      pos = {
-        x = pos.x + targetpos.x + (target:flip().h * 50),
-        y = pos.y + targetpos.y - (target:dim("std").h * 0.5),
-        z = pos.z + targetpos.z}
+      pos = pos + targetpos + {
+        x =  target:flip().h * 50,
+        y = -target:dim("std").h * 0.5}
     end)
   
-    this.dst = {
-      x = pos.x / #this.targets,
-      y = pos.y / #this.targets,
-      z = pos.z / #this.targets}
+    this.dst = pos / #this.targets
     
     local lim = scene:lim()    
     local k = delta / this.time
     
-    this.pos = {
-      x = (this.pos.x * (1-k)) + (this.dst.x * k),
-      y = (this.pos.y * (1-k)) + (this.dst.y * k),
-      z = (this.pos.z * (1-k)) + (this.dst.z * k)}
-    
+    this.pos = (this.pos * (1 - k)) + (this.dst * k)    
     
     local off = {
       x = (game.w * 0.5) - (this.pos.x * scene:ratio().x),

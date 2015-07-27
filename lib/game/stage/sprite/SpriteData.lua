@@ -6,11 +6,11 @@ Moo Object Oriented framework for LUA
 SpriteData = Class {
   graphics = Dependency("graphics"),
   
-  box = Property("_box"), -- Hitbox
-  dim = Property("_dim"), -- Dimension
-  pad = Property("_pad"), -- Padding
-  anim = Property("_anim"), -- Animation
+  box = Property("_box", {use = WH}), -- Hitbox
+  dim = Property("_dim", {use = WH}), -- Dimension
+  pad = Property("_pad", {use = XY}), -- Padding
   
+  _anim = nil,  
   _frate = nil,
   _frame = nil,
   _nframes = nil,  
@@ -27,7 +27,7 @@ SpriteData = Class {
     
     this:box(init and init.box or {w = 0, h = 0})
     this:dim(init and init.dim or {w = 0, h = 0})
-    this:pad(init and init.pad or {x = 0.5, h = 0.5})
+    this:pad(init and init.pad or {x = 0.5, y = 0.5})
   end,
     
   step = function(this, actor, scene, game)

@@ -8,9 +8,9 @@ require("lib/game/ui/graphic/GraphicData")
 SceneData = Class {
   super = GraphicData,
   
-  off = Property("_off"),     -- Offset
-  lim = Property("_lim"),     -- Limits
-  ratio = Property("_ratio"), -- Coordinate ratio
+  lim = Property("_lim"), -- Limits
+  off = Property("_off", {use = XY}), -- Offset
+  ratio = Property("_ratio", {use = XYZ}), -- Coordinate ratio
   time = Property("_time"),   -- Local time
   step = Property("_step"),   -- Frame changed
   frame = Property("_frame"), -- Frame

@@ -4,9 +4,9 @@ Moo Object Oriented framework for LUA
 ]]--
 
 ActorData = Class {
-  pos = Property("_pos"), -- Position
-  dir = Property("_dir"), -- Direction
-  spd = Property("_spd"), -- Speed
+  pos = Property("_pos", {use = XYZ}), -- Position
+  dir = Property("_dir", {use = XYZ}), -- Direction
+  spd = Property("_spd", {use = XYZ}), -- Speed
   dmg = Property("_dmg"), -- Damage
   rad = Property("_rad"), -- Radius
   flip = Property("_flip"), -- Flip

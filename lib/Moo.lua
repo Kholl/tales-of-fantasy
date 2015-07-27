@@ -17,6 +17,7 @@ Moo = {
   
   Property = function(attr, config)
     local trigger = config and config.trigger or false
+    local use = config and config.use or false
     
     return function(obj, val)
       if val == nil then return obj[attr] end
@@ -29,6 +30,7 @@ Moo = {
         end
       
         if trigger and obj[trigger] then obj[trigger](obj) end
+        if use then rawset(obj, attr, use(rawget(obj, attr))) end
       end
       
       return obj
@@ -129,3 +131,4 @@ Moo = {
 require("lib/util/List")
 require("lib/util/Func")
 require("lib/util/Math")
+require("lib/util/Vect")

@@ -4,8 +4,8 @@ Moo Object Oriented framework for LUA
 ]]--
 
 ScrollData = Class {
-  pos = Property("_pos"), -- Position
-  mul = Property("_mul"), -- Multiplier (parallax)
+  pos = Property("_pos", {use = XY}), -- Position
+  mul = Property("_mul", {use = XY}), -- Multiplier (parallax)
   scr = Property("_scr"), -- Scroll    
 
   create = function(this, init)

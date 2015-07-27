@@ -11,15 +11,22 @@ Math = {
   
   Sign = function(val)
     if val == 0 then return 0 end
-    return val / math.abs(val)
+    if type(val) == "number" then return val / math.abs(val) end
+    if type(val) == "table" then return Moo.List.each(val, Math.Sign) end
+    
+    error("Value is not number nor table")
   end,
   
   Lim = function(val, lim)
-    if lim.min and lim.max then return math.min(math.max(lim.min, val), lim.max)
-      elseif lim.max then return math.min(val, lim.max)
-      elseif lim.min then return math.max(val, lim.min)
-      else return val
+    if type(val) == "number" then
+      if lim.min and lim.max then return math.min(math.max(lim.min, val), lim.max)
+        elseif lim.max then return math.min(val, lim.max)
+        elseif lim.min then return math.max(val, lim.min)
+        else return val
+      end
     end
+    
+    return Moo.Li
   end,
   --[[
   Dist = function(a, b) return {x = a.x - b.x, y = a.y - b.y, z = a.z - b.z} end,
