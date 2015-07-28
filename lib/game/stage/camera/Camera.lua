@@ -44,4 +44,6 @@ Camera = Class {
   end,
   
   add = function(this, target) List.add(this.targets, target) end,
+  rem = function(this, target) List.rem(this.targets, target) end,
+  focus = function(this, target) this.targets = {target} end,
 }

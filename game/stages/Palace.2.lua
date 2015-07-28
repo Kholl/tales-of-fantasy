@@ -19,7 +19,7 @@ return {
   color = {r = 0, g = 0, b = 0},
   grav = "y",
   lim = {
-    x = {min = 0, max = 480},
+    x = {min = 0, max = 4800},
     y = {max = 0},
     z = {min = 0, max = 480},
   },
@@ -51,23 +51,17 @@ return {
       pos = {x = 75, y = 0, z = 450},
       dir = {x = 1, y = 1, z = 0}
     }),
---[[
-    dqueen = Actor.new("game/chars/DQueen.lua", {
-      pos = {x = 200, y = 0, z = 450},
-      dir = {x = -1, y = 1, z = 0},
-    }),
-]]
   },
   
   list = {
     Animator.new{prop = "color", key = {"r", "g", "b"}, t = {0, 1}},
     Animator.new{prop = "dim", key = "h", v = {0.5, 1}, t = {1, 2}},
-    camera = Camera.new{},
+    camera = Camera.new{pos = {x = 100, z = 325}},
   },
   
   script = {
     start = function(scene, game)
-      scene:get("camera"):add("player")
+      scene:get("camera"):focus("player")
       
       scene:actor("player"):get("keyb"):stop()
       scene:actor("player"):state("wlk")
@@ -84,6 +78,22 @@ return {
         scene:actor("telarin"):state("std")
         
         return "stop"
+      end
+    end,
+    
+    stop = function(scene, game)
+      if game.ui:time() > 3 then
+        scene:addActor("dqueen", "game/chars/DQueen.lua", {
+          pos = {x = 4000, y = 0, z = 425},
+          flip = {h = -1, v = 1},
+          dir = {x = -1, y = 1, z = 0},
+        })
+      
+        scene:get("camera"):focus("dqueen")
+        scene:actor("dqueen"):get("AI"):stop()
+        scene:actor("dqueen"):state("spl2")
+      
+        return "pollo"
       end
     end,
   },

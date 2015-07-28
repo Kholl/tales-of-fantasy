@@ -83,8 +83,8 @@ Scene = Class {
   
   scroll = function(this, key) return this.scrolls[key] end,
   actor = function(this, key) return this.actors[key] end,
-  addScroll = function(this, init, custom) return List.add(this.scrolls, Scroll.new(init, custom)) end,
-  addActor = function(this, init, custom) return List.add(this.actors, Actor.new(init, custom)) end,
+  addScroll = function(this, key, init, custom) this.scrolls[key] = Scroll.new(init, custom) end,
+  addActor = function(this, key, init, custom) this.actors[key] = Actor.new(init, custom) end,
     
   getActors = function(this, func)
     if func then return List.filter(this.actors, func) else return this.actors end
