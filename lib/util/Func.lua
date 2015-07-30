@@ -14,7 +14,7 @@ Func = Moo.Operator {
   ["+"]  = function(a, b) return F{function(...) return a(...) or b(...) end} end,
   -- Function composition
   [".."] = function(a, b) return F{function(...) return a(b(...)) end} end,
-  -- Function chaining
+  -- Function then
   ["/"] = function(a, b) return F{function(...) if a(...) then return true, b(...) end end} end,
 }
 

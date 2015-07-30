@@ -10,8 +10,13 @@ ActorScript = {
   end}
   end,
   
-  set = function(property, value) return F{function(actor)
-    actor[property](actor, value)
+  dir = function(dir) return F{function(actor)
+    actor:dir(dir)
+  end}
+  end,
+  
+  setExtra = function(key, value) return F{function(actor)
+    actor:extra(key, value)
   end}
   end,
 
@@ -42,7 +47,9 @@ ActorScript = {
   end,
 
   -- Triggers
-  isDmg = F{function(actor) return actor:dmg() > 0 end},
+  isExtraGT = function(key, val) return F{function(actor) return actor:extra(key) > val end} end,
+  isExtraLT = function(key, val) return F{function(actor) return actor:extra(key) < val end} end,
+  isExtraEQ = function(key, val) return F{function(actor) return actor:extra(key) == val end} end,
 
   isTargetHit = function(states) return F{function(actor, scene, game, target)
     target = target or actor:target()

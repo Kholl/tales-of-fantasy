@@ -20,9 +20,9 @@ Camera = Class {
   step = Nil,
   
   update = function(this, delta, scene, game)
-    local pos = {x = 0, y = 0, z = 0}
+    local pos = XYZ{x = 0, y = 0, z = 0}
     List.each(this.targets, function(target)
-      local target = scene:actor(target)
+      target = scene:actor(target)
       local targetpos = target:pos()
       pos = pos + targetpos + {
         x =  target:flip().h * 50,

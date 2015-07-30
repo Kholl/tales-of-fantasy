@@ -11,7 +11,6 @@ require("lib/game/stage/state/State")
 Actor = Class {
   data = nil,
   list = nil,
-  info = nil,
   
   spriteData = nil,
   spriteDraw = nil,
@@ -21,6 +20,8 @@ Actor = Class {
       
     this.spriteData = {}    
     this.spriteDraw = {}
+    
+    this.list = init and init.list or {}
     
     List.each(init and init.states, function(state, key)
       this.spriteDraw[key] = SpriteDraw.new{
@@ -39,9 +40,6 @@ Actor = Class {
         frate = state.frate,
         nframes = state.nframes}      
     end)
-
-    this.list = init and init.list or {}
-    this.info = init and init.info or {}
   end,
   
   draw = function(this, scene)
@@ -83,7 +81,6 @@ Actor = Class {
     
   pos = function(this, val) return this.data:pos(val) end,    
   spd = function(this, val) return this.data:spd(val) end,
-  dmg = function(this, val) return this.data:dmg(val) end,    
   rad = function(this, val) return this.data:rad(val) end,    
   flip = function(this, val) return this.data:flip(val) end,
   mass = function(this, val) return this.data:mass(val) end,
@@ -106,6 +103,14 @@ Actor = Class {
     
     this:getData(val):reset()
     return this.data:state(val)
+  end,
+  
+  extra = function(this, key, val)
+    local extra = this.data:extra()
+    if (val == nil) or (val == extra[key]) then return extra[key] end    
+    
+    this.data:extra()[key] = val
+    return val
   end,
 
   distrel = function(this, actor)

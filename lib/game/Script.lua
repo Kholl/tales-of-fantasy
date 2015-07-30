@@ -25,7 +25,10 @@ Script = {
     game.scene = Scene.new(name)
     game.ui:time(0)
     
+    game.scene:step(game)
     game.scene:update(0, nil, game)
+    
+    game.ui:step(game)
     game.ui:update(0, nil, game)
   end,
 }

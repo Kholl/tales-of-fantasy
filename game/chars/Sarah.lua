@@ -10,11 +10,11 @@ actor.pad = {x = 0.5, y = 1}
 actor.box = {w = 24, h = 68}
 actor.rad = 12
 
-actor.info = {
+actor.extra = {
   faction = "helf",
   hp =  75, hpmax =  75,
   mp = 125, mpmax = 125,
-  dir = {x = 0, z = 0},
+  dmg = 0,
 }
 
 actor.states = {
@@ -43,7 +43,7 @@ actor.states = {
 
 actor.list = {}
 actor.list.auto = ActorDlg.new{
-  all = {  ActorScript.isDmg / ActorScript.set("dmg", 0) / ActorScript.act("hit") },
+  all = {  ActorScript.isExtraGT("dmg", 0) / ActorScript.setExtra("dmg", 0) / ActorScript.act("hit") },
   wlk = {  ActorScript.move{x = 100, z = 100} },
   atk = {  ActorScript.isFrame(5) / ActorScript.hitAll{dmg = 6},
            ActorScript.isEnded / ActorScript.act("std") },
@@ -87,17 +87,17 @@ actor.list.keyb = ActorDlg.new{
           ActorScript.isKey{"a[rl]>"} / ActorScript.act("atkalt"),
           ActorScript.isKey{"ab>"} / ActorScript.act("atkrnd") },
   wlk = { ActorScript.all{
-            ActorScript.set("dir", {x = 0, z = 0}),
-            ActorScript.isKeypress("r") / ActorScript.set("dir", {x =  1}),
-            ActorScript.isKeypress("l") / ActorScript.set("dir", {x = -1}),
-            ActorScript.isKeypress("u") / ActorScript.set("dir", {z = -1}),
-            ActorScript.isKeypress("d") / ActorScript.set("dir", {z =  1}),
+            ActorScript.dir{x = 0, z = 0},
+            ActorScript.isKeypress("r") / ActorScript.dir{x =  1},
+            ActorScript.isKeypress("l") / ActorScript.dir{x = -1},
+            ActorScript.isKeypress("u") / ActorScript.dir{z = -1},
+            ActorScript.isKeypress("d") / ActorScript.dir{z =  1},
           },
           ActorScript.isKey{"r>r>", "l>l>"} / ActorScript.act("run"),
           ActorScript.isKey{"[rlud]+>"} / ActorScript.act("wlk"),
           ActorScript.isKey{"[rlud]*b>"} / ActorScript.act("jmp") / ActorScript.move{x = 100, y = -200},
           ActorScript.isKey{"au>u>d>"} / ActorScript.act("atkup") / ActorScript.move{y = -200},
-          ActorScript.act("std") / ActorScript.set("dir", {x = 0, z = 0}) },
+          ActorScript.act("std") / ActorScript.dir{x = 0, z = 0} },
   run = { ActorScript.isKey{"r>r>", "l>l>"} / ActorScript.act("run"),
           ActorScript.isKey{"[rlud]*b>"} / ActorScript.act("jmp") / ActorScript.move{x = 200, y = -180},
           ActorScript.isKey{"au>u>d>"} / ActorScript.act("atkup") / ActorScript.move{y = -180},

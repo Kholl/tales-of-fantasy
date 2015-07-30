@@ -12,11 +12,11 @@ actor.rad = 14
 actor.mass = 1
 actor.pmap = Asset["high elf pal"]
 
-actor.info = {
+actor.extra = {
   faction = "helf",
   hp = 300, hpmax = 300,
   mp = 100, mpmax = 100,
-  dir = {x = 0, z = 0},
+  dmg = 0,
 }
 
 actor.states = {
@@ -38,7 +38,7 @@ actor.states = {
 
 actor.list = {}
 actor.list.auto = ActorDlg.new{
-  all = {  ActorScript.isDmg / ActorScript.set("dmg", 0) / ActorScript.act("hit") },
+  all = {  ActorScript.isExtraGT("dmg", 0) / ActorScript.setExtra("dmg", 0) / ActorScript.act("hit") },
   wlk = {  ActorScript.move{x =  90, z = 90} },
   bck = {  ActorScript.move{x = -60} },
   jmp = {  ActorScript.isFloor / ActorScript.act("std") },

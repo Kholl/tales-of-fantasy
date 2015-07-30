@@ -56,33 +56,29 @@ return {
   list = {
     Animator.new{prop = "color", key = {"r", "g", "b"}, t = {0, 1}},
     Animator.new{prop = "dim", key = "h", v = {0.5, 1}, t = {1, 2}},
-    camera = Camera.new{pos = {x = 100, z = 325}},
-  },
-  
-  script = {
-    start = function(scene, game)
-      scene:get("camera"):focus("player")
-      
-      scene:actor("player"):get("keyb"):stop()
-      scene:actor("player"):state("wlk")
-      scene:actor("telarin"):get("AI"):stop()
-      scene:actor("telarin"):state("wlk")
-      
-      return "move"
-    end,
     
-    move = function(scene, game)
-      if game.ui:time() > 2 then
+    camera = Camera.new{pos = {x = 100, z = 325}},
+    
+    script = SceneDlg.new{
+      start = {function(scene, game)
+        scene:get("camera"):focus("player")
+        
+        scene:actor("player"):get("keyb"):stop()
+        scene:actor("player"):state("wlk")
+        scene:actor("telarin"):get("AI"):stop()
+        scene:actor("telarin"):state("wlk")
+        
+        scene:state("move")
+      end},
+      
+      move = {SceneScript.at(2) / function(scene, game)
         scene:actor("player"):get("keyb"):play()
         scene:actor("player"):state("std")
-        scene:actor("telarin"):state("std")
-        
-        return "stop"
-      end
-    end,
-    
-    stop = function(scene, game)
-      if game.ui:time() > 3 then
+        scene:actor("telarin"):state("std")        
+        scene:state("stop")
+      end},
+      
+      stop = {SceneScript.at(3) / function(scene, game)
         scene:addActor("dqueen", "game/chars/DQueen.lua", {
           pos = {x = 4000, y = 0, z = 425},
           flip = {h = -1, v = 1},
@@ -93,9 +89,9 @@ return {
         scene:actor("dqueen"):get("AI"):stop()
         scene:actor("dqueen"):state("spl2")
       
-        return "pollo"
-      end
-    end,
+        scene:state("end")
+      end},
+    },
   },
 }
 --      }})

@@ -3,7 +3,7 @@ Moo Object Oriented framework for LUA
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-ScriptDlg = Moo.Class {
+ScriptDlgUnused = Moo.Class {
   ruleset = false,
   state = nil,
   script = nil,

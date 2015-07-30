@@ -44,18 +44,16 @@ return {
   list = {
     Animator.new{prop = "off", key = "y", v = {60, 15}},
     Animator.new{prop = "color", key = {"r", "g", "b"}, v = {1, 0}, t = {19, 21}},
-  },
   
-  script = {
-    start = function(scene, game)
-      scene:actor("player"):get("keyb"):stop()
-      scene:actor("telarin"):get("AI"):stop()
-      scene:actor("telarin"):state("wlk")
-      return "move"
-    end,
-    
-    move = function(scene, game)
-      if game.ui:time() > 2.25 then 
+    script = SceneDlg.new{
+      start = {function(scene, game)
+        scene:actor("player"):get("keyb"):stop()
+        scene:actor("telarin"):get("AI"):stop()
+        scene:actor("telarin"):state("wlk")
+        scene:state("move")
+      end},
+      
+      move = {SceneScript.at(2.25) / function(scene, game)
         game.ui:add(Dialog.new("game/preset/dialog/Dialog.lua", {
           seqtime = {5, 15},
           seq = {
@@ -90,81 +88,20 @@ return {
         }))
           
         scene:actor("telarin"):state("std")
-        return "talk"
-      end
-    end,
-    
-    talk = function(scene, game)
-      if game.ui:time() > 19 then
+        scene:state("talk")
+      end},
+      
+      talk = {SceneScript.at(19) / function(scene, game)
         scene:actor("player"):state("wlk")
         scene:actor("player"):dir{x = 1, y = 1, z = 0}
         scene:actor("telarin"):state("wlk")
         scene:actor("telarin"):dir{x = 1, y = 1, z = 0}
-        return "leave"
-      end
-    end,
-    
-    leave = function(scene, game)
-      if game.ui:time() > 21 then
+        scene:state("leave")
+      end},
+      
+      leave = {SceneScript.at(21) / function(scene, game)
         Script.loadScene(game, "game/stages/Palace.2.lua")
-      end
-    end,
---      }})
-
---[[      
-      local spawn
-  --    Game.Scene.spawn(scene, "TelArin"):pos{x = 275, y = 0, z = 425}
-      
-      spawn = scene:addActor("game/chars/TelArin.lua")
-      spawn:auto(EnemyDlg.new())
-      spawn:pos{x = 275, y = 0, z = 425}
-      
-      spawn = scene:addActor("game/chars/HElfBoss.lua")
-      spawn:auto(EnemyDlg.new())
-      spawn:pos{x = 300, y = 0, z = 350}
-      
-      spawn = scene:addActor("game/chars/HElfBoss.lua")
-      spawn:auto(EnemyDlg.new())
-      spawn:pos{x = 250, y = 0, z = 500}
-      
-      spawn = scene:addActor("game/chars/HElf.lua")
-      spawn:auto(EnemyDlg.new())
-      spawn:pos{x = 375, y = 0, z = 350}
-      
-      spawn = scene:addActor("game/chars/HElf.lua")
-      spawn:auto(EnemyDlg.new())
-      spawn:pos{x = 350, y = 0, z = 400}
-      
-      spawn = scene:addActor("game/chars/HElf.lua")
-      spawn:auto(EnemyDlg.new())
-      spawn:pos{x = 325, y = 0, z = 450}
-      
-      spawn = scene:addActor("game/chars/HElf.lua")
-      spawn:auto(EnemyDlg.new())
-      spawn:pos{x = 300, y = 0, z = 500}
-
-      spawn = scene:addActor("game/chars/BHeart.lua")
-      spawn:auto(EnemyDlg.new())
-      spawn:pos{x = 750, y = 0, z = 500}
-
-      spawn = scene:addActor("game/chars/DWarrior.lua")
-      spawn:auto(EnemyDlg.new())
-      spawn:pos{x = 750, y = 0, z = 350}
-]]--
---      return "update"
---    end,
-  
---    update = function(scene)
---[[
-      List.sort(scene.actors, function(actor) return actor:pos().z end)
-      
-      local off = {
-        x = 160 - (camera:pos().x * scene:ratio().x),
-        y = 100 - (camera:pos().z * scene:ratio().z) - (camera:pos().y * scene:ratio().y)}
-      off.y = Math.Lim(off.y, {min = -56, max = 0})
-      scene:off(off)
-]]--      
---      return "update"
---    end,
+      end},
+    },
   }
 }

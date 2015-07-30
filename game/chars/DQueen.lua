@@ -11,11 +11,11 @@ actor.box = {w = 35, h = 90}
 actor.rad = 20
 actor.mass = 1
 
-actor.info = {
+actor.extra = {
   faction = "demon",
   hp = 200, hpmax = 200,
   mp = 300, mpmax = 300,
-  dir = {x = 0, z = 0},
+  dmg = 0,
 }
 
 actor.states = {
@@ -49,7 +49,7 @@ actor.states = {
 
 actor.list = {}
 actor.list.auto = ActorDlg.new{
-  all = {  ActorScript.isDmg / ActorScript.set("dmg", 0) / ActorScript.act("hit") },
+  all = {  ActorScript.isExtraGT("dmg", 0) / ActorScript.setExtra("dmg", 0) / ActorScript.act("hit") },
   wlk = {  ActorScript.move{x =  100, z = 100} },
   bck = {  ActorScript.move{x = -100} },
   jmp = {  ActorScript.isFloor / ActorScript.act("stdup") },
