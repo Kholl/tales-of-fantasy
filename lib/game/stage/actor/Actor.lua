@@ -6,7 +6,8 @@ Moo Object Oriented framework for LUA
 require("lib/game/stage/actor/ActorScript")
 require("lib/game/stage/actor/ActorData")
 require("lib/game/stage/actor/ActorDlg")
-require("lib/game/stage/state/State")
+require("lib/game/stage/sprite/SpriteData")
+require("lib/game/stage/sprite/SpriteDraw")
 
 Actor = Class {
   data = nil,
