@@ -63,91 +63,82 @@ return {
       start = {function(scene, game)
         scene:get("camera"):focus("player")
         
-        scene:actor("player"):get("keyb"):stop()
         scene:actor("player"):state("wlk")
-        scene:actor("telarin"):get("AI"):stop()
         scene:actor("telarin"):state("wlk")
         
-        scene:state("move")
+        scene:state("run")
       end},
       
-      move = {SceneScript.at(2) / function(scene, game)
-        scene:actor("player"):get("keyb"):play()
-        scene:actor("player"):state("std")
-        scene:actor("telarin"):state("std")        
-        scene:state("stop")
-      end},
-      
-      stop = {SceneScript.at(3) / function(scene, game)
-        scene:addActor("dqueen", "game/chars/DQueen.lua", {
-          pos = {x = 4000, y = 0, z = 425},
-          flip = {h = -1, v = 1},
-          dir = {x = -1, y = 1, z = 0},
-        })
-      
-        scene:get("camera"):focus("dqueen")
-        scene:actor("dqueen"):get("AI"):stop()
-        scene:actor("dqueen"):state("spl2")
-      
-        scene:state("end")
-      end},
-    },
-  },
+      { SceneScript.at(2) / function(scene, game)
+          scene:actor("player"):state("std")
+          scene:actor("telarin"):state("std")        
+        end,
+          
+        SceneScript.at(3) / function(scene, game)
+          scene:addActor("dqueen", "game/chars/DQueen.lua", {
+            pos = {x = 4000, y = 0, z = 425},
+            flip = {h = -1, v = 1},
+            dir = {x = -1, y = 1, z = 0},
+          })
+        
+          scene:get("camera"):focus("dqueen")
+          scene:actor("dqueen"):state("spl2")
+        end,
+        
+        SceneScript.at(4) / function(scene, game) scene:actor("dqueen"):state("std") end,
+        SceneScript.at(5) / SceneScript.dialog("Palace.2.dlg.1.lua"),
+        SceneScript.at(10) / SceneScript.focus("telarin"),
+        SceneScript.at(15) / function(scene, game)
+          scene:actor("telarin"):script{
+            ActorScript.at(16) / ActorScript.act("spl"),
+            ActorScript.at(16.5) / ActorScript.act("spl1"),
+            ActorScript.at(17) / ActorScript.act("spl5"),
+            ActorScript.at(19) / ActorScript.act("rdy") }
+        end,
+        
+        SceneScript.at(19.5) / function(scene, game)
+          scene:get("camera"):unfocus()
+          scene:actor("telarin"):state("jmp")
+          scene:actor("telarin"):spd{x = 330, z = 0, y = -160}
+        end,
+        
+        SceneScript.at(21) / SceneScript.all{
+          SceneScript.spawn("guard1", "game/chars/HElf.lua", {
+            state = "wlk",
+            pos = {x = 125, y = 0, z = 375},
+            dir = {x = 1, y = 1, z = 0} }),
+          
+          SceneScript.spawn("guard2", "game/chars/HElf.lua", {
+            state = "wlk",
+            pos = {x = 75, y = 0, z = 375},
+            dir = {x = 1, y = 1, z = 0} }),
+          
+          SceneScript.spawn("guard3", "game/chars/HElf.lua", {
+            state = "wlk",
+            pos = {x = 25, y = 0, z = 375},
+            dir = {x = 1, y = 1, z = 0} }),
+
+          SceneScript.spawn("guard4", "game/chars/HElf.lua", {
+            state = "wlk",
+            pos = {x = 100, y = 0, z = 425},
+            dir = {x = 1, y = 1, z = 0} }),
+        
+          SceneScript.spawn("guard5", "game/chars/HElf.lua", {
+            state = "wlk",
+            pos = {x = 50, y = 0, z = 425},
+            dir = {x = 1, y = 1, z = 0} }),
+        
+          SceneScript.spawn("guard6", "game/chars/HElf.lua", {
+            state = "wlk",
+            pos = {x = 0, y = 0, z = 425},
+            dir = {x = 1, y = 1, z = 0} }),
+        },
+        
+        SceneScript.at(22) / function(scene, game)
+          scene:get("camera"):focus("player")
+          scene:actor("player"):get("keyb"):play()
+        end,
+      }
+    }
+  }
 }
---      }})
-
---[[      
-      local spawn
-  --    Game.Scene.spawn(scene, "TelArin"):pos{x = 275, y = 0, z = 425}
-      
-      spawn = scene:addActor("game/chars/TelArin.lua")
-      spawn:auto(EnemyDlg.new())
-      spawn:pos{x = 275, y = 0, z = 425}
-      
-      spawn = scene:addActor("game/chars/HElfBoss.lua")
-      spawn:auto(EnemyDlg.new())
-      spawn:pos{x = 300, y = 0, z = 350}
-      
-      spawn = scene:addActor("game/chars/HElfBoss.lua")
-      spawn:auto(EnemyDlg.new())
-      spawn:pos{x = 250, y = 0, z = 500}
-      
-      spawn = scene:addActor("game/chars/HElf.lua")
-      spawn:auto(EnemyDlg.new())
-      spawn:pos{x = 375, y = 0, z = 350}
-      
-      spawn = scene:addActor("game/chars/HElf.lua")
-      spawn:auto(EnemyDlg.new())
-      spawn:pos{x = 350, y = 0, z = 400}
-      
-      spawn = scene:addActor("game/chars/HElf.lua")
-      spawn:auto(EnemyDlg.new())
-      spawn:pos{x = 325, y = 0, z = 450}
-      
-      spawn = scene:addActor("game/chars/HElf.lua")
-      spawn:auto(EnemyDlg.new())
-      spawn:pos{x = 300, y = 0, z = 500}
-
-      spawn = scene:addActor("game/chars/BHeart.lua")
-      spawn:auto(EnemyDlg.new())
-      spawn:pos{x = 750, y = 0, z = 500}
-
-      spawn = scene:addActor("game/chars/DWarrior.lua")
-      spawn:auto(EnemyDlg.new())
-      spawn:pos{x = 750, y = 0, z = 350}
-]]--
---      return "update"
---    end,
-  
---    update = function(scene)
---[[
-      List.sort(scene.actors, function(actor) return actor:pos().z end)
-      
-      local off = {
-        x = 160 - (camera:pos().x * scene:ratio().x),
-        y = 100 - (camera:pos().z * scene:ratio().z) - (camera:pos().y * scene:ratio().y)}
-      off.y = Math.Lim(off.y, {min = -56, max = 0})
-      scene:off(off)
-]]--      
---      return "update"
---    end,

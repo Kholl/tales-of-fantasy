@@ -20,6 +20,8 @@ Camera = Class {
   step = Nil,
   
   update = function(this, delta, scene, game)
+    if List.empty(this.targets) then return end
+    
     local pos = XYZ{x = 0, y = 0, z = 0}
     List.each(this.targets, function(target)
       target = scene:actor(target)
@@ -46,4 +48,5 @@ Camera = Class {
   add = function(this, target) List.add(this.targets, target) end,
   rem = function(this, target) List.rem(this.targets, target) end,
   focus = function(this, target) this.targets = {target} end,
+  unfocus = function(this) this.targets = {} end,
 }

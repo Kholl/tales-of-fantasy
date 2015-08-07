@@ -5,8 +5,36 @@ Moo Object Oriented framework for LUA
 
 SceneScript = {
   -- Triggers
-  at = function(time) return F{function(scene, game)
-    return scene:time() >= time
+  at = function(start, finish) return F{function(scene, game)
+    finish = finish or start + (1 / game.fps)
+    return scene:time() >= start and scene:time() < finish
+  end}
+  end,
+
+  -- Actions
+  act = function(action) return F{function(scene, game)
+    scene:state(action)
+  end}
+  end,
+  
+  dialog = function(id) return F{function(scene, game)
+    game.ui:add(Dialog.new("game/preset/dialog/Dialog.lua", Load("game/stages/dialog/".. id)))
+  end}
+  end,
+
+  focus = function(target) return F{function(scene, game)
+    scene:get("camera"):focus(target)
+  end}
+  end,
+  
+  spawn = function(key, init, custom) return F{function(scene, game)
+    scene:addActor(key, init, custom)
+  end}
+  end,
+  
+  all = function(list) return F{function(actor, scene, game)
+    List.each(list, function(rule) rule(actor, scene, game) end)
+    return false
   end}
   end,
 }

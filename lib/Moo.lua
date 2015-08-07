@@ -21,18 +21,20 @@ Moo = {
     
     return function(obj, val)
       if val == nil then return obj[attr] end
+      
       local pval = rawget(obj, attr)
       
+      if use then val = use(val) end
       if not (pval == val) then
         if type(pval) == "table"
           then Moo.List.copy(obj[attr], val)
           else rawset(obj, attr, val)
         end
-      
-        if trigger and obj[trigger] then obj[trigger](obj) end
-        if use then rawset(obj, attr, use(rawget(obj, attr))) end
       end
       
+      if not (pval == val) and trigger then
+        obj[trigger](obj, val)
+      end
       return obj
     end
   end,

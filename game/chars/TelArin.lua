@@ -29,6 +29,13 @@ actor.states = {
            pad = {x = 0.5, y = -5}},
   jmp = { res = "game/chars/telarin/jmp.png", dim = {w = 106, h = 109}, frate = 0, nframes = 3, anim = Anim.Air3(60)},
   hit = { res = "game/chars/telarin/hit.png", dim = {w = 132, h =  84}, frate = 4, nframes = 2, anim = "play"},
+  rdy = { res = "game/chars/telarin/rdy.png", dim = {w = 100, h =  89}, frate = 3, nframes = 5, anim = "play"},
+  spl = { res = "game/chars/telarin/rdy.png", dim = {w = 100, h =  89}, frate = 3, nframes = 5, anim = "playrev"},
+  spl1 = { res = "game/chars/telarin/spl1.png", dim = {w = 106, h = 99}, frate = 3, nframes = 3, anim = "play"},
+  spl2 = { res = "game/chars/telarin/spl2.png", dim = {w = 114, h = 88}, frate = 3, nframes = 3, anim = "play"},
+  spl3 = { res = "game/chars/telarin/spl3.png", dim = {w = 114, h = 88}, frate = 3, nframes = 2, anim = "loop"},
+  spl4 = { res = "game/chars/telarin/spl4.png", dim = {w = 116, h = 81}, frate = 4, nframes = 2, anim = "play"},
+  spl5 = { res = "game/chars/telarin/spl5.png", dim = {w =  86, h = 99}, frate = 3, nframes = 3, anim = "play"},
   hitair = { res = "game/chars/telarin/hitair.png", dim = {w = 111, h =  77}, frate = 0, nframes = 2, anim = Anim.Air2()},
   hithvy = { res = "game/chars/telarin/hithvy.png", dim = {w = 158, h = 111}, frate = 2, nframes = 3, anim = "play"},
   hitflr = { res = "game/chars/telarin/hitflr.png", dim = {w = 125, h =  52}, frate = {2,28}, nframes = 2, anim = "play"},
@@ -38,12 +45,19 @@ actor.states = {
 
 actor.list = {}
 actor.list.auto = ActorDlg.new{
-  all = {  ActorScript.isExtraGT("dmg", 0) / ActorScript.setExtra("dmg", 0) / ActorScript.act("hit") },
+  {  ActorScript.isExtraGT("dmg", 0) / ActorScript.setExtra("dmg", 0) / ActorScript.act("hit") },
   wlk = {  ActorScript.move{x =  90, z = 90} },
   bck = {  ActorScript.move{x = -60} },
   jmp = {  ActorScript.isFloor / ActorScript.act("std") },
   hit = { -ActorScript.isFloor / ActorScript.act("hitair"),
            ActorScript.isEnded / ActorScript.act("std") },
+  rdy = {  ActorScript.isEnded / ActorScript.act("std") },
+  spl = {  },
+  spl1 = { },
+  spl2 = { ActorScript.isEnded / ActorScript.act("spl3") },
+  spl3 = { },
+  spl4 = { ActorScript.isEnded / ActorScript.act("rdy") },
+  spl5 = { },
   atk1 = { ActorScript.isFrame(4) / ActorScript.hitAll{dmg = 20},
            ActorScript.isEnded / ActorScript.act("std") },
   atk2 = { ActorScript.isFrame(2) / ActorScript.hitAll{dmg = 24},
@@ -85,4 +99,5 @@ actor.list.AI = ActorDlg.new{
   },
 }
 
+actor.list.AI:stop()
 return actor

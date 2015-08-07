@@ -49,20 +49,20 @@ Scene = Class {
   end,
   
   step = function(this, game)
-    List.each(this.list, function(item) item:step(this, game) end)
     List.each(this.scrolls, function(scroll) scroll:step(this, game) end)
     List.each(this.actors, function(actor) actor:step(this, game) end)
     List.each(this.actors, function(actor) this.phys:step(actor, this, game) end)      
+    List.each(this.list, function(item) item:step(this, game) end)
   end,
   
   update = function(this, delta, parent, game)
     this.data:update(delta, this, game)
-    List.each(this.list, function(item) item:update(delta, this, game) end)
     List.each(this.scrolls, function(scroll) scroll:update(delta, this, game) end)
     List.each(this.actors, function(actor) actor:update(delta, this, game) end)
     List.each(this.actors, function(actor) this.phys:update(delta, actor, this, game) end)      
+    List.each(this.list, function(item) item:update(delta, this, game) end)
 
-    if this.data:isStep() then this:step(game) end
+    if this.data:onFrame() then this:step(game) end
   end,
   
   off = function(this, val) return this.data:off(val) end,
@@ -70,6 +70,8 @@ Scene = Class {
   time = function(this, val) return this.data:time(val) end,
   ratio = function(this, val) return this.data:ratio(val) end,
   state = function(this, val) return this.data:state(val) end,
+  
+  onFrame = function(this) return this.data:onFrame() end,
   
   scroll = function(this, key) return this.scrolls[key] end,
   actor = function(this, key) return this.actors[key] end,

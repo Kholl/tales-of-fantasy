@@ -73,6 +73,8 @@ Actor = Class {
   has = function(this, key) return not (this.list[key] == nil) end,
   get = function(this, key) return this.list[key] or Nil end,
   
+  script = function(this, rules) this:add(ActorDlg.new{rules}) end,
+  
   dim = function(this, state) return this:getData(state):dim() end,
   box = function(this, state) return this:getData(state):box() end,
   pad = function(this, state) return this:getData(state):pad() end,

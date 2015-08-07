@@ -8,8 +8,8 @@ PhysDlg = Class {
   grav = nil,
   
   create = function(this, init)
-    this.drag = (init and init.drag) or 0
-    this.grav = (init and init.grav) or 0
+    this.drag = XYZ(init and init.drag or {x = 0, y = 0, z = 0})
+    this.grav = init and init.grav or 0
   end,
   
   step = Nil,
@@ -40,20 +40,15 @@ PhysDlg = Class {
         pos.z = Math.Linear(pos.z, other:pos().z + angle.z * dist, ratio)
       end)
     end
-
-    spd.x = spd.x + (k.x * this.drag.x * delta)
-    spd.y = spd.y + (k.y * this.drag.y * delta)
-    spd.z = spd.z + (k.z * this.drag.z * delta)
     
-    local lim = scene:lim()
-    pos.x = Math.Lim(pos.x, lim.x)
-    pos.y = Math.Lim(pos.y, lim.y)
-    pos.z = Math.Lim(pos.z, lim.z)
+    pos = Math.Lim(pos, scene:lim())
+    spd = spd + (k * this.drag * delta)
+    
+    if pos[this.grav] > 0 then pos[this.grav], spd[this.grav] = 0, 0 end
     
     actor:spd(spd)
     actor:pos(pos)
-    if this:isFloor(actor) then spd[this.grav] = 0 end
   end,
   
-  isFloor = function(this, actor) return actor:pos()[this.grav] == 0 end,
+  isFloor = function(this, actor) return actor:pos()[this.grav] >= 0 end,
 }

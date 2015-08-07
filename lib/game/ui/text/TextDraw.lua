@@ -27,6 +27,7 @@ TextDraw = Class {
     this.graphics.printf(txt, x, y, w, data:align())
     
     local fit, dim = data:fit(), data:dim()
+    
     if fit.w or fit.h then 
       local fitw, nlines = this.font:getWrap(txt, w)
       local fith = nlines * this.font:getHeight()

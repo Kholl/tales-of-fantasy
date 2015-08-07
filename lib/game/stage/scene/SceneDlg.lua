@@ -17,7 +17,7 @@ SceneDlg = Class {
   step = function(this, scene, game)
     if not this.run then return end
   
-    local rules = this.rules.all or {}
+    local rules = this.rules[1] or {}
     IndexList.each(rules, function(rule, index) rule(scene, game) end)
     
     local state = scene:state()

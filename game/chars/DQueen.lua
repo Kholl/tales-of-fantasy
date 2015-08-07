@@ -35,7 +35,8 @@ actor.states = {
   atk6 = {res = "game/chars/morrigan/atk6.png", dim = {w =  76, h = 140}, frate = {4,4,8}, nframes = 3, anim = "play",
           pad = {x = 0.5, y = -25}},
   spl1 = {res = "game/chars/morrigan/spl1.png", dim = {w = 104, h =  86}, frate = 3, nframes = 2, anim = "loop"},
-  spl2 = {res = "game/chars/morrigan/spl2.png", dim = {w =  55, h = 123}, frate = 3, nframes = 4, anim = "loop"},
+  spl2 = {res = "game/chars/morrigan/spl2.png", dim = {w =  55, h = 123}, frate = 2, nframes = 1, anim = "play"},
+  spl3 = {res = "game/chars/morrigan/spl3.png", dim = {w =  55, h = 123}, frate = 2, nframes = 3, anim = "loop"},
   stdup = {res = "game/chars/morrigan/stdup.png", dim = {w = 84, h = 99}, frate = 4, nframes = 3, anim = "play",
            pad = {x = 0.5, y = -15}},
   hitair = {res = "game/chars/morrigan/hitair.png", dim = {w = 115, h =  87}, frate = 0, nframes = 1, anim = Anim.Air2()},
@@ -49,7 +50,7 @@ actor.states = {
 
 actor.list = {}
 actor.list.auto = ActorDlg.new{
-  all = {  ActorScript.isExtraGT("dmg", 0) / ActorScript.setExtra("dmg", 0) / ActorScript.act("hit") },
+  {  ActorScript.isExtraGT("dmg", 0) / ActorScript.setExtra("dmg", 0) / ActorScript.act("hit") },
   wlk = {  ActorScript.move{x =  100, z = 100} },
   bck = {  ActorScript.move{x = -100} },
   jmp = {  ActorScript.isFloor / ActorScript.act("stdup") },
@@ -73,7 +74,8 @@ actor.list.auto = ActorDlg.new{
            ActorScript.isFrame(3) / ActorScript.hitAll{dmg = 10},
            ActorScript.isFall / ActorScript.act("jmp") },
   spl1 = { ActorScript.isEnded / ActorScript.act("std") },
-  spl2 = { ActorScript.isEnded / ActorScript.act("std") },
+  spl2 = { ActorScript.isEnded / ActorScript.act("spl3") },
+  spl3 = { },
   stdup = { ActorScript.isEnded / ActorScript.act("std") },
   hitalt = { -ActorScript.isFloor / ActorScript.act("hitair"),
               ActorScript.isEnded / ActorScript.act("std") },
@@ -128,4 +130,5 @@ actor.list.AI = ActorDlg.new{
   },
 }
 
+actor.list.AI:stop()
 return actor

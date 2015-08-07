@@ -56,10 +56,10 @@ SpriteDraw = Class {
     if pad.x >= 0 and pad.x <= 1 then padx = dim.w * pad.x else padx = pad.x end
     if pad.y >= 0 and pad.y <= 1 then pady = dim.h * pad.y else pady = pad.y end
     
-    this.graphics.drawq(this.drawable, this.quads[frame],
-      off.x + (pos.x * ratio.x),
-      off.y + (pos.y * ratio.y) + (pos.z * ratio.z), 0,
-      flip.h, flip.v,
-      padx % (dim.w +1), pady % (dim.h +1))
+    local x, y = off.x + (pos.x * ratio.x), off.y + (pos.y * ratio.y) + (pos.z * ratio.z)
+    local w, h = dim.w, dim.h
+    local ow, oh = padx % (dim.w +1), pady % (dim.h +1)
+    
+    this.graphics.drawq(this.drawable, this.quads[frame], x, y, 0, flip.h, flip.v, ow, oh)
   end,
 }

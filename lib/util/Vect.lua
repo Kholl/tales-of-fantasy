@@ -48,8 +48,6 @@ XY = Vect{x = 1, y = 2}
 XYZ = Vect{x = 1, y = 2, z = 3}
 -- Dimension coordinates (width height)
 WH = Vect{w = 1, h = 2}
--- Color
-RGB = Vect{r = 1, g = 2, b = 3}
 
 if __TEST then
   local a, r = XYZ{x = 1, y = 2, z = 3}, 0

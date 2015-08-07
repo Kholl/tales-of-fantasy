@@ -47,6 +47,12 @@ ActorScript = {
   end,
 
   -- Triggers
+  at = function(start, finish) return F{function(actor, scene, game)
+    finish = finish or start + 1 / game.fps
+    return scene:time() >= start and scene:time() < finish
+  end}
+  end,
+  
   isExtraGT = function(key, val) return F{function(actor) return actor:extra(key) > val end} end,
   isExtraLT = function(key, val) return F{function(actor) return actor:extra(key) < val end} end,
   isExtraEQ = function(key, val) return F{function(actor) return actor:extra(key) == val end} end,
@@ -107,7 +113,7 @@ ActorScript = {
 
   isKey = function(key) return F{function(actor, scene, game)
     local player = actor:player()
-    return game.control[player]:isKey(key)
+    return game.control[player] and game.control[player]:isKey(key)
   end}
   end,
 

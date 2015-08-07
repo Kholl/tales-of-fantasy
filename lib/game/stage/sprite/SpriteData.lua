@@ -40,6 +40,7 @@ SpriteData = Class {
   
   idle = function(this, actor, scene, game) end,
   play = function(this, actor, scene, game) this:delta(1):lim() end,
+  playrev = function(this, actor, scene, game) this:delta(-1):lim() end,
   loop = function(this, actor, scene, game) this:delta(1):mod() end,
   looprev = function(this, actor, scene, game) this:delta(-1):mod() end,
 

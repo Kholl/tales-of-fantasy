@@ -8,7 +8,7 @@ require("game/custom/Asset")
 
 Game = {
   checkHit = function(actor, target)
-    return not (actor.info.faction == target.info.faction) and
+    return not (actor:extra("faction") == target:extra("faction")) and
            not (target:state() == "blk") and
            string.match(target:state(), "hit-") == nil
   end,

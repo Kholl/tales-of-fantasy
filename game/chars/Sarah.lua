@@ -43,7 +43,7 @@ actor.states = {
 
 actor.list = {}
 actor.list.auto = ActorDlg.new{
-  all = {  ActorScript.isExtraGT("dmg", 0) / ActorScript.setExtra("dmg", 0) / ActorScript.act("hit") },
+  {  ActorScript.isExtraGT("dmg", 0) / ActorScript.setExtra("dmg", 0) / ActorScript.act("hit") },
   wlk = {  ActorScript.move{x = 100, z = 100} },
   atk = {  ActorScript.isFrame(5) / ActorScript.hitAll{dmg = 6},
            ActorScript.isEnded / ActorScript.act("std") },
@@ -111,4 +111,5 @@ actor.list.keyb = ActorDlg.new{
   atksq2 = { ActorScript.isKey{"a>a>a>a>"} ^ ActorScript.isFrame(5) / ActorScript.act("atksq3") },
 }
 
+actor.list.keyb:stop()
 return actor
