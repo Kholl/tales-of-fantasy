@@ -78,8 +78,11 @@ Scene = Class {
   addScroll = function(this, key, init, custom) this.scrolls[key] = Scroll.new(init, custom) end,
   addActor = function(this, key, init, custom) this.actors[key] = Actor.new(init, custom) end,
     
-  getActors = function(this, func)
-    if func then return List.filter(this.actors, func) else return this.actors end
+  getActors = function(this, filter)
+    if filter == nil then return this.actors
+    elseif type(filter) == "function" then return List.filter(this.actors, filter)
+    elseif type(filter) == "string" then return List.filter(this.actors, function(actor, key) return string.match(key, filter) end)
+    end
   end,
   
   getHits = function(this, actor, game)

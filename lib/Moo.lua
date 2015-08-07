@@ -104,6 +104,15 @@ Moo = {
     end
   end,
   
+  Group = function(objects)
+    return setmetatable({}, {__index = function(group, key)
+      return setmetatable({}, {__call = function(group, this, ...)
+        local args = {...}
+        Moo.List.each(objects, function(object) object[key](object, unpack(args)) end)
+      end})
+    end})
+  end,
+  
   Push = function(instance, props)
     Moo.List.each(props, function(value, property) instance[property](instance, value) end)
     return instance

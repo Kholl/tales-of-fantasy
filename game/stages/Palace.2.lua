@@ -134,7 +134,9 @@ return {
             dir = {x = 1, y = 1, z = 0} }),
         },
         
-        SceneScript.at(22) / function(scene, game)
+        SceneScript.at(23.5) / function(scene, game)
+          Group(scene:getActors("guard?")):state("std")
+          
           scene:get("camera"):focus("player")
           scene:actor("player"):get("keyb"):play()
         end,
