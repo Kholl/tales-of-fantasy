@@ -95,7 +95,7 @@ actor.list.auto = ActorDlg.new{
 
 actor.list.AI = ActorDlg.new{
   std = {
-    ActorScript.isRange("x", nil, 20) / ActorScript.act("wlk"),
+    ActorScript.isRange("x", nil, 60) / ActorScript.act("wlk"),
     ActorScript.isRange("x", 0) ^ Script.random(6) / ActorScript.act("jmpbck") / ActorScript.move{x = -200, y = -200},
     ActorScript.isRange("x", 0) / ActorScript.act("bck"),
     ActorScript.isTargetState("atk-") ^ ActorScript.isHitTarget / ActorScript.act("blk"),
@@ -112,8 +112,8 @@ actor.list.AI = ActorDlg.new{
   wlk = {
      ActorScript.faceTarget,
      ActorScript.isRange("x", 180, 100) / ActorScript.act("jmp") / ActorScript.move{x = 100, y = -240},
-    -ActorScript.isRange("x", nil, 20) / ActorScript.act("std"),
-     ActorScript.isRange("x", 10) / ActorScript.act("bck"),
+     ActorScript.isRange("x", 60) / ActorScript.act("std"),
+     ActorScript.isRange("x", 50) / ActorScript.act("bck"),
      ActorScript.isTargetState("atk-") ^ ActorScript.isHitTarget / ActorScript.act("blk"),
   },
   

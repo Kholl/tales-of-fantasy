@@ -61,7 +61,7 @@ Moo.ListGenerator = function(iterator) return {
   
   divide = function(list)
     local keys, vals = {}, {}
-    for key, val in iterator(src) do
+    for key, val in iterator(list) do
       table.insert(keys, key)
       table.insert(vals, val)
     end

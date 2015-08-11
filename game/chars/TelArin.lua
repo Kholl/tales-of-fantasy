@@ -58,7 +58,7 @@ actor.list.auto = ActorDlg.new{
   spl3 = { },
   spl4 = { ActorScript.isEnded / ActorScript.act("rdy") },
   spl5 = { },
-  atk1 = { ActorScript.isFrame(4) / ActorScript.hitAll{dmg = 20},
+  atk1 = { ActorScript.isFrame(4) / ActorScript.hitAll{dmg = 20, force = {x = 140, y = -200}},
            ActorScript.isEnded / ActorScript.act("std") },
   atk2 = { ActorScript.isFrame(2) / ActorScript.hitAll{dmg = 24},
            ActorScript.isEnded / ActorScript.act("std") },
@@ -74,7 +74,7 @@ actor.list.auto = ActorDlg.new{
 
 actor.list.AI = ActorDlg.new{
   std = {
-    ActorScript.isRange("x", nil, 20) / ActorScript.act("wlk"),
+    ActorScript.isRange("x", nil, 75) / ActorScript.act("wlk"),
     ActorScript.isRange("x", 0) / ActorScript.act("bck"),
     ActorScript.pick{
       ActorScript.isTargetHit{"atk1"} / ActorScript.act("atk1"),
@@ -84,14 +84,14 @@ actor.list.AI = ActorDlg.new{
   
   wlk = {
      ActorScript.faceTarget,
-     ActorScript.isRange("x", 180, 100) / ActorScript.act("jmp") / ActorScript.move{x = 100, y = -220},
-    -ActorScript.isRange("x", nil, 20) / ActorScript.act("std"),
-     ActorScript.isRange("x", 10) / ActorScript.act("bck"),
+     ActorScript.isRange("x", 180, 140) / ActorScript.act("jmp") / ActorScript.move{x = 100, y = -220},
+     ActorScript.isRange("x", 75) / ActorScript.act("std"),
+     ActorScript.isRange("x", 50) / ActorScript.act("bck"),
   },
   
   bck = {
     ActorScript.faceTarget,
-    ActorScript.isRange("x", nil, 30) / ActorScript.act("std"),
+    ActorScript.isRange("x", nil, 90) / ActorScript.act("std"),
   },
   
   jmp = {

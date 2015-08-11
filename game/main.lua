@@ -22,8 +22,9 @@ return {
       b = "s",
     },
   },
-  --start = "game/stages/Palace.1.lua",
-  start = "game/stages/Palace.2.lua",
+--  start = "game/stages/Palace.1.lua",
+--  start = "game/stages/Palace.2.lua",
+  start = "game/stages/Tester.lua",
   interface = {
     items = {}
   },

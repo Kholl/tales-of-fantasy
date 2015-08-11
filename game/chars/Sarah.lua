@@ -43,7 +43,13 @@ actor.states = {
 
 actor.list = {}
 actor.list.auto = ActorDlg.new{
-  {  ActorScript.isExtraGT("dmg", 0) / ActorScript.setExtra("dmg", 0) / ActorScript.act("hit") },
+  {  ActorScript.isExtraGT("dmg", 0) /
+     ActorScript.setExtra("dmg", 0) .. Script.pick{
+      ActorScript.act("hit"),
+      ActorScript.act("hit"),
+--      ActorScript.act("hitair") ^ ActorScript.move{x = -40, y = -180},
+    },
+  },
   wlk = {  ActorScript.move{x = 100, z = 100} },
   atk = {  ActorScript.isFrame(5) / ActorScript.hitAll{dmg = 6},
            ActorScript.isEnded / ActorScript.act("std") },
@@ -71,8 +77,7 @@ actor.list.auto = ActorDlg.new{
   atksq3 = {  ActorScript.isFrame(5) / ActorScript.hitAll{dmg = 12, force = {x = 140, y = -200}},
               ActorScript.isEnded / ActorScript.act("std") },
   hitair = {  ActorScript.isFloor / ActorScript.act("hitflr") },
-  hitflr = {  ActorScript.isEnded / ActorScript.act("std"),
-              ActorScript.isDied / ActorScript.act("die") },
+  hitflr = {  ActorScript.isEnded / ActorScript.act("std") },
   hitalt = { -ActorScript.isFloor / ActorScript.act("hitair"),
               ActorScript.isEnded / ActorScript.act("std") },
   hithvy = {  ActorScript.isFall / ActorScript.act("hitair") },

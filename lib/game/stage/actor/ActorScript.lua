@@ -15,6 +15,11 @@ ActorScript = {
   end}
   end,
   
+  spd = function(spd) return F{function(actor)
+    actor:spd(spd)
+  end}
+  end,
+  
   setExtra = function(key, value) return F{function(actor)
     actor:extra(key, value)
   end}
@@ -40,7 +45,7 @@ ActorScript = {
   hitAll = function(hit) return F{function(actor, scene, game)
     local hits = scene:getHits(actor, game)
     List.each(hits, function(other)
-      other:dmg(hit.dmg)
+      other:extra("dmg", hit.dmg)
       if not (hit.force == nil) then other:force(actor, hit.force) end
     end)
   end}
@@ -70,7 +75,8 @@ ActorScript = {
     local z = math.max(actor:rad(), target:rad())
 
     local select = List.select(states, function(state)
-      local x = (actor:dim(state).w + target:box().w) * 0.5        
+      local x = (actor:dim(state).w + target:box().w) * 0.5
+
       return (d.x < x) and (d.z < z)
     end)
   
@@ -103,6 +109,7 @@ ActorScript = {
     if not actor:target() then return false end
     
     local dist = actor:distout()
+    
     local ok = true
     if ok and min then ok = ok and (dist[k] >= min) end
     if ok and max then ok = ok and (dist[k] <= max) end
@@ -130,7 +137,6 @@ ActorScript = {
   
   isFloor = F{function(actor, scene) return scene.phys:isFloor(actor) end},
 
-  isDied = F{function(actor, scene) return actor.info.hp == 0 end},
   isFall = F{function(actor, scene) return actor:spd().y > 0 end},
   isKeyb = F{function(actor, scene) return not (actor:keyb() == false) end},
   isAuto = F{function(actor, scene) return not (actor:auto() == false) end},

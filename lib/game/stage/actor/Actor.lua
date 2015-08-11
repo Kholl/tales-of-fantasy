@@ -131,7 +131,7 @@ Actor = Class {
   disthit = function(this, actor)
     actor = actor or this:target() or this
     return {
-      x = (this:dim().w + actor:box().w) * 0.5,
+      x = (this:box().w + actor:box().w) * 0.5,
       z = math.max(this:rad(), actor:rad()) }
   end,
   
