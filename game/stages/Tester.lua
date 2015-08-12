@@ -39,7 +39,7 @@ return {
   },
   
   actors = {
-    player = Actor.new("game/chars/Helf.lua", {
+    player = Actor.new("game/chars/Sarah.lua", {
       player = 1,
       pos = {x = 100, y = 0, z = 400},
       dir = {x = 1, y = 1, z = 0},
@@ -58,7 +58,7 @@ return {
     script = SceneDlg.new{
       start = {function(scene, game)
         scene:get("camera"):focus("player")
-        scene:actor("player"):get("AI"):play()
+--        scene:actor("player"):get("AI"):play()
         scene:actor("player"):get("keyb"):play()
         scene:actor("player"):extra("faction", "player")
         scene:actor("player"):target(scene:actor("enemy"))

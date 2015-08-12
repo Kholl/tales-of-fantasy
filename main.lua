@@ -15,6 +15,7 @@ Dependency "logger" (io.output())
 Dependency "window" (love.window)
 Dependency "graphics" (love.graphics)
 Dependency "keyboard" (love.keyboard)
+Dependency "joystick" (love.joystick)
 Dependency "filesystem" (love.filesystem)
 Dependency "image" (love.image)
 
@@ -26,7 +27,9 @@ Dependency "resource" (Resources.new{
 })
 
 require("lib/game/ui/graphic/Graphic")
-require("lib/game/dlgs/KeybDlg")
+require("lib/game/dlgs/Controller")
+require("lib/game/dlgs/Keyboard")
+require("lib/game/dlgs/Gamepad")
 require("lib/game/Script")
 
 local game
@@ -38,7 +41,8 @@ love.load = function(arg)
   game.ui = Graphic.new(game.interface)
   
   game.control = {}
-  game.control[1] = KeybDlg.new(game.keyb[1])
+  game.control[1] = Controller.get(game.input[2].controller).new(game.input[2])
+  
   game.checkHit = Game.checkHit
   game.checkDmg = Game.checkDmg
   

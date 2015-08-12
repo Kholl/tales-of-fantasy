@@ -12,14 +12,28 @@ return {
   sync = true,
   dir = "ToF",
   fps = 30,
-  keyb = {
-    {
-      r = "right",
-      l = "left",
-      u = "up",
-      d = "down",
-      a = "a",
-      b = "s",
+  input = {
+    [1] = {
+      controller = "keyboard",
+      keys = {
+        r = "right",
+        l = "left",
+        u = "up",
+        d = "down",
+        a = "a",
+        b = "s",
+      },
+    },
+    [2] = {
+      controller = "gamepad",
+      keys = {
+        r = "right",
+        l = "left",
+        u = "up",
+        d = "down",
+        a = 1,
+        b = 2,
+      },
     },
   },
 --  start = "game/stages/Palace.1.lua",

@@ -44,11 +44,8 @@ actor.states = {
 actor.list = {}
 actor.list.auto = ActorDlg.new{
   {  ActorScript.isExtraGT("dmg", 0) /
-     ActorScript.setExtra("dmg", 0) .. Script.pick{
-      ActorScript.act("hit"),
-      ActorScript.act("hit"),
---      ActorScript.act("hitair") ^ ActorScript.move{x = -40, y = -180},
-    },
+     ActorScript.setExtra("dmg", 0) /
+     ActorScript.act("hit"),
   },
   wlk = {  ActorScript.move{x = 100, z = 100} },
   atk = {  ActorScript.isFrame(5) / ActorScript.hitAll{dmg = 6},

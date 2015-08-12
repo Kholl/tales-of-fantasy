@@ -3,10 +3,8 @@ Moo Object Oriented framework for LUA
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-KeybDlg = Class {
+Controller = Class {
   MAXIDLE = 0.1,
-  
-  keyboard = Dependency("keyboard"),
   
   keys = nil,
   list = nil,
@@ -17,6 +15,12 @@ KeybDlg = Class {
   idle = nil,
   match = nil,
   matchlen = nil,
+  
+  get = function(controller)
+    if controller == "keyboard" then return Keyboard
+    elseif controller == "gamepad" then return Gamepad
+    end
+  end,
   
   create = function(this, keys)
     this.keys = keys
@@ -34,13 +38,13 @@ KeybDlg = Class {
   update = function(this, delta, game)
     local keypress = this:updateCurrKey(delta)
         
-    if this.idle >= KeybDlg.MAXIDLE then
+    if this.idle >= Controller.MAXIDLE then
       this:resetState()
     end
     
     if this:isChangedKey() then this:addCurrKey() end
   end,
-    
+  
   updateCurrKey = function(this, delta)
     local keypress = false
 
@@ -48,7 +52,7 @@ KeybDlg = Class {
     this.prevkey, this.currkey = this.currkey, ""
     
     List.each(this.keys, function(key, cmd)
-      if this.keyboard.isDown(key) then keypress, currlist[cmd] = true, true end
+      if this:isDown(key) then keypress, currlist[cmd] = true, true end
     end)
     
     List.each(this.keys, function(key, cmd)
@@ -58,7 +62,7 @@ KeybDlg = Class {
     if keypress then this.idle = 0 else this.idle = this.idle +delta end
     return keypress
   end,
-    
+      
   resetState = function(this)
     this.idle = 0
     this.key, this.list = "", {}
@@ -76,6 +80,8 @@ KeybDlg = Class {
     this.key, this.match, this.matchlen = "", "", 0
     List.each(this.list, function(key) this.key = key .. ">" .. this.key end)
   end,
+  
+  isKeypress = function(this, cmd) return this:isDown(this.keys[cmd]) end,
 
   isKey = function(this, keys)
     -- Return FALSE if no key was pressed.
@@ -97,6 +103,4 @@ KeybDlg = Class {
     
     return isMatch
   end,
-  
-  isKeypress = function(this, cmd) return this.keyboard.isDown(this.keys[cmd]) end,
 }
