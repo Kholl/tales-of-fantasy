@@ -32,9 +32,21 @@ SceneScript = {
   end}
   end,
   
-  all = function(list) return F{function(actor, scene, game)
-    List.each(list, function(rule) rule(actor, scene, game) end)
+  all = function(list) return F{function(scene, game)
+    List.each(list, function(rule) rule(scene, game) end)
     return false
+  end}
+  end,
+
+  loadScene = function(name) return F{function(scene, game)
+    game.scene = Scene.new(name)
+    game.ui:time(0)
+    
+    game.scene:step(game)
+    game.scene:update(0, nil, game)
+    
+    game.ui:step(game)
+    game.ui:update(0, nil, game)
   end}
   end,
 }

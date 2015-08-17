@@ -55,7 +55,7 @@ return {
   
   list = {
     Animator.new{prop = "color", key = {"r", "g", "b"}, t = {0, 1}},
-    Animator.new{prop = "dim", key = "h", v = {0.5, 1}, t = {1, 2}},
+    Animator.new{prop = "dim", key = "h", v = {0.5, 1}, t = {23, 24}},
     
     camera = Camera.new{pos = {x = 100, z = 325}},
     
@@ -69,7 +69,8 @@ return {
         scene:state("run")
       end},
       
-      { SceneScript.at(2) / function(scene, game)
+      run = {
+        SceneScript.at(2) / function(scene, game)
           scene:actor("player"):state("std")
           scene:actor("telarin"):state("std")        
         end,
@@ -134,13 +135,62 @@ return {
             dir = {x = 1, y = 1, z = 0} }),
         },
         
-        SceneScript.at(23.5) / function(scene, game)
+        SceneScript.at(24) / function(scene, game)
           Group(scene:getActors("guard?")):state("std")
           
           scene:get("camera"):focus("player")
-          scene:actor("player"):get("keyb"):play()
+          scene:actor("player"):run("keyb")
+          
+          scene:addActor("demon1", "game/chars/Demon.lua", {
+            state = "fly",
+            flip = {h = -1, v = 1},
+            pos = {x = 800, y = -100, z = 375},
+            dir = {x = -1, y = 1, z = 0} })
+          
+          scene:addActor("demon2", "game/chars/Demon.lua", {
+            state = "fly",
+            flip = {h = -1, v = 1},
+            pos = {x = 750, y = -100, z = 400},
+            dir = {x = -1, y = 1, z = 0} })
+          
+          scene:addActor("demon3", "game/chars/Demon.lua", {
+            state = "fly",
+            flip = {h = -1, v = 1},
+            pos = {x = 700, y = -100, z = 425},
+            dir = {x = -1, y = 1, z = 0} })
+          
+          scene:addActor("demon4", "game/chars/Demon.lua", {
+            state = "fly",
+            flip = {h = -1, v = 1},
+            pos = {x = 800, y = -100, z = 375},
+            dir = {x = -1, y = 1, z = 0} })
+          
+          scene:addActor("demon5", "game/chars/Demon.lua", {
+            state = "fly",
+            flip = {h = -1, v = 1},
+            pos = {x = 750, y = -100, z = 400},
+            dir = {x = -1, y = 1, z = 0} })
+          
+          scene:addActor("demon6", "game/chars/Demon.lua", {
+            state = "fly",
+            flip = {h = -1, v = 1},
+            pos = {x = 700, y = -100, z = 425},
+            dir = {x = -1, y = 1, z = 0} })
+        
+          for i = 1,6 do
+            local demon = scene:actor("demon" .. i)
+            local guard = scene:actor("guard" .. i)
+            demon:run("AI")
+            guard:run("AI")
+            demon:target(guard)
+            guard:target(demon)
+          end
+          
+          
+          scene:actor("telarin"):pos{x = 3800}          
+          scene:state("battle1")
         end,
-      }
+      },
     }
   }
 }

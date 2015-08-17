@@ -38,31 +38,27 @@ actor.states = {
 
 actor.list = {}
 actor.list.auto = ActorDlg.new{
-  {  ActorScript.isExtraGT("dmg", 0) /
-     ActorScript.setExtra("dmg", 0) /
-     ActorScript.act("hit"),
-  },
   wlk = {  ActorScript.move{x = 100, z = 100} },
-  bck = {  ActorScript.move{x = -60} },
+  bck = {  ActorScript.move{x = -50} },
   jmp = {  ActorScript.isFloor / ActorScript.act("std") },
   hit = { -ActorScript.isFloor / ActorScript.act("hitair"),
            ActorScript.isEnded / ActorScript.act("std") },
-  atk1 = { ActorScript.isFrame(2) / ActorScript.hitAll{dmg = 5},
+  atk1 = { ActorScript.isFrame(2) / ActorScript.hitAll(Game.dmg(5)),
            ActorScript.isEnded / ActorScript.act("std") },
-  atk2 = { ActorScript.isFrame(2) / ActorScript.hitAll{dmg = 8, force = {x = 80}},
+  atk2 = { ActorScript.isFrame(2) / ActorScript.hitAll(Game.dmg(8, {x = 80})),
            ActorScript.isEnded / ActorScript.act("std") },
-  atk3 = { ActorScript.isFrame(2) / ActorScript.hitAll{dmg = 10},
+  atk3 = { ActorScript.isFrame(2) / ActorScript.hitAll(Game.dmg(10)),
            ActorScript.isEnded / ActorScript.act("std") },
   hitair = {  ActorScript.isFloor / ActorScript.act("hitflr") },
   hithvy = { -ActorScript.isFloor / ActorScript.act("hitair"),
               ActorScript.isEnded / ActorScript.act("std") },
   hitflr = {  ActorScript.isEnded / ActorScript.act("std") },
   jmpend = {  ActorScript.isFloor / ActorScript.act("std") },
-  atkjmp = {  ActorScript.isFrame(2) / ActorScript.hitAll{dmg = 10},
+  atkjmp = {  ActorScript.isFrame(2) / ActorScript.hitAll(Game.dmg(10)),
               ActorScript.isEnded / ActorScript.act("jmpend"),
               ActorScript.isFloor / ActorScript.act("std") },
   jmpatk = {
-    ActorScript.isFrame(2) / ActorScript.hitAll{dmg = 10},
+    ActorScript.isFrame(2) / ActorScript.hitAll(Game.dmg(10)),
     jmp = ActorScript.isEnded,
     std = SceneScript.isFloor,
   },  

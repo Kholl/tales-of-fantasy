@@ -42,12 +42,10 @@ ActorScript = {
   end}
   end,
   
-  hitAll = function(hit) return F{function(actor, scene, game)
-    local hits = scene:getHits(actor, game)
-    List.each(hits, function(other)
-      other:extra("dmg", hit.dmg)
-      if not (hit.force == nil) then other:force(actor, hit.force) end
-    end)
+  force = function(force) return F{function(actor) actor:force(force) end} end,
+  
+  hitAll = function(func) return F{function(actor, scene, game)
+    List.each(scene:getHits(actor, game), func)
   end}
   end,
 
@@ -58,10 +56,6 @@ ActorScript = {
   end}
   end,
   
-  isExtraGT = function(key, val) return F{function(actor) return actor:extra(key) > val end} end,
-  isExtraLT = function(key, val) return F{function(actor) return actor:extra(key) < val end} end,
-  isExtraEQ = function(key, val) return F{function(actor) return actor:extra(key) == val end} end,
-
   isTargetHit = function(states) return F{function(actor, scene, game, target)
     target = target or actor:target()
     if actor == target then return false end
@@ -153,4 +147,31 @@ ActorScript = {
     return false
   end}
   end,
+  
+  prob = function(list) return F{function(actor, scene, game)
+    local n = math.random(1, 100)
+    local func = IndexList.select(list, function(func, value) return n <= value end)
+    return func(actor, scene, game)
+  end}
+  end,
+  
+  -- Custom extra properties
+  extra = function(key) return {
+    gt = function(val) return F{function(actor) return actor:extra(key) > val end} end,
+    lt = function(val) return F{function(actor) return actor:extra(key) < val end} end,
+    eq = function(val) return F{function(actor) return actor:extra(key) == val end} end,     
+    set = function(val) return F{function(actor) actor:extra(key, val) end} end,
+
+    inc = function(inc) return F{function(actor)
+      local val = actor:extra(key)
+      return actor:extra(key, val + inc)
+    end}
+    end,
+    
+    dec = function(dec) return F{function(actor)
+      local val = actor:extra(key)
+      return actor:extra(key, val - dec)
+    end}
+    end,
+  } end,
 }

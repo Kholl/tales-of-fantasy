@@ -5,17 +5,17 @@ Moo Object Oriented framework for LUA
 
 SceneDlg = Class {
   rules = nil,
-  run = nil,
+  running = nil,
   
   create = function(this, rules)
     this.rules = rules or {}
-    this.run = true
+    this.running = true
   end,
   
   draw = Nil,
   
   step = function(this, scene, game)
-    if not this.run then return end
+    if not this.running then return end
   
     local rules = this.rules[1] or {}
     IndexList.each(rules, function(rule, index) rule(scene, game) end)
@@ -27,6 +27,6 @@ SceneDlg = Class {
   
   update = Nil,
   
-  play = function(this) this.run = true end,
-  stop = function(this) this.run = false end,
+  run = function(this) this.running = true end,
+  stop = function(this) this.running = false end,
 }

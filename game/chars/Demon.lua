@@ -38,23 +38,19 @@ actor.states = {
 
 actor.list = {}
 actor.list.auto = ActorDlg.new{
-  {  ActorScript.isExtraGT("dmg", 0) /
-     ActorScript.setExtra("dmg", 0) /
-     ActorScript.act("hit"),
-  },
-  wlk = {  ActorScript.move{x =  70, z = 70} },
+  wlk = {  ActorScript.move{x =  80, z = 80} },
   bck = {  ActorScript.move{x = -40} },
   fly = {  ActorScript.move{x = 120, z = 30} ^ ActorScript.spd{y = 20},
            ActorScript.isFloor / ActorScript.act("std") },
   hit = { -ActorScript.isFloor / ActorScript.act("hitair"),
            ActorScript.isEnded / ActorScript.act("std") },
-  atk1 = { ActorScript.isFrame(1) / ActorScript.hitAll{dmg = 8},
+  atk1 = { ActorScript.isFrame(1) / ActorScript.hitAll(Game.dmg(8)),
            ActorScript.isEnded / ActorScript.act("std") },
-  atk2 = { ActorScript.isFrame(4) / ActorScript.hitAll{dmg = 15, force = {x = 40, y = -200}},
+  atk2 = { ActorScript.isFrame(4) / ActorScript.hitAll(Game.dmg(15, {x = 40, y = -200})),
            ActorScript.isEnded / ActorScript.act("std") },
-  atk3 = { ActorScript.isFrame(2) / ActorScript.hitAll{dmg = 10},
+  atk3 = { ActorScript.isFrame(2) / ActorScript.hitAll(Game.dmg(10)),
            ActorScript.isEnded / ActorScript.act("std") },
-  atkjmp = { ActorScript.isFrame(3) / ActorScript.hitAll{dmg = 12},
+  atkjmp = { ActorScript.isFrame(3) / ActorScript.hitAll(Game.dmg(12)),
              ActorScript.isFloor / ActorScript.act("std") },
   hitair = { ActorScript.isFloor / ActorScript.act("hitflr") },
   hitflr = { ActorScript.isEnded / ActorScript.act("std") },

@@ -45,7 +45,6 @@ actor.states = {
 
 actor.list = {}
 actor.list.auto = ActorDlg.new{
-  {  ActorScript.isExtraGT("dmg", 0) / ActorScript.setExtra("dmg", 0) / ActorScript.act("hit") },
   wlk = {  ActorScript.move{x =  90, z = 90} },
   bck = {  ActorScript.move{x = -60} },
   jmp = {  ActorScript.isFloor / ActorScript.act("std") },

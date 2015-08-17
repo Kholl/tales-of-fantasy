@@ -41,7 +41,7 @@ love.load = function(arg)
   game.ui = Graphic.new(game.interface)
   
   game.control = {}
-  game.control[1] = Controller.get(game.input[2].controller).new(game.input[2])
+  game.control[1] = Controller.get(game.input[1].controller).new(game.input[1])
   
   game.checkHit = Game.checkHit
   game.checkDmg = Game.checkDmg
@@ -49,7 +49,7 @@ love.load = function(arg)
   love.filesystem.setIdentity(game.dir)
   love.graphics.setMode(game.w, game.h, game.full, game.sync)  
   
-  Script.loadScene(game, game.start)
+  SceneScript.loadScene(game.start)(nil, game)
 end
 
 love.draw = function()

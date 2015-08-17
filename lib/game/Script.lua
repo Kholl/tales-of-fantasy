@@ -5,7 +5,7 @@ Moo Object Oriented framework for LUA
 
 require("lib/game/stage/scene/Scene")
 
-Script = {
+ScriptUnused = {
   always = F{function() return true end},
   never = F{function() return false end},
   
@@ -19,16 +19,5 @@ Script = {
     local key = keys[math.random(1, #keys)]
     return list[key]
   end}
-  end,
-
-  loadScene = function(game, name)
-    game.scene = Scene.new(name)
-    game.ui:time(0)
-    
-    game.scene:step(game)
-    game.scene:update(0, nil, game)
-    
-    game.ui:step(game)
-    game.ui:update(0, nil, game)
   end,
 }

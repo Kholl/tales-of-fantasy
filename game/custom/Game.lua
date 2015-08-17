@@ -12,4 +12,9 @@ Game = {
            not (target:state() == "blk") and
            string.match(target:state(), "hit-") == nil
   end,
+  
+  dmg = function(dmg) return F{function(other)
+    other:state("hit")
+  end}
+  end,
 }

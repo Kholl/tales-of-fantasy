@@ -72,6 +72,8 @@ Actor = Class {
   rem = function(this, item) List.rem(this.list, item) end,
   has = function(this, key) return not (this.list[key] == nil) end,
   get = function(this, key) return this.list[key] or Nil end,
+  run = function(this, key) this:get(key):run() end,
+  stop = function(this, key) this:get(key):stop() end,
   
   script = function(this, rules) this:add(ActorDlg.new{rules}) end,
   
