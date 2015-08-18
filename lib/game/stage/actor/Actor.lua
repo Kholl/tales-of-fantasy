@@ -26,20 +26,21 @@ Actor = Class {
     
     List.each(init and init.states, function(state, key)
       this.spriteDraw[key] = SpriteDraw.new{
-        res = state.res or init.res,
+        res = state.res or init.res or key,
+        path = state.path or init.path,
         pmap = state.pmap or init.pmap,
-        nframes = state.nframes or init.nframes,
-        hframes = state.hframes or init.hframes,
-        dim = state.dim or init.dim}
+        nframes = state.nframes or init.nframes}
       
       this.spriteData[key] = SpriteData.new{
+        dim = {
+          w = this.spriteDraw[key]:getWidth() / (state.nframes or init.nframes),
+          h = this.spriteDraw[key]:getHeight() },
         box = state.box or init.box,
-        dim = state.dim or init.dim,
         pad = state.pad or init.pad,
         
-        anim = state.anim,
-        frate = state.frate,
-        nframes = state.nframes}      
+        anim = state.anim or init.anim,
+        frate = state.frate or init.frate,
+        nframes = state.nframes or init.nframes}      
     end)
   end,
   

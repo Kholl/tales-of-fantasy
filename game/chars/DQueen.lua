@@ -10,6 +10,7 @@ actor.pad = {x = 0.5, y = 1}
 actor.box = {w = 35, h = 90}
 actor.rad = 20
 actor.mass = 1
+actor.path = "game/chars/morrigan"
 
 actor.extra = {
   faction = "demon",
@@ -19,33 +20,31 @@ actor.extra = {
 }
 
 actor.states = {
-  std = {res = "game/chars/morrigan/std.png", dim = {w =  74, h = 100}, frate = 3, nframes = 13, anim = "loop"},
-  wlk = {res = "game/chars/morrigan/wlk.png", dim = {w =  57, h = 108}, frate = 0, nframes = 1, anim = "loop"},
-  bck = {res = "game/chars/morrigan/wlk.png", dim = {w =  57, h = 108}, frate = 0, nframes = 1, anim = "loop"},
-  jmp = {res = "game/chars/morrigan/jmp.png", dim = {w =  72, h =  88}, frate = 0, nframes = 5, anim = Anim.Air(-240)},
-  blk = {res = "game/chars/morrigan/blk.png", dim = {w = 178, h = 113}, frate = {2,8}, nframes = 2, anim = "play"},
-  hit = {res = "game/chars/morrigan/hit.png", dim = {w =  78, h =  91}, frate = 8, nframes = 1, anim = "play"},
-  stn = {res = "game/chars/morrigan/stn.png", dim = {w =  74, h =  78}, frate = 0, nframes = 1, anim = "loop"},
-  win = {res = "game/chars/morrigan/win.png", dim = {w =  64, h = 111}, frate = 0, nframes = 1, anim = "loop"},
-  atk1 = {res = "game/chars/morrigan/atk1.png", dim = {w = 200, h =  89}, frate = {3,3,3,6,4}, nframes = 5, anim = "play"},
-  atk2 = {res = "game/chars/morrigan/atk2.png", dim = {w = 120, h =  99}, frate = {3,6,4}, nframes = 3, anim = "play"},
-  atk3 = {res = "game/chars/morrigan/atk3.png", dim = {w = 200, h = 114}, frate = {3,3,3,3,6,4}, nframes = 6, anim = "play"},
-  atk4 = {res = "game/chars/morrigan/atk4.png", dim = {w = 220, h = 105}, frate = {3,3,6,4}, nframes = 4, anim = "play"},
-  atk5 = {res = "game/chars/morrigan/atk5.png", dim = {w = 192, h = 126}, frate = {3,3,3,3,6,4}, nframes = 6, anim = "play"},
-  atk6 = {res = "game/chars/morrigan/atk6.png", dim = {w =  76, h = 140}, frate = {4,4,8}, nframes = 3, anim = "play",
-          pad = {x = 0.5, y = -25}},
-  spl1 = {res = "game/chars/morrigan/spl1.png", dim = {w = 104, h =  86}, frate = 3, nframes = 2, anim = "loop"},
-  spl2 = {res = "game/chars/morrigan/spl2.png", dim = {w =  55, h = 123}, frate = 2, nframes = 1, anim = "play"},
-  spl3 = {res = "game/chars/morrigan/spl3.png", dim = {w =  55, h = 123}, frate = 2, nframes = 3, anim = "loop"},
-  stdup = {res = "game/chars/morrigan/stdup.png", dim = {w = 84, h = 99}, frate = 4, nframes = 3, anim = "play",
-           pad = {x = 0.5, y = -15}},
-  hitair = {res = "game/chars/morrigan/hitair.png", dim = {w = 115, h =  87}, frate = 0, nframes = 1, anim = Anim.Air2()},
-  hithvy = {res = "game/chars/morrigan/hithvy.png", dim = {w =  74, h =  97}, frate = 8, nframes = 1, anim = "play"},
-  hitflr = {res = "game/chars/morrigan/hitflr.png", dim = {w = 141, h =  33}, frate = 30, nframes = 1, anim = "play"},
-  jmpend = {res = "game/chars/morrigan/jmpend.png", dim = {w =  72, h =  88}, frate = 4, nframes = 2, anim = "play"},
-  jmpbck = {res = "game/chars/morrigan/jmpbck.png", dim = {w = 190, h = 160}, frate = 3, nframes = 7, anim = "play"},
-  atkjmp1 = {res = "game/chars/morrigan/atkjmp1.png", dim = {w = 158, h =  88}, frate = 4, nframes = 2, anim = "play"},
-  atkjmp2 = {res = "game/chars/morrigan/atkjmp2.png", dim = {w = 216, h =  76}, frate = 2, nframes = 4, anim = "play"},
+  std = {frate = 3, nframes = 13, anim = "loop"},
+  wlk = {frate = 0, nframes =  1, anim = "loop"},
+  bck = {frate = 0, nframes =  1, anim = "loop", res = "wlk"},
+  jmp = {frate = 0, nframes = 5, anim = Anim.Air(-240)},
+  blk = {frate = {2,8}, nframes = 2, anim = "play"},
+  hit = {frate = 8, nframes = 1, anim = "play"},
+  stn = {frate = 0, nframes = 1, anim = "loop"},
+  win = {frate = 0, nframes = 1, anim = "loop"},
+  atk1 = {frate = {3,3,3,6,4}, nframes = 5, anim = "play"},
+  atk2 = {frate = {3,6,4}, nframes = 3, anim = "play"},
+  atk3 = {frate = {3,3,3,3,6,4}, nframes = 6, anim = "play"},
+  atk4 = {frate = {3,3,6,4}, nframes = 4, anim = "play"},
+  atk5 = {frate = {3,3,3,3,6,4}, nframes = 6, anim = "play"},
+  atk6 = {frate = {4,4,8}, nframes = 3, anim = "play", pad = {x = 0.5, y = -25}},
+  spl1 = {frate = 3, nframes = 2, anim = "loop"},
+  spl2 = {frate = 2, nframes = 1, anim = "play"},
+  spl3 = {frate = 2, nframes = 3, anim = "loop"},
+  stdup = {frate = 4, nframes = 3, anim = "play", pad = {x = 0.5, y = -15}},
+  hitair = {frate = 0, nframes = 1, anim = Anim.Air2()},
+  hithvy = {frate = 8, nframes = 1, anim = "play"},
+  hitflr = {frate = 30, nframes = 1, anim = "play"},
+  jmpend = {frate = 4, nframes = 2, anim = "play"},
+  jmpbck = {frate = 3, nframes = 7, anim = "play"},
+  atkjmp1 = {frate = 4, nframes = 2, anim = "play"},
+  atkjmp2 = {frate = 2, nframes = 4, anim = "play"},
 }
 
 actor.list = {}

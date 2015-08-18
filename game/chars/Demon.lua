@@ -10,6 +10,7 @@ actor.pad = {x = 0.5, y = 1}
 actor.box = {w = 32, h = 55}
 actor.rad = 22
 actor.mass = 2
+actor.path = "game/chars/gargoyle"
 
 actor.extra = {
   faction = "demon",
@@ -19,21 +20,21 @@ actor.extra = {
 }
 
 actor.states = {
-  std = { res = "game/chars/gargoyle/std.png", dim = {w =  94, h =  55}, frate = 0, nframes = 1},
-  stn = { res = "game/chars/gargoyle/stn.png", dim = {w =  72, h =  70}, frate = 0, nframes = 1},
-  wlk = { res = "game/chars/gargoyle/wlk.png", dim = {w = 105, h =  48}, frate = 3, nframes = 6, anim = "loop"},
-  bck = { res = "game/chars/gargoyle/wlk.png", dim = {w = 105, h =  48}, frate = 4, nframes = 6, anim = "looprev"},
-  fly = { res = "game/chars/gargoyle/fly.png", dim = {w =  83, h = 106}, frate = 0, nframes = 1},
-  hit = { res = "game/chars/gargoyle/hit.png", dim = {w =  69, h =  68}, frate = 8, nframes = 1, anim = "play"},
-  atk1 = { res = "game/chars/gargoyle/atk1.png", dim = {w = 99, h =  90}, frate = {6,10}, nframes = 2, anim = "play"},
-  atk2 = { res = "game/chars/gargoyle/atk2.png", dim = {w = 99, h = 102}, frate = 4, nframes = 7, anim = "play"},
-  atk3 = { res = "game/chars/gargoyle/atk3.png", dim = {w = 99, h = 103}, frate = {4,4,8}, nframes = 3, anim = "play"},
-  atkjmp = { res = "game/chars/gargoyle/atkjmp.png", dim = {w = 106, h = 112}, frate = 6, nframes = 4, anim = "play"},
-  flyend = { res = "game/chars/gargoyle/fly.png",    dim = {w =  83, h = 106}, frate = 3, nframes = 2, anim = "play"},
-  hitair = { res = "game/chars/gargoyle/hitair.png", dim = {w = 125, h =  63}, frate = 0, nframes = 2, anim = Anim.Air2()},
-  hitflr = { res = "game/chars/gargoyle/hitflr.png", dim = {w = 122, h =  45}, frate = {2,2,26}, nframes = 3, anim = "play"},
-  jmpend = { res = "game/chars/gargoyle/jmpend.png", dim = {w =  83, h = 106}, frate = 0, nframes = 1},
-  jmpbck = { res = "game/chars/gargoyle/jmpbck.png", dim = {w =  98, h =  91}, frate = 4, nframes = 3, anim = "play"},
+  std = { frate = 0, nframes = 1},
+  stn = { frate = 0, nframes = 1},
+  wlk = { frate = 3, nframes = 6, anim = "loop"},
+  bck = { frate = 4, nframes = 6, anim = "looprev", res = "wlk" },
+  fly = { frate = 0, nframes = 1},
+  hit = { frate = 8, nframes = 1, anim = "play"},
+  atk1 = { frate = {6,10}, nframes = 2, anim = "play"},
+  atk2 = { frate = 4, nframes = 7, anim = "play"},
+  atk3 = { frate = {4,4,8}, nframes = 3, anim = "play"},
+  atkjmp = { frate = 6, nframes = 4, anim = "play"},
+  flyend = { frate = 3, nframes = 2, anim = "play", res = "fly" },
+  hitair = { frate = 0, nframes = 2, anim = Anim.Air2()},
+  hitflr = { frate = {2,2,26}, nframes = 3, anim = "play"},
+  jmpend = { frate = 0, nframes = 1},
+  jmpbck = { frate = 4, nframes = 3, anim = "play"},
 }
 
 actor.list = {}

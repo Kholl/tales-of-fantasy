@@ -3,12 +3,12 @@ Tales Of Fantasy
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-require("game/custom/FX")
+require("lib/game/fx/ImageFX")
 
 Asset = {
   ["high elf pal"] = {
     name = "helf",
-    func = FX.MapPixel{
+    func = ImageFX.mapPixel{
       ["000000"] = {r =  34, g =  85, b =  51},
       ["223355"] = {r = 119, g =  68, b =  34},
       ["444477"] = {r = 153, g = 102, b =  68},

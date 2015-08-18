@@ -11,9 +11,13 @@ SpriteDraw = Class {
   quads = nil,
   
   create = function(this, init)
-    local imageName = init and init.res    
-    local image
+    local path = init and init.path
     
+    local imageName
+    imageName = init and init.res    
+    imageName = path .. "/" .. imageName .. ".png"
+    
+    local image
     if init.pmap
       then image = this.resource:getFx("image", imageName)(init.pmap.name, init.pmap.func)
       else image = this.resource:get("image", imageName)
@@ -22,25 +26,15 @@ SpriteDraw = Class {
     this.drawable = this.graphics.newImage(image)
     
     local nframes = init and init.nframes or 1
-    local hframes = init and init.hframes or nframes
 
-    local div = {
-      w = math.min(nframes, hframes),
-      h = math.ceil(nframes / hframes)}
-    
-    local dim = init and init.dim or {w = 0, h = 0}    
+    local w, h = this.drawable:getWidth(), this.drawable:getHeight()
+    local dim = {w = w / nframes, h = h}
     
     this.quads = {}
     
     for i = 0, nframes -1 do
-      local x = (i % hframes) * dim.w
-      local y = math.floor(i / hframes) * dim.w
-      
-      this.quads[i] = this.graphics.newQuad(
-        x, y,
-        dim.w, dim.h,
-        this.drawable:getWidth(),
-        this.drawable:getHeight())
+      local x, y = i * dim.w, 0
+      this.quads[i] = this.graphics.newQuad(x, y, dim.w, dim.h, w, h)
     end
   end,
   
@@ -62,4 +56,7 @@ SpriteDraw = Class {
     
     this.graphics.drawq(this.drawable, this.quads[frame], x, y, 0, flip.h, flip.v, ow, oh)
   end,
+  
+  getWidth = function(this) return this.drawable:getWidth() end,
+  getHeight = function(this) return this.drawable:getHeight() end,
 }

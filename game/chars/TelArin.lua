@@ -11,6 +11,7 @@ actor.box = {w = 28, h = 78}
 actor.rad = 14
 actor.mass = 1
 actor.pmap = Asset["high elf pal"]
+actor.path = "game/chars/telarin"
 
 actor.extra = {
   faction = "helf",
@@ -20,27 +21,25 @@ actor.extra = {
 }
 
 actor.states = {
-  std = { res = "game/chars/telarin/std.png", dim = {w = 100, h =  80}, frate = 10, nframes = 2, anim = "loop"},
-  wlk = { res = "game/chars/telarin/wlk.png", dim = {w = 100, h = 114}, frate =  3, nframes = 8, anim = "loop"},
-  bck = { res = "game/chars/telarin/wlk.png", dim = {w = 100, h = 114}, frate =  4, nframes = 8, anim = "looprev"},
-  atk1 = { res = "game/chars/telarin/atk1.png", dim = {w = 252, h = 81}, frate = {4,4,4,4,6,4,4}, nframes = 7, anim = "play",
-           pad = {x = 100, y = 1}},
-  atk2 = { res = "game/chars/telarin/atk2.png", dim = {w = 200, h = 90}, frate = {3,3,6,3}, nframes = 4, anim = "play",
-           pad = {x = 0.5, y = -5}},
-  jmp = { res = "game/chars/telarin/jmp.png", dim = {w = 106, h = 109}, frate = 0, nframes = 3, anim = Anim.Air3(60)},
-  hit = { res = "game/chars/telarin/hit.png", dim = {w = 132, h =  84}, frate = 4, nframes = 2, anim = "play"},
-  rdy = { res = "game/chars/telarin/rdy.png", dim = {w = 100, h =  89}, frate = 3, nframes = 5, anim = "play"},
-  spl = { res = "game/chars/telarin/rdy.png", dim = {w = 100, h =  89}, frate = 3, nframes = 5, anim = "playrev"},
-  spl1 = { res = "game/chars/telarin/spl1.png", dim = {w = 106, h = 99}, frate = 3, nframes = 3, anim = "play"},
-  spl2 = { res = "game/chars/telarin/spl2.png", dim = {w = 114, h = 88}, frate = 3, nframes = 3, anim = "play"},
-  spl3 = { res = "game/chars/telarin/spl3.png", dim = {w = 114, h = 88}, frate = 3, nframes = 2, anim = "loop"},
-  spl4 = { res = "game/chars/telarin/spl4.png", dim = {w = 116, h = 81}, frate = 4, nframes = 2, anim = "play"},
-  spl5 = { res = "game/chars/telarin/spl5.png", dim = {w =  86, h = 99}, frate = 3, nframes = 3, anim = "play"},
-  hitair = { res = "game/chars/telarin/hitair.png", dim = {w = 111, h =  77}, frate = 0, nframes = 2, anim = Anim.Air2()},
-  hithvy = { res = "game/chars/telarin/hithvy.png", dim = {w = 158, h = 111}, frate = 2, nframes = 3, anim = "play"},
-  hitflr = { res = "game/chars/telarin/hitflr.png", dim = {w = 125, h =  52}, frate = {2,28}, nframes = 2, anim = "play"},
-  jmpend = { res = "game/chars/telarin/jmp.png",    dim = {w =  72, h =  88}, frate = 4, nframes = 2, anim = Anim.Air3(60)},
-  atkjmp = { res = "game/chars/telarin/atkair.png", dim = {w = 200, h = 122}, frate = 3, nframes = 7, anim = "play"},
+  std = { frate = 10, nframes = 2, anim = "loop"},
+  wlk = { frate =  3, nframes = 8, anim = "loop"},
+  bck = { frate =  4, nframes = 8, anim = "looprev", res = "wlk"},
+  atk1 = { frate = {4,4,4,4,6,4,4}, nframes = 7, anim = "play", pad = {x = 100, y = 1}},
+  atk2 = { frate = {3,3,6,3}, nframes = 4, anim = "play", pad = {x = 0.5, y = -5}},
+  jmp = { frate = 0, nframes = 3, anim = Anim.Air3(60)},
+  hit = { frate = 4, nframes = 2, anim = "play"},
+  rdy = { frate = 3, nframes = 5, anim = "play"},
+  spl = { frate = 3, nframes = 5, anim = "playrev", res = "rdy"},
+  spl1 = { frate = 3, nframes = 3, anim = "play"},
+  spl2 = { frate = 3, nframes = 3, anim = "play"},
+  spl3 = { frate = 3, nframes = 2, anim = "loop"},
+  spl4 = { frate = 4, nframes = 2, anim = "play"},
+  spl5 = { frate = 3, nframes = 3, anim = "play"},
+  hitair = { frate = 0, nframes = 2, anim = Anim.Air2()},
+  hithvy = { frate = 2, nframes = 3, anim = "play"},
+  hitflr = { frate = {2,28}, nframes = 2, anim = "play"},
+  jmpend = { frate = 4, nframes = 2, anim = Anim.Air3(60), res = "jmp"},
+  atkjmp = { frate = 3, nframes = 7, anim = "play", res = "atkair"},
 }
 
 actor.list = {}

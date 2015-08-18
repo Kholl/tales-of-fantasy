@@ -45,7 +45,7 @@ return {
       dir = {x = 1, y = 1, z = 0},
     }),
 
-    enemy = Actor.new("game/chars/Demon.lua", {
+    enemy = Actor.new("game/chars/HElf.lua", {
       pos = {x = 600, y = 0, z = 400},
       dir = {x = -1, y = 1, z = 0},
       flip = {h = -1, v = 1},
@@ -59,12 +59,13 @@ return {
       start = {function(scene, game)
         scene:get("camera"):focus("player")
 --        scene:actor("player"):get("AI"):play()
-        scene:actor("player"):get("keyb"):play()
+        scene:actor("player"):run("keyb")
         scene:actor("player"):extra("faction", "player")
         scene:actor("player"):target(scene:actor("enemy"))
         scene:actor("enemy"):target(scene:actor("player"))
         scene:actor("enemy"):extra("faction", "enemy")
-        scene:actor("enemy"):get("AI"):play()
+        scene:actor("enemy"):run("AI")
+
         scene:state("run")
       end},
     }
