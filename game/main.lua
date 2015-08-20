@@ -4,6 +4,7 @@ Tales Of Fantasy
 ]]--
 
 require("game/custom/Game")
+require("lib/game/beat/Beat")
 
 return {
   x = 0, y = 0,

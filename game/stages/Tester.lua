@@ -58,7 +58,6 @@ return {
     script = SceneDlg.new{
       start = {function(scene, game)
         scene:get("camera"):focus("player")
---        scene:actor("player"):get("AI"):play()
         scene:actor("player"):run("keyb")
         scene:actor("player"):extra("faction", "player")
         scene:actor("player"):target(scene:actor("enemy"))

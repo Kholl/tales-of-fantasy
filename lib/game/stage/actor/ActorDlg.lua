@@ -29,4 +29,13 @@ ActorDlg = Class {
   
   run = function(this) this.running = true end,
   stop = function(this) this.running = false end,
+    
+  add = function(this, rules)
+    List.each(rules, function(rules, state)
+      if this.rules[state] == nil then this.rules[state] = {} end
+      IndexList.each(rules, function(rule) table.insert(this.rules[state], rule) end)
+    end)
+  
+    return this
+  end
 }

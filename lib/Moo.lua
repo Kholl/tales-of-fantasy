@@ -73,9 +73,10 @@ Moo = {
       
       if type(init) == "string" then
         init = Moo.Load(init, instance)
-        if custom then
-          Moo.List.copy(init, custom)
-        end
+      end
+      
+      if custom then
+        Moo.List.copy(init, custom)
       end
       
       instance:create(init)

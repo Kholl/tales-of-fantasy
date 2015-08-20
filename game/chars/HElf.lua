@@ -36,54 +36,25 @@ actor.states = {
 }
 
 actor.list = {}
-actor.list.auto = ActorDlg.new{
-  wlk = {  ActorScript.move{x = 100, z = 100} },
-  bck = {  ActorScript.move{x = -50} },
-  jmp = {  ActorScript.isFloor / ActorScript.act("std") },
-  hit = { -ActorScript.isFloor / ActorScript.act("hitair"),
-           ActorScript.isEnded / ActorScript.act("std") },
+actor.list.auto = EnemyAuto{spd = 100}:add{
   atk1 = { ActorScript.isFrame(2) / ActorScript.hitAll(Game.dmg(5)),
            ActorScript.isEnded / ActorScript.act("std") },
   atk2 = { ActorScript.isFrame(2) / ActorScript.hitAll(Game.dmg(8, {x = 80})),
            ActorScript.isEnded / ActorScript.act("std") },
   atk3 = { ActorScript.isFrame(2) / ActorScript.hitAll(Game.dmg(10)),
            ActorScript.isEnded / ActorScript.act("std") },
-  hitair = {  ActorScript.isFloor / ActorScript.act("hitflr") },
-  hithvy = { -ActorScript.isFloor / ActorScript.act("hitair"),
-              ActorScript.isEnded / ActorScript.act("std") },
-  hitflr = {  ActorScript.isEnded / ActorScript.act("std") },
-  jmpend = {  ActorScript.isFloor / ActorScript.act("std") },
   atkjmp = {  ActorScript.isFrame(2) / ActorScript.hitAll(Game.dmg(10)),
               ActorScript.isEnded / ActorScript.act("jmpend"),
               ActorScript.isFloor / ActorScript.act("std") },
-  jmpatk = {
-    ActorScript.isFrame(2) / ActorScript.hitAll(Game.dmg(10)),
-    jmp = ActorScript.isEnded,
-    std = SceneScript.isFloor,
-  },  
 }
 
-actor.list.AI = ActorDlg.new{
+actor.list.AI = EnemyAI{spd = 100, rng = 60, rngjmp = 80}:add{
   std = {
-    ActorScript.isRange("x", nil, 60) / ActorScript.act("wlk"),
-    ActorScript.isRange("x", 0) / ActorScript.act("bck"),
     ActorScript.pick{
       ActorScript.isTargetHit{"atk1"} / ActorScript.act("atk1"),
       ActorScript.isTargetHit{"atk2"} / ActorScript.act("atk2"),
       ActorScript.isTargetHit{"atk3"} / ActorScript.act("atk3"),
     },
-  },
-  
-  wlk = {
-     ActorScript.faceTarget,
-     ActorScript.isRange("x", 100, 80) / ActorScript.act("jmp") / ActorScript.move{x = 100, y = -220},
-     ActorScript.isRange("x", 60) / ActorScript.act("std"),
-     ActorScript.isRange("x", 50) / ActorScript.act("bck"),
-  },
-  
-  bck = {
-    ActorScript.faceTarget,
-    ActorScript.isRange("x", nil, 80) / ActorScript.act("std"),
   },
   
   jmp = {
