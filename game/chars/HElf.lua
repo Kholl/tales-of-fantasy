@@ -17,6 +17,9 @@ actor.extra = {
   hp = 100, hpmax = 100,
   mp =   0, mpmax =   0,
   dmg = 0,
+  rng = 60,
+  rngjmp = 80,
+  spd = {x = 100, y = 210, z = 100},
 }
 
 actor.states = {
@@ -36,7 +39,7 @@ actor.states = {
 }
 
 actor.list = {}
-actor.list.auto = EnemyAuto{spd = 100}:add{
+actor.list.auto = EnemyAuto(actor.extra):add{
   atk1 = { ActorScript.isFrame(2) / ActorScript.hitAll(Game.dmg(5)),
            ActorScript.isEnded / ActorScript.act("std") },
   atk2 = { ActorScript.isFrame(2) / ActorScript.hitAll(Game.dmg(8, {x = 80})),
@@ -48,19 +51,6 @@ actor.list.auto = EnemyAuto{spd = 100}:add{
               ActorScript.isFloor / ActorScript.act("std") },
 }
 
-actor.list.AI = EnemyAI{spd = 100, rng = 60, rngjmp = 80}:add{
-  std = {
-    ActorScript.pick{
-      ActorScript.isTargetHit{"atk1"} / ActorScript.act("atk1"),
-      ActorScript.isTargetHit{"atk2"} / ActorScript.act("atk2"),
-      ActorScript.isTargetHit{"atk3"} / ActorScript.act("atk3"),
-    },
-  },
-  
-  jmp = {
-    ActorScript.isTargetHit{"atkjmp"} / ActorScript.act("atkjmp"),
-  },
-}
-
+actor.list.AI = EnemyAI(actor.extra)
 actor.list.AI:stop()
 return actor

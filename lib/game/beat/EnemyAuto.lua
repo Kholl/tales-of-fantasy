@@ -4,8 +4,8 @@ Beat extension for Moo game library
 ]]--
 
 Beat.EnemyAuto = function(init) return ActorDlg.new{
-  wlk = {  ActorScript.move{x = init.spd, z = init.spd} },
-  bck = {  ActorScript.move{x = -init.spd*0.6} },
+  wlk = {  ActorScript.move(init.spd, {x = 1, y = 0, z = 1}) },
+  bck = {  ActorScript.move(init.spd, {x = -0.6, y = 0, z = 0}) },
   jmp = {  ActorScript.isFloor / ActorScript.act("std") },
   hit = { -ActorScript.isFloor / ActorScript.act("hitair"),
            ActorScript.isEnded / ActorScript.act("std") },

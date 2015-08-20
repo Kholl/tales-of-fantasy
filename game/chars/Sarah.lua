@@ -16,6 +16,7 @@ actor.extra = {
   hp =  75, hpmax =  75,
   mp = 125, mpmax = 125,
   dmg = 0,
+  spd = {x = 100, y = -100, z = 100},
 }
 
 actor.states = {
@@ -42,7 +43,7 @@ actor.states = {
 }
 
 actor.list = {}
-actor.list.auto = EnemyAuto{spd = 100}:add{
+actor.list.auto = EnemyAuto(actor.extra):add{
   atk = {  ActorScript.isFrame(5) / ActorScript.hitAll(Game.dmg(6)),
            ActorScript.isEnded / ActorScript.act("std") },
   run = {  ActorScript.move{x = 200} },

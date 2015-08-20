@@ -27,6 +27,7 @@ if __TEST then
   local b = F{function(a, b) return a < b end}
   local c = F{function(a, b) return a == b end}
   local d = F{function(a) return a * 2 end}
+  local e = F{function(a) return a + 2 end}
   assert(a(5, 3) == true)
   assert(b(5, 3) == false)
   assert(c(5, 3) == false)
@@ -40,6 +41,7 @@ if __TEST then
   assert((-c)(5, 3) == true)
   assert(d(5) == 10)
   assert((d..d)(5) == 20)
+  assert((d..e)(5) == 14)
   assert(((a + b) / d)(5, 3) == true, 10)
   assert((a / d)(5, 3) == true, 10)
   assert((-a / d)(5, 3) == nil)

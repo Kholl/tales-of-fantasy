@@ -27,7 +27,8 @@ ActorScript = {
 
   faceTarget = F{function(actor) actor:face() end},
   
-  move = function(force) return F{function(actor, scene)
+  move = function(force, k) return F{function(actor, scene)
+    local k = k or {}
     local spd = actor:spd()
     local dir = actor:dir()
     if force.y then spd.y = force.y end
@@ -36,7 +37,7 @@ ActorScript = {
     if not (kx == 0) then spd.x, dir.x = kx * (force.x or 0), kx end
     if not (kz == 0) then spd.z, dir.z = kz * (force.z or 0), kz end
     
-    actor:spd(spd)
+    actor:spd(XYZ(spd) * XYZ(k))
     
     return true
   end}
@@ -69,12 +70,13 @@ ActorScript = {
     local z = math.max(actor:rad(), target:rad())
 
     local select = List.select(states, function(state)
+      if not actor:getData(state) then return false end
       local x = (actor:dim(state).w + target:box().w) * 0.5
 
       return (d.x < x) and (d.z < z)
     end)
   
-    return not (select == nil)
+    return select
   end}
   end,
 
