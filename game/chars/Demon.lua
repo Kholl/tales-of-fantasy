@@ -24,27 +24,24 @@ actor.states = {
   stn = { frate = 0, nframes = 1},
   wlk = { frate = 3, nframes = 6, anim = "loop"},
   bck = { frate = 4, nframes = 6, anim = "looprev", res = "wlk" },
+  jmp = { frate = 4, nframes = 3, anim = "play"},
   fly = { frate = 0, nframes = 1},
   hit = { frate = 8, nframes = 1, anim = "play"},
   atk1 = { frate = {6,10}, nframes = 2, anim = "play"},
   atk2 = { frate = 4, nframes = 7, anim = "play"},
   atk3 = { frate = {4,4,8}, nframes = 3, anim = "play"},
   atkjmp = { frate = 6, nframes = 4, anim = "play"},
+  jmpend = { frate = 0, nframes = 1},
   flyend = { frate = 3, nframes = 2, anim = "play", res = "fly" },
   hitair = { frate = 0, nframes = 2, anim = Anim.Air2()},
   hitflr = { frate = {2,2,26}, nframes = 3, anim = "play"},
-  jmpend = { frate = 0, nframes = 1},
-  jmpbck = { frate = 4, nframes = 3, anim = "play"},
 }
 
 actor.list = {}
-actor.list.auto = ActorDlg.new{
-  wlk = {  ActorScript.move{x =  80, z = 80} },
-  bck = {  ActorScript.move{x = -40} },
+actor.list.auto = EnemyAuto{spd = 100}:add{
+  jmp = { ActorScript.isEnded / ActorScript.act("fly") },
   fly = {  ActorScript.move{x = 120, z = 30} ^ ActorScript.spd{y = 20},
            ActorScript.isFloor / ActorScript.act("std") },
-  hit = { -ActorScript.isFloor / ActorScript.act("hitair"),
-           ActorScript.isEnded / ActorScript.act("std") },
   atk1 = { ActorScript.isFrame(1) / ActorScript.hitAll(Game.dmg(8)),
            ActorScript.isEnded / ActorScript.act("std") },
   atk2 = { ActorScript.isFrame(4) / ActorScript.hitAll(Game.dmg(15, {x = 40, y = -200})),
@@ -53,16 +50,10 @@ actor.list.auto = ActorDlg.new{
            ActorScript.isEnded / ActorScript.act("std") },
   atkjmp = { ActorScript.isFrame(3) / ActorScript.hitAll(Game.dmg(12)),
              ActorScript.isFloor / ActorScript.act("std") },
-  hitair = { ActorScript.isFloor / ActorScript.act("hitflr") },
-  hitflr = { ActorScript.isEnded / ActorScript.act("std") },
-  jmpend = { ActorScript.isFloor / ActorScript.act("std") },
-  jmpbck = { ActorScript.isEnded / ActorScript.act("fly") },
 }
 
-actor.list.AI = ActorDlg.new{
+actor.list.AI = EnemyAI{spd = 100, rng = 30, rngjmp = 120}:add{
   std = {
-    ActorScript.isRange("x", nil, 30) / ActorScript.act("wlk"),
-    ActorScript.isRange("x", 0) / ActorScript.act("bck"),
     ActorScript.pick{
       ActorScript.isTargetHit{"atk1"} / ActorScript.act("atk1"),
       ActorScript.isTargetHit{"atk2"} / ActorScript.act("atk2"),
@@ -71,25 +62,12 @@ actor.list.AI = ActorDlg.new{
   },
   
   wlk = {
-     ActorScript.faceTarget,
-     ActorScript.isRange("x", 160, 140) / ActorScript.act("jmpbck") / ActorScript.move{x = -40, y = -200},
-     ActorScript.isRange("x", 140, 120) / ActorScript.act("atkjmp") / ActorScript.move{x = 120, y = -200},
-     ActorScript.isRange("x", 30) / ActorScript.act("std"),
-     ActorScript.isRange("x", 20) / ActorScript.act("bck"),
+    ActorScript.isRange("x", 120, 100) / ActorScript.act("atkjmp") / ActorScript.move{x = 140, y = -180, z = 0},
   },
   
   fly = {
      ActorScript.isRange("x", 60) / ActorScript.act("jmpend"),
-  },  
-  
-  bck = {
-    ActorScript.faceTarget,
-    ActorScript.isRange("x", nil, 40) / ActorScript.act("std"),
-  },
-  
-  jmp = {
-    ActorScript.isTargetHit{"atkjmp"} / ActorScript.act("atkjmp"),
-  },
+  },    
 }
 
 actor.list.AI:stop()

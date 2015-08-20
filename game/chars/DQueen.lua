@@ -48,15 +48,8 @@ actor.states = {
 }
 
 actor.list = {}
-actor.list.auto = ActorDlg.new{
-  wlk = {  ActorScript.move{x =  100, z = 100} },
-  bck = {  ActorScript.move{x = -100} },
-  jmp = {  ActorScript.isFloor / ActorScript.act("stdup") },
+actor.list.auto = EnemyAuto{spd = 100}:add{
   blk = {  ActorScript.isEnded / ActorScript.act("std") },
-  hit = { -ActorScript.isFloor / ActorScript.act("hitair"),
-           ActorScript.isEnded / ActorScript.act("std") },
-  stn = {},
-  win = {},  
   atk1 = { ActorScript.isFrame(2) / ActorScript.hitAll{dmg = 15},
            ActorScript.isEnded / ActorScript.act("std") },
   atk2 = { ActorScript.isFrame(1) / ActorScript.hitAll{dmg = 15},
@@ -75,13 +68,6 @@ actor.list.auto = ActorDlg.new{
   spl2 = { ActorScript.isEnded / ActorScript.act("spl3") },
   spl3 = { },
   stdup = { ActorScript.isEnded / ActorScript.act("std") },
-  hitalt = { -ActorScript.isFloor / ActorScript.act("hitair"),
-              ActorScript.isEnded / ActorScript.act("std") },
-  hitair = {  ActorScript.isFloor / ActorScript.act("hitflr") },
-  hithvy = { -ActorScript.isFloor / ActorScript.act("hitair"),
-              ActorScript.isEnded / ActorScript.act("std") },
-  hitflr = {  ActorScript.isEnded / ActorScript.act("stdup") },
-  jmpend = {  ActorScript.isFloor / ActorScript.act("stdup") },
   jmpbck = {  ActorScript.isFloor / ActorScript.act("stdup") },
   atkjmp1 = { ActorScript.isFrame(1) / ActorScript.hitAll{dmg = 15},
               ActorScript.isEnded / ActorScript.act("jmpend"),
@@ -91,11 +77,9 @@ actor.list.auto = ActorDlg.new{
               ActorScript.isFloor / ActorScript.act("stdup") },
 }
 
-actor.list.AI = ActorDlg.new{
+actor.list.AI = EnemyAI{spd = 100, rng = 50, rngjmp = 100}:add{
   std = {
-    ActorScript.isRange("x", nil, 60) / ActorScript.act("wlk"),
---    ActorScript.isRange("x", 0) ^ Script.random(6) / ActorScript.act("jmpbck") / ActorScript.move{x = -200, y = -200},
-    ActorScript.isRange("x", 0) / ActorScript.act("bck"),
+    ActorScript.isRange("x", 0) / ActorScript.act("jmpbck") / ActorScript.move{x = -200, y = -200},
     ActorScript.isTargetState("atk-") ^ ActorScript.isHitTarget / ActorScript.act("blk"),
     ActorScript.pick{
       ActorScript.isTargetHit{"atk1"} / ActorScript.act("atk1"),
@@ -108,16 +92,10 @@ actor.list.AI = ActorDlg.new{
   },
   
   wlk = {
-     ActorScript.faceTarget,
-     ActorScript.isRange("x", 180, 100) / ActorScript.act("jmp") / ActorScript.move{x = 100, y = -240},
-     ActorScript.isRange("x", 60) / ActorScript.act("std"),
-     ActorScript.isRange("x", 50) / ActorScript.act("bck"),
      ActorScript.isTargetState("atk-") ^ ActorScript.isHitTarget / ActorScript.act("blk"),
   },
   
   bck = {
-    ActorScript.faceTarget,
-    ActorScript.isRange("x", nil, 80) / ActorScript.act("std"),
     ActorScript.isTargetState("atk-") ^ ActorScript.isHitTarget / ActorScript.act("blk") },
   
   jmp = {

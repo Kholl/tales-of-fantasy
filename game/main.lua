@@ -3,8 +3,10 @@ Tales Of Fantasy
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
+
 require("game/custom/Game")
 require("lib/game/beat/Beat")
+Import(Beat)
 
 return {
   x = 0, y = 0,

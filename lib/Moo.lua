@@ -125,8 +125,8 @@ Moo = {
     return values
   end,
   
-  Import = function()
-    Moo.List.each(Moo, function(value, key)
+  Import = function(library)
+    Moo.List.each(library or Moo, function(value, key)
       if rawget(_G, key) == nil then rawset(_G, key, value) end
     end)
   end,

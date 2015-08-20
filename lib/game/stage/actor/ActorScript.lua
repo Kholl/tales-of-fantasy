@@ -45,7 +45,7 @@ ActorScript = {
   force = function(force) return F{function(actor) actor:force(force) end} end,
   
   hitAll = function(func) return F{function(actor, scene, game)
-    List.each(scene:getHits(actor, game), func)
+--    List.each(scene:getHits(actor, game), func)
   end}
   end,
 

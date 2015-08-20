@@ -42,14 +42,10 @@ actor.states = {
 }
 
 actor.list = {}
-actor.list.auto = ActorDlg.new{
-  wlk = {  ActorScript.move{x = 100, z = 100} },
+actor.list.auto = EnemyAuto{spd = 100}:add{
   atk = {  ActorScript.isFrame(5) / ActorScript.hitAll(Game.dmg(6)),
            ActorScript.isEnded / ActorScript.act("std") },
-  jmp = {  ActorScript.isFloor / ActorScript.act("std") },
   run = {  ActorScript.move{x = 200} },
-  hit = { -ActorScript.isFloor / ActorScript.act("hitair"),
-           ActorScript.isEnded / ActorScript.act("std") },
   atkup = { ActorScript.isFrame(1) / ActorScript.hitAll(Game.dmg(6, {y = -220})),
             ActorScript.isEnded / ActorScript.act("jmp"),
             ActorScript.isFloor / ActorScript.act("std") },
@@ -69,11 +65,6 @@ actor.list.auto = ActorDlg.new{
               ActorScript.isEnded / ActorScript.act("std") },
   atksq3 = {  ActorScript.isFrame(5) / ActorScript.hitAll(Game.dmg(12, {x = 140, y = -200})),
               ActorScript.isEnded / ActorScript.act("std") },
-  hitair = {  ActorScript.isFloor / ActorScript.act("hitflr") },
-  hitflr = {  ActorScript.isEnded / ActorScript.act("std") },
-  hitalt = { -ActorScript.isFloor / ActorScript.act("hitair"),
-              ActorScript.isEnded / ActorScript.act("std") },
-  hithvy = {  ActorScript.isFall / ActorScript.act("hitair") },
 }
 
 actor.list.keyb = ActorDlg.new{
