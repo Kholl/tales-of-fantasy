@@ -38,7 +38,7 @@ Moo.ListGenerator = function(iterator) return {
   
   select = function(list, func)
     for key, val in iterator(list) do
-      if func(val, key) then return key end
+      if func(val, key) then return val, key end
     end
   end,
   

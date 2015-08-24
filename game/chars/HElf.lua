@@ -17,8 +17,7 @@ actor.extra = {
   hp = 100, hpmax = 100,
   mp =   0, mpmax =   0,
   dmg = 0,
-  rng = 60,
-  rngjmp = 80,
+  rng = 60, rngjmp = 80,
   spd = {x = 100, y = 210, z = 100},
 }
 
@@ -53,4 +52,5 @@ actor.list.auto = EnemyAuto(actor.extra):add{
 
 actor.list.AI = EnemyAI(actor.extra)
 actor.list.AI:stop()
+
 return actor

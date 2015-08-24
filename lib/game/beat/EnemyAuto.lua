@@ -14,4 +14,5 @@ Beat.EnemyAuto = function(init) return ActorDlg.new{
               ActorScript.isEnded / ActorScript.act("std") },
   hitflr = {  ActorScript.isEnded / ActorScript.act("std") },
   jmpend = {  ActorScript.isFloor / ActorScript.act("std") },
-} end
+}
+end

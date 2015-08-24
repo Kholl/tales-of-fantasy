@@ -17,6 +17,8 @@ actor.extra = {
   hp = 200, hpmax = 200,
   mp = 300, mpmax = 300,
   dmg = 0,
+  rng = 50, rngjmp = 100,
+  spd = {x = 100, y = 210, z = 100}, 
 }
 
 actor.states = {
@@ -48,7 +50,7 @@ actor.states = {
 }
 
 actor.list = {}
-actor.list.auto = EnemyAuto{spd = 100}:add{
+actor.list.auto = EnemyAuto(actor.extra):add{
   blk = {  ActorScript.isEnded / ActorScript.act("std") },
   atk1 = { ActorScript.isFrame(2) / ActorScript.hitAll{dmg = 15},
            ActorScript.isEnded / ActorScript.act("std") },
@@ -77,18 +79,9 @@ actor.list.auto = EnemyAuto{spd = 100}:add{
               ActorScript.isFloor / ActorScript.act("stdup") },
 }
 
-actor.list.AI = EnemyAI{spd = 100, rng = 50, rngjmp = 100}:add{
+actor.list.AI = EnemyAI(actor.extra):add{
   std = {
-    ActorScript.isRange("x", 0) / ActorScript.act("jmpbck") / ActorScript.move{x = -200, y = -200},
     ActorScript.isTargetState("atk-") ^ ActorScript.isHitTarget / ActorScript.act("blk"),
-    ActorScript.pick{
-      ActorScript.isTargetHit{"atk1"} / ActorScript.act("atk1"),
-      ActorScript.isTargetHit{"atk2"} / ActorScript.act("atk2"),
-      ActorScript.isTargetHit{"atk3"} / ActorScript.act("atk3"),
-      ActorScript.isTargetHit{"atk4"} / ActorScript.act("atk4"),
-      ActorScript.isTargetHit{"atk5"} / ActorScript.act("atk5"),
-      ActorScript.isTargetHit{"atk6"} / ActorScript.act("atk6"),
-    },
   },
   
   wlk = {
@@ -96,13 +89,8 @@ actor.list.AI = EnemyAI{spd = 100, rng = 50, rngjmp = 100}:add{
   },
   
   bck = {
-    ActorScript.isTargetState("atk-") ^ ActorScript.isHitTarget / ActorScript.act("blk") },
-  
-  jmp = {
-    ActorScript.pick{
-      ActorScript.isTargetHit{"atkjmp1"} / ActorScript.act("atkjmp1"),
-      ActorScript.isTargetHit{"atkjmp2"} / ActorScript.act("atkjmp2"),
-    },
+    ActorScript.isRange("x", 0) / ActorScript.act("jmpbck") / ActorScript.move{x = -200, y = -200},
+    ActorScript.isTargetState("atk-") ^ ActorScript.isHitTarget / ActorScript.act("blk"),
   },
 }
 

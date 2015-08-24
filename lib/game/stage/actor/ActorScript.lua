@@ -59,8 +59,8 @@ ActorScript = {
   
   isTargetHit = function(states) return F{function(actor, scene, game, target)
     target = target or actor:target()
-    if actor == target then return false end
     if not target then return false end
+    if actor == target then return false end
     if not game.checkHit(actor, target) then return false end
     
     local facing = (actor:flip().h == Math.Sign(target:pos().x - actor:pos().x))
@@ -69,10 +69,10 @@ ActorScript = {
     local d = actor:dist(target)
     local z = math.max(actor:rad(), target:rad())
 
-    local select = List.select(states, function(state)
+    local select = List.select(states, function(state)      
       if not actor:getData(state) then return false end
       local x = (actor:dim(state).w + target:box().w) * 0.5
-
+      
       return (d.x < x) and (d.z < z)
     end)
   

@@ -7,8 +7,6 @@ Beat.EnemyAI = function(init) return ActorDlg.new{
   std = {
     ActorScript.isRange("x", nil, init.rng) / ActorScript.act("wlk"),
     ActorScript.isRange("x", 0) / ActorScript.act("bck"),
---    ActorScript.isTargetHit{"atk", "atk1", "atk2", "atk3"} .. ActorScript.act,
-
     ActorScript.pick{
       ActorScript.isTargetHit{"atk"} / ActorScript.act("atk"),
       ActorScript.isTargetHit{"atk1"} / ActorScript.act("atk1"),
@@ -41,6 +39,12 @@ Beat.EnemyAI = function(init) return ActorDlg.new{
     ActorScript.isTargetHit{"atkjmp"} / ActorScript.act("atkjmp"),
     ActorScript.isTargetHit{"atkjmp1"} / ActorScript.act("atkjmp1"),
     ActorScript.isTargetHit{"atkjmp2"} / ActorScript.act("atkjmp2"),
+    ActorScript.isTargetHit{"atkjmp3"} / ActorScript.act("atkjmp3"),
+    ActorScript.isTargetHit{"atkjmp4"} / ActorScript.act("atkjmp4"),
+    ActorScript.isTargetHit{"atkjmp5"} / ActorScript.act("atkjmp5"),
+    ActorScript.isTargetHit{"atkjmp6"} / ActorScript.act("atkjmp6"),
+    ActorScript.isTargetHit{"atkjmp7"} / ActorScript.act("atkjmp7"),
+    ActorScript.isTargetHit{"atkjmp8"} / ActorScript.act("atkjmp8"),
+    ActorScript.isTargetHit{"atkjmp9"} / ActorScript.act("atkjmp9"),
   },
-
 } end

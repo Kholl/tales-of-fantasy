@@ -13,7 +13,8 @@ Func = Moo.Operator {
   -- Function or
   ["+"]  = function(a, b) return F{function(...) return a(...) or b(...) end} end,
   -- Function composition
-  [".."] = function(a, b) return F{function(...) return a(b(...)) end} end,
+  [".."] = function(a, b) return F{function(...) return b(a(...)) end}
+  end,
   -- Function then
   ["/"] = function(a, b) return F{function(...) if a(...) then return true, b(...) end end} end,
 }
@@ -41,7 +42,7 @@ if __TEST then
   assert((-c)(5, 3) == true)
   assert(d(5) == 10)
   assert((d..d)(5) == 20)
-  assert((d..e)(5) == 14)
+  assert((d..e)(5) == 12)
   assert(((a + b) / d)(5, 3) == true, 10)
   assert((a / d)(5, 3) == true, 10)
   assert((-a / d)(5, 3) == nil)
