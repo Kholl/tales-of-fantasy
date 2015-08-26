@@ -15,6 +15,9 @@ Moo = {
     return function(t, key, val) error(string.format(message, key)) end
   end,
   
+  Always = function() return true end,
+  Never = function() return false end,
+  
   Property = function(attr, config)
     local trigger = config and config.trigger or false
     local use = config and config.use or false

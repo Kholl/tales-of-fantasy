@@ -29,6 +29,9 @@ Moo.ListGenerator = function(iterator) return {
   end,
 
   filter = function(list, func)
+    func = func or Always
+    if type(func) == "string" then func = function(val, key) return string.match(key, func) end end
+    
     local res = {}
     for key, val in iterator(list) do
       if func(val, key) then res[key] = val end
@@ -37,6 +40,9 @@ Moo.ListGenerator = function(iterator) return {
   end,
   
   select = function(list, func)
+    func = func or Always
+    if type(func) == "string" then func = function(val, key) return string.match(key, func) end end
+    
     for key, val in iterator(list) do
       if func(val, key) then return val, key end
     end

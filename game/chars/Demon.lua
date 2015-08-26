@@ -44,13 +44,13 @@ actor.list.auto = EnemyAuto(actor.extra):add{
   jmp = { ActorScript.isEnded / ActorScript.act("fly") },
   fly = {  ActorScript.move{x = 120, z = 30} ^ ActorScript.spd{y = 20},
            ActorScript.isFloor / ActorScript.act("std") },
-  atk1 = { ActorScript.isFrame(1) / ActorScript.hitAll(Game.dmg(8)),
+  atk1 = { ActorScript.isFrame(1) / Beat.Script.hitAll(),
            ActorScript.isEnded / ActorScript.act("std") },
-  atk2 = { ActorScript.isFrame(4) / ActorScript.hitAll(Game.dmg(15, {x = 40, y = -200})),
+  atk2 = { ActorScript.isFrame(4) / Beat.Script.hitAll(),
            ActorScript.isEnded / ActorScript.act("std") },
-  atk3 = { ActorScript.isFrame(2) / ActorScript.hitAll(Game.dmg(10)),
+  atk3 = { ActorScript.isFrame(2) / Beat.Script.hitAll(),
            ActorScript.isEnded / ActorScript.act("std") },
-  atkjmp = { ActorScript.isFrame(3) / ActorScript.hitAll(Game.dmg(12)),
+  atkjmp = { ActorScript.isFrame(3) / Beat.Script.hitAll(),
              ActorScript.isFloor / ActorScript.act("std") },
 }
 

@@ -30,7 +30,7 @@ require("lib/game/ui/graphic/Graphic")
 require("lib/game/dlgs/Controller")
 require("lib/game/dlgs/Keyboard")
 require("lib/game/dlgs/Gamepad")
-require("lib/game/Script")
+require("lib/game/stage/scene/Scene")
 
 local game
 

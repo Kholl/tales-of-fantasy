@@ -6,3 +6,4 @@ Beat extension for Moo game library
 Beat = {}
 require("lib/game/beat/EnemyAuto")
 require("lib/game/beat/EnemyAI")
+require("lib/game/beat/Script")

@@ -45,53 +45,12 @@ ActorScript = {
   
   force = function(force) return F{function(actor) actor:force(force) end} end,
   
-  hitAll = function(func) return F{function(actor, scene, game)
---    List.each(scene:getHits(actor, game), func)
-  end}
-  end,
-
   -- Triggers
   at = function(start, finish) return F{function(actor, scene, game)
     finish = finish or start + 1 / game.fps
     return scene:time() >= start and scene:time() < finish
   end}
   end,
-  
-  isTargetHit = function(states) return F{function(actor, scene, game, target)
-    target = target or actor:target()
-    if not target then return false end
-    if actor == target then return false end
-    if not game.checkHit(actor, target) then return false end
-    
-    local facing = (actor:flip().h == Math.Sign(target:pos().x - actor:pos().x))
-    if not facing then return false end
-
-    local d = actor:dist(target)
-    local z = math.max(actor:rad(), target:rad())
-
-    local select = List.select(states, function(state)      
-      if not actor:getData(state) then return false end
-      local x = (actor:dim(state).w + target:box().w) * 0.5
-      
-      return (d.x < x) and (d.z < z)
-    end)
-  
-    return select
-  end}
-  end,
-
-  isHitTarget = F{function(actor, scene)
-    local target = actor:target()
-    if not target then return false end
-    
-    local facing = (target:flip().h == Math.Sign(actor:pos().x - target:pos().x))
-    if not facing then return false end
-      
-    local d = target:dist(actor)
-    local h = target:disthit(actor)
-    
-    return (d.x < h.x) and (d.z < h.z)
-  end},
 
   isTargetState = function(pattern) return F{function(actor, scene)
     local target = actor:target()

@@ -39,13 +39,13 @@ actor.states = {
 
 actor.list = {}
 actor.list.auto = EnemyAuto(actor.extra):add{
-  atk1 = { ActorScript.isFrame(2) / ActorScript.hitAll(Game.dmg(5)),
+  atk1 = { ActorScript.isFrame(2) / Beat.Script.hitAll(),
            ActorScript.isEnded / ActorScript.act("std") },
-  atk2 = { ActorScript.isFrame(2) / ActorScript.hitAll(Game.dmg(8, {x = 80})),
+  atk2 = { ActorScript.isFrame(2) / Beat.Script.hitAll(),
            ActorScript.isEnded / ActorScript.act("std") },
-  atk3 = { ActorScript.isFrame(2) / ActorScript.hitAll(Game.dmg(10)),
+  atk3 = { ActorScript.isFrame(2) / Beat.Script.hitAll(),
            ActorScript.isEnded / ActorScript.act("std") },
-  atkjmp = {  ActorScript.isFrame(2) / ActorScript.hitAll(Game.dmg(10)),
+  atkjmp = {  ActorScript.isFrame(2) / Beat.Script.hitAll(),
               ActorScript.isEnded / ActorScript.act("jmpend"),
               ActorScript.isFloor / ActorScript.act("std") },
 }
