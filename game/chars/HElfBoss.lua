@@ -84,62 +84,62 @@ actor.states = {
 
 actor.rules = {
   wlk = {
-    ActorScript.move{x = 100, z = 100},
+    Script.move{x = 100, z = 100},
   },
   atk = {
-    ActorScript.isFrame(3) / ActorScript.hitAll{dmg = 8},
-    std = ActorScript.isEnded,
+    Script.isFrame(3) / Script.hitAll{dmg = 8},
+    std = Script.isEnded,
   },
   hit = {
-    hitair = -SceneScript.isFloor,
-    std = ActorScript.isEnded,
+    hitair = -Script.isFloor,
+    std = Script.isEnded,
   },
   hitair = {
-    hitflr = SceneScript.isFloor,
+    hitflr = Script.isFloor,
   },
   hitflr = {
-    std = ActorScript.isEnded,
-    die = ActorScript.isDied,
+    std = Script.isEnded,
+    die = Script.isDied,
   },
   atkalt = {
-    ActorScript.isFrame(4) / ActorScript.hitAll{dmg = 12},
-    std = ActorScript.isEnded,    
+    Script.isFrame(4) / Script.hitAll{dmg = 12},
+    std = Script.isEnded,    
   },
   jmp = {
-    std = SceneScript.isFloor,
+    std = Script.isFloor,
   },
 }
 
 actor.autorules = {
   std = {
-    -ActorScript.isTarget / ActorScript.find,
-    wlk = ActorScript.isTarget,
-    atk = ActorScript.isTarget ^ ActorScript.isHit("atk"),
-    atkalt = ActorScript.isTarget ^ ActorScript.isHit("atkalt"),
-    jmp = (ActorScript.isTarget ^ ActorScript.isRange("x", 140, 120)) / ActorScript.move{x = 100, y = -240},
+    -Script.isTarget / Script.find,
+    wlk = Script.isTarget,
+    atk = Script.isTarget ^ Script.isHit("atk"),
+    atkalt = Script.isTarget ^ Script.isHit("atkalt"),
+    jmp = (Script.isTarget ^ Script.isRng("x", 140, 120)) / Script.move{x = 100, y = -240},
   },
   
   wlk = {
-    ActorScript.move{x = 100, z = 100},
-    std = -ActorScript.isTarget,
-    wlk = ActorScript.isTarget,
-    atk = ActorScript.isTarget ^ ActorScript.isHit("atk"),
-    atkalt = ActorScript.isTarget ^ ActorScript.isHit("atkalt") ^ Script.random(2),
-    jmp = (ActorScript.isTarget ^ ActorScript.isRange("x", 140, 120)) / ActorScript.move{x = 100, y = -240},
+    Script.move{x = 100, z = 100},
+    std = -Script.isTarget,
+    wlk = Script.isTarget,
+    atk = Script.isTarget ^ Script.isHit("atk"),
+    atkalt = Script.isTarget ^ Script.isHit("atkalt") ^ Script.random(2),
+    jmp = (Script.isTarget ^ Script.isRng("x", 140, 120)) / Script.move{x = 100, y = -240},
   },
 }
 
 actor.keybrules = {
   std = {
-    atkalt = ActorScript.isKey{"a[rl]>"},
-    jmp = ActorScript.isKey{"b[rlud]*>"} / ActorScript.move{x = 100, y = -220},
-    wlk = ActorScript.isKey{"[rlud]+>"},
-    atk = ActorScript.isKey{"a>"},
+    atkalt = Script.isKey{"a[rl]>"},
+    jmp = Script.isKey{"b[rlud]*>"} / Script.move{x = 100, y = -220},
+    wlk = Script.isKey{"[rlud]+>"},
+    atk = Script.isKey{"a>"},
   },
   wlk = {
-    jmp = ActorScript.isKey{"[rlud]*b>"} / ActorScript.move{x = 100, y = -200},
-    wlk = ActorScript.isKey{"[rlud]+>"},
-    std = -ActorScript.isKey(),
+    jmp = Script.isKey{"[rlud]*b>"} / Script.move{x = 100, y = -200},
+    wlk = Script.isKey{"[rlud]+>"},
+    std = -Script.isKey(),
   },
 }
 

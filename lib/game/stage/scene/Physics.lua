@@ -3,7 +3,7 @@ Moo Object Oriented framework for LUA
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-PhysDlg = Class {
+Physics = Class {
   drag = nil,
   grav = nil,
   

@@ -4,7 +4,14 @@ Beat extension for Moo game library
 ]]--
 
 Beat.Script = {
-  isTargetHit = function(state) return F{function(actor, scene, game, target)
+  hit = function(hit) return F{function(actor, scene, game)
+    local check = Beat.Script.isHit
+    local hit = hit or Nil
+    List.each(scene:getActors(check), hit(actor, scene, game))
+  end}
+  end,
+
+  isHit = function(state) return F{function(actor, scene, game, target)
     target = target or actor:target()
     if not target then return false end
     if actor == target then return false end
@@ -35,11 +42,4 @@ Beat.Script = {
     
     return (d.x < h.x) and (d.z < h.z)
   end},
-
-  hitAll = function(hit) return F{function(actor, scene, game)
-    local check = Beat.Script.isTargetHit
-    local hit = hit or Nil
-    List.each(scene:getActors(check), hit(actor, scene, game))
-  end}
-  end,
 }

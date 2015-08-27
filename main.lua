@@ -27,9 +27,9 @@ Dependency "resource" (Resources.new{
 })
 
 require("lib/game/ui/graphic/Graphic")
-require("lib/game/dlgs/Controller")
-require("lib/game/dlgs/Keyboard")
-require("lib/game/dlgs/Gamepad")
+require("lib/game/controls/Controller")
+require("lib/game/controls/Keyboard")
+require("lib/game/controls/Gamepad")
 require("lib/game/stage/scene/Scene")
 
 local game
@@ -49,7 +49,7 @@ love.load = function(arg)
   love.filesystem.setIdentity(game.dir)
   love.graphics.setMode(game.w, game.h, game.full, game.sync)  
   
-  SceneScript.loadScene(game.start)(nil, game)
+  Script.loadScene(game.start)(nil, game)
 end
 
 love.draw = function()

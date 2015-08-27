@@ -5,8 +5,11 @@ Tales Of Fantasy
 
 
 require("game/custom/Game")
+Import(Script)
+
 require("lib/game/beat/Beat")
 Import(Beat)
+Import(Beat.Script)
 
 return {
   x = 0, y = 0,

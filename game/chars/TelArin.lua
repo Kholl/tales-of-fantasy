@@ -46,20 +46,16 @@ actor.states = {
 
 actor.list = {}
 actor.list.auto = EnemyAuto(actor.extra):add{
-  rdy = {  ActorScript.isEnded / ActorScript.act("std") },
-  spl = {  },
+  rdy = { isEnded / act("std") },
+  spl = { },
   spl1 = { },
-  spl2 = { ActorScript.isEnded / ActorScript.act("spl3") },
+  spl2 = { isEnded / act("spl3") },
   spl3 = { },
-  spl4 = { ActorScript.isEnded / ActorScript.act("rdy") },
+  spl4 = { isEnded / act("rdy") },
   spl5 = { },
-  atk1 = { ActorScript.isFrame(4) / Beat.Script.hitAll(),
-           ActorScript.isEnded / ActorScript.act("std") },
-  atk2 = { ActorScript.isFrame(2) / Beat.Script.hitAll(),
-           ActorScript.isEnded / ActorScript.act("std") },
-  atkjmp = {  ActorScript.isFrame(6) / Beat.Script.hitAll(),
-              ActorScript.isEnded / ActorScript.act("jmpend"),
-              ActorScript.isFloor / ActorScript.act("std") },
+  atk1 =   { isFrame(4) / hit(), isEnded / act("std") },
+  atk2 =   { isFrame(2) / hit(), isEnded / act("std") },
+  atkjmp = { isFrame(6) / hit(), isEnded / act("jmpend"), isFloor / act("std") },
 }
 
 actor.list.AI = EnemyAI(actor.extra)

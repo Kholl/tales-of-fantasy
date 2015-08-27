@@ -55,7 +55,7 @@ return {
   list = {
     camera = Camera.new{pos = {x = 100, z = 400}},
     
-    script = SceneDlg.new{
+    script = SceneRules.new{
       start = {function(scene, game)
         scene:get("camera"):focus("player")
         scene:actor("player"):run("keyb")

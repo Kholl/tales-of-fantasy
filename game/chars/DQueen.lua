@@ -51,48 +51,30 @@ actor.states = {
 
 actor.list = {}
 actor.list.auto = EnemyAuto(actor.extra):add{
-  blk = {  ActorScript.isEnded / ActorScript.act("std") },
-  atk1 = { ActorScript.isFrame(2) / Beat.Script.hitAll(),
-           ActorScript.isEnded / ActorScript.act("std") },
-  atk2 = { ActorScript.isFrame(1) / Beat.Script.hitAll(),
-           ActorScript.isEnded / ActorScript.act("std") },
-  atk3 = { ActorScript.isFrame(4) / Beat.Script.hitAll(),
-           ActorScript.isEnded / ActorScript.act("std") },
-  atk4 = { ActorScript.isFrame(3) / Beat.Script.hitAll(),
-           ActorScript.isEnded / ActorScript.act("std") },
-  atk5 = { ActorScript.isFrame(2) / Beat.Script.hitAll(),
-           ActorScript.isEnded / ActorScript.act("std") },
-  atk6 = { ActorScript.isFrame(1) / Beat.Script.hitAll() /
-             ActorScript.move{x = 120, y = -240},
-           ActorScript.isFrame(2) / Beat.Script.hitAll(),
-           ActorScript.isFrame(3) / Beat.Script.hitAll(),
-           ActorScript.isFall / ActorScript.act("jmp") },
-  spl1 = { ActorScript.isEnded / ActorScript.act("std") },
-  spl2 = { ActorScript.isEnded / ActorScript.act("spl3") },
+  blk = {  isEnded / act("std") },
+  atk1 = { isFrame(2) / hit(), isEnded / act("std") },
+  atk2 = { isFrame(1) / hit(), isEnded / act("std") },
+  atk3 = { isFrame(4) / hit(), isEnded / act("std") },
+  atk4 = { isFrame(3) / hit(), isEnded / act("std") },
+  atk5 = { isFrame(2) / hit(), isEnded / act("std") },
+  atk6 = { isFrame(1) / hit() / move{x = 120, y = -240},
+           isFrame(2) / hit(),
+           isFrame(3) / hit(),
+           isFall / act("jmp") },
+  spl1 = { isEnded / act("std") },
+  spl2 = { isEnded / act("spl3") },
   spl3 = { },
-  stdup = { ActorScript.isEnded / ActorScript.act("std") },
-  jmpbck = {  ActorScript.isFloor / ActorScript.act("stdup") },
-  atkjmp1 = { ActorScript.isFrame(1) / Beat.Script.hitAll(),
-              ActorScript.isEnded / ActorScript.act("jmpend"),
-              ActorScript.isFloor / ActorScript.act("stdup") },
-  atkjmp2 = { ActorScript.isFrame(2) / Beat.Script.hitAll(),
-              ActorScript.isEnded / ActorScript.act("jmpend"),
-              ActorScript.isFloor / ActorScript.act("stdup") },
+  stdup =   { isEnded / act("std") },
+  jmpbck =  { isFloor / act("stdup") },
+  atkjmp1 = { isFrame(1) / hit(), isEnded / act("jmpend"), isFloor / act("stdup") },
+  atkjmp2 = { isFrame(2) / hit(), isEnded / act("jmpend"), isFloor / act("stdup") },
 }
 
 actor.list.AI = EnemyAI(actor.extra):add{
-  std = {
-    ActorScript.isTargetState("atk-") ^ Script.isHitTarget / ActorScript.act("blk"),
-  },
-  
-  wlk = {
-     ActorScript.isTargetState("atk-") ^ Script.isHitTarget / ActorScript.act("blk"),
-  },
-  
-  bck = {
-    ActorScript.isRange("x", 0) / ActorScript.act("jmpbck") / ActorScript.move{x = -200, y = -200},
-    ActorScript.isTargetState("atk-") ^ ActorScript.isHitTarget / ActorScript.act("blk"),
-  },
+  std = { isTargetState("atk-") ^ isHitTarget / act("blk") },  
+  wlk = { isTargetState("atk-") ^ isHitTarget / act("blk") },  
+  bck = { isTargetState("atk-") ^ isHitTarget / act("blk"),
+          isRng("x", 0) / {act("jmpbck"), move{x = -200, y = -200}} },
 }
 
 actor.list.AI:stop()

@@ -4,12 +4,11 @@ Moo Object Oriented framework for LUA
 ]]--
 
 require("lib/game/ui/graphic/Graphic")
-require("lib/game/stage/scene/SceneDlg")
+require("lib/game/stage/scene/SceneRules")
 require("lib/game/stage/scene/SceneData")
-require("lib/game/stage/scene/SceneScript")
+require("lib/game/stage/scene/Physics")
 require("lib/game/stage/scroll/Scroll")
 require("lib/game/stage/actor/Actor")
-require("lib/game/dlgs/PhysDlg")
 
 Scene = Class {
   super = Graphic,
@@ -24,7 +23,7 @@ Scene = Class {
   
   create = function(this, init)
     this.data = SceneData.new(init)
-    this.phys = PhysDlg.new(init)
+    this.phys = Physics.new(init)
     
     this.scrolls = init.scrolls or {}
     this.actors = init.actors or {}

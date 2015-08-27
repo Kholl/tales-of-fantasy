@@ -3,9 +3,8 @@ Moo Object Oriented framework for LUA
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-require("lib/game/stage/actor/ActorScript")
 require("lib/game/stage/actor/ActorData")
-require("lib/game/stage/actor/ActorDlg")
+require("lib/game/stage/actor/ActorRules")
 require("lib/game/stage/sprite/SpriteData")
 require("lib/game/stage/sprite/SpriteDraw")
 

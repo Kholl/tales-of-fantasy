@@ -3,7 +3,10 @@ Moo Object Oriented framework for LUA
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-ActorDlg = Class {
+require("lib/game/stage/Script")
+
+ActorRules = Class {
+  
   rules = nil,
   running = nil,
   

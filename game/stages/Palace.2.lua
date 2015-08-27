@@ -70,12 +70,12 @@ return {
       end},
       
       run = {
-        SceneScript.at(2) / function(scene, game)
+        Script.at(2) / function(scene, game)
           scene:actor("player"):state("std")
           scene:actor("telarin"):state("std")        
         end,
           
-        SceneScript.at(3) / function(scene, game)
+        Script.at(3) / function(scene, game)
           scene:addActor("dqueen", "game/chars/DQueen.lua", {
             pos = {x = 4000, y = 0, z = 425},
             flip = {h = -1, v = 1},
@@ -86,56 +86,56 @@ return {
           scene:actor("dqueen"):state("spl2")
         end,
         
-        SceneScript.at(4) / function(scene, game) scene:actor("dqueen"):state("std") end,
-        SceneScript.at(5) / SceneScript.dialog("Palace.2.dlg.1.lua"),
-        SceneScript.at(10) / SceneScript.focus("telarin"),
-        SceneScript.at(15) / function(scene, game)
+        Script.at(4) / function(scene, game) scene:actor("dqueen"):state("std") end,
+        Script.at(5) / Script.dialog("Palace.2.dlg.1.lua"),
+        Script.at(10) / Script.focus("telarin"),
+        Script.at(15) / function(scene, game)
           scene:actor("telarin"):script{
-            ActorScript.at(16) / ActorScript.act("spl"),
-            ActorScript.at(16.5) / ActorScript.act("spl1"),
-            ActorScript.at(17) / ActorScript.act("spl5"),
-            ActorScript.at(19) / ActorScript.act("rdy") }
+            Script.at(16) / Script.act("spl"),
+            Script.at(16.5) / Script.act("spl1"),
+            Script.at(17) / Script.act("spl5"),
+            Script.at(19) / Script.act("rdy") }
         end,
         
-        SceneScript.at(19.5) / function(scene, game)
+        Script.at(19.5) / function(scene, game)
           scene:get("camera"):unfocus()
           scene:actor("telarin"):state("jmp")
           scene:actor("telarin"):spd{x = 330, z = 0, y = -160}
         end,
         
-        SceneScript.at(21) / SceneScript.all{
-          SceneScript.spawn("guard1", "game/chars/HElf.lua", {
+        Script.at(21) / Script.all{
+          Script.spawn("guard1", "game/chars/HElf.lua", {
             state = "wlk",
             pos = {x = 125, y = 0, z = 375},
             dir = {x = 1, y = 1, z = 0} }),
           
-          SceneScript.spawn("guard2", "game/chars/HElf.lua", {
+          Script.spawn("guard2", "game/chars/HElf.lua", {
             state = "wlk",
             pos = {x = 75, y = 0, z = 375},
             dir = {x = 1, y = 1, z = 0} }),
           
-          SceneScript.spawn("guard3", "game/chars/HElf.lua", {
+          Script.spawn("guard3", "game/chars/HElf.lua", {
             state = "wlk",
             pos = {x = 25, y = 0, z = 375},
             dir = {x = 1, y = 1, z = 0} }),
 
-          SceneScript.spawn("guard4", "game/chars/HElf.lua", {
+          Script.spawn("guard4", "game/chars/HElf.lua", {
             state = "wlk",
             pos = {x = 100, y = 0, z = 425},
             dir = {x = 1, y = 1, z = 0} }),
         
-          SceneScript.spawn("guard5", "game/chars/HElf.lua", {
+          Script.spawn("guard5", "game/chars/HElf.lua", {
             state = "wlk",
             pos = {x = 50, y = 0, z = 425},
             dir = {x = 1, y = 1, z = 0} }),
         
-          SceneScript.spawn("guard6", "game/chars/HElf.lua", {
+          Script.spawn("guard6", "game/chars/HElf.lua", {
             state = "wlk",
             pos = {x = 0, y = 0, z = 425},
             dir = {x = 1, y = 1, z = 0} }),
         },
         
-        SceneScript.at(24) / function(scene, game)
+        Script.at(24) / function(scene, game)
           Group(scene:getActors("guard?")):state("std")
           
           scene:get("camera"):focus("player")

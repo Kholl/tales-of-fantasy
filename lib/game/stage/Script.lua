@@ -3,7 +3,7 @@ Moo Object Oriented framework for LUA
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-ActorScript = {
+Script = {
   -- Actions  
   act = function(action) return F{function(actor)
     actor:state(action)
@@ -19,13 +19,8 @@ ActorScript = {
     actor:spd(spd)
   end}
   end,
-  
-  setExtra = function(key, value) return F{function(actor)
-    actor:extra(key, value)
-  end}
-  end,
 
-  faceTarget = F{function(actor) actor:face() end},
+  face = F{function(actor) actor:face() end},
   
   move = function(force, k) return F{function(actor, scene)
     local k = k or {}
@@ -52,7 +47,7 @@ ActorScript = {
   end}
   end,
 
-  isTargetState = function(pattern) return F{function(actor, scene)
+  isAct = function(pattern) return F{function(actor, scene)
     local target = actor:target()
     if not target then return false end
     
@@ -60,7 +55,7 @@ ActorScript = {
   end}
   end,
   
-  isRange = function(k, max, min) return F{function(actor, scene)
+  isRng = function(k, max, min) return F{function(actor, scene)
     if not actor:target() then return false end
     
     local dist = actor:distout()
@@ -102,19 +97,6 @@ ActorScript = {
     return list[math.random(1, #list)](actor, scene, game)
   end}
   end,
-
-  all = function(list) return F{function(actor, scene, game)
-    List.each(list, function(rule) rule(actor, scene, game) end)
-    return false
-  end}
-  end,
-  
-  prob = function(list) return F{function(actor, scene, game)
-    local n = math.random(1, 100)
-    local func = IndexList.select(list, function(func, value) return n <= value end)
-    return func(actor, scene, game)
-  end}
-  end,
   
   -- Custom extra properties
   extra = function(key) return {
@@ -135,4 +117,31 @@ ActorScript = {
     end}
     end,
   } end,
+
+  dialog = function(id) return F{function(scene, game)
+    game.ui:add(Dialog.new("game/preset/dialog/Dialog.lua", Load("game/stages/dialog/".. id)))
+  end}
+  end,
+
+  focus = function(target) return F{function(scene, game)
+    scene:get("camera"):focus(target)
+  end}
+  end,
+  
+  spawn = function(key, init, custom) return F{function(scene, game)
+    scene:addActor(key, init, custom)
+  end}
+  end,
+  
+  loadScene = function(name) return F{function(scene, game)
+    game.scene = Scene.new(name)
+    game.ui:time(0)
+    
+    game.scene:step(game)
+    game.scene:update(0, nil, game)
+    
+    game.ui:step(game)
+    game.ui:update(0, nil, game)
+  end}
+  end,
 }

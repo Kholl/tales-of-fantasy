@@ -3,38 +3,38 @@ Beat extension for Moo game library
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-Beat.EnemyAI = function(init) return ActorDlg.new{
+Beat.EnemyAI = function(init) return ActorRules.new{
   std = {
-    ActorScript.isRange("x", nil, init.rng) / ActorScript.act("wlk"),
-    ActorScript.isRange("x", 0) / ActorScript.act("bck"),
-    ActorScript.pick{
-      Beat.Script.isTargetHit("atk") / ActorScript.act("atk"),
-      Beat.Script.isTargetHit("atk1") / ActorScript.act("atk1"),
-      Beat.Script.isTargetHit("atk2") / ActorScript.act("atk2"),
-      Beat.Script.isTargetHit("atk3") / ActorScript.act("atk3"),
-      Beat.Script.isTargetHit("atk4") / ActorScript.act("atk4"),
-      Beat.Script.isTargetHit("atk5") / ActorScript.act("atk5"),
-      Beat.Script.isTargetHit("atk6") / ActorScript.act("atk6"),
+    Script.isRng("x", nil, init.rng) / Script.act("wlk"),
+    Script.isRng("x", 0) / Script.act("bck"),
+    Script.pick{
+      Beat.Script.isHit("atk") / Script.act("atk"),
+      Beat.Script.isHit("atk1") / Script.act("atk1"),
+      Beat.Script.isHit("atk2") / Script.act("atk2"),
+      Beat.Script.isHit("atk3") / Script.act("atk3"),
+      Beat.Script.isHit("atk4") / Script.act("atk4"),
+      Beat.Script.isHit("atk5") / Script.act("atk5"),
+      Beat.Script.isHit("atk6") / Script.act("atk6"),
     },
   },
   
   wlk = {
-     ActorScript.faceTarget,
-     ActorScript.isRange("x", init.rngjmp +20, init.rngjmp) /
-       ActorScript.act("jmp") /
-       ActorScript.move(init.spd, {x = 1, y = -1, z = 0}),
-     ActorScript.isRange("x", init.rng) / ActorScript.act("std"),
-     ActorScript.isRange("x", init.rng -10) / ActorScript.act("bck"),
+     Script.face,
+     Script.isRng("x", init.rngjmp +20, init.rngjmp) /
+       Script.act("jmp") /
+       Script.move(init.spd, {x = 1, y = -1, z = 0}),
+     Script.isRng("x", init.rng) / Script.act("std"),
+     Script.isRng("x", init.rng -10) / Script.act("bck"),
   },
   
   bck = {
-    ActorScript.faceTarget,
-    ActorScript.isRange("x", nil, init.rng -10) / ActorScript.act("std"),
+    Script.face,
+    Script.isRng("x", nil, init.rng -10) / Script.act("std"),
   },
     
   jmp = {
-    Beat.Script.isTargetHit("atkjmp") / ActorScript.act("atkjmp"),
-    Beat.Script.isTargetHit("atkjmp1") / ActorScript.act("atkjmp1"),
-    Beat.Script.isTargetHit("atkjmp2") / ActorScript.act("atkjmp2"),
+    Beat.Script.isHit("atkjmp") / Script.act("atkjmp"),
+    Beat.Script.isHit("atkjmp1") / Script.act("atkjmp1"),
+    Beat.Script.isHit("atkjmp2") / Script.act("atkjmp2"),
   },
 } end

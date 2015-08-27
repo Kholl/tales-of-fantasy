@@ -41,27 +41,17 @@ actor.states = {
 
 actor.list = {}
 actor.list.auto = EnemyAuto(actor.extra):add{
-  jmp = { ActorScript.isEnded / ActorScript.act("fly") },
-  fly = {  ActorScript.move{x = 120, z = 30} ^ ActorScript.spd{y = 20},
-           ActorScript.isFloor / ActorScript.act("std") },
-  atk1 = { ActorScript.isFrame(1) / Beat.Script.hitAll(),
-           ActorScript.isEnded / ActorScript.act("std") },
-  atk2 = { ActorScript.isFrame(4) / Beat.Script.hitAll(),
-           ActorScript.isEnded / ActorScript.act("std") },
-  atk3 = { ActorScript.isFrame(2) / Beat.Script.hitAll(),
-           ActorScript.isEnded / ActorScript.act("std") },
-  atkjmp = { ActorScript.isFrame(3) / Beat.Script.hitAll(),
-             ActorScript.isFloor / ActorScript.act("std") },
+  jmp =    { isEnded / act("fly") },
+  fly =    { move{x = 120, z = 30} ^ spd{y = 20}, isFloor / act("std") },
+  atk1 =   { isFrame(1) / hit(), isEnded / act("std") },
+  atk2 =   { isFrame(4) / hit(), isEnded / act("std") },
+  atk3 =   { isFrame(2) / hit(), isEnded / act("std") },
+  atkjmp = { isFrame(3) / hit(), isFloor / act("std") },
 }
 
 actor.list.AI = EnemyAI(actor.extra):add{
-  wlk = {
-    ActorScript.isRange("x", 120, 100) / ActorScript.act("atkjmp") / ActorScript.move{x = 140, y = -180, z = 0},
-  },
-  
-  fly = {
-     ActorScript.isRange("x", 60) / ActorScript.act("jmpend"),
-  },    
+  wlk = { isRng("x", 120, 100) / act("atkjmp") / move{x = 140, y = -180, z = 0} },
+  fly = { isRng("x", 60)       / act("jmpend") },    
 }
 
 actor.list.AI:stop()

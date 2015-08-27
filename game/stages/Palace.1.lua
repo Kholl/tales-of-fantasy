@@ -53,19 +53,19 @@ return {
         scene:state("run")
       end},
       
-      { SceneScript.at(2) / function(scene, game)
-          SceneScript.dialog("Palace.1.dlg.1.lua")(scene, game)
+      { Script.at(2) / function(scene, game)
+          Script.dialog("Palace.1.dlg.1.lua")(scene, game)
           scene:actor("telarin"):state("std")
         end,
       
-        SceneScript.at(19) / function(scene, game)
+        Script.at(19) / function(scene, game)
           scene:actor("player"):state("wlk")
           scene:actor("player"):dir{x = 1, y = 1, z = 0}
           scene:actor("telarin"):state("wlk")
           scene:actor("telarin"):dir{x = 1, y = 1, z = 0}
         end,
       
-        SceneScript.at(21) / function(scene, game)
+        Script.at(21) / function(scene, game)
           Script.loadScene(game, "game/stages/Palace.2.lua")
         end,
       },
