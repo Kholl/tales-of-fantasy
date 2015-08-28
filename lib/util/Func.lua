@@ -22,8 +22,8 @@ Func = Moo.Operator {
 
   -- Function then
   ["/"] = function(a, b)
-    return F{function(...) if a(...) then return true, b(...) end end}
-  end,
+    return F{function(...) if a(...) then b(...) return true end end}
+  end,  
 }
 
 -- Alias

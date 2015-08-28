@@ -43,9 +43,6 @@ love.load = function(arg)
   game.control = {}
   game.control[1] = Controller.get(game.input[1].controller).new(game.input[1])
   
-  game.checkHit = Game.checkHit
-  game.checkDmg = Game.checkDmg
-  
   love.filesystem.setIdentity(game.dir)
   love.graphics.setMode(game.w, game.h, game.full, game.sync)  
   

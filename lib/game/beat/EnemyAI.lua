@@ -8,13 +8,13 @@ Beat.EnemyAI = function(init) return ActorRules.new{
     Script.isRng("x", nil, init.rng) / Script.act("wlk"),
     Script.isRng("x", 0) / Script.act("bck"),
     Script.pick{
-      Beat.Script.isHit("atk") / Script.act("atk"),
-      Beat.Script.isHit("atk1") / Script.act("atk1"),
-      Beat.Script.isHit("atk2") / Script.act("atk2"),
-      Beat.Script.isHit("atk3") / Script.act("atk3"),
-      Beat.Script.isHit("atk4") / Script.act("atk4"),
-      Beat.Script.isHit("atk5") / Script.act("atk5"),
-      Beat.Script.isHit("atk6") / Script.act("atk6"),
+      Game.isHit("atk")  / Script.act("atk"),
+      Game.isHit("atk1") / Script.act("atk1"),
+      Game.isHit("atk2") / Script.act("atk2"),
+      Game.isHit("atk3") / Script.act("atk3"),
+      Game.isHit("atk4") / Script.act("atk4"),
+      Game.isHit("atk5") / Script.act("atk5"),
+      Game.isHit("atk6") / Script.act("atk6"),
     },
   },
   
@@ -33,8 +33,8 @@ Beat.EnemyAI = function(init) return ActorRules.new{
   },
     
   jmp = {
-    Beat.Script.isHit("atkjmp") / Script.act("atkjmp"),
-    Beat.Script.isHit("atkjmp1") / Script.act("atkjmp1"),
-    Beat.Script.isHit("atkjmp2") / Script.act("atkjmp2"),
+    Game.isHit("atkjmp") / Script.act("atkjmp"),
+    Game.isHit("atkjmp1") / Script.act("atkjmp1"),
+    Game.isHit("atkjmp2") / Script.act("atkjmp2"),
   },
 } end
