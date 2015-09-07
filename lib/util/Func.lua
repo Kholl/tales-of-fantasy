@@ -22,6 +22,7 @@ Func = Moo.Operator {
 
   -- Function then
   ["/"] = function(a, b)
+    if type(b) == "table" then b = F(b) end
     return F{function(...) if a(...) then b(...) return true end end}
   end,  
 }

@@ -3,7 +3,7 @@ Beat extension for Moo game library
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-Beat.Script = {
+Beat.Script = {  
   hitAll = function(chk, hit) return F{function(actor, scene, game)
     List.each(scene:getActors(), function(target) (chk / hit)(actor, scene, game, target) end)
   end}

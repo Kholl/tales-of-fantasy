@@ -59,137 +59,133 @@ return {
     
     camera = Camera.new{pos = {x = 100, z = 325}},
     
-    script = SceneDlg.new{
-      start = {function(scene, game)
-        scene:get("camera"):focus("player")
-        
-        scene:actor("player"):state("wlk")
-        scene:actor("telarin"):state("wlk")
-        
-        scene:state("run")
-      end},
+    script = SceneRules.new{
+      start = {
+        with("camera", focus("player")),
+        with("player", act("wlk")),
+        with("telarin", act("wlk")),
+        act("run") },
       
       run = {
-        Script.at(2) / function(scene, game)
-          scene:actor("player"):state("std")
-          scene:actor("telarin"):state("std")        
-        end,
+        at(2) / {
+          with("player", act("std")),
+          with("telarin", act("std")) },
           
-        Script.at(3) / function(scene, game)
-          scene:addActor("dqueen", "game/chars/DQueen.lua", {
+        at(3) / {
+          spawn("dqueen", "game/chars/DQueen.lua", {
+            state = "spl2",
             pos = {x = 4000, y = 0, z = 425},
             flip = {h = -1, v = 1},
             dir = {x = -1, y = 1, z = 0},
-          })
+          }),
         
-          scene:get("camera"):focus("dqueen")
-          scene:actor("dqueen"):state("spl2")
-        end,
+          with("camera", focus("dqueen")),
+          with("dqueen", script{
+            at(4) / act("std") }),
+        },
         
-        Script.at(4) / function(scene, game) scene:actor("dqueen"):state("std") end,
-        Script.at(5) / Script.dialog("Palace.2.dlg.1.lua"),
-        Script.at(10) / Script.focus("telarin"),
-        Script.at(15) / function(scene, game)
-          scene:actor("telarin"):script{
-            Script.at(16) / Script.act("spl"),
-            Script.at(16.5) / Script.act("spl1"),
-            Script.at(17) / Script.act("spl5"),
-            Script.at(19) / Script.act("rdy") }
-        end,
+        at( 5) / dialog("Palace.2.dlg.1.lua"),
+        at(10) / focus("telarin"),
+        at(15) / with("telarin", script{
+          at(16.0) / act("spl"),
+          at(16.5) / act("spl1"),
+          at(17.0) / act("spl5"),
+          at(19.0) / act("rdy") }),
         
-        Script.at(19.5) / function(scene, game)
-          scene:get("camera"):unfocus()
-          scene:actor("telarin"):state("jmp")
-          scene:actor("telarin"):spd{x = 330, z = 0, y = -160}
-        end,
+        at(19.5) / {
+          with("camera", unfocus),
+          with("telarin", act("jmp")),
+          with("telarin", move{x = 330, z = 0, y = -160})
+        },
         
-        Script.at(21) / Script.all{
-          Script.spawn("guard1", "game/chars/HElf.lua", {
+        at(21) / {
+          spawn("guard1", "game/chars/HElf.lua", {
             state = "wlk",
             pos = {x = 125, y = 0, z = 375},
             dir = {x = 1, y = 1, z = 0} }),
           
-          Script.spawn("guard2", "game/chars/HElf.lua", {
+          spawn("guard2", "game/chars/HElf.lua", {
             state = "wlk",
             pos = {x = 75, y = 0, z = 375},
             dir = {x = 1, y = 1, z = 0} }),
           
-          Script.spawn("guard3", "game/chars/HElf.lua", {
+          spawn("guard3", "game/chars/HElf.lua", {
             state = "wlk",
             pos = {x = 25, y = 0, z = 375},
             dir = {x = 1, y = 1, z = 0} }),
 
-          Script.spawn("guard4", "game/chars/HElf.lua", {
+          spawn("guard4", "game/chars/HElf.lua", {
             state = "wlk",
             pos = {x = 100, y = 0, z = 425},
             dir = {x = 1, y = 1, z = 0} }),
         
-          Script.spawn("guard5", "game/chars/HElf.lua", {
+          spawn("guard5", "game/chars/HElf.lua", {
             state = "wlk",
             pos = {x = 50, y = 0, z = 425},
             dir = {x = 1, y = 1, z = 0} }),
         
-          Script.spawn("guard6", "game/chars/HElf.lua", {
+          spawn("guard6", "game/chars/HElf.lua", {
             state = "wlk",
             pos = {x = 0, y = 0, z = 425},
             dir = {x = 1, y = 1, z = 0} }),
         },
         
-        Script.at(24) / function(scene, game)
-          Group(scene:getActors("guard?")):state("std")
+        at(24) / {
+          all("guard?", act("std")),
           
-          scene:get("camera"):focus("player")
-          scene:actor("player"):run("keyb")
-          
-          scene:addActor("demon1", "game/chars/Demon.lua", {
+          with("camera", focus("player")),
+          with("player", run("keyb")),
+          with("telarin", pos{x = 3800}),
+
+          spawn("demon1", "game/chars/Demon.lua", {
             state = "fly",
             flip = {h = -1, v = 1},
             pos = {x = 800, y = -100, z = 375},
-            dir = {x = -1, y = 1, z = 0} })
+            dir = {x = -1, y = 1, z = 0} }),
           
-          scene:addActor("demon2", "game/chars/Demon.lua", {
+          spawn("demon2", "game/chars/Demon.lua", {
             state = "fly",
             flip = {h = -1, v = 1},
             pos = {x = 750, y = -100, z = 400},
-            dir = {x = -1, y = 1, z = 0} })
+            dir = {x = -1, y = 1, z = 0} }),
           
-          scene:addActor("demon3", "game/chars/Demon.lua", {
+          spawn("demon3", "game/chars/Demon.lua", {
             state = "fly",
             flip = {h = -1, v = 1},
             pos = {x = 700, y = -100, z = 425},
-            dir = {x = -1, y = 1, z = 0} })
+            dir = {x = -1, y = 1, z = 0} }),
           
-          scene:addActor("demon4", "game/chars/Demon.lua", {
+          spawn("demon4", "game/chars/Demon.lua", {
             state = "fly",
             flip = {h = -1, v = 1},
             pos = {x = 800, y = -100, z = 375},
-            dir = {x = -1, y = 1, z = 0} })
+            dir = {x = -1, y = 1, z = 0} }),
           
-          scene:addActor("demon5", "game/chars/Demon.lua", {
+          spawn("demon5", "game/chars/Demon.lua", {
             state = "fly",
             flip = {h = -1, v = 1},
             pos = {x = 750, y = -100, z = 400},
-            dir = {x = -1, y = 1, z = 0} })
+            dir = {x = -1, y = 1, z = 0} }),
           
-          scene:addActor("demon6", "game/chars/Demon.lua", {
+          spawn("demon6", "game/chars/Demon.lua", {
             state = "fly",
             flip = {h = -1, v = 1},
             pos = {x = 700, y = -100, z = 425},
-            dir = {x = -1, y = 1, z = 0} })
+            dir = {x = -1, y = 1, z = 0} }),
         
-          for i = 1,6 do
-            local demon = scene:actor("demon" .. i)
-            local guard = scene:actor("guard" .. i)
-            demon:run("AI")
-            guard:run("AI")
-            demon:target(guard)
-            guard:target(demon)
-          end
+          all("guard?", run("AI")),
+          all("demon?", run("AI")),
+          act("battle"),
           
-          
-          scene:actor("telarin"):pos{x = 3800}          
-          scene:state("battle1")
-        end,
+          function(actor, scene, game)
+            for i = 1,6 do
+              local demon = scene:actor("demon" .. i)
+              local guard = scene:actor("guard" .. i)
+              demon:target(guard)
+              guard:target(demon)
+            end
+          end,          
+        },
       },
     }
   }

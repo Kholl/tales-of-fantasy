@@ -4,25 +4,57 @@ Moo Object Oriented framework for LUA
 ]]--
 
 Script = {
-  -- Actions  
-  act = function(action) return F{function(actor)
-    actor:state(action)
+  -- Mixed actions
+  act = function(action) return F{function(actor, scene, game)
+    local object = actor or scene
+    object:state(action)
   end}
   end,
-  
-  dir = function(dir) return F{function(actor)
+    
+  with = function(name, script) return F{function(actor, scene, game)
+    local object = nil
+    
+    if not (actor == nil) then object = actor:get(name) end
+    if object == nil then object = scene:get(name) end
+    if object == nil then object = scene:actor(name) end
+    
+    script(object, scene, game)
+  end}
+  end,
+
+  run = function(name) return F{function(actor, scene, game)
+    local object = actor or scene
+    object:run(name)
+  end}
+  end,
+
+  -- Camera only Actions
+  focus = function(target) return F{function(camera)
+    camera:focus(target)
+  end}
+  end,
+
+  unfocus = F{function(camera) camera:unfocus() end},
+
+  -- Actor only Actions    
+  face = F{function(actor, scene, game) actor:face() end},
+
+  dir = function(dir) return F{function(actor, scene, game)
     actor:dir(dir)
   end}
   end,
   
-  spd = function(spd) return F{function(actor)
-    actor:spd(spd)
+  pos = function(pos) return F{function(actor, scene, game)
+    actor:pos(pos)
   end}
   end,
 
-  face = F{function(actor) actor:face() end},
+  spd = function(spd) return F{function(actor, scene, game)
+    actor:spd(spd)
+  end}
+  end,
   
-  move = function(force, k) return F{function(actor, scene)
+  move = function(force, k) return F{function(actor, scene, game)
     local k = k or {}
     local spd = actor:spd()
     local dir = actor:dir()
@@ -38,15 +70,17 @@ Script = {
   end}
   end,
   
-  force = function(force) return F{function(actor) actor:force(force) end} end,
-  
-  -- Triggers
-  at = function(start, finish) return F{function(actor, scene, game)
-    finish = finish or start + 1 / game.fps
-    return scene:time() >= start and scene:time() < finish
+  force = function(force) return F{function(actor, scene, game)
+    actor:force(force)
   end}
   end,
 
+  script = function(script) return F{function(actor, scene, game)
+    actor:script(script)
+  end}
+  end,
+  
+  -- Actor only Triggers
   isAct = function(pattern) return F{function(actor, scene)
     local target = actor:target()
     if not target then return false end
@@ -61,8 +95,8 @@ Script = {
     local dist = actor:distout()
     
     local ok = true
-    if ok and min then ok = ok and (dist[k] >= min) end
-    if ok and max then ok = ok and (dist[k] <= max) end
+    if min then ok = ok and (dist[k] >= min) end
+    if max then ok = ok and (dist[k] <= max) end
     
     return ok
   end}
@@ -102,7 +136,9 @@ Script = {
   extra = function(key) return {
     gt = function(val) return F{function(actor) return actor:extra(key) > val end} end,
     lt = function(val) return F{function(actor) return actor:extra(key) < val end} end,
-    eq = function(val) return F{function(actor) return actor:extra(key) == val end} end,     
+    eq = function(val) return F{function(actor) return actor:extra(key) == val end} end,   
+    leq = function(val) return F{function(actor) return actor:extra(key) <= val end} end,   
+    geq = function(val) return F{function(actor) return actor:extra(key) >= val end} end,   
     set = function(val) return F{function(actor) actor:extra(key, val) end} end,
 
     inc = function(inc) return F{function(actor)
@@ -118,22 +154,36 @@ Script = {
     end,
   } end,
 
-  dialog = function(id) return F{function(scene, game)
+  -- Scene only actions
+  dialog = function(id) return F{function(actor, scene, game)
     game.ui:add(Dialog.new("game/preset/dialog/Dialog.lua", Load("game/stages/dialog/".. id)))
   end}
   end,
 
-  focus = function(target) return F{function(scene, game)
+  focus = function(target) return F{function(actor, scene, game)
     scene:get("camera"):focus(target)
   end}
   end,
   
-  spawn = function(key, init, custom) return F{function(scene, game)
+  spawn = function(key, init, custom) return F{function(actor, scene, game)
     scene:addActor(key, init, custom)
   end}
   end,
+
+  all = function(names, script) return F{function(actor, scene, game)
+    List.each(scene:getActors(names), function(object) script(object, scene, game) end)
+  end}
+  end,
+
+  -- Scene only triggers
+  at = function(start, finish) return F{function(actor, scene, game)
+    finish = finish or start + 1 / game.fps
+    return scene:time() >= start and scene:time() < finish
+  end}
+  end,
   
-  loadScene = function(name) return F{function(scene, game)
+  -- Game only actions
+  loadScene = function(name) return F{function(actor, scene, game)
     game.scene = Scene.new(name)
     game.ui:time(0)
     

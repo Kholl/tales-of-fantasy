@@ -71,9 +71,9 @@ actor.list.auto = EnemyAuto(actor.extra):add{
 }
 
 actor.list.AI = EnemyAI(actor.extra):add{
-  std = { isTargetState("atk-") ^ isHitTarget / act("blk") },  
-  wlk = { isTargetState("atk-") ^ isHitTarget / act("blk") },  
-  bck = { isTargetState("atk-") ^ isHitTarget / act("blk"),
+  std = { isAct("atk-") ^ isHitTarget / act("blk") },  
+  wlk = { isAct("atk-") ^ isHitTarget / act("blk") },  
+  bck = { isAct("atk-") ^ isHitTarget / act("blk"),
           isRng("x", 0) / {act("jmpbck"), move{x = -200, y = -200}} },
 }
 

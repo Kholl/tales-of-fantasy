@@ -20,11 +20,11 @@ SceneRules = Class {
     if not this.running then return end
   
     local rules = this.rules[1] or {}
-    IndexList.each(rules, function(rule, index) rule(scene, game) end)
+    IndexList.each(rules, function(rule, index) rule(nil, scene, game) end)
     
     local state = scene:state()
     local stateRules = this.rules[state] or {}
-    IndexList.select(stateRules, function(rule, index) return rule(scene, game) end)
+    IndexList.select(stateRules, function(rule, index) return rule(nil, scene, game) end)
   end,
   
   update = Nil,

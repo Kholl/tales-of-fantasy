@@ -17,7 +17,7 @@ actor.extra = {
   hp = 100, hpmax = 100,
   mp =   0, mpmax =   0,
   dmg = 0,
-  rng = 60, rngjmp = 80,
+  rad = 12, rng = 60, rngjmp = 80,
   spd = {x = 100, y = 210, z = 100},
 }
 
@@ -26,7 +26,8 @@ actor.states = {
   wlk = { frate =  3, nframes = 8, anim = "loop"},
   bck = { frate =  4, nframes = 8, anim = "looprev", res = "wlk" },
   jmp = { frate =  0, nframes = 1, anim = "idle"},
-  hit = { frate =  4, nframes = 2, anim = "play"},
+  hit = { frate =  {5,10}, nframes = 2, anim = "play"},
+  die = { frate =  0, nframes = 1, anim = "play", res = "hitflr" },
   atk1 = { frate = 3, nframes = 7, anim = "play", pad = {x = 0.5, y = -5} },
   atk2 = { frate = 3, nframes = 4, anim = "play"},
   atk3 = { frate = {3,3,3,6,3,3}, nframes = 6, anim = "play"},

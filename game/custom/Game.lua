@@ -15,6 +15,14 @@ end}
 
 Game.hit = function(atk) return F{function(actor, scene, game, target)
   target = target or actor:target()
+      
+  if target:state() == "blk" and not (actor:flip().h == target:flip().h) then
+    local hvy = atk.hvy or {x = 1}
+    target:force(actor, XYZ{x = 100} * hvy)
+    
+    return
+  end
+
   target:state("hit")
   
   atk = atk or {}

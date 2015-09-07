@@ -75,7 +75,7 @@ Actor = Class {
   run = function(this, key) this:get(key):run() end,
   stop = function(this, key) this:get(key):stop() end,
   
-  script = function(this, rules) this:add(ActorDlg.new{rules}) end,
+  script = function(this, rules) this:add(ActorRules.new{rules}) end,
   
   dim = function(this, state) return this:getData(state):dim() end,
   box = function(this, state) return this:getData(state):box() end,

@@ -43,7 +43,7 @@ Graphic = Class {
   add = function(this, item) List.add(this.list, item) end,
   rem = function(this, item) List.rem(this.list, item) end,
   has = function(this, key) return not (this.list[key] == nil) end,
-  get = function(this, key) return this.list[key] or Nil end,
+  get = function(this, key) return this.list[key] end,
   
   dim = function(this, val) return this.data:dim(val) end,
   pos = function(this, val) return this.data:pos(val) end,

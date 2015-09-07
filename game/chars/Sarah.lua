@@ -26,6 +26,7 @@ actor.states = {
   jmp = { frate = 0, nframes =  8, anim = Anim.Air(-220)},
   run = { frate = 2, nframes = 12, anim = "loop"},
   hit = { frate = {3,5}, nframes =  2, anim = "play"},
+  die = { frate = 0, nframes = 1, anim = "play", res = "hitflr"},
   blk = { frate = 2, nframes = 1, anim = "idle"},
   atkup = { frate = 4, nframes = 4, anim = "play"},
   jmpatk = { frate = {2,2,2,2,2,6,4}, nframes = 7, anim = "play"},

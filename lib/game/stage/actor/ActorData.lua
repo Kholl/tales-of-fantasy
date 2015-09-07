@@ -15,7 +15,7 @@ ActorData = Class {
   target = Property("_target"), -- Target
   action = Property("_action"), -- Action
   player = Property("_player"), -- Player id
-
+  
   create = function(this, init)
     this:pos(init and init.pos or {x = 0, y = 0, z = 0})
     this:spd(init and init.spd or {x = 0, y = 0, z = 0})

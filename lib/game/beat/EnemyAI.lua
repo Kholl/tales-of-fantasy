@@ -7,6 +7,7 @@ Beat.EnemyAI = function(init) return ActorRules.new{
   std = {
     Script.isRng("x", nil, init.rng) / Script.act("wlk"),
     Script.isRng("x", 0) / Script.act("bck"),
+    Script.isRng("z", nil, init.rad) / Script.act("bck"),
     Script.pick{
       Game.isHit("atk")  / Script.act("atk"),
       Game.isHit("atk1") / Script.act("atk1"),
@@ -24,12 +25,12 @@ Beat.EnemyAI = function(init) return ActorRules.new{
        Script.act("jmp") /
        Script.move(init.spd, {x = 1, y = -1, z = 0}),
      Script.isRng("x", init.rng) / Script.act("std"),
-     Script.isRng("x", init.rng -10) / Script.act("bck"),
+     Script.isRng("x", init.rng -10)  / Script.act("bck"),
   },
   
   bck = {
     Script.face,
-    Script.isRng("x", nil, init.rng -10) / Script.act("std"),
+    (Script.isRng("x", nil, init.rng -10) ^ Script.isRng("z", init.rad)) / Script.act("std"),
   },
     
   jmp = {

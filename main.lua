@@ -46,7 +46,7 @@ love.load = function(arg)
   love.filesystem.setIdentity(game.dir)
   love.graphics.setMode(game.w, game.h, game.full, game.sync)  
   
-  Script.loadScene(game.start)(nil, game)
+  Script.loadScene(game.start)(nil, nil, game)
 end
 
 love.draw = function()

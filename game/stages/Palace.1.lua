@@ -47,27 +47,15 @@ return {
     Animator.new{prop = "off", key = "y", v = {60, 15}},
     Animator.new{prop = "color", key = {"r", "g", "b"}, v = {1, 0}, t = {19, 21}},
 
-    script = SceneDlg.new{
-      start = {function(scene, game)
-        scene:actor("telarin"):state("wlk")
-        scene:state("run")
-      end},
-      
-      { Script.at(2) / function(scene, game)
-          Script.dialog("Palace.1.dlg.1.lua")(scene, game)
-          scene:actor("telarin"):state("std")
-        end,
-      
-        Script.at(19) / function(scene, game)
-          scene:actor("player"):state("wlk")
-          scene:actor("player"):dir{x = 1, y = 1, z = 0}
-          scene:actor("telarin"):state("wlk")
-          scene:actor("telarin"):dir{x = 1, y = 1, z = 0}
-        end,
-      
-        Script.at(21) / function(scene, game)
-          Script.loadScene(game, "game/stages/Palace.2.lua")
-        end,
+    script = SceneRules.new{
+      { at( 0) / { with("telarin", act("wlk")) },
+        at( 2) / {
+          with("telarin", act("std")),
+          dialog("Palace.1.dlg.1.lua") },
+        at(19) / {
+          with("player", F{ act("wlk"), dir{x = 1, y = 1, z = 0} }),          
+          with("telarin", F{ act("wlk"), dir{x = 1, y = 1, z = 0} }) },
+        at(21) / Script.loadScene("game/stages/Palace.2.lua"),
       },
     },
   }
