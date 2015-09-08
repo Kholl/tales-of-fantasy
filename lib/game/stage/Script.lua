@@ -17,6 +17,7 @@ Script = {
     if not (actor == nil) then object = actor:get(name) end
     if object == nil then object = scene:get(name) end
     if object == nil then object = scene:actor(name) end
+    if type(script) == "table" then script = F(script) end
     
     script(object, scene, game)
   end}
@@ -77,6 +78,11 @@ Script = {
 
   script = function(script) return F{function(actor, scene, game)
     actor:script(script)
+  end}
+  end,
+
+  target = function(name) return F{function(actor, scene, game)
+    actor:target(scene:actor(name))
   end}
   end,
   

@@ -53,8 +53,8 @@ return {
           with("telarin", act("std")),
           dialog("Palace.1.dlg.1.lua") },
         at(19) / {
-          with("player", F{ act("wlk"), dir{x = 1, y = 1, z = 0} }),          
-          with("telarin", F{ act("wlk"), dir{x = 1, y = 1, z = 0} }) },
+          with("player", { act("wlk"), dir{x = 1, y = 1, z = 0} }),          
+          with("telarin", { act("wlk"), dir{x = 1, y = 1, z = 0} }) },
         at(21) / Script.loadScene("game/stages/Palace.2.lua"),
       },
     },
