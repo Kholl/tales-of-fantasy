@@ -36,7 +36,7 @@ ActorRules = Class {
   add = function(this, rules)
     List.each(rules, function(rules, state)
       if this.rules[state] == nil then this.rules[state] = {} end
-      IndexList.each(rules, function(rule) table.insert(this.rules[state], rule) end)
+      IndexList.each(rules, function(rule) table.insert(this.rules[state], 1, rule) end)
     end)
   
     return this

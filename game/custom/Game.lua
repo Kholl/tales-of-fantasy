@@ -14,18 +14,19 @@ Game.check = F{function(actor, scene, game, target)
 end}
 
 Game.hit = function(atk) return F{function(actor, scene, game, target)
+  atk = atk or {}
   target = target or actor:target()
-      
+
+  if target:state() == "die" then return end
   if target:state() == "blk" and not (actor:flip().h == target:flip().h) then
     local hvy = atk.hvy or {x = 1}
     target:force(actor, XYZ{x = 100} * hvy)
     
     return
-  end
+  end  
 
   target:state("hit")
   
-  atk = atk or {}
   if atk.dmg then target:extra("hp", target:extra("hp") - atk.dmg) end
   if atk.hvy then target:force(actor, XYZ{x = 100, y = -100} * atk.hvy) end
 end}

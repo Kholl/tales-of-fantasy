@@ -31,6 +31,7 @@ actor.states = {
   jmp = { frate = 0, nframes = 3, anim = Anim.Air3(60)},
   hit = { frate = 4, nframes = 2, anim = "play"},
   rdy = { frate = 3, nframes = 5, anim = "play"},
+  die = { frate = 0, nframes = 1, anim = "play"},
   spl = { frate = 3, nframes = 5, anim = "playrev", res = "rdy"},
   spl1 = { frate = 3, nframes = 3, anim = "play"},
   spl2 = { frate = 3, nframes = 3, anim = "play"},

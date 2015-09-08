@@ -29,6 +29,7 @@ actor.states = {
   jmp = { frate = 4, nframes = 3, anim = "play"},
   fly = { frate = 0, nframes = 1},
   hit = { frate = 8, nframes = 1, anim = "play"},
+  die = { frate = 0, nframes = 1, anim = "play"},
   atk1 = { frate = {6,10}, nframes = 2, anim = "play"},
   atk2 = { frate = 4, nframes = 7, anim = "play"},
   atk3 = { frate = {4,4,8}, nframes = 3, anim = "play"},

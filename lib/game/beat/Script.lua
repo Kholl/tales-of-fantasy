@@ -32,9 +32,10 @@ Beat.Script = {
     local facing = (target:flip().h == Math.Sign(actor:pos().x - target:pos().x))
     if not facing then return false end
       
+    local x = (target:dim(state).w + actor:box().w) * 0.5
+    local z = math.max(target:rad(), actor:rad())
     local d = target:dist(actor)
-    local h = target:disthit(actor)
     
-    return (d.x < h.x) and (d.z < h.z)
+    return (d.x < x) and (d.z < z)
   end},
 }

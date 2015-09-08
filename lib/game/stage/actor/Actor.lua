@@ -80,6 +80,7 @@ Actor = Class {
   dim = function(this, state) return this:getData(state):dim() end,
   box = function(this, state) return this:getData(state):box() end,
   pad = function(this, state) return this:getData(state):pad() end,
+  reset = function(this, state) return this:getData(state):reset() end,
   frame = function(this) return this:getData():frame() end,
   isStep = function(this) return this:getData():isStep() end,
   isEnded = function(this) return this:getData():isEnded() end,
