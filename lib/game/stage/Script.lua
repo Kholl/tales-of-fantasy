@@ -5,27 +5,42 @@ Moo Object Oriented framework for LUA
 
 Script = {
   -- Mixed actions
-  act = function(action) return F{function(actor, scene, game)
-    local object = actor or scene
+  prop = function(property) return function(val) return F{function(object, parent, game)
+    object = object or parent
+    object[property](object, val)
+  end}
+  end
+  end,
+  
+  act = function(action) return F{function(object, parent, game)
+    object = object or parent
     object:state(action)
   end}
   end,
     
-  with = function(name, script) return F{function(actor, scene, game)
-    local object = nil
-    
-    if not (actor == nil) then object = actor:get(name) end
-    if object == nil then object = scene:get(name) end
-    if object == nil then object = scene:actor(name) end
+  with = function(name, script) return F{function(object, parent, game)
+    if not (object == nil) then object = object:get(name) end
+    if object == nil then object = parent:get(name) end
+    if object == nil then object = parent:actor(name) end
     if type(script) == "table" then script = F(script) end
     
-    script(object, scene, game)
+    script(object, parent, game)
   end}
   end,
 
-  run = function(name) return F{function(actor, scene, game)
-    local object = actor or scene
+  run = function(name) return F{function(object, parent, game)
+    object = object or parent
     object:run(name)
+  end}
+  end,
+  
+  kill = F{function(object, parent, game) parent:rem(object) end},
+
+  -- Mixed triggers
+  at = function(start, finish) return F{function(object, parent, game)
+    object = object or parent
+    finish = finish or start + (1 / game.fps)
+    return object:time() >= start and object:time() < finish
   end}
   end,
 
@@ -39,7 +54,7 @@ Script = {
 
   -- Actor only Actions    
   face = F{function(actor, scene, game) actor:face() end},
-
+--[[
   dir = function(dir) return F{function(actor, scene, game)
     actor:dir(dir)
   end}
@@ -54,7 +69,7 @@ Script = {
     actor:spd(spd)
   end}
   end,
-  
+  ]]--
   move = function(force, k) return F{function(actor, scene, game)
     local k = k or {}
     local spd = actor:spd()
@@ -70,17 +85,18 @@ Script = {
     return true
   end}
   end,
-  
+  --[[
   force = function(force) return F{function(actor, scene, game)
     actor:force(force)
   end}
   end,
+]]--
 
   script = function(script) return F{function(actor, scene, game)
     actor:script(script)
   end}
   end,
-
+  
   target = function(name) return F{function(actor, scene, game)
     actor:target(scene:actor(name))
   end}
@@ -162,12 +178,10 @@ Script = {
 
   -- Scene only actions
   dialog = function(id) return F{function(actor, scene, game)
-    game.ui:add(Dialog.new("game/preset/dialog/Dialog.lua", Load("game/stages/dialog/".. id)))
-  end}
-  end,
-
-  focus = function(target) return F{function(actor, scene, game)
-    scene:get("camera"):focus(target)
+    local dialog = Frame.new("game/preset/dialog/Dialog.lua")
+    dialog.list.script = GraphicRules.new("game/stages/dialog/".. id)
+    
+    game.ui:add(dialog)
   end}
   end,
   
@@ -181,23 +195,19 @@ Script = {
   end}
   end,
 
-  -- Scene only triggers
-  at = function(start, finish) return F{function(actor, scene, game)
-    finish = finish or start + 1 / game.fps
-    return scene:time() >= start and scene:time() < finish
-  end}
-  end,
+  -- Graphic only triggers
+  show = F{function(graphic, parent, game) graphic:hide(false) end},
+  hide = F{function(graphic, parent, game) graphic:hide(true) end},
   
   -- Game only actions
-  loadScene = function(name) return F{function(actor, scene, game)
+  loadScene = function(name) return F{function(_, _, game)
     game.scene = Scene.new(name)
     game.ui:time(0)
     
     game.scene:step(game)
     game.scene:update(0, nil, game)
     
-    game.ui:step(game)
-    game.ui:update(0, nil, game)
+    game.ui:update(0, nil, nil, game)
   end}
   end,
 }

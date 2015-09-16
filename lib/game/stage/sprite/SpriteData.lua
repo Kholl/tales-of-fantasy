@@ -20,7 +20,7 @@ SpriteData = Class {
   create = function(this, init)
     this._isStep, this._isEnded = false, false
     
-    this._anim = init and init.anim or "idle"
+    this._anim = init and init.anim or "play"
     this._frate = init and init.frate or 0
     this._frame = init and init.frame or 0
     this._nframes = init and init.nframes or 1

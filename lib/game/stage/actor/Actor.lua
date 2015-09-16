@@ -54,6 +54,7 @@ Actor = Class {
   end,
   
   update = function(this, delta, scene, game)
+    this.data:update(delta, this, scene, game)
     this:getData():update(delta, this, scene, game)
     List.each(this.list, function(item) item:update(delta, this, scene, game) end)
   end,
@@ -74,7 +75,6 @@ Actor = Class {
   get = function(this, key) return this.list[key] or Nil end,
   run = function(this, key) this:get(key):run() end,
   stop = function(this, key) this:get(key):stop() end,
-  
   script = function(this, rules) this:add(ActorRules.new{rules}) end,
   
   dim = function(this, state) return this:getData(state):dim() end,
@@ -90,6 +90,7 @@ Actor = Class {
   rad = function(this, val) return this.data:rad(val) end,    
   flip = function(this, val) return this.data:flip(val) end,
   mass = function(this, val) return this.data:mass(val) end,
+  time = function(this, val) return this.data:time(val) end,
   target = function(this, val) return this.data:target(val) end,
   player = function(this, val) return this.data:player(val) end,
   

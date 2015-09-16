@@ -54,19 +54,19 @@ return {
   },
   
   list = {
-    Animator.new{prop = "color", key = {"r", "g", "b"}, t = {0, 1}},
-    Animator.new{prop = "dim", key = "h", v = {0.5, 1}, t = {23, 24}},
+    fadeIn =  Animator.new{prop = "color", key = {"r", "g", "b"}},
+    cineOut = Animator.new{prop = "dim", key = "h", val = {0.5, 1}},
     
     camera = Camera.new{pos = {x = 100, z = 325}},
     
     script = SceneRules.new{
-      start = {
-        with("camera", focus("player")),
-        with("player", act("wlk")),
-        with("telarin", act("wlk")),
-        act("run") },
+      {
+        at(0) / {
+          with("camera", focus("player")),
+          with("player", act("wlk")),
+          with("telarin", act("wlk")),
+          run("fadeIn") },
       
-      run = {
         at(2) / {
           with("player", act("std")),
           with("telarin", act("std")) },
@@ -75,8 +75,8 @@ return {
           spawn("dqueen", "game/chars/DQueen.lua", {
             state = "spl2",
             pos = {x = 4000, y = 0, z = 425},
-            flip = {h = -1, v = 1},
             dir = {x = -1, y = 1, z = 0},
+            flip = {h = -1, v = 1},
           }),
         
           with("camera", focus("dqueen")),
@@ -85,7 +85,7 @@ return {
         },
         
         at( 5) / dialog("Palace.2.dlg.1.lua"),
-        at(10) / focus("telarin"),
+        at(10) / with("camera", focus("telarin")),
         at(15) / with("telarin", script{
           at(16.0) / act("spl"),
           at(16.5) / act("spl1"),
@@ -97,6 +97,8 @@ return {
           with("telarin", act("jmp")),
           with("telarin", move{x = 330, z = 0, y = -160})
         },
+        
+        at(20) / run("cineOut"),
         
         at(21) / {
           spawn("guard1", "game/chars/HElf.lua", {
@@ -135,7 +137,7 @@ return {
           
           with("camera", focus("player")),
           with("player", run("keyb")),
-          with("telarin", pos{x = 3800}),
+          with("telarin", prop("pos"){x = 3800}),
 
           spawn("demon1", "game/chars/Demon.lua", {
             state = "fly",
@@ -186,7 +188,7 @@ return {
             end
           end,          
         },
-      },
+      }
     }
   }
 }

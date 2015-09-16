@@ -22,28 +22,29 @@ actor.extra = {
 }
 
 actor.states = {
-  std = { frate = 0, nframes = 1},
+  std =   { frate = 0, nframes = 1},
+  stdup = { frate = 2, nframes = 3, anim = "playrev", res = "hitflr"},
   stn = { frate = 0, nframes = 1},
   wlk = { frate = 3, nframes = 6, anim = "loop"},
   bck = { frate = 4, nframes = 6, anim = "looprev", res = "wlk" },
-  jmp = { frate = 4, nframes = 3, anim = "play"},
+  jmp = { frate = 4, nframes = 3},
   fly = { frate = 0, nframes = 1},
-  hit = { frate = 8, nframes = 1, anim = "play"},
-  die = { frate = 0, nframes = 1, anim = "play"},
-  atk1 = { frate = {6,10}, nframes = 2, anim = "play"},
-  atk2 = { frate = 4, nframes = 7, anim = "play"},
-  atk3 = { frate = {4,4,8}, nframes = 3, anim = "play"},
-  atkjmp = { frate = 6, nframes = 4, anim = "play"},
+  hit = { frate = 8, nframes = 1},
+  die = { frate = 0, nframes = 1},
+  atk1 = { frate = {6,10}, nframes = 2},
+  atk2 = { frate = 4, nframes = 7},
+  atk3 = { frate = {4,4,8}, nframes = 3},
+  atkjmp = { frate = 6, nframes = 4},
   jmpend = { frate = 0, nframes = 1},
-  flyend = { frate = 3, nframes = 2, anim = "play", res = "fly" },
+  flyend = { frate = 3, nframes = 2, res = "fly" },
   hitair = { frate = 0, nframes = 2, anim = Anim.Air2()},
-  hitflr = { frate = {2,2,26}, nframes = 3, anim = "play"},
+  hitflr = { frate = {2,2,26}, nframes = 3},
 }
 
 actor.list = {}
 actor.list.auto = EnemyAuto(actor.extra):add{
   jmp =    { isEnded / act("fly") },
-  fly =    { move{x = 120, z = 30} ^ spd{y = 20}, isFloor / act("std") },
+  fly =    { move{x = 120, z = 30} ^ prop("spd"){y = 20}, isFloor / act("std") },
   atk1 =   { isFrame(1) / hit(), isEnded / act("std") },
   atk2 =   { isFrame(4) / hit(), isEnded / act("std") },
   atk3 =   { isFrame(2) / hit(), isEnded / act("std") },

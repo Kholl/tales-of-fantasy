@@ -44,17 +44,16 @@ return {
   },
   
   list = {
-    Animator.new{prop = "off", key = "y", v = {60, 15}},
-    Animator.new{prop = "color", key = {"r", "g", "b"}, v = {1, 0}, t = {19, 21}},
+    fadeIn  = Animator.new{prop = "off", key = "y", val = {60, 15}},
+    fadeOut = Animator.new{prop = "color", key = {"r", "g", "b"}, val = {1, 0}, len = 2},
 
     script = SceneRules.new{
-      { at( 0) / { with("telarin", act("wlk")) },
-        at( 2) / {
-          with("telarin", act("std")),
-          dialog("Palace.1.dlg.1.lua") },
+      { at( 0) / { with("telarin", act("wlk")), run("fadeIn") },
+        at( 2) / { with("telarin", act("std")), dialog("Palace.1.dlg.1.lua") },
         at(19) / {
-          with("player", { act("wlk"), dir{x = 1, y = 1, z = 0} }),          
-          with("telarin", { act("wlk"), dir{x = 1, y = 1, z = 0} }) },
+          with("player", { act("wlk"), prop("dir"){x = 1, y = 1, z = 0} }),          
+          with("telarin", { act("wlk"), prop("dir"){x = 1, y = 1, z = 0} }),
+          run("fadeOut") },
         at(21) / Script.loadScene("game/stages/Palace.2.lua"),
       },
     },

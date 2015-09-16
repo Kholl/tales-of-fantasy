@@ -10,6 +10,7 @@ ActorData = Class {
   rad = Property("_rad"), -- Radius
   flip = Property("_flip"), -- Flip
   mass = Property("_mass"), -- Mass
+  time = Property("_time"), -- Time
   state = Property("_state"), -- State
   extra = Property("_extra"), -- Extras
   target = Property("_target"), -- Target
@@ -23,10 +24,15 @@ ActorData = Class {
     this:rad(init and init.rad or 0)
     this:flip(init and init.flip or {h = 1, v = 1})
     this:mass(init and init.mass or 1)
+    this:time(init and init.time or 0)
     this:state(init and init.state or "std")
     this:extra(init and init.extra or {})
     this:target(init and init.target or false)
     this:action(init and init.action or false)
     this:player(init and init.player or 0)
+  end,
+  
+  update = function(this, delta, actor, scene, game)
+    this._time = delta + this._time
   end,
 }

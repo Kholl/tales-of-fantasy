@@ -45,7 +45,7 @@ return {
       dir = {x = 1, y = 1, z = 0},
     }),
 
-    enemy = Actor.new("game/chars/TelArin.lua", {
+    enemy = Actor.new("game/chars/Demon.lua", {
       pos = {x = 600, y = 0, z = 400},
       dir = {x = -1, y = 1, z = 0},
       flip = {h = -1, v = 1},
