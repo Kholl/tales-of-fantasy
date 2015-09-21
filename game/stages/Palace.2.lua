@@ -137,7 +137,7 @@ return {
           
           with("camera", focus("player")),
           with("player", run("keyb")),
-          with("telarin", prop("pos"){x = 3800}),
+          with("telarin", set("pos"){x = 3800}),
 
           spawn("demon1", "game/chars/Demon.lua", {
             state = "fly",

@@ -5,7 +5,7 @@ Moo Object Oriented framework for LUA
 
 Script = {
   -- Mixed actions
-  prop = function(property) return function(val) return F{function(object, parent, game)
+  set = function(property) return function(val) return F{function(object, parent, game)
     object = object or parent
     object[property](object, val)
   end}
@@ -41,6 +41,11 @@ Script = {
     object = object or parent
     finish = finish or start + (1 / game.fps)
     return object:time() >= start and object:time() < finish
+  end}
+  end,
+
+  chance = function(rate) return F{function()
+    return math.random(1, 100) <= rate
   end}
   end,
 

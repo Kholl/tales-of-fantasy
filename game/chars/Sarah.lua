@@ -10,6 +10,10 @@ actor.pad = {x = 0.5, y = 1}
 actor.box = {w = 24, h = 68}
 actor.rad = 12
 actor.path = "game/chars/lucia"
+actor.energy = { -- Seconds
+  run = 4, 
+  atk = 4,
+}
 
 actor.extra = {
   faction = "helf",
@@ -69,16 +73,16 @@ actor.list.keyb = ActorRules.new{
           isKey{"a[rl]>"}    / act("atkalt"),
           isKey{"ab>"}       / act("atkrnd") },
   wlk = { F{
-            prop("dir"){x = 0, z = 0},
-            isKeypress("r") / prop("dir"){x =  1},
-            isKeypress("l") / prop("dir"){x = -1},
-            isKeypress("u") / prop("dir"){z = -1},
-            isKeypress("d") / prop("dir"){z =  1} },
+            set("dir"){x = 0, z = 0},
+            isKeypress("r") / set("dir"){x =  1},
+            isKeypress("l") / set("dir"){x = -1},
+            isKeypress("u") / set("dir"){z = -1},
+            isKeypress("d") / set("dir"){z =  1} },
           isKey{"r>r>", "l>l>"} / act("run"),
           isKey{"[rlud]+>"}     / act("wlk"),
           isKey{"[rlud]*b>"}    / act("jmp")   / move{x =  100, y = -200, z = 0},
           isKey{"au>u>d>"}      / act("atkup") / move{y = -200, z = 0},
-          act("std")            / prop("dir"){x = 0, z = 0} },
+          act("std")            / set("dir"){x = 0, z = 0} },
   run = { isKey{"r>r>", "l>l>"}       / act("run"),
           isKey{"[rlud]*b>"}          / act("jmp")   / move{x =  200, y = -180, z = 0},
           isKey{"au>u>d>"}            / act("atkup") / move{y = -180, z = 0},

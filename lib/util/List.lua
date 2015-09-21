@@ -28,6 +28,14 @@ Moo.ListGenerator = function(iterator) return {
     return res
   end,
   
+  sorted = function(list, func)
+    local keys, vals = List.divide(list)
+    table.sort(vals, function(a, b)
+      return func(a) < func(b)
+    end)
+    return vals
+  end,
+  
   filter = function(list, match)
     local func
     if type(match) == "string"
@@ -52,13 +60,6 @@ Moo.ListGenerator = function(iterator) return {
     for key, val in iterator(list) do
       if func(val, key) then return val, key end
     end
-  end,
-  
-  sort = function(list, eval)
-    table.sort(list, function(a, b)
-        return eval(a) < eval(b)
-      end)
-    return list
   end,
   
   find = function(list, item)

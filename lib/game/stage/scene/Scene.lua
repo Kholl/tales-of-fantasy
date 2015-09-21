@@ -40,8 +40,11 @@ Scene = Class {
     this.graphics.setColor(color.r * 255, color.g * 255, color.b * 255, alpha * 255)
     
     List.each(this.scrolls, function(scroll) scroll:draw(this) end)
-    List.each(this.actors, function(actor) actor:draw(this) end)
     List.each(this.list, function(item) item:draw(this) end)
+    List.each(this.actors, function(actor) actor:drawShadow(this) end)
+    
+    List.each(List.sorted(this.actors, function(actor) return actor:pos().z end),
+      function(actor) actor:draw(this) end)
     
     this.graphics.setColor(255, 255, 255, 255)    
     this.graphics.setScissor()     

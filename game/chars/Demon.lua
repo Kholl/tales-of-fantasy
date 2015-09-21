@@ -17,6 +17,7 @@ actor.extra = {
   hp = 75, hpmax = 75,
   mp =  0, mpmax = 0,
   dmg = 0,
+  ini = 90,
   rng = 30, rngjmp = 120,
   spd = {x = 100, y = 210, z = 100},
 }
@@ -44,11 +45,11 @@ actor.states = {
 actor.list = {}
 actor.list.auto = EnemyAuto(actor.extra):add{
   jmp =    { isEnded / act("fly") },
-  fly =    { move{x = 120, z = 30} ^ prop("spd"){y = 20}, isFloor / act("std") },
-  atk1 =   { isFrame(1) / hit(), isEnded / act("std") },
-  atk2 =   { isFrame(4) / hit(), isEnded / act("std") },
-  atk3 =   { isFrame(2) / hit(), isEnded / act("std") },
-  atkjmp = { isFrame(3) / hit(), isFloor / act("std") },
+  fly =    { move{x = 120, z = 30} ^ set("spd"){y = 20}, isFloor / act("std") },
+  atk1 =   { isFrame(1) / hit{dmg = 3}, isEnded / act("std") },
+  atk2 =   { isFrame(4) / hit{dmg = 5, hvy = {x = 1, y = 1}}, isEnded / act("std") },
+  atk3 =   { isFrame(2) / hit{dmg = 3}, isEnded / act("std") },
+  atkjmp = { isFrame(3) / hit{dmg = 3}, isFloor / act("std") },
 }
 
 actor.list.AI = EnemyAI(actor.extra):add{

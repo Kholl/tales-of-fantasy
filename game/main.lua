@@ -40,9 +40,9 @@ return {
       },
     },
   },
+--  start = "game/stages/Tester.lua",
 --  start = "game/stages/Palace.1.lua",
---  start = "game/stages/Palace.2.lua",
-  start = "game/stages/Tester.lua",
+  start = "game/stages/Palace.2.lua",
   interface = {
     items = {}
   },

@@ -17,6 +17,7 @@ actor.extra = {
   hp = 200, hpmax = 200,
   mp = 300, mpmax = 300,
   dmg = 0,
+  ini = 50,
   rng = 50, rngjmp = 100,
   spd = {x = 100, y = 210, z = 100}, 
 }

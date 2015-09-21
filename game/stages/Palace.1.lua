@@ -51,8 +51,8 @@ return {
       { at( 0) / { with("telarin", act("wlk")), run("fadeIn") },
         at( 2) / { with("telarin", act("std")), dialog("Palace.1.dlg.1.lua") },
         at(19) / {
-          with("player", { act("wlk"), prop("dir"){x = 1, y = 1, z = 0} }),          
-          with("telarin", { act("wlk"), prop("dir"){x = 1, y = 1, z = 0} }),
+          with("player", { act("wlk"), set("dir"){x = 1, y = 1, z = 0} }),          
+          with("telarin", { act("wlk"), set("dir"){x = 1, y = 1, z = 0} }),
           run("fadeOut") },
         at(21) / Script.loadScene("game/stages/Palace.2.lua"),
       },

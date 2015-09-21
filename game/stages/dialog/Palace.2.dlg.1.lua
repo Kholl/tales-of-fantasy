@@ -2,16 +2,16 @@ return {
   at(0) / run("rollOut"),
   at(1) / {
     with("image", {
-      prop("img")("game/chars/Morrigan/portrait-l.png"),
-      prop("pos"){x = -10, y = 0.5},
-      prop("dim"){w = 40, h = 60},
+      set("img")("game/chars/Morrigan/portrait-l.png"),
+      set("pos"){x = -10, y = 0.5},
+      set("dim"){w = 40, h = 60},
       run("fadeIn"),
       show }),
     
     with("text", {
-      prop("txt")("Ha! ha! I got you at last! ...you wont stop me to fulfill my plan..."),
-      prop("pos"){x = 0, y = 0},
-      prop("fit"){w = false, h = false},
+      set("txt")("Ha! ha! I got you at last! ...you wont stop me to fulfill my plan..."),
+      set("pos"){x = 0, y = 0},
+      set("fit"){w = false, h = false},
       run("fadeIn"),
       show }),
   },  
@@ -21,16 +21,16 @@ return {
   },
   at(5) / {
     with("image", {
-      prop("img")("game/chars/TelArin/portrait-m.png"),
-      prop("pal")("game/preset/imagefx/HElf.lua"),
-      prop("pos"){x = 10, y = 0.5},
-      prop("dim"){w = 48, h = 48},
+      set("img")("game/chars/TelArin/portrait-m.png"),
+      set("pal")("game/preset/imagefx/HElf.lua"),
+      set("pos"){x = 10, y = 0.5},
+      set("dim"){w = 48, h = 48},
       run("fadeIn") }),
   
     with("text", {
-      prop("txt")("What is this? Princess, stay back while I fight! Guards! Protect her!"),
-      prop("pos"){x = 1, y = 0.5},
-      prop("fit"){w = false, h = false},
+      set("txt")("What is this? Princess, stay back while I fight! Guards! Protect her!"),
+      set("pos"){x = 1, y = 0.5},
+      set("fit"){w = false, h = false},
       run("fadeIn") }),
   },
   at(9) / {

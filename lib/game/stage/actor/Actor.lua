@@ -48,6 +48,10 @@ Actor = Class {
     List.each(this.list, function(item) item:draw(this, scene) end)
   end,
   
+  drawShadow = function(this, scene)
+    this:getDraw():drawShadow(this:getData(), this.data, scene)
+  end,
+  
   step = function(this, scene, game)
     this:getData():step(this, scene, game)
     List.each(this.list, function(item) item:step(this, scene, game) end)
