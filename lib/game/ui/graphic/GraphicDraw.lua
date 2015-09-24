@@ -38,8 +38,8 @@ GraphicDraw = Class {
     
     if bgImage then
       this.graphics.setColor(255, 255, 255, alpha * bgAlpha * 255)
-      this.bqQuad:setViewport(0, 0, w, h)
-      this.graphics.drawq(this.bgDrawable, this.bgQuad, x, y)
+      this.bgQuad:setViewport(0, 0, w, h)
+      this.graphics.drawq(this.bgDraw, this.bgQuad, x, y)
     end
     
     this.graphics.setColor(color.r * 255, color.g * 255, color.b * 255, alpha * 255)

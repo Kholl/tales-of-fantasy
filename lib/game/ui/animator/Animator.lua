@@ -26,6 +26,7 @@ Animator = Class {
   end,
   
   draw = Nil,
+  
   step = Nil,
   
   update = function(this, delta, object, game)    

@@ -4,7 +4,7 @@ Tales Of Fantasy
 ]]--
 
 return {
-  res = "game/ui/dialog2.png",
+  res = "game/ui/dialog/dialog2.png",
   pos = {x = 0.5, y = 0.5},
   dim = {w = 254, h = 160},
   bgColor = {r = 0, g = 0, b = 0},

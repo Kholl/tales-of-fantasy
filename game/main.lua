@@ -3,11 +3,12 @@ Tales Of Fantasy
 @author Manuel Coll <mkhollv@gmail.com>
 ]]--
 
-
 require("game/custom/Game")
 Import(Game)
 Import(Beat)
 Import(Script)
+
+require("lib/game/ui/image/Image")
 
 return {
   x = 0, y = 0,
@@ -41,9 +42,11 @@ return {
     },
   },
 --  start = "game/stages/Tester.lua",
---  start = "game/stages/Palace.1.lua",
-  start = "game/stages/Palace.2.lua",
+  start = "game/stages/Palace.1.lua",
+--  start = "game/stages/Palace.2.lua",
   interface = {
-    items = {}
+    list = {
+      barP1 = Image.new("game/ui/bar/PlayerBar.lua"),
+    },
   },
 }

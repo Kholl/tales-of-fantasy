@@ -183,7 +183,7 @@ Script = {
 
   -- Scene only actions
   dialog = function(id) return F{function(actor, scene, game)
-    local dialog = Frame.new("game/preset/dialog/Dialog.lua")
+    local dialog = Frame.new("game/ui/dialog/Dialog.lua")
     dialog.list.script = GraphicRules.new("game/stages/dialog/".. id)
     
     game.ui:add(dialog)

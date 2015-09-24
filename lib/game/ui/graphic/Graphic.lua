@@ -23,7 +23,7 @@ Graphic = Class {
     local area = this.data:area(parent)
     
     List.each(this.list, function(item) item:draw(area) end)
-  end,
+  end,  
   
   update = function(this, delta, parent, _, game)
     this.data:update(delta, this, game)

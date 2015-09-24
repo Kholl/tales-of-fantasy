@@ -5,7 +5,6 @@ Tales Of Fantasy
 
 require("lib/game/stage/camera/Camera")
 
-require("lib/game/ui/dialog/Dialog")
 require("lib/game/ui/frame/Frame")
 require("lib/game/ui/image/Image")
 require("lib/game/ui/text/Text")
