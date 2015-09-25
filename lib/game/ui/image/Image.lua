@@ -16,8 +16,9 @@ Image = Class {
   end,
   
   draw = function(this, parent)
+    this.drawable:drawBg(this.data, parent)
     Graphic.draw(this, parent)
-    this.drawable:draw(this.data, parent)
+    this.drawable:drawFg(this.data, parent)
   end,    
   
   img = function(this, val) this.drawable:img(val) end,

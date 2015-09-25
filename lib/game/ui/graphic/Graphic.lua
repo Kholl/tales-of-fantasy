@@ -18,12 +18,12 @@ Graphic = Class {
     this.data = GraphicData.new(init)
   end,
   
-  draw = function(this, parent)
+  draw = function(this, area)
     if this.data:hide() then return end
-    local area = this.data:area(parent)
     
+    area = this.data:bounds(area)    
     List.each(this.list, function(item) item:draw(area) end)
-  end,  
+  end,
   
   update = function(this, delta, parent, _, game)
     this.data:update(delta, this, game)

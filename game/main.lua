@@ -8,8 +8,6 @@ Import(Game)
 Import(Beat)
 Import(Script)
 
-require("lib/game/ui/image/Image")
-
 return {
   x = 0, y = 0,
   w = 320, h = 240,
@@ -46,7 +44,7 @@ return {
 --  start = "game/stages/Palace.2.lua",
   interface = {
     list = {
-      barP1 = Image.new("game/ui/bar/PlayerBar.lua"),
+      barP1 = Load("game/ui/bar/PlayerBar.lua"),
     },
   },
 }

@@ -31,12 +31,12 @@ Scene = Class {
   end,
   
   draw = function(this, parent)
-    local area = this.data:area(parent)
+    local area, view = this.data:bounds(parent)
     local color = this.data:color()
     local alpha = this.data:alpha()
     local x, y, w, h = area.x, area.y, area.w, area.h
     
-    this.graphics.setScissor(area.vx, area.vy, area.vw, area.vh)  
+    this.graphics.setScissor(view.x, view.y, view.w, view.h)  
     this.graphics.setColor(color.r * 255, color.g * 255, color.b * 255, alpha * 255)
     
     List.each(this.scrolls, function(scroll) scroll:draw(this) end)
