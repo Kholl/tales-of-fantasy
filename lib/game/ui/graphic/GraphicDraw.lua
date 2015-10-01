@@ -19,16 +19,17 @@ GraphicDraw = Class {
     end
   end,
   
-  drawBg = function(this, data, parent)
+  drawBg = function(this, data, area, view)
     if data:hide() then return end    
     
     local alpha = data:alpha()
     local bgColor = data:bgColor()
     local bgImage = data:bgImage()
     local bgAlpha = data:bgAlpha()
-    local area, view = data:bounds(parent)
+    
+    area = data:bounds(area)
     local x, y, w, h = area.x, area.y, area.w, area.h
-    this.graphics.setScissor(view.x, view.y, view.w, view.h)
+    this.graphics.setScissor(area.vx, area.vy, area.vw, area.vh)
 
     if bgColor then
       this.graphics.setColor(bgColor.r * 255, bgColor.g * 255, bgColor.b * 255, alpha * bgAlpha * 255)
@@ -46,16 +47,17 @@ GraphicDraw = Class {
     this.graphics.setScissor() 
   end,
   
-  drawFg = function(this, data, parent)
+  drawFg = function(this, data, area)
     if data:hide() then return end    
 
     local color = data:color()
     local bdColor = data:bdColor()
     local alpha = data:alpha()
-    local area, view = data:bounds(parent)
+    
+    area = data:bounds(area)
     local x, y, w, h = area.x, area.y, area.w, area.h
     
-    this.graphics.setScissor(view.x, view.y, view.w, view.h)
+    this.graphics.setScissor(area.vx, area.vy, area.vw, area.vh)
     this.graphics.setColor(color.r * 255, color.g * 255, color.b * 255, alpha * 255)
 
     this.doDraw(this, data, x, y, w, h)
@@ -69,8 +71,8 @@ GraphicDraw = Class {
     this.graphics.setScissor() 
   end,
 
-  draw = function(this, data, parent)
-    this:drawBg(data, parent)
-    this:drawFg(data, parent)
+  draw = function(this, data, area, view)
+    this:drawBg(data, area, view)
+    this:drawFg(data, area, view)
   end,
 }

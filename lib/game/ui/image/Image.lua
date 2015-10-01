@@ -15,10 +15,10 @@ Image = Class {
     this.drawable = ImageDraw.new(init)
   end,
   
-  draw = function(this, parent)
-    this.drawable:drawBg(this.data, parent)
-    Graphic.draw(this, parent)
-    this.drawable:drawFg(this.data, parent)
+  draw = function(this, area)
+    this.drawable:drawBg(this.data, area)
+    Graphic.draw(this, area)
+    this.drawable:drawFg(this.data, area)
   end,    
   
   img = function(this, val) this.drawable:img(val) end,

@@ -16,9 +16,9 @@ Text = Class {
     this.data = TextData.new(init)
   end,
     
-  draw = function(this, parent)
-    Graphic.draw(this, parent)
-    this.drawable:draw(this.data, parent)
+  draw = function(this, area)
+    Graphic.draw(this, area)
+    this.drawable:draw(this.data, area)
   end,
   
   txt = function(this, val) this.data:txt(val) end,    

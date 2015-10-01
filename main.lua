@@ -31,6 +31,7 @@ require("lib/game/controls/Controller")
 require("lib/game/controls/Keyboard")
 require("lib/game/controls/Gamepad")
 require("lib/game/stage/scene/Scene")
+require("lib/game/Script")
 
 local game
 

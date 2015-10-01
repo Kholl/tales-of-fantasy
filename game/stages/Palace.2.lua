@@ -10,7 +10,6 @@ require("lib/game/ui/image/Image")
 require("lib/game/ui/text/Text")
 
 return {
-  fps = 30,
   ratio = {x = 1, y = 1, z = 1/2},
   drag = {x = -300, y = 480, z = -300},
   pos = {x = 0.5, y = 0.5},
@@ -39,19 +38,6 @@ return {
     },
   },
   
-  actors = {
-    player = Actor.new("game/chars/Sarah.lua", {
-      player = 1,
-      pos = {x = 100, y = 0, z = 400},
-      dir = {x = 1, y = 1, z = 0},
-    }),
-
-    telarin = Actor.new("game/chars/TelArin.lua", {
-      pos = {x = 75, y = 0, z = 450},
-      dir = {x = 1, y = 1, z = 0}
-    }),
-  },
-  
   list = {
     fadeIn =  Animator.new{prop = "color", key = {"r", "g", "b"}},
     cineOut = Animator.new{prop = "dim", key = "h", val = {0.5, 1}},
@@ -61,6 +47,17 @@ return {
     script = SceneRules.new{
       {
         at(0) / {
+          spawn("player", "game/chars/Sarah.lua", {
+            player = 1,
+            pos = {x = 100, y = 0, z = 400},
+            dir = {x = 1, y = 1, z = 0},
+          }),
+        
+          spawn("telarin", "game/chars/TelArin.lua", {
+            pos = {x = 75, y = 0, z = 450},
+            dir = {x = 1, y = 1, z = 0}
+          }),
+          
           with("camera", focus("player")),
           with("player", act("wlk")),
           with("telarin", act("wlk")),
@@ -97,7 +94,10 @@ return {
           with("telarin", move{x = 330, z = 0, y = -160})
         },
         
-        at(20) / run("cineOut"),
+        at(20) / {
+          run("cineOut"),
+          withUI(run("rollIn")),
+        },
         
         at(21) / {
           spawn("guard1", "game/chars/HElf.lua", {

@@ -40,11 +40,15 @@ return {
     },
   },
 --  start = "game/stages/Tester.lua",
-  start = "game/stages/Palace.1.lua",
---  start = "game/stages/Palace.2.lua",
+--  start = "game/stages/Palace.1.lua",
+  start = "game/stages/Palace.2.lua",
   interface = {
+    pos = {x = 0.5, y = 0.5},
+    dim = {w = 1, h = 240 +70},
+    
     list = {
-      barP1 = Load("game/ui/bar/PlayerBar.lua"),
-    },
+      rollIn =  Animator.new{func = "Decel", prop = "dim", key = "h", val = {240 +70, 240}},
+      rollOut = Animator.new{func = "Decel", prop = "dim", key = "h", val = {240, 240 +70}},
+    }
   },
 }

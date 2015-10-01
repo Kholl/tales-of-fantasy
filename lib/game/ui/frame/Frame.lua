@@ -18,9 +18,9 @@ Frame = Class {
     this.data = FrameData.new(init)
   end,
   
-  draw = function(this, parent)
-    this.drawable:draw(this.data, parent)
-    Graphic.draw(this, parent)
+  draw = function(this, area)
+    this.drawable:draw(this.data, area)
+    Graphic.draw(this, area)
   end,    
   
   border = function(this, val) return this.data:border(val) end,
